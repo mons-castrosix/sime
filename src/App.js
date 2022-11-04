@@ -57,7 +57,7 @@ function App() {
           <input type="text" className="form-control" id="cpostal" name="cpostal" placeholder="Código Postal" required />
           </div>
           <div class="form-group col-lg-3 col-md-4 col-sm-4 col-6">
-          <label for="colonia">Ciudad(INE)</label>
+          <label for="colonia">Ciudad(INE) </label>
           <input type="text" className="form-control" id="ciudad" name="ciudad" placeholder="Ciudad" required />
           </div>
         </div>
