@@ -1,4 +1,4 @@
-
+import React from 'react';
 import apoyo from './apoyos.png'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
