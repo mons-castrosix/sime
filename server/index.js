@@ -51,6 +51,7 @@ app.post('/api/insert/',(req,res)=>{
     const alcance_apoyo=req.body.alcance_apoyo
     const contacto =req.body.contacto
     const no_celcontacto=req.body.no_celcontacto
+    
 
     const sqlInsert="INSERT INTO apoyo (apaterno,amaterno,nombres,calle,numero,colonia,cp,ciudad,clave_elector,curp,fecha_nacimiento,seccion,distrito_federal,distrito_local,nivel,no_celular,facebook,twitter,otra_red,descripcion_apoyo,monto_apoyo,alcance_apoyo,contacto,no_celcontacto) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
     db.query(sqlInsert,[apaterno,amaterno,nombres,calle,numero,colonia,cp,ciudad,clave_elector,curp,

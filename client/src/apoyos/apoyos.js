@@ -30,6 +30,7 @@ function Apoyos() {
   const [alcance, setAlcance]=useState('');
   const [contacto, setContacto]=useState('');
   const [celContacto, setCelcontacto]=useState('');
+  const [camera_ine,setCameraIne]=useState('')
 
   const submitReview = () =>{
     Axios.post("http://localhost:3001/api/insert",{
@@ -44,7 +45,7 @@ function Apoyos() {
     console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
       + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel
       + celular + email + facebook + twitter + otra + descrApoyo + tipoApoyo
-      + monto + alcance + contacto + celContacto)
+      + monto + alcance + contacto + celContacto+camera_ine)
   }
 
   return (
@@ -74,7 +75,7 @@ function Apoyos() {
           capture='enviroment'
           name="ine" 
           accept='image/*'
-          enctype="multipart/form-data"
+          encType="multipart/form-data"
           
           required 
           onChange={(event) =>{setApaterno(event.target.value)}} />
