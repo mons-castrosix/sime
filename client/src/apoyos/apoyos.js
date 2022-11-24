@@ -98,6 +98,10 @@ function Apoyos() {
       //console.log(res.data.df)
       document.getElementById("df").value=res.data.df
       document.getElementById("dl").value=res.data.dl
+      console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
+        + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel
+        + celular + email + facebook + twitter + otra + descrApoyo + tipoApoyo
+        + monto + alcance + contacto + celContacto+camera_ine)
       
     });
   }
