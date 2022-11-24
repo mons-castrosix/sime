@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import apoyo from './apoyos.png'
 import Axios from 'axios';
+import './apoyos.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.js'
 
 function Apoyos() {
+  const [file, setFile] = useState();
+  const [fileName, setFileName] = useState("");
   const [aPaterno,setApaterno]= useState('');
   const [aMaterno,setAmaterno]=useState('');
   const [nombres,setNombres]=useState('');
@@ -31,7 +35,47 @@ function Apoyos() {
   const [contacto, setContacto]=useState('');
   const [celContacto, setCelcontacto]=useState('');
   const [camera_ine,setCameraIne]=useState('')
+  const saveFile = (e) => {
+    setFile(e.target.files[0]);
+    setFileName(e.target.files[0].name);
+  };
 
+  const uploadFile = async (e) => {
+    const formData = new FormData();
+    console.log(fileName)
+    console.log(file)
+    formData.append("file", file);
+    formData.append("fileName", fileName);
+    //console.log(formData)
+    
+    try {
+      const res = await Axios.post(
+        "http://localhost:3001/upload",
+        formData
+      );
+      
+      
+      document.getElementById("amaterno").value=res.data.amaterno
+      document.getElementById("apaterno").value=res.data.apaterno
+      document.getElementById("nombre").value=res.data.nombres
+      document.getElementById("calle").value=res.data.calle
+      document.getElementById("colonia").value=res.data.colonia
+      document.getElementById("cpostal").value=res.data.cp
+      document.getElementById("numero").value=res.data.numero
+      document.getElementById("curp").value=res.data.curp
+      var fecha= res.data.fecha_nacimiento
+      fecha = fecha.split("/").reverse().join("-");
+      document.getElementById("fnacimiento").value=fecha
+      document.getElementById("secc").value=res.data.seccion
+      document.getElementById("celectoral").value=res.data.c_elector
+      document.getElementById("ciudad").value=res.data.ciudad
+
+      
+      
+    } catch (ex) {
+      //console.log(ex);
+    }
+  };
   const submitReview = () =>{
     Axios.post("http://localhost:3001/api/insert",{
     apaterno:aPaterno,amaterno:aMaterno,nombres:nombres,calle:calle,numero:numero,colonia:colonia,cp:cp,
@@ -42,10 +86,20 @@ function Apoyos() {
     }).then(() => {
       alert("Registrado");
     });
-    console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
+    //console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
       + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel
       + celular + email + facebook + twitter + otra + descrApoyo + tipoApoyo
       + monto + alcance + contacto + celContacto+camera_ine)
+  }
+  const submitSeccion = () =>{
+    Axios.post("http://localhost:3001/api/distritos",{
+    seccion:seccion
+    }).then((res) => {
+      //console.log(res.data.df)
+      document.getElementById("df").value=res.data.df
+      document.getElementById("dl").value=res.data.dl
+      
+    });
   }
 
   return (
@@ -78,44 +132,44 @@ function Apoyos() {
           encType="multipart/form-data"
           
           required 
-          onChange={(event) =>{setApaterno(event.target.value)}} />
+          onChange={saveFile} />
 
           
           </div>
-          <button onClick={submitReview}  className="btn btn-primary col-lg-2" type="submit">Guardar</button>
+          <div className="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <button  onClick={uploadFile}  className="btn btn-primary btn-sm cargar" type="submit">Cargar Imágen</button>
+
           
-          
-          
-          
-          
+          </div>
+
         </div>
       </div>
       <div className="form-row">
         <div className="row px-1">
           <div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
-          <label htmlFor="apaterno">Apellido Paterno (INE)</label>
+          <label htmlFor="apaterno">Apellido Paterno</label>
           <input 
           type="text" 
           className="form-control" 
-          id="aparterno" 
+          id="apaterno" 
           name="apaterno" 
           placeholder="Apellido Paterno" required 
           onChange={(event) =>{setApaterno(event.target.value)}} />
           </div>
           
           <div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
-          <label htmlFor="amaterno">Apellido Materno (INE)</label>
+          <label htmlFor="amaterno">Apellido Materno</label>
           <input 
           type="text" 
           className="form-control" 
-          id="amarterno" 
+          id="amaterno" 
           name="amaterno" 
           placeholder="Apellido Materno" required 
           onChange={(event) =>{setAmaterno(event.target.value)}}/>
           </div>
           
           <div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
-          <label htmlFor="nombre">Nombre (INE)</label>
+          <label htmlFor="nombre">Nombre(s)</label>
           <input 
           type="text" 
           className="form-control" 
@@ -128,8 +182,8 @@ function Apoyos() {
       </div>
       <div className="form-row">
         <div className="row px-1">
-          <div className="form-group col-lg-2 col-md-2 col-sm-2 col-6">
-          <label htmlFor="calle">Calle (INE)</label>
+          <div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+          <label htmlFor="calle">Calle</label>
           <input 
           type="text" 
           className="form-control" 
@@ -138,8 +192,9 @@ function Apoyos() {
           placeholder="Calle" required 
           onChange={(event) =>{setCalle(event.target.value)}}/>
           </div>
-          <div className="form-group col-lg-2 col-md-2 col-sm-2 col-6">
-          <label htmlFor="numero">No. (INE)</label>
+          
+          <div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+          <label htmlFor="numero">No.</label>
           <input 
           type="text" 
           className="form-control" 
@@ -149,8 +204,8 @@ function Apoyos() {
           onChange={(event) =>{setNumero(event.target.value)}} />
           </div>
           
-          <div className="form-group col-lg-3 col-md-3 col-sm-3 col-6">
-          <label htmlFor="colonia">Colonia (INE)</label>
+          <div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+          <label htmlFor="colonia">Colonia</label>
           <input 
           type="text" 
           className="form-control" 
@@ -159,8 +214,12 @@ function Apoyos() {
           placeholder="Colonia" required 
           onChange={(event) =>{setColonia(event.target.value)}} />
           </div>
-          <div className="form-group col-lg-2 col-md-2 col-sm-2 col-6">
-          <label htmlFor="cpostal">CP (INE)</label>
+        </div>
+      </div>
+      <div className="form-row">
+        <div className="row px-1">
+          <div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+          <label htmlFor="cpostal">CP</label>
           <input 
           type="text" 
           className="form-control" 
@@ -169,8 +228,9 @@ function Apoyos() {
           placeholder="Código Postal" required 
           onChange={(event) =>{setCp(event.target.value)}} />
           </div>
-          <div className="form-group col-lg-3 col-md-4 col-sm-4 col-6">
-          <label htmlFor="colonia">Ciudad(INE) </label>
+          
+          <div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+          <label htmlFor="colonia">Ciudad</label>
           <input 
           type="text" 
           className="form-control" 
@@ -179,13 +239,9 @@ function Apoyos() {
           placeholder="Ciudad" required 
           onChange={(event) =>{setCiudad(event.target.value)}} />
           </div>
-        </div>
-      </div>
-        
-      <div className="form-row">
-        <div className="row px-1">
-          <div className="form-group col-lg-3 col-md-3 col-sm-3 col-6">
-          <label htmlFor="celectoral">Clave Electoral(INE)</label>
+          
+          <div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+          <label htmlFor="celectoral">Clave Electoral</label>
           <input 
           type="text" 
           className="form-control" 
@@ -194,8 +250,14 @@ function Apoyos() {
           placeholder="Clave electoral"  required 
           onChange={(event) =>{setClave(event.target.value)}} />
           </div>
-          <div className="form-group col-lg-3 col-md-3 col-sm-3 col-6">
-          <label htmlFor="curp">CURP (INE)</label>
+        </div>
+      </div>
+      
+        
+      <div className="form-row">
+        <div className="row px-1">
+          <div className="form-group col-lg-4 col-md-4 col-sm-4 col-6">
+          <label htmlFor="curp">CURP</label>
           <input 
           type="text" 
           className="form-control" 
@@ -205,8 +267,8 @@ function Apoyos() {
           onChange={(event) =>{setCurp(event.target.value)}} />
           </div>
           
-          <div className="form-group col-lg-3 col-md-3 col-sm-3 col-6">
-          <label htmlFor="fnacimiento">Fecha de Nacimiento (INE)</label>
+          <div className="form-group col-lg-4 col-md-4 col-sm-4 col-6">
+          <label htmlFor="fnacimiento">Fecha de Nacimiento</label>
           <input 
           type="date" 
           className="form-control" 
@@ -215,7 +277,7 @@ function Apoyos() {
           placeholder="Fecha de Nacimiento" required 
           onChange={(event) =>{setFecha(event.target.value)}}/>
           </div>
-          <div className="form-group col-lg-3 col-md-3 col-sm-3 col-6">
+          <div className="form-group col-lg-4 col-md-4 col-sm-4 col-6">
           <label htmlFor="secc">Sección</label>
           <input 
           type="text" 
@@ -227,10 +289,10 @@ function Apoyos() {
           </div>
         </div>
       </div>
-
+      <hr></hr>
       <div className="form-row">
         <div className="row px-1">
-          <div className="form-group col-lg-4 col-md-6">
+          <div className="form-group col-lg-3 col-md-3">
             <label htmlFor="df">Distrito Federal</label>
             <input 
             type="number" 
@@ -240,8 +302,8 @@ function Apoyos() {
             onChange={(event) =>{setDfederal(event.target.value)}} />
             
           </div>
-          <div className="form-group col-lg-4 col-md-6">
-            <label htmlFor="df">Distrito Local</label>
+          <div className="form-group col-lg-3 col-md-3">
+            <label htmlFor="dl">Distrito Local</label>
             <input 
             type="number" 
             className="form-control" 
@@ -250,7 +312,10 @@ function Apoyos() {
             onChange={(event) =>{setDlocal(event.target.value)}} />
             
           </div>
-          <div className="form-group col-lg-4 col-md-6">
+          <div className="form-group col-lg-3 col-md-3">
+          <button onClick={submitSeccion}  className="btn btn-primary btn-sm distritos" type="submit">Asignar Distritos</button>
+          </div>
+          <div className="form-group col-lg-3 col-md-3">
             <label htmlFor="nivel">Nivel</label>
             <select 
             className="form-control mr-1"  
