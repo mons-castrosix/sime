@@ -50,7 +50,7 @@ function Apoyos() {
     
     try {
       const res = await Axios.post(
-        "http://localhost:3001/upload",
+        "http://54.219.124.66:3001/upload",
         formData
       );
       
@@ -77,7 +77,7 @@ function Apoyos() {
     }
   };
   const submitReview = () =>{
-    Axios.post("http://localhost:3001/api/insert",{
+    Axios.post("http://54.219.124.66:3001/api/insert",{
     apaterno:aPaterno,amaterno:aMaterno,nombres:nombres,calle:calle,numero:numero,colonia:colonia,cp:cp,
     ciudad:ciudad,clave_elector:claveElectoral,curp:curp,fecha_nacimiento:fecha,seccion:seccion,distrito_federal:dfederal,
     distrito_local:dLocal,nivel:nivel,no_celular:celular,facebook:facebook,twitter:twitter,
@@ -92,7 +92,7 @@ function Apoyos() {
       + monto + alcance + contacto + celContacto+camera_ine)*/
   }
   const submitSeccion = () =>{
-    Axios.post("http://localhost:3001/api/distritos",{
+    Axios.post("http://54.219.124.66:3001/api/distritos",{
     seccion:seccion
     }).then((res) => {
       //console.log(res.data.df)
