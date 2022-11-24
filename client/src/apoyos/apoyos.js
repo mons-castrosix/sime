@@ -86,10 +86,10 @@ function Apoyos() {
     }).then(() => {
       alert("Registrado");
     });
-    //console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
+    /*console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
       + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel
       + celular + email + facebook + twitter + otra + descrApoyo + tipoApoyo
-      + monto + alcance + contacto + celContacto+camera_ine)
+      + monto + alcance + contacto + celContacto+camera_ine)*/
   }
   const submitSeccion = () =>{
     Axios.post("http://localhost:3001/api/distritos",{
