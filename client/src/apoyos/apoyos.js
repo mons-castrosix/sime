@@ -37,7 +37,7 @@ function Apoyos() {
   const [list,setList]=useState([])
 
   const getList=()=>{
-    Axios.get("http://54.219.124.66:3001/api/distritos"
+    Axios.get("http://54.219.124.66:3001/api/apoyos"
     /*"http://localhost:3001/apoyos"*/).then((response) =>{
       setList(response.data)
       console.log(response)
@@ -98,6 +98,7 @@ function Apoyos() {
     no_celcontacto:contacto
     }).then(() => {
       console.log("succes")
+      alert("AGREGADO")
     });
     /*console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
       + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel
