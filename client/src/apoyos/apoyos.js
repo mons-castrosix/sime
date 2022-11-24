@@ -34,7 +34,15 @@ function Apoyos() {
   const [alcance, setAlcance]=useState('');
   const [contacto, setContacto]=useState('');
   const [celContacto, setCelcontacto]=useState('');
-  const [camera_ine,setCameraIne]=useState('')
+  const [list,setList]=useState([])
+
+  const getList=()=>{
+    Axios.get("http://54.219.124.66:3001/api/distritos"
+    /*"http://localhost:3001/apoyos"*/).then((response) =>{
+      setList(response.data)
+      console.log(response)
+    });
+  }
   const saveFile = (e) => {
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
@@ -51,24 +59,25 @@ function Apoyos() {
     try {
       const res = await Axios.post(
         "http://54.219.124.66:3001/upload",
+        //"http://localhost:3001/upload",
         formData
       );
       
       
-      document.getElementById("amaterno").value=res.data.amaterno
-      document.getElementById("apaterno").value=res.data.apaterno
-      document.getElementById("nombre").value=res.data.nombres
-      document.getElementById("calle").value=res.data.calle
-      document.getElementById("colonia").value=res.data.colonia
-      document.getElementById("cpostal").value=res.data.cp
-      document.getElementById("numero").value=res.data.numero
-      document.getElementById("curp").value=res.data.curp
+      document.getElementById("amaterno").setAttribute('value',res.data.amaterno)
+      document.getElementById("apaterno").setAttribute('value',res.data.apaterno)
+      document.getElementById("nombre").setAttribute('value',res.data.nombres)
+      document.getElementById("calle").setAttribute('value',res.data.calle)
+      document.getElementById("colonia").setAttribute('value',res.data.colonia)
+      document.getElementById("cpostal").setAttribute('value',res.data.cp)
+      document.getElementById("numero").setAttribute('value',res.data.numero)
+      document.getElementById("curp").setAttribute('value',res.data.curp)
       var fecha= res.data.fecha_nacimiento
       fecha = fecha.split("/").reverse().join("-");
-      document.getElementById("fnacimiento").value=fecha
-      document.getElementById("secc").value=res.data.seccion
-      document.getElementById("celectoral").value=res.data.c_elector
-      document.getElementById("ciudad").value=res.data.ciudad
+      document.getElementById("fnacimiento").setAttribute('value',fecha)
+      document.getElementById("secc").setAttribute('value',res.data.seccion)
+      document.getElementById("celectoral").setAttribute('value',res.data.c_elector)
+      document.getElementById("ciudad").setAttribute('value',res.data.ciudad)
 
       
       
@@ -77,14 +86,18 @@ function Apoyos() {
     }
   };
   const submitReview = () =>{
-    Axios.post("http://54.219.124.66:3001/api/insert",{
-    apaterno:aPaterno,amaterno:aMaterno,nombres:nombres,calle:calle,numero:numero,colonia:colonia,cp:cp,
-    ciudad:ciudad,clave_elector:claveElectoral,curp:curp,fecha_nacimiento:fecha,seccion:seccion,distrito_federal:dfederal,
-    distrito_local:dLocal,nivel:nivel,no_celular:celular,facebook:facebook,twitter:twitter,
+    
+
+    Axios.post("http://54.219.124.66:3001/api/insert",
+    //"http://localhost:3001/api/insert",
+    {
+    apaterno:document.getElementById("apaterno").value,amaterno:document.getElementById("amaterno").value,nombres:document.getElementById("nombre").value,calle:document.getElementById("calle").value,numero:document.getElementById("numero").value,colonia:document.getElementById("colonia").value,cp:document.getElementById("cpostal").value,
+    ciudad:document.getElementById("ciudad").value,clave_elector:document.getElementById("celectoral").value,curp:document.getElementById("curp").value,fecha_nacimiento:document.getElementById("fnacimiento").value,seccion:document.getElementById("secc").value,distrito_federal:document.getElementById("df").value,
+    distrito_local:document.getElementById("dl").value,nivel:nivel,no_celular:celular,facebook:facebook,twitter:twitter,
     otra_red:otra,descripcion_apoyo:descrApoyo,monto_apoyo:monto,alcance_apoyo:alcance,contacto:contacto,
     no_celcontacto:contacto
     }).then(() => {
-      alert("Registrado");
+      console.log("succes")
     });
     /*console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
       + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel
@@ -92,16 +105,17 @@ function Apoyos() {
       + monto + alcance + contacto + celContacto+camera_ine)*/
   }
   const submitSeccion = () =>{
-    Axios.post("http://54.219.124.66:3001/api/distritos",{
-    seccion:seccion
+    
+    
+    Axios.post("http://54.219.124.66:3001/api/distritos",
+    //"http://localhost:3001/api/distritos",{
+    seccion:document.getElementById("secc").value
     }).then((res) => {
-      //console.log(res.data.df)
+
+      console.log(res.data.df)
       document.getElementById("df").value=res.data.df
       document.getElementById("dl").value=res.data.dl
-      console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
-        + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel
-        + celular + email + facebook + twitter + otra + descrApoyo + tipoApoyo
-        + monto + alcance + contacto + celContacto+camera_ine)
+      console.log(seccion)
       
     });
   }
@@ -119,7 +133,6 @@ function Apoyos() {
   
 
   <div className="card">
-    
     <div className="card-body">
      
     <div className="form-row">
@@ -289,7 +302,7 @@ function Apoyos() {
           id="secc" 
           name="secc" 
           placeholder="Sección" required 
-          onInput ={(event) =>{setSeccion(event.target.value)}}/>
+          onChange={(event) =>{setSeccion(event.target.value)}}/>
           </div>
         </div>
       </div>
@@ -522,8 +535,29 @@ function Apoyos() {
       
       
     </div>
-    
   </div>
+    <div className='apoyos'>
+      <button onClick={getList}>Ver apoyos</button>
+      {list.map((val,key)=>{
+          return <div className='apoyo'>
+          <h3>{val.apaterno}</h3>
+          <h3>{val.amaterno}</h3>
+          <h3>{val.nombres}</h3>
+          <h3>{val.calle}</h3>
+          <h3>{val.colonia}</h3>
+          <h3>{val.cp}</h3>
+          <h3>{val.ciudad}</h3>
+          <h3>{val.clave_elector}</h3>
+          <h3>{val.curp}</h3>
+          <h3>{val.fecha_nacimiento}</h3>
+          <h3>{val.seccion}</h3>
+          <h3>{val.distrito_federal}</h3>
+          <h3>{val.distrito_local}</h3>
+          
+          
+          </div>
+      })}
+    </div>
     </div>
   );
 }

@@ -1,3 +1,23 @@
 .cargar,.distritos{
     margin-top: 25px;
 }
+.apoyos{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+}
+
+.apoyo{
+width: 1200px;
+height: auto;
+background-color: lightgray;
+border: 1px solid black;
+margin: 10px;
+display: flex;
+padding: 10px;
+}
+.apoyo h3{
+    margin: 10px;
+    font-size: 12px;
+}

@@ -5,11 +5,17 @@ const bodyParser= require('body-parser')
 const cors =require('cors')
 const vision= require('@google-cloud/vision')
 const mysql= require('mysql')
-const db= mysql.createConnection({
+/*const db= mysql.createConnection({
     user:'root',
     host:'localhost',
     password:'sime123',
     database:'sime'
+})*/
+const db= mysql.createConnection({
+  user:'root',
+  host:'localhost',
+  password:'',
+  database:'sime'
 })
 
 const credential= JSON.parse(JSON.stringify({
@@ -244,6 +250,7 @@ app.post('/api/distritos/',(req,res)=>{
   const seccion= req.body.seccion
   console.log(seccion)
   const sqlInsert="SELECT df,dl FROM secc_distrito WHERE secc ="+seccion+" ;"
+  console.log(sqlInsert)
   db.query(sqlInsert,(err,result) =>{
         res.send(result[0])
         console.log(result[0].dl)
@@ -284,9 +291,25 @@ app.post('/api/insert/',(req,res)=>{
         fecha_nacimiento,seccion,distrito_federal,distrito_local,nivel,no_celular,facebook,twitter,
         otra_red,descripcion_apoyo,monto_apoyo,alcance_apoyo, contacto,no_celcontacto],(err,result) =>{
           
-          console.log(err)
+          if(err){
+            console.log(err);
+          }
+          else{
+            res.send("Values Inserted");
+          }
         });
 });
+
+app.get('/apoyos',(req,res) =>{
+    db.query("SELECT *FROM apoyo",(err,result)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            res.send(result)
+        }
+    })
+})
 app.listen(3001,()=>{
     console.log('Your server is running')
 });
