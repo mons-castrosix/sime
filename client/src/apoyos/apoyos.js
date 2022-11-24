@@ -205,7 +205,7 @@ function Apoyos() {
           id="numero" 
           name="numero" 
           placeholder="Número" required 
-          onChange={(event) =>{setNumero(event.target.value)}} />
+          onChange ={(event) =>{setNumero(event.target.value)}} />
           </div>
           
           <div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
@@ -289,7 +289,7 @@ function Apoyos() {
           id="secc" 
           name="secc" 
           placeholder="Sección" required 
-          onChange={(event) =>{setSeccion(event.target.value)}}/>
+          onInput ={(event) =>{setSeccion(event.target.value)}}/>
           </div>
         </div>
       </div>
