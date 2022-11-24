@@ -107,8 +107,8 @@ function Apoyos() {
   const submitSeccion = () =>{
     
     
-    Axios.post("http://54.219.124.66:3001/api/distritos",
-    //"http://localhost:3001/api/distritos",{
+    Axios.post("http://54.219.124.66:3001/api/distritos"
+    /*"http://localhost:3001/api/distritos",*/,{
     seccion:document.getElementById("secc").value
     }).then((res) => {
 
