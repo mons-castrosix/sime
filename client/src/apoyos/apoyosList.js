@@ -64,7 +64,7 @@ function ApoyosList(){
                                     <div className="search">
                                         <div className="input">
                                             
-                                            <Link to='/apoyos/add-apoyo' className="btn btn-block" type="submit"><i class="fa-solid fa-plus pl"></i>Nuevo</Link>
+                                            <Link to='/apoyos/add-apoyo' className="btn btn-block" type="submit"><i className="fa-solid fa-plus pl"></i>Nuevo</Link>
                                         </div>
                                     </div>
                                 </div>
