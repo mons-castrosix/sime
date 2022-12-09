@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import apoyo from './apoyos.png'
+import tipoD from './example-D.png'
+import tipoG from './example-G.png'
 import Axios from 'axios';
 import './apoyos.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -34,21 +36,15 @@ function Apoyos() {
   const [alcance, setAlcance]=useState('');
   const [contacto, setContacto]=useState('');
   const [celContacto, setCelcontacto]=useState('');
-  const [list,setList]=useState([])
-
-  const getList=()=>{
-    Axios.get("http://54.219.124.66:3001/apoyos"
-    /*"http://localhost:3001/apoyos"*/).then((response) =>{
-      setList(response.data)
-      console.log(response)
-    });
-  }
+  
+  const [selectedImage, setSelectedImage] = useState();
+ 
   const saveFile = (e) => {
     setFile(e.target.files[0]);
     setFileName(e.target.files[0].name);
   };
 
-  const uploadFile = async (e) => {
+  const uploadFile1 = async (e) => {
     const formData = new FormData();
     console.log(fileName)
     console.log(file)
@@ -58,8 +54,8 @@ function Apoyos() {
     
     try {
       const res = await Axios.post(
-        "http://54.219.124.66:3001/upload",
-        //"http://localhost:3001/upload",
+        //"http://54.219.124.66:3001/upload",
+        "http://localhost:3001/uploadD",
         formData
       );
       
@@ -85,11 +81,12 @@ function Apoyos() {
       //console.log(ex);
     }
   };
+  
   const submitReview = () =>{
     
 
-    Axios.post("http://54.219.124.66:3001/api/insert",
-    //"http://localhost:3001/api/insert",
+    Axios.post(//"http://54.219.124.66:3001/api/insert",
+    "http://localhost:3001/api/insert",
     {
     apaterno:document.getElementById("apaterno").value,amaterno:document.getElementById("amaterno").value,nombres:document.getElementById("nombre").value,calle:document.getElementById("calle").value,numero:document.getElementById("numero").value,colonia:document.getElementById("colonia").value,cp:document.getElementById("cpostal").value,
     ciudad:document.getElementById("ciudad").value,clave_elector:document.getElementById("celectoral").value,curp:document.getElementById("curp").value,fecha_nacimiento:document.getElementById("fnacimiento").value,seccion:document.getElementById("secc").value,distrito_federal:document.getElementById("df").value,
@@ -108,8 +105,8 @@ function Apoyos() {
   const submitSeccion = () =>{
     
     
-    Axios.post("http://54.219.124.66:3001/api/distritos"
-    /*"http://localhost:3001/api/distritos",*/,{
+    Axios.post(//"http://54.219.124.66:3001/api/distritos"
+    "http://localhost:3001/api/distritos",{
     seccion:document.getElementById("secc").value
     }).then((res) => {
 
@@ -120,6 +117,12 @@ function Apoyos() {
       
     });
   }
+ 
+
+  // This function will be triggered when the "Remove This Image" button is clicked
+  const removeSelectedImage = () => {
+    setFile();
+  };
 
   return (
     <div className="container">
@@ -136,32 +139,54 @@ function Apoyos() {
   <div className="card">
     <div className="card-body">
      
-    <div className="form-row">
-        <div className="row px-1">
-          <div className="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
-          <label htmlFor="ine">Cargar INE</label>
-          <input 
-          type="file" 
-          className="form-control" 
-          id="ine" 
-          capture='enviroment'
-          name="ine" 
-          accept='image/*'
-          encType="multipart/form-data"
-          
-          required 
-          onChange={saveFile} />
+      <div className="form-row">
 
+        <div className="row px-1">
+          
+         
+          
+          <div className="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <div className="form-row">
+              <label htmlFor="ine">Cargar INE</label>
+                        <input 
+                        type="file" 
+                        className="form-control" 
+                        id="ine" 
+                        capture='enviroment'
+                        name="ine" 
+                        accept='image/*'
+                        encType="multipart/form-data"
+                        
+                        required 
+                        onChange={saveFile} /> <br></br>
+                        <button  onClick={uploadFile1}  className="btn btn-dark btn-md cargar" type="submit">Cargar</button>
+           
+            </div>
+            
+         
           
           </div>
           <div className="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
-          <button  onClick={uploadFile}  className="btn btn-primary btn-sm cargar" type="submit">Cargar Imágen</button>
+          
+          {file && (
+          <div className='preview' >
+            <img
+              src={URL.createObjectURL(file)}
+              
+              alt="Thumb"
+            />
+            <button className='delete' onClick={removeSelectedImage} >
+              Ocultar Imagen
+            </button>
+          </div>
+          )}
 
           
           </div>
 
         </div>
       </div>
+      <hr></hr>
       <div className="form-row">
         <div className="row px-1">
           <div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
@@ -537,28 +562,7 @@ function Apoyos() {
       
     </div>
   </div>
-    <div className='apoyos'>
-      <button onClick={getList}>Ver apoyos</button>
-      {list.map((val,key)=>{
-          return <div className='apoyo'>
-          <h3>{val.apaterno}</h3>
-          <h3>{val.amaterno}</h3>
-          <h3>{val.nombres}</h3>
-          <h3>{val.calle}</h3>
-          <h3>{val.colonia}</h3>
-          <h3>{val.cp}</h3>
-          <h3>{val.ciudad}</h3>
-          <h3>{val.clave_elector}</h3>
-          <h3>{val.curp}</h3>
-          <h3>{val.fecha_nacimiento}</h3>
-          <h3>{val.seccion}</h3>
-          <h3>{val.distrito_federal}</h3>
-          <h3>{val.distrito_local}</h3>
-          
-          
-          </div>
-      })}
-    </div>
+    
     </div>
   );
 }

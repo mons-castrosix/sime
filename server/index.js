@@ -5,20 +5,22 @@ const bodyParser= require('body-parser')
 const cors =require('cors')
 const vision= require('@google-cloud/vision')
 const mysql= require('mysql')
+/*
 const db= mysql.createConnection({
     user:'root',
     host:'localhost',
     password:'sime123',
     database:'sime'
 })
-/*
+*/
+
 const db= mysql.createConnection({
   user:'root',
   host:'localhost',
   password:'',
   database:'sime'
 })
-*/
+
 
 const credential= JSON.parse(JSON.stringify({
     "type": "service_account",
@@ -42,144 +44,289 @@ const config = {
 
 
 const client= new vision.ImageAnnotatorClient(config);
-const detectText= async (file_path)=>{
-  let obj={}
-  let [result] = await client.documentTextDetection(file_path);
-  const full= result.fullTextAnnotation;
-  console.log(full)
-  var cleanText= full.text;
-  
-  
-  var x= cleanText.split(" ")
-  var y= cleanText.split("\n")
-  
-  
-  const msg = new String(y);
-  console.log(`Result: ${msg}`);
+const detectTextD= async (file_path)=>{
+    let obj={}
+    let [result] = await client.documentTextDetection(file_path);
+    const full= result.fullTextAnnotation;
+    //console.log(full)
+    var cleanText= full.text;
+    
+    var x= cleanText.split(" ")
+    var y= cleanText.split("\n")
+    
+    
+    const msg = new String(y);
+    console.log(`Result: ${msg}`);
 
-  let arr= msg.split(",")
-  console.log(arr);
-  
+    let arr= msg.split(",")
+    console.log(arr);
+    
 
-  
-  nombre= arr.indexOf('NOMBRE')
-  console.log(nombre)
-  console.log('DATOS NOMBRE:')
-  
-  for (i=nombre+1;i<nombre+4; i++){
-      
-      if(i == nombre+1){
-          obj['apaterno']=arr[i]
-          console.log(arr[i])
-      }
-      else if (i == nombre+2){
-          obj['amaterno']=arr[i]
-          console.log(arr[i])
-      }
-      else if (i == nombre+3){
-          obj['nombres']=arr[i]
-          console.log(arr[i])
-      }
-  }
-  
-  console.log("\n")
-  
-  domicilio= arr.indexOf('DOMICILIO')
-  console.log('DATOS DOMICILIO:')
-  //console.log(domicilio)
+    
+    nombre= arr.indexOf('NOMBRE')
+    console.log(nombre)
+    console.log('DATOS NOMBRE:')
+    
+    for (i=nombre+1;i<nombre+4; i++){
+        
+        if(i == nombre+1){
+            obj['apaterno']=arr[i]
+            console.log(arr[i])
+        }
+        else if (i == nombre+2){
+            obj['amaterno']=arr[i]
+            console.log(arr[i])
+        }
+        else if (i == nombre+3){
+            obj['nombres']=arr[i]
+            console.log(arr[i])
+        }
+    }
+    
+    console.log("\n")
+    
+    domicilio= arr.indexOf('DOMICILIO')
+    console.log('DATOS DOMICILIO:')
+    //console.log(domicilio)
 
-  for (i=domicilio+1;i<domicilio+4; i++){
-      if(i == domicilio+1){
-          let num=""
-          var x= arr[i].split(" ");
-          console.log(x)
-          for (k=1;k<x.length-1;k++){
-              num+=x[k]+""
-          }
+    for (i=domicilio+1;i<domicilio+4; i++){
+        if(i == domicilio+1){
+            let num=""
+            var x= arr[i].split(" ");
+            console.log(x)
+            for (k=1;k<x.length-1;k++){
+                num+=x[k]+" "
+            }
 
-          obj['calle']=num
-          obj['numero']=x[x.length-1]
-          console.log(arr[i])
-      }
-      else if(i == domicilio+2){
-          let b=""
-          var a= arr[i].split(" ")
-          console.log(a)
-          
-          for (j=1;j<a.length-1;j++){
-              //console.log(a[j])
-              b+=a[j]+" "
-          }
-          obj['colonia']=b
-          obj['cp']=a[a.length-1]
-          
-      }
-      else if(i== domicilio+3){
-          obj['ciudad']=arr[i]
-          console.log(arr[i])
-      }
-      
-      
-  }
-  console.log("\n")
-
+            obj['calle']=num
+            obj['numero']=x[x.length-1]
+            console.log(arr[i])
+        }
+        else if(i == domicilio+2){
+            let b=""
+            var a= arr[i].split(" ")
+            console.log(a)
+            
+            for (j=1;j<a.length-1;j++){
+                //console.log(a[j])
+                b+=a[j]+" "
+            }
+            obj['colonia']=b
+            obj['cp']=a[a.length-1]
+            
+        }
+        else if(i== domicilio+3){
+            obj['ciudad']=arr[i]
+            console.log(arr[i])
+        }
+        
+        
+    }
+    console.log("\n")
 
 
-  console.log('CLAVE DE ELECTOR:')
-  for (i=0;i<arr.length;i++){
-      //console.log('Renglon'+i+" "+arr[i])
-      var a= arr[i].split(" ")
-      if(a.includes('ELECTOR')){
-          console.log(a[3]);
-          obj['c_elector']=a[3]
-      }
-  }
-  
-  console.log("\n")
-  console.log('CURP:')
-  for (i=0;i<arr.length;i++){
-      //console.log('Renglon'+i+" "+arr[i])
-      var a= arr[i].split(" ")
-      if(a.includes('CURP')){
-          console.log(a[1]);
-          obj['curp']=a[1]
-      }
-  }
-  console.log("\n")
+
+    console.log('CLAVE DE ELECTOR:')
+    for (i=0;i<arr.length;i++){
+        //console.log('Renglon'+i+" "+arr[i])
+        var a= arr[i].split(" ")
+       
+        if(a.includes('ELECTOR')){
+            console.log(a)
+            console.log(a[3]);
+            obj['c_elector']=a[3]
+        }
+    }
+    
+    console.log("\n")
+    console.log('CURP:')
+    for (i=0;i<arr.length;i++){
+        //console.log('Renglon'+i+" "+arr[i])
+        var a= arr[i].split(" ")
+        if(a.includes('CURP')){
+            console.log(a[1]);
+            obj['curp']=a[1]
+        }
+    }
+
+    if(obj['curp'] == undefined){
+        curp= arr.indexOf('CURP')
+        console.log(arr[curp+1])
+        obj['curp']=arr[curp+1]
+    }
+    console.log("\n")
 
 
-  console.log('FECHA DE NACIMIENTO:')
-  fecha= arr.indexOf('FECHA DE NACIMIENTO')
-  console.log(fecha)
-  for (i=fecha+1;i<fecha+2; i++){
-      
-      console.log(arr[i])
-      obj['fecha_nacimiento']=arr[i]
-  }
-  console.log("\n")
+    console.log('FECHA DE NACIMIENTO:')
+    fecha= arr.indexOf('FECHA DE NACIMIENTO')
+    console.log(fecha)
+    for (i=fecha+1;i<fecha+2; i++){
+        
+        console.log(arr[i])
+        obj['fecha_nacimiento']=arr[i]
+    }
+    console.log("\n")
 
-  console.log('SECCION:')
-  for (i=0;i<arr.length;i++){
-      //console.log('Renglon'+i+" "+arr[i])
-      var a= arr[i].split(" ")
-      if(a.includes('SECCIÓN')){
-          console.log(a[3]);
-          obj['seccion']=a[3]
-      }
-  }
-  console.log(obj)
-  return obj;
+    console.log('SECCION:')
+    for (i=0;i<arr.length;i++){
+        //console.log('Renglon'+i+" "+arr[i])
+        var a= arr[i].split(" ")
+        if(a.includes('SECCIÓN')){
+            console.log(a[3]);
+            obj['seccion']=a[3]
+        }
+    }
+    if(obj['seccion'] == undefined){
+        
+        secc= arr.indexOf('SECCIÓN')
+        console.log(arr[secc+1])
+        obj['seccion']=arr[secc+1]
+    }
+    console.log(obj)
+    return obj;
 
-  /*
-  for (i=0;i<arr.length;i++){
-      console.log('Renglon'+i+" "+arr[i])
-      var a= arr[i].split(" ")
-      if(a.includes('CURP')){
-          console.log(a);
-      }
-  }
-  */
-      
+    /*
+    for (i=0;i<arr.length;i++){
+        console.log('Renglon'+i+" "+arr[i])
+        var a= arr[i].split(" ")
+        if(a.includes('CURP')){
+            console.log(a);
+        }
+    }
+    */
+        
+};
+const detectTextG= async (file_path)=>{
+    let obj={}
+    let [result] = await client.documentTextDetection(file_path);
+    const full= result.fullTextAnnotation;
+    //console.log(full)
+    var cleanText= full.text;
+    
+    var x= cleanText.split(" ")
+    var y= cleanText.split("\n")
+    
+    
+    const msg = new String(y);
+    console.log(`Result: ${msg}`);
+
+    let arr= msg.split(",")
+    console.log(arr);
+    
+
+    
+    nombre= arr.indexOf('NOMBRE')
+    console.log(nombre)
+    console.log('DATOS NOMBRE:')
+    
+    for (i=nombre+1;i<nombre+4; i++){
+        
+        if(i == nombre+1){
+            obj['apaterno']=arr[i]
+            console.log(arr[i])
+        }
+        else if (i == nombre+2){
+            obj['amaterno']=arr[i]
+            console.log(arr[i])
+        }
+        else if (i == nombre+3){
+            obj['nombres']=arr[i]
+            console.log(arr[i])
+        }
+    }
+    
+    console.log("\n")
+    
+    domicilio= arr.indexOf('DOMICILIO')
+    console.log('DATOS DOMICILIO:')
+    //console.log(domicilio)
+
+    for (i=domicilio+1;i<domicilio+4; i++){
+        if(i == domicilio+1){
+            let num=""
+            var x= arr[i].split(" ");
+            console.log(x)
+            for (k=1;k<x.length-1;k++){
+                num+=x[k]+" "
+
+                
+            }
+            console.log(num)
+            obj['calle']=num
+            obj['numero']=x[x.length-1]
+            //console.log(arr[i])
+        }
+        else if(i == domicilio+2){
+            let b=""
+            var a= arr[i].split(" ")
+            console.log(a)
+            
+            for (j=1;j<a.length-1;j++){
+                //console.log(a[j])
+                b+=a[j]+" "
+            }
+            obj['colonia']=b
+            obj['cp']=a[a.length-1]
+            
+        }
+        else if(i== domicilio+3){
+            obj['ciudad']=arr[i]
+            console.log(arr[i])
+        }
+        
+        
+    }
+    console.log("\n")
+
+
+
+    console.log('CLAVE DE ELECTOR:')
+    for (i=0;i<arr.length;i++){
+        //console.log('Renglon'+i+" "+arr[i])
+        var a= arr[i].split(" ")
+       
+        if(a.includes('ELECTOR')){
+            console.log(a[3]);
+
+            obj['c_elector']=a[3]
+        }
+    }
+    console.log()
+    console.log("\n")
+    console.log('CURP:')
+    curp= arr.indexOf('CURP')
+    console.log(arr[curp+1])
+    obj['curp']=arr[curp+1]
+    console.log("\n")
+
+
+    console.log('FECHA DE NACIMIENTO:')
+    fecha= arr.indexOf('FECHA DE NACIMIENTO')
+    console.log(fecha)
+    for (i=fecha+1;i<fecha+2; i++){
+        
+        console.log(arr[i])
+        obj['fecha_nacimiento']=arr[i]
+    }
+    console.log("\n")
+
+    console.log('SECCION:')
+    secc= arr.indexOf('SECCIÓN')
+    console.log(arr[secc+1])
+    obj['seccion']=arr[secc+1]
+    console.log(obj)
+    return obj;
+
+    /*
+    for (i=0;i<arr.length;i++){
+        console.log('Renglon'+i+" "+arr[i])
+        var a= arr[i].split(" ")
+        if(a.includes('CURP')){
+            console.log(a);
+        }
+    }
+    */
+        
 };
 
 //console.log(client)
@@ -213,7 +360,7 @@ const upload = multer({
 
 //@type   POST
 //route for post data
-app.post("/upload", upload.single('file'), (req, res) => {
+app.post("/uploadD", upload.single('file'), (req, res) => {
   if (!req.file) {
       console.log("No file upload");
   } else {
@@ -235,7 +382,7 @@ app.post("/upload", upload.single('file'), (req, res) => {
           ruta='./images/'+result[0].ruta
           console.log(ruta)
           const data='';
-          detectText(ruta).then( (x) =>
+          detectTextD(ruta).then( (x) =>
             res.send(JSON.stringify(x))
             
           )
@@ -248,6 +395,7 @@ app.post("/upload", upload.single('file'), (req, res) => {
 
   }
 });
+
 app.post('/api/distritos/',(req,res)=>{
   const seccion= req.body.seccion
   console.log(seccion)

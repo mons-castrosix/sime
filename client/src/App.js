@@ -1,16 +1,28 @@
 import React from 'react';
-import Header from './header';
+import Header from './header/header';
 import Apoyos from './apoyos/apoyos';
-
+import ApoyosList from './apoyos/apoyosList';
+import { BrowserRouter, NavLink, Routes, Route,Switch } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 function App() {
   return (
-    <React.Fragment>
-    <Header></Header>
-    <Apoyos></Apoyos>
+    <BrowserRouter> 
+      <Header></Header>
+      <Routes>
+            <Route path='/apoyos' element={<ApoyosList/>} />
+            <Route path='/apoyos/add-apoyo' element={<Apoyos/>} />
+      </Routes>
+    </BrowserRouter> 
+    
+    
+    
+    
+    
+    
+    
       
-    </React.Fragment>
+    
     
   );
 }

@@ -1,28 +1,26 @@
 import React from 'react';
-
+import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.js'
 import './header.css'
+import Apoyos from '../apoyos/apoyos';
 
 function Header(){
     return(
-        
-        
+          
         <div className='header'>
-       
             <link rel="preconnect" href="https://fonts.googleapis.com"/>
             <link rel="preconnect" href="https://fonts.gstatic.com" />
             <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700&display=swap" rel="stylesheet"/>
-        
-          
+            <link href="lib/animate/animate.min.css" rel="stylesheet"/>
+            <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"></link>
             <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet"/>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet"/>
         
         
-            <link href="lib/animate/animate.min.css" rel="stylesheet"/>
-            <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet"></link>
-                
             
+             
+        
         <nav className="navbar navbar-expand-lg sticky-top p-0 px-4 px-lg-5">
             <a href='!#' className="navbar-brand d-flex align-items-center">
                 <h2 className="m-0 nombrepartido"><img className="img-fluid me-2"  alt="" />Sistema Territorial</h2>
@@ -32,7 +30,7 @@ function Header(){
             </button>
             <div className="collapse navbar-collapse" id="navbarCollapse">
                 <div className="navbar-nav ms-auto py-4 py-lg-0">
-                    <a href='!#'  className="nav-item nav-link active">Modulo 1</a>
+                    <NavLink to='/apoyos'  className="nav-item nav-link active">Apoyos</NavLink>
                     <a href='!#' className="nav-item nav-link">Modulo 2</a>
                     <a href='!#' className="nav-item nav-link">Modulo 3</a>
                     <a href='!#' className="nav-item nav-link">Modulo 4</a>
@@ -50,9 +48,13 @@ function Header(){
                 
             </div>
         </nav>
+       
         
-    
+        
+        
         </div>
+       
+        
     );
 }
 
