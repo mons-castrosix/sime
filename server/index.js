@@ -5,21 +5,21 @@ const bodyParser= require('body-parser')
 const cors =require('cors')
 const vision= require('@google-cloud/vision')
 const mysql= require('mysql')
-/*
+
 const db= mysql.createConnection({
     user:'root',
     host:'localhost',
     password:'sime123',
     database:'sime'
 })
-*/
 
+/*
 const db= mysql.createConnection({
   user:'root',
   host:'localhost',
   password:'',
   database:'sime'
-})
+})*/
 
 
 const credential= JSON.parse(JSON.stringify({
