@@ -54,8 +54,8 @@ function Apoyos() {
     
     try {
       const res = await Axios.post(
-        //"http://54.219.124.66:3001/upload",
-        "http://localhost:3001/uploadD",
+        "http://54.219.124.66:3001/upload",
+        //"http://localhost:3001/uploadD",
         formData
       );
       
@@ -85,8 +85,8 @@ function Apoyos() {
   const submitReview = () =>{
     
 
-    Axios.post(//"http://54.219.124.66:3001/api/insert",
-    "http://localhost:3001/api/insert",
+    Axios.post("http://54.219.124.66:3001/api/insert",
+    //"http://localhost:3001/api/insert",
     {
     apaterno:document.getElementById("apaterno").value,amaterno:document.getElementById("amaterno").value,nombres:document.getElementById("nombre").value,calle:document.getElementById("calle").value,numero:document.getElementById("numero").value,colonia:document.getElementById("colonia").value,cp:document.getElementById("cpostal").value,
     ciudad:document.getElementById("ciudad").value,clave_elector:document.getElementById("celectoral").value,curp:document.getElementById("curp").value,fecha_nacimiento:document.getElementById("fnacimiento").value,seccion:document.getElementById("secc").value,distrito_federal:document.getElementById("df").value,
@@ -105,8 +105,8 @@ function Apoyos() {
   const submitSeccion = () =>{
     
     
-    Axios.post(//"http://54.219.124.66:3001/api/distritos"
-    "http://localhost:3001/api/distritos",{
+    Axios.post(//"http://54.219.124.66:3001/api/distritos""http://localhost:3001/api/distritos"
+    "http://54.219.124.66:3001/api/distritos",{
     seccion:document.getElementById("secc").value
     }).then((res) => {
 
