@@ -6,7 +6,7 @@ const cors =require('cors')
 const vision= require('@google-cloud/vision')
 const mysql= require('mysql')
 
-const maps= require("@googlemaps/google-maps-services-js");
+
 /*
 const db= mysql.createConnection({
     user:'root',
@@ -44,7 +44,6 @@ const config = {
     }
 };
 
-const clientMaps= new maps.Client(config)
 const client= new vision.ImageAnnotatorClient(config);
 const detectTextD= async (file_path)=>{
     let obj={}
