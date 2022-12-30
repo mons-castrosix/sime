@@ -6,20 +6,22 @@ const cors =require('cors')
 const vision= require('@google-cloud/vision')
 const mysql= require('mysql')
 
+const maps= require("@googlemaps/google-maps-services-js");
+/*
 const db= mysql.createConnection({
     user:'root',
     host:'localhost',
     password:'sime123',
     database:'sime'
 })
+*/
 
-/*
 const db= mysql.createConnection({
   user:'root',
   host:'localhost',
   password:'',
   database:'sime'
-})*/
+})
 
 
 const credential= JSON.parse(JSON.stringify({
@@ -42,7 +44,7 @@ const config = {
     }
 };
 
-
+const clientMaps= new maps.Client(config)
 const client= new vision.ImageAnnotatorClient(config);
 const detectTextD= async (file_path)=>{
     let obj={}
@@ -460,6 +462,7 @@ app.get('/apoyos',(req,res) =>{
         }
     })
 })
+
 app.listen(3001,()=>{
     console.log('Your server is running')
 });

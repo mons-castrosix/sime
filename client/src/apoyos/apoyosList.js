@@ -8,8 +8,8 @@ function ApoyosList(){
    
     const [list,setList]=useState([])
     const getList=()=>{
-        Axios.get(//"http://localhost:3001/apoyos"
-        "http://54.219.124.66:3001/apoyos"
+        Axios.get("http://localhost:3001/apoyos"
+        //"http://54.219.124.66:3001/apoyos"
         ).then((response) =>{
           setList(response.data)
           console.log(response)
