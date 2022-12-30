@@ -3,8 +3,7 @@ import { GoogleMap, KmlLayer, LoadScript, Marker,Polyline,Rectangle } from '@rea
 import config from './config.json';
 
 const mapContainerStyle = {
-  height: "400px",
-  width: "800px"
+  width: '100vw', height: '100vh'
 };
 
 const center = {
