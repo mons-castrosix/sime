@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './header/header';
 import Apoyos from './apoyos/apoyos';
 import ApoyosList from './apoyos/apoyosList';
-import Example from './maps/example';
+import Map from './maps/example';
 import { BrowserRouter, NavLink, Routes, Route,Switch } from 'react-router-dom';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -17,7 +17,7 @@ function App() {
                 <Route path='/apoyos/add-apoyo' element={<Apoyos/>} />
           </Routes>
         </BrowserRouter> 
-        <Example></Example>
+        <Map></Map>
         
         
         
