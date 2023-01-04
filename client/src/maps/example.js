@@ -1,11 +1,25 @@
-import React, { Component } from 'react';
-import { GoogleMap, KmlLayer, LoadScript, Marker,Polyline,Rectangle } from '@react-google-maps/api';
+import React from 'react';
+import { GoogleMap, KmlLayer, LoadScript, InfoWindowF,Marker,Polyline,Rectangle } from '@react-google-maps/api';
 import config from './config.json';
 
 const mapContainerStyle = {
-  width: '100vw', height: '100vh'
+  width: '98vw', height: '98vh'
 };
+const option = {
 
+  mapTypeControl: true,
+  scaleControl: true,
+  streetViewControl: true,
+  fullscreenControl: true,
+  clickableIcons: true,
+  streetViewPanorama:true,
+};
+const optionMap={
+  clickable:true,
+  preserveViewport:true,
+  screenOverlays:true,
+  suppressInfoWindows:false
+}
 const center = {
   lat: 19.2130929078429,
   lng: -101.09697103412132
@@ -15,19 +29,46 @@ const onLoad = rectangle => {
   console.log('rectangle: ', rectangle)
 }
 
+const onClick = click =>{
+  console.log('click: ',click.featureData
+  )
+}
 
+
+const positio={lat: 19.312116839964077, lng:   -101.56639341054306}
+/*
+const onMouseOver = mouse =>{
+  console.log('mouse:',mouse.latLng)
+}*/
+const divStyle = {
+  background: `white`,
+  border: `1px solid #ccc`,
+  padding: 15
+}
 function Example() {
   
     return (
       <div>
         <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
         <GoogleMap
-    id="rectangle-example"
-    mapContainerStyle={mapContainerStyle}
-    zoom={11}
-    center={center}
-  >
-    <KmlLayer url='http://drive.google.com/uc?export=download&id=1JIOp7HLCB5ICIKrJwcPZoAc6MrpuPbQq'></KmlLayer>
+          id="rectangle-example"
+          mapContainerStyle={mapContainerStyle}
+          zoom={11}
+          center={center}
+          options={option}
+          
+          
+        >
+        
+      <KmlLayer 
+      url='http://drive.google.com/uc?export=download&id=1P_HwE8ONn-TFAnAqiLcuXQ7XzuZxW1Pu'
+      onClick={onClick}
+      options={option}
+      >
+      
+      
+      </KmlLayer>
+  
   </GoogleMap>
         </LoadScript>
       </div>
@@ -38,60 +79,3 @@ export default Example;
 
 
 
-/*import React, { Component } from 'react';
-import { GoogleMap, KmlLayer, LoadScript, Marker,Polyline } from '@react-google-maps/api';
-import config from './config.json';
-
-
-
-
-
-
-const mapStyle = { width: '90vw', height: '90vh' };
-
-const DEPAUW_CENTER = { lat: 19.2130929078429, lng: -101.09697103412132 };
-
-const DEPAUW_BOUNDS = {
-  north: 39.653244,
-  south: 39.621949,
-  west: -86.902833,
-  east: -86.831743,
-};
-
-const option = {
-  
-
-  mapTypeControl: false,
-  scaleControl: true,
-  streetViewControl: true,
-  fullscreenControl: false,
-  clickableIcons: true,
-};
- const onLoad = kml => {
-    console.log('onLoad: ', kml)
-    
-  };
- 
-
-function Example() {
-  
-    return (
-      <div>
-        <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
-          <GoogleMap
-            mapContainerStyle={mapStyle}
-            center={DEPAUW_CENTER}
-            zoom={7}
-            options={option}
-          >
-            <KmlLayer></KmlLayer>
-          </GoogleMap>
-
-        </LoadScript>
-      </div>
-    );
-  
-}
-export default Example;
-
-*/
