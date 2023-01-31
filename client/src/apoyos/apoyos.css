@@ -11,12 +11,27 @@
     position: absolute;
     right: 0;
 }
-
-
-
+/*BOTONES LISTA APOYOS*/
+table.table td a.view {
+    color: #AF272F;
+}
+table.table td a.edit {
+    color: #235b4E;
+}
+table.table td a.delet {
+    color: #BC955C;
+}
+.divmap{
+    overflow-y: hidden; /* Hide vertical scrollbar */
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+/*BOTON NUEVO*/
 .search a:focus, .search a, .search a:hover {
-    border-color:  #BC955C;
-    background-color:#DDc9A3;
+    border-color:  #6d6d6d;
+    background-color:#4F4F4F;
     color: white;
     
 }
@@ -53,19 +68,52 @@ padding: 10px;
     font-size: 12px;
 }
 .preview{
-    width: 60%;
+    width: 40%;
     margin-top: 50;
-    margin-left: 80px;
     display: flex;
     flex-direction: column;
 }
-
+.preview img{
+    width: 20rem;
+    margin-left: -5px;
+    margin-top: 2rem;
+}
+@media only screen and (width: 820px) {
+    .preview img{
+        width: 20rem;
+        
+    }
+    .preview img{
+        margin-top: 9px;
+        margin-left: -8px;
+    }
+  }
+  
+  @media only screen and (min-width: 355px) and (max-width:414px) {
+    .preview img{
+        width: 14rem;
+        
+    }
+    .preview img{
+        margin-top: 20px;
+        margin-left: 30px;
+    }
+   
+  }
 .delete{
-    cursor: pointer;
-    padding: 15;
-    background-color: red;
-    color: white;
-    border: none;
+  position: absolute;
+  top: 50%;
+  left: 7%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.912);
+  color: rgb(231, 28, 28);
+  font-size: 16px;
+  
+  border: none;
+  cursor: pointer;
+  border-radius: 1px;
+  text-align: center;
 }
 .example{
     width: 450px;
@@ -156,15 +204,7 @@ table.table td a {
     display: inline-block;
     margin: 0 5px;
 }
-table.table td a.view {
-    color: #03A9F4;
-}
-table.table td a.edit {
-    color: #FFC107;
-}
-table.table td a.delete {
-    color: #E34724;
-}
+
 table.table td i {
     font-size: 19px;
 }    
@@ -188,10 +228,10 @@ table.table td i {
     color: #666;
 }	
 .pagination li.active a {
-    background: #03A9F4;
+    background: #DDc9A3;
 }
 .pagination li.active a:hover {        
-    background: #0397d6;
+    background: #DDc9A3;
 }
 .pagination li.disabled i {
     color: #ccc;

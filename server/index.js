@@ -5,8 +5,35 @@ const bodyParser= require('body-parser')
 const cors =require('cors')
 const vision= require('@google-cloud/vision')
 const mysql= require('mysql')
+const { response } = require('express')
+const Client = require("@googlemaps/google-maps-services-js").Client;
 
+/*
+import {Client} from "@googlemaps/google-maps-services-js";
 
+async function getDriverLocationNearAddress(streetAddress){
+    const geocodingClient = new Client({});
+    let params = {
+            address: streetAddress,
+            components: 'country:US',
+            key: AIzaSyDZxgUG7MfFXKj_zPyvUdclvgrcKSSZsZ8
+        }; 
+    
+        console.log('retrieving lat, lng for ' + streetAddress);
+        geocodingClient.geocode({
+            params:params
+        })
+        .then((response)=>{
+            console.log('status: ' + response.data.status);
+            console.log(response.data.results[0].geometry.location.lat);
+            console.log(response.data.results[0].geometry.location.lng);
+            return response;
+        })
+        .catch((error)=>{
+            console.log('error retrieving geocoded results');
+        });
+    }
+    */
 /*
 const db= mysql.createConnection({
     user:'root',
@@ -15,7 +42,33 @@ const db= mysql.createConnection({
     database:'sime'
 })
 */
-
+const r=[]
+const  getDriverLocationNearAddress =async (streetAddress)=>{
+    const geocodingClient =new Client({});
+    let params = {
+            address: streetAddress,
+            key: 'AIzaSyDZxgUG7MfFXKj_zPyvUdclvgrcKSSZsZ8'
+        }; 
+    
+        console.log('retrieving lat, lng for ' + streetAddress);
+        geocodingClient.geocode({
+            params:params
+        })
+        .then((response)=>{
+            //console.log('status: ' + response.data.status);
+    
+            //console.log(response.data.results[0].geometry.location.lat);
+           
+            //console.log(response.data.results[0].geometry.location.lng);
+            r['lat']=response.data.results[0].geometry.location.lat;
+            r['lng']=response.data.results[0].geometry.location.lng;
+            console.log(r)
+            return r;
+        })
+        .catch((error)=>{
+            console.log('error retrieving geocoded results',error);
+        });
+    }
 const db= mysql.createConnection({
   user:'root',
   host:'localhost',
@@ -197,138 +250,7 @@ const detectTextD= async (file_path)=>{
     */
         
 };
-const detectTextG= async (file_path)=>{
-    let obj={}
-    let [result] = await client.documentTextDetection(file_path);
-    const full= result.fullTextAnnotation;
-    //console.log(full)
-    var cleanText= full.text;
-    
-    var x= cleanText.split(" ")
-    var y= cleanText.split("\n")
-    
-    
-    const msg = new String(y);
-    console.log(`Result: ${msg}`);
 
-    let arr= msg.split(",")
-    console.log(arr);
-    
-
-    
-    nombre= arr.indexOf('NOMBRE')
-    console.log(nombre)
-    console.log('DATOS NOMBRE:')
-    
-    for (i=nombre+1;i<nombre+4; i++){
-        
-        if(i == nombre+1){
-            obj['apaterno']=arr[i]
-            console.log(arr[i])
-        }
-        else if (i == nombre+2){
-            obj['amaterno']=arr[i]
-            console.log(arr[i])
-        }
-        else if (i == nombre+3){
-            obj['nombres']=arr[i]
-            console.log(arr[i])
-        }
-    }
-    
-    console.log("\n")
-    
-    domicilio= arr.indexOf('DOMICILIO')
-    console.log('DATOS DOMICILIO:')
-    //console.log(domicilio)
-
-    for (i=domicilio+1;i<domicilio+4; i++){
-        if(i == domicilio+1){
-            let num=""
-            var x= arr[i].split(" ");
-            console.log(x)
-            for (k=1;k<x.length-1;k++){
-                num+=x[k]+" "
-
-                
-            }
-            console.log(num)
-            obj['calle']=num
-            obj['numero']=x[x.length-1]
-            //console.log(arr[i])
-        }
-        else if(i == domicilio+2){
-            let b=""
-            var a= arr[i].split(" ")
-            console.log(a)
-            
-            for (j=1;j<a.length-1;j++){
-                //console.log(a[j])
-                b+=a[j]+" "
-            }
-            obj['colonia']=b
-            obj['cp']=a[a.length-1]
-            
-        }
-        else if(i== domicilio+3){
-            obj['ciudad']=arr[i]
-            console.log(arr[i])
-        }
-        
-        
-    }
-    console.log("\n")
-
-
-
-    console.log('CLAVE DE ELECTOR:')
-    for (i=0;i<arr.length;i++){
-        //console.log('Renglon'+i+" "+arr[i])
-        var a= arr[i].split(" ")
-       
-        if(a.includes('ELECTOR')){
-            console.log(a[3]);
-
-            obj['c_elector']=a[3]
-        }
-    }
-    console.log()
-    console.log("\n")
-    console.log('CURP:')
-    curp= arr.indexOf('CURP')
-    console.log(arr[curp+1])
-    obj['curp']=arr[curp+1]
-    console.log("\n")
-
-
-    console.log('FECHA DE NACIMIENTO:')
-    fecha= arr.indexOf('FECHA DE NACIMIENTO')
-    console.log(fecha)
-    for (i=fecha+1;i<fecha+2; i++){
-        
-        console.log(arr[i])
-        obj['fecha_nacimiento']=arr[i]
-    }
-    console.log("\n")
-
-    console.log('SECCION:')
-    secc= arr.indexOf('SECCIÓN')
-    console.log(arr[secc+1])
-    obj['seccion']=arr[secc+1]
-    console.log(obj)
-    return obj;
-
-    /*
-    for (i=0;i<arr.length;i++){
-        console.log('Renglon'+i+" "+arr[i])
-        var a= arr[i].split(" ")
-        if(a.includes('CURP')){
-            console.log(a);
-        }
-    }
-    */
-        
-};
 
 //console.log(client)
 /*
@@ -342,7 +264,7 @@ connection.connect(function(err) {
 
 */
 app.use(cors());
-app.use(express.static("./public"));
+app.use(express.static("public"));
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}))
 
@@ -384,12 +306,8 @@ app.post("/uploadD", upload.single('file'), (req, res) => {
           console.log(ruta)
           const data='';
           detectTextD(ruta).then( (x) =>
-            res.send(JSON.stringify(x))
-            
+            res.send(JSON.stringify(x)) 
           )
-          
-          
-
         })
 
       });
@@ -408,10 +326,23 @@ app.post('/api/distritos/',(req,res)=>{
         console.log(err)
       });
 })
+
+
+
+app.post('/apoyos',(req,res) =>{
+    db.query("SELECT *FROM apoyo",(err,result)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            res.send(JSON.stringify(result))
+        }
+    })
+})
 app.post('/api/insert/',(req,res)=>{
-    
+    console.log(req.body)
+
     const apaterno= req.body.apaterno
-    
     const amaterno= req.body.amaterno
     const nombres= req.body.nombres
     const calle= req.body.calle
@@ -427,32 +358,92 @@ app.post('/api/insert/',(req,res)=>{
     const distrito_local=req.body.distrito_local
     const nivel= req.body.nivel
     const no_celular= req.body.no_celular
+    const email=req.body.email
     const facebook = req.body.facebook
     const twitter= req.body.twitter
     const otra_red= req.body.otra_red
     const descripcion_apoyo= req.body.descripcion_apoyo
+    const apoyo_tipo=req.body.apoyo_tipo
     const monto_apoyo = req.body.monto_apoyo
     const alcance_apoyo=req.body.alcance_apoyo
     const contacto =req.body.contacto
     const no_celcontacto=req.body.no_celcontacto
-    
 
-    const sqlInsert="INSERT INTO apoyo (apaterno,amaterno,nombres,calle,numero,colonia,cp,ciudad,clave_elector,curp,fecha_nacimiento,seccion,distrito_federal,distrito_local,nivel,no_celular,facebook,twitter,otra_red,descripcion_apoyo,monto_apoyo,alcance_apoyo,contacto,no_celcontacto) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
-    db.query(sqlInsert,[apaterno,amaterno,nombres,calle,numero,colonia,cp,ciudad,clave_elector,curp,
-        fecha_nacimiento,seccion,distrito_federal,distrito_local,nivel,no_celular,facebook,twitter,
-        otra_red,descripcion_apoyo,monto_apoyo,alcance_apoyo, contacto,no_celcontacto],(err,result) =>{
-          
-          if(err){
-            console.log(err);
-          }
-          else{
-            res.send("Values Inserted");
-          }
+    const sql2="SELECT max(id) as id FROM img_ine"
+    const sqlInsert="INSERT INTO apoyo (apaterno,amaterno,nombres,calle,numero,colonia,cp,ciudad,clave_elector,curp,fecha_nacimiento,seccion,distrito_federal,distrito_local,nivel,no_celular,email,facebook,twitter,otra_red,contacto,no_celcontacto,img) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
+    const persona_id="SELECT max(id) as id FROM apoyo"
+    const sql3= "INSERT INTO apoyos (descripcion,tipo,monto,alcance,id_persona) VALUES (?,?,?,?,?)"
+    db.query(sql2,(err,result) =>{
+        const id_image=result[0].id
+        const response=[]
+        
+        db.query(sqlInsert,[
+            apaterno,amaterno,nombres,
+            calle,numero,colonia,cp,ciudad,
+            clave_elector,curp,fecha_nacimiento,
+            seccion,distrito_federal,distrito_local,nivel,
+            no_celular,email,facebook,twitter,otra_red,
+            contacto,no_celcontacto,
+            id_image],(err,result) =>{
+              
+              if(err){
+                console.log(err);
+              }
+              else{
+                response.push(true)
+                
+              }
+            });
+        db.query(persona_id,(err,result)=>{
+
+            const id_p=result[0].id
+            db.query(sql3,[
+                descripcion_apoyo,apoyo_tipo,monto_apoyo,alcance_apoyo,id_p],
+                (err,result) =>{
+                  
+                  if(err){
+                    console.log(err);
+                  }
+                  else{
+                    response.push(true);
+                    
+                    
+                  }
+                });
+        if( response[0] == true && response[1] ==true){
+            res.send("Agregado")
+        }
+        else{
+            res.send("No Agregado")
+        }
+
         });
-});
 
-app.get('/apoyos',(req,res) =>{
-    db.query("SELECT *FROM apoyo",(err,result)=>{
+
+      });
+
+   
+    
+});
+app.post('/apoyoId',(req,res) =>{
+    const id= req.body.id
+    db.query("SELECT * FROM apoyo INNER JOIN apoyos on apoyo.id=apoyos.id_persona where apoyos.id_persona=?;",
+    [id],
+    (err,result)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            res.send(result)
+            
+        }
+    })
+    
+})
+
+app.delete('/deleteApoyo/:id',(req,res) =>{
+    const id=  req.params.id
+    db.query("DELETE FROM apoyo WHERE id=?",id,(err,result)=>{
         if(err){
             console.log(err)
         }
@@ -461,6 +452,54 @@ app.get('/apoyos',(req,res) =>{
         }
     })
 })
+app.put('/apoyo/update/:id',(req,res) =>{
+    console.log(req.body)
+    
+    const id=req.body.id;
+    const apaterno= req.body.apaterno
+    const amaterno= req.body.amaterno
+    const nombres= req.body.nombres
+    const calle= req.body.calle
+    const numero=req.body.numero
+    const colonia=req.body.colonia
+    const cp=req.body.cp
+    const ciudad= req.body.ciudad
+    const clave_elector=req.body.clave_elector
+    const curp=req.body.curp
+    const fecha_nacimiento=req.body.fecha_nacimiento
+    const seccion= req.body.seccion
+    const distrito_federal=req.body.distrito_federal
+    const distrito_local=req.body.distrito_local
+    const nivel= req.body.nivel
+    const no_celular= req.body.no_celular
+    const email=req.body.email
+    const facebook = req.body.facebook
+    const twitter= req.body.twitter
+    const otra_red= req.body.otra_red
+    const descripcion_apoyo= req.body.descripcion_apoyo
+    const apoyo_tipo=req.body.apoyo_tipo
+    const monto_apoyo = req.body.monto_apoyo
+    const alcance_apoyo=req.body.alcance_apoyo
+    const contacto =req.body.contacto
+    const no_celcontacto=req.body.no_celcontacto
+    
+    db.query(
+    "UPDATE apoyo a1 INNER JOIN apoyos a2 ON a1.id=a2.id_persona SET a1.apaterno=?,a1.amaterno=?,a1.nombres=?,a1.calle=?,a1.numero=?,a1.colonia=?,a1.cp=?,a1.ciudad=?,a1.clave_elector=?,a1.curp=?,a1.fecha_nacimiento=?,a1.seccion=?,a1.distrito_federal=?,a1.distrito_local=?,a1.nivel=?,a1.no_celular=?,a1.email=?,a1.facebook=?,a1.twitter=?,a1.otra_red=?,a1.contacto=?,a1.no_celcontacto=?,a2.descripcion=?,a2.tipo=?,a2.monto=?,a2.alcance=? WHERE a1.id=?;",
+        [apaterno,amaterno,nombres,calle,numero,colonia,cp,ciudad,clave_elector,curp,fecha_nacimiento,seccion,distrito_federal,distrito_local,nivel,no_celular,email,facebook,twitter,otra_red,contacto,no_celcontacto,descripcion_apoyo,apoyo_tipo,monto_apoyo,alcance_apoyo,id],
+        (err,result)=>{
+            if (err){
+                console.log(err);
+            }
+            else{
+                res.send(result)
+                console.log(result)
+            }
+        }
+    )
+
+    
+})
+
 
 app.listen(3001,()=>{
     console.log('Your server is running')

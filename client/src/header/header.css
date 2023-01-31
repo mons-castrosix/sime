@@ -1,3 +1,15 @@
+.logo{
+    width: 30%;
+    height: 30%;
+}
+.navbar .navbar-nav .nav-link {
+    margin-right: 30px;
+    padding: 25px 0;
+    color: #ffffff;
+    font-weight: 500;
+    outline: none;
+}
+
 /********** Template CSS **********/
 :root {
     --primary: #16D5FF;
@@ -9,7 +21,8 @@
     background-color: #9f2241;
 }
 .nombrepartido{
-    color:#FFFFFF
+    color:#FFFFFF;
+    
 }
 .back-to-top {
     position: fixed;
@@ -90,13 +103,7 @@ h6,
     height: 75px;
 }
 
-.navbar .navbar-nav .nav-link {
-    margin-right: 30px;
-    padding: 25px 0;
-    color: #DDc9A3;
-    font-weight: 500;
-    outline: none;
-}
+
 
 .navbar .navbar-nav .nav-link:hover,
 .navbar .navbar-nav .nav-link.active {
