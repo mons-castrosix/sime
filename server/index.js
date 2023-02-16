@@ -34,14 +34,14 @@ async function getDriverLocationNearAddress(streetAddress){
         });
     }
     */
-/*
+
 const db= mysql.createConnection({
     user:'root',
     host:'localhost',
     password:'sime123',
     database:'sime'
 })
-*/
+
 const r=[]
 const  getDriverLocationNearAddress =async (streetAddress)=>{
     const geocodingClient =new Client({});
@@ -69,12 +69,12 @@ const  getDriverLocationNearAddress =async (streetAddress)=>{
             console.log('error retrieving geocoded results',error);
         });
     }
-const db= mysql.createConnection({
+/*const db= mysql.createConnection({
   user:'root',
   host:'localhost',
   password:'',
   database:'sime'
-})
+})*/
 
 
 const credential= JSON.parse(JSON.stringify({
