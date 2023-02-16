@@ -59,8 +59,8 @@ function Apoyos() {
     
     try {
       const res = await Axios.post(
-        //"http://54.219.124.66:3001/uploadD",
-        "http://localhost:3001/uploadD",
+        "http://54.219.124.66:3001/uploadD",
+        //"http://localhost:3001/uploadD",
         formData
       );
       
@@ -105,8 +105,8 @@ function Apoyos() {
   const submitReview = () =>{
     
 
-    Axios.post(//"http://54.219.124.66:3001/api/insert",
-    "http://localhost:3001/api/insert",
+    Axios.post("http://54.219.124.66:3001/api/insert",
+    //"http://localhost:3001/api/insert",
     {
       
     apaterno:aPaterno,amaterno:aMaterno,nombres:nombres,calle:calle,numero:numero,colonia:colonia,cp:cp,
@@ -128,8 +128,8 @@ function Apoyos() {
   const submitSeccion = () =>{
     
     
-    Axios.post("http://localhost:3001/api/distritos"
-    /*"http://54.219.124.66:3001/api/distritos"*/,{
+    Axios.post(/*"http://localhost:3001/api/distritos"*/
+    "http://54.219.124.66:3001/api/distritos",{
     seccion:document.getElementById("secc").value
     }).then((res) => {
 

@@ -13,8 +13,8 @@ function ViewAp() {
   const [alcance, setAlcance]=useState('');
   const [tipoApoyo, setTipoapoyo]=useState('');
   const getList=()=>{
-    Axios.post("http://localhost:3001/apoyoId",{id:id}
-    //"http://54.219.124.66:3001/apoyos"
+    Axios.post(//"http://localhost:3001/apoyoId",{id:id}
+    "http://54.219.124.66:3001/apoyos",{id:id}
     ).then((response) =>{
       setList(response.data)
       console.log(list)
