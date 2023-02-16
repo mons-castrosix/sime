@@ -102,13 +102,13 @@ function ApoyosList(){
                                         <td>{val.curp}</td>
                                         <td>
                                             <Link className="view" to={"/apoyos/view-apoyo/"+val.id}  title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link>
-                                            <Link className="edit" to={"/apoyos/edit-apoyo/"+val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link>
+                                            <Link className="edit"  title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link>
                                             <Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={()=>{setId(val.id)}} title="Delete"><i className="material-icons">&#xE872;</i></Link>
                                         </td>
                                     </tr>
                                         
                                         
-                                        
+                                        /*<Link className="edit" to={"/apoyos/edit-apoyo/"+val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link>*/
                                         
                                         
                                         
