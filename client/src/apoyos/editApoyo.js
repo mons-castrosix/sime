@@ -50,8 +50,8 @@ function EditApp() {
       document.getElementById("ciudad").setAttribute('value',list[0].ciudad)
       document.getElementById("celectoral").setAttribute('value',list[0].clave_elector)
       document.getElementById("curp").setAttribute('value',list[0].curp)
-      var fecha= list[0].fecha_nacimiento
-      var f=moment(fecha).utc().format('MM/DD/YYYY')
+      var f= list[0].fecha_nacimiento
+      //var f=moment(fecha).utc().format('MM/DD/YYYY')
       //console.log(f)
       
       document.getElementById("fnacimiento").setAttribute('value',f)
