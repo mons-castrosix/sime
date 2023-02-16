@@ -9,15 +9,15 @@ function ApoyosList(){
     const [list,setList]=useState([])
     const navigate=useNavigate();
     const getList=()=>{
-        Axios.post("http://localhost:3001/apoyos"
-        //"http://54.219.124.66:3001/apoyos"
+        Axios.post(//"http://localhost:3001/apoyos"
+        "http://54.219.124.66:3001/apoyos"
         ).then((response) =>{
           setList(response.data)
           
         });
       }
       const deleteApoyo =(id) =>{
-        Axios.delete("http://localhost:3001/deleteApoyo/"+id).then(()=>{
+        Axios.delete("http://54.219.124.66:3001/deleteApoyo/"+id).then(()=>{
             //alert("ELIMINADO")
             navigate('/apoyos')
         })
