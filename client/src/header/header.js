@@ -24,7 +24,7 @@ function Header(){
         
         <nav className="navbar navbar-expand-lg sticky-top p-0 px-4 px-lg-5">
             <a href='!#' className="navbar-brand d-flex align-items-center">
-                <h2 className="m-0 nombrepartido"><img className="img-fluid me-2 logo"  alt="" src={logo} /></h2>
+                <h2 className="m-0 nombrepartido">MAP-E</h2>
             </a>
             <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span className="navbar-toggler-icon"></span>
@@ -33,18 +33,8 @@ function Header(){
                 <div className="navbar-nav ms-auto py-4 py-lg-0">
                     <NavLink to='/apoyos'  className="nav-item nav-link ">Apoyos</NavLink>
                     <NavLink to='/mapa'  className="nav-item nav-link ">Mapa</NavLink>
-                    <a href='!#' className="nav-item nav-link">Promovidos</a>
-                    <a href='!#' className="nav-item nav-link">Bingo</a>
-                    <div className="nav-item dropdown">
-                        <a href='!#' className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Resultados Electorales</a>
-                        <div className="dropdown-menu shadow-sm m-0">
-                            <a href='!#'  className="dropdown-item">Submodulo 1</a>
-                            <a href='!#' className="dropdown-item">Submodulo 2</a>
-                            <a href='!#'  className="dropdown-item">Submodulo 3</a>
-                            <a href='!#' className="dropdown-item">Submodulo 4</a>
-                        </div>
-                    </div>
-                    <a href='!#' className="nav-item nav-link">Modulo6</a>
+                    <NavLink to='/mapa/resultados-electorales-2021'  className="nav-item nav-link">Resultados Electorales</NavLink>
+                   
                 </div>
                 
             </div>
@@ -60,3 +50,30 @@ function Header(){
 }
 
 export default Header;
+/*<nav className="navbar navbar-expand-lg sticky-top p-0 px-4 px-lg-5">
+            <a href='!#' className="navbar-brand d-flex align-items-center">
+                <h2 className="m-0 nombrepartido">MAP-E</h2>
+            </a>
+            <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarCollapse">
+                <div className="navbar-nav ms-auto py-4 py-lg-0">
+                    <NavLink to='/apoyos'  className="nav-item nav-link ">Apoyos</NavLink>
+                    <NavLink to='/mapa'  className="nav-item nav-link ">Mapa</NavLink>
+                    <a href='!#' className="nav-item nav-link">Promovidos</a>
+                    <NavLink to='/mapa/resultados-electorales-2021'  className="nav-item nav-link">Resultados Electorales</NavLink>
+                    <div className="nav-item dropdown">
+                        <a href='!#' className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Bingo</a>
+                        <div className="dropdown-menu shadow-sm m-0">
+                            <a href='!#'  className="dropdown-item">Submodulo 1</a>
+                            <a href='!#' className="dropdown-item">Submodulo 2</a>
+                            <a href='!#'  className="dropdown-item">Submodulo 3</a>
+                            <a href='!#' className="dropdown-item">Submodulo 4</a>
+                        </div>
+                    </div>
+                    <a href='!#' className="nav-item nav-link">Modulo6</a>
+                </div>
+                
+            </div>
+        </nav>*/

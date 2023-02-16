@@ -18,7 +18,7 @@ function ApoyosList(){
       }
       const deleteApoyo =(id) =>{
         Axios.delete("http://localhost:3001/deleteApoyo/"+id).then(()=>{
-            alert("ELIMINADO")
+            //alert("ELIMINADO")
             navigate('/apoyos')
         })
 

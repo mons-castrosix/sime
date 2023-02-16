@@ -116,7 +116,7 @@ function Apoyos() {
     no_celcontacto:celContacto
     }).then(() => {
       console.log("succes")
-      alert("AGREGADO")
+      //alert("AGREGADO")
       navigate('/apoyos')
 
     });

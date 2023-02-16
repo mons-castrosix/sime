@@ -45,16 +45,16 @@ const onClick = click =>{
 
 const positions = [
   
-  {id:1,persona:'Persona 1',lat: 19.67708293434324, lng:    -101.30195911697166},
-  {id:2,persona:'Persona 2',lat: 19.674502612277184, lng:    -101.39236614686959},
-  {id:3,persona:'Persona 3',lat: 19.641797181965238, lng:     -101.41114624408013},
-  {id:4,persona:'Persona 4',lat: 19.77393757745782, lng:     -101.46668502728099},
-  {id:5,persona:'Persona 5',lat: 19.808790918482668, lng:     -101.29900931651122},
-  {id:6,persona:'Persona 6',lat: 19.783719839921176, lng:     -101.35727602324286},
-  {id:7,persona:'Persona 7',lat: 19.73298165678351, lng:      -101.22481553262554},
-  {id:8,persona:'Persona 8',lat: 19.72483219112784, lng:     -101.39592294903684},
-  {id:9,persona:'Persona 9',lat: 19.548923517998286, lng:     -101.3498776789934},
-  {id:10,persona:'Persona 10',lat: 19.64058828612842, lng:     -101.26365732414023},
+  {id:1,persona:'Persona 1',lat: 19.913155136181825, lng:    -100.23615130148286},
+  {id:2,persona:'Persona 2',lat: 18.366740952284204, lng:     -103.22443253484077},
+  {id:3,persona:'Persona 3',lat: 18.891671319236345,  lng:     -101.48948911409637},
+  {id:4,persona:'Persona 4',lat: 19.415765302281212, lng:     -102.17613461808484},
+  {id:5,persona:'Persona 5',lat: 18.53788658093323, lng:     -100.88524107058647},
+  {id:6,persona:'Persona 6',lat: 18.579546646656805, lng:    -102.5606561003184},
+  {id:7,persona:'Persona 7',lat: 19.984643366831122, lng:      -102.09373715760623},
+  {id:8,persona:'Persona 8',lat: 20.041419403995963, lng:     -102.85728695804143},
+  {id:9,persona:'Persona 9',lat: 19.679769251135365, lng:     -101.57737973860688},
+  {id:10,persona:'Persona 10',lat: 18.798094529403937, lng:     -101.28624204491577},
 
   
 ];
@@ -153,7 +153,7 @@ function Example() {
         <GoogleMap
           id="rectangle-example"
           mapContainerStyle={mapContainerStyle}
-          zoom={13}
+          zoom={14}
           center={center}
           options={option}
           
