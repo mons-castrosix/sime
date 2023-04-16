@@ -1,10 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import apoyo from './apoyos.png'
 import Axios from 'axios';
 import './apoyos.css';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.js'
+
+import { GoogleMap, KmlLayer, LoadScript, InfoWindow,Marker,Polyline,Rectangle } from '@react-google-maps/api';
+import config from '../maps/config.json';
+
+const mapContainerStyle = {
+  width: '65vw', height: '98vh'
+};
+const divStyle = {
+  background: `white`,
+ 
+  width:'50px',
+  height:'10px',
+  fontSize:'10px'
+}
+const option = {
+
+  mapTypeControl: true,
+  scaleControl: true,
+  streetViewControl: true,
+  fullscreenControl: true,
+  clickableIcons: true,
+  streetViewPanorama:true,
+  
+};
+const optionMap={
+  clickable:true,
+  preserveViewport:true,
+  screenOverlays:true,
+  suppressInfoWindows:false
+}
+
+
+const onLoad = rectangle => {
+  console.log('rectangle: ', rectangle)
+}
+
+const onClick = click =>{
+  console.log('click: ',click.featureData
+  )
+}
+
+const onPosition = click =>{
+	console.log('click: ',click
+	)
+  }
+ 
 
 function Apoyos() {
   const [file, setFile] = useState();
@@ -35,10 +81,24 @@ function Apoyos() {
   const [alcance, setAlcance]=useState('');
   const [contacto, setContacto]=useState('');
   const [celContacto, setCelcontacto]=useState('');
-  
   const [selectedImage, setSelectedImage] = useState();
- 
+  const [coordenadas,setCoordenadas]= useState([19.36313799880912
+    ,-101.81796480831713]);
+  const [newCoordenadas,setNewCoor]= useState([])
+  const [changeCenter, setChangeCenter] = useState(false);
+
   const navigate=useNavigate();
+  
+  /*const center = {
+    lat: document.getElementById("lat").value,
+    lng:document.getElementById("lng").value
+  };*/
+ 
+  const [infoWindowOpen, setInfoWindowOpen] = useState(false);
+  const [peopleInfo, setPeopleInfo] = useState([]);
+  
+  const persona='Persona 1';
+ 
   
   const atras = () =>{ 
     let path = '/'; 
@@ -59,8 +119,8 @@ function Apoyos() {
     
     try {
       const res = await Axios.post(
-        "http://54.219.124.66:3001/uploadD",
-        //"http://localhost:3001/uploadD",
+        //"http://54.219.124.66:3001/uploadD",
+        "http://localhost:3001/uploadD",
         formData
       );
       
@@ -79,6 +139,7 @@ function Apoyos() {
       document.getElementById("secc").setAttribute('value',res.data.seccion)
       document.getElementById("celectoral").setAttribute('value',res.data.c_elector)
       document.getElementById("ciudad").setAttribute('value',res.data.ciudad)
+      
       setApaterno(document.getElementById("apaterno").value)
       setAmaterno(document.getElementById("amaterno").value)
       setNombres(document.getElementById("nombre").value)
@@ -93,7 +154,8 @@ function Apoyos() {
       setSeccion(document.getElementById("secc").value)
       setDfederal(document.getElementById("df").value)
       setDlocal(document.getElementById("dl").value)
-
+      
+      
 
 
     } catch (ex) {
@@ -105,15 +167,15 @@ function Apoyos() {
   const submitReview = () =>{
     
 
-    Axios.post("http://54.219.124.66:3001/api/insert",
-    //"http://localhost:3001/api/insert",
+    Axios.post(//"http://54.219.124.66:3001/api/insert",
+    "http://localhost:3001/api/insert",
     {
       
     apaterno:aPaterno,amaterno:aMaterno,nombres:nombres,calle:calle,numero:numero,colonia:colonia,cp:cp,
     ciudad:ciudad,clave_elector:claveElectoral,curp:curp,fecha_nacimiento:fecha,seccion:seccion,distrito_federal:document.getElementById("df").value,
     distrito_local:document.getElementById("dl").value,nivel:nivel,no_celular:celular,email:email,facebook:facebook,twitter:twitter,
     otra_red:otra,descripcion_apoyo:descrApoyo,apoyo_tipo:tipoApoyo,monto_apoyo:monto,alcance_apoyo:alcance,contacto:contacto,
-    no_celcontacto:celContacto
+    no_celcontacto:celContacto,lat:document.getElementById("lat").value,lng:document.getElementById("lng").value
     }).then(() => {
       console.log("succes")
       //alert("AGREGADO")
@@ -128,8 +190,8 @@ function Apoyos() {
   const submitSeccion = () =>{
     
     
-    Axios.post(/*"http://localhost:3001/api/distritos"*/
-    "http://54.219.124.66:3001/api/distritos",{
+    Axios.post("http://localhost:3001/api/distritos"
+    /*"http://54.219.124.66:3001/api/distritos"*/,{
     seccion:document.getElementById("secc").value
     }).then((res) => {
 
@@ -141,419 +203,469 @@ function Apoyos() {
     });
     
   }
- 
+  
+  const getLocation =() =>{
+    var direccion= calle+" "+numero+", "+colonia+", "+cp+" "+ciudad
+      document.getElementById("direc").setAttribute('value',direccion)
+    Axios.post("http://localhost:3001/getLoc/",{direccion:document.getElementById("direc").value}).then((res)=>{
+      console.log(res)  
+      
+      var lat=res.data.lat
+      console.log(lat)
+      var lng=res.data.lng
+      console.log(lng)
+      document.getElementById("lat").setAttribute('value',lat)
+      document.getElementById("lng").setAttribute('value',lng)
+      setNewCoor([lat,lng])
+      setChangeCenter(true);
 
+      
+    })
+  }
+ 
+  
   // This function will be triggered when the "Remove This Image" button is clicked
   const removeSelectedImage = () => {
     setFile();
   };
 
   return (
-    <div>
+    <div className='divmap'>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous"/>
-       <div className="container-xl px-4 mt-4">
-   
-    <nav className="nav nav-borders">
-        
-    </nav>
+       
+  
     
-    <div className="row">
-        <div className="col-xl-4">
+        <div className="row">
+            <div className="col-xl-4" id='left'>
             
-            <div className="card mb-4 mb-xl-0">
-                <div className="card-header">INE</div>
-                <div className="card-body text-center">
-                    
-                <label htmlFor="ine">Cargar INE</label>
-                        <input 
-                        type="file" 
-                        className="form-control" 
-                        id="ine" 
-                        capture='enviroment'
-                        name="ine" 
-                        accept='image/*'
-                        encType="multipart/form-data"
+                    <div className="card-header text-center">REGISTRO DE APOYOS</div>
+                    <div className="card-body text-center vertical-scrollable ">
                         
-                        required
-                        onChange={saveFile} /> <br></br>
-                        <button  onClick={uploadFile1}  className="btn btn-dark btn-md cargar" type="submit">Cargar</button>
+                    <label htmlFor="ine">Cargar INE</label>
+                    <input type="file" 
+                    className="form-control" 
+                    id="ine" 
+                    capture='enviroment'
+                    name="ine" 
+                    accept='image/*'
+                    encType="multipart/form-data"
+                    required onChange={saveFile} /> <br></br>
+                    <button  onClick={uploadFile1}  className="btn btn-dark btn-md cargar" type="submit">Cargar INE</button>
+                    <br/>
+                    <button  onClick={getLocation}  className="btn btn-dark btn-md cargar" type="submit">Cargar en el Mapa</button>
+                    <br/><br/>
+                    <input placeholder='latitud' type="hidden"  id='lat'></input>
+                    <input placeholder='longitud' type="hidden" id='lng'></input>
+                    {file && (
+                      <div className='preview' >
+                        <img
+                          src={URL.createObjectURL(file)}
+                          alt="Thumb"
+                        />
+                        <button className='delete' onClick={removeSelectedImage} >
+                          X
+                        </button>
+                        
+                      </div>
+                    )}
 
-                        {file && (
-          <div className='preview' >
-            <img
-              src={URL.createObjectURL(file)}
-              alt="Thumb"
-            />
-            <button className='delete' onClick={removeSelectedImage} >
-              X
-            </button>
-            
-          </div>
-          )}  
-                </div>
-            </div>
-        </div>
-        <div className="col-xl-8">
-            
-            <div className="card mb-4">
-                <div className="card-header">Detalles</div>
-                <div className="card-body">
-                   
-                        
-                        <div className="mb-3">
-                        <label htmlFor="nombre">Nombre(s)</label>
-                        <input 
-                        type="text" 
-                        className="form-control" 
-                        id="nombre" 
-                        name="nombre" 
-                        placeholder="Nombre (s)" required 
-                        onChange={(event) =>{setNombres(event.target.value)}}/>
+                    <div className="mb-3">
+                            <label htmlFor="nombre">Nombre(s)</label>
+                            <input 
+                            type="text" 
+                            className="form-control" 
+                            id="nombre" 
+                            name="nombre" 
+                            placeholder="Nombre (s)" required 
+                            onChange={(event) =>{setNombres(event.target.value)}}/>
+                              
+                            </div>
                           
-                        </div>
-                       
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                            <label htmlFor="apaterno">Apellido Paterno</label>
-                            <input 
-                            type="text" 
-                            className="form-control" 
-                            id="apaterno" 
-                            name="apaterno" 
-                            placeholder="Apellido Paterno" required 
-                            onChange={(event) =>{setApaterno(event.target.value)}} />
-         
-                            </div>
-                            
-                            <div className="col-md-6">
-                            <label htmlFor="amaterno">Apellido Materno</label>
-                            <input 
-                            type="text" 
-                            className="form-control" 
-                            id="amaterno" 
-                            name="amaterno" 
-                            placeholder="Apellido Materno" required 
-                            onChange={(event) =>{setAmaterno(event.target.value)}}/>
-                            </div>
-                        </div>
-                       
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                            <label htmlFor="calle">Calle</label>
-                            <input 
-                            type="text" 
-                            className="form-control" 
-                            id="calle" 
-                            name="calle" 
-                            placeholder="Calle" required 
-                            onChange={(event) =>{setCalle(event.target.value)}}/>
-                            </div>
-                            
-                            <div className="col-md-6">
-                            <label htmlFor="numero">No.</label>
-                            <input 
-                            type="text" 
-                            className="form-control" 
-                            id="numero" 
-                            name="numero" 
-                            placeholder="Número" required 
-                            onChange ={(event) =>{setNumero(event.target.value)}} />
-                            </div>
-                        </div>
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                            <label htmlFor="colonia">Colonia</label>
-                            <input 
-                            type="text" 
-                            className="form-control" 
-                            id="colonia" 
-                            name="colonia" 
-                            placeholder="Colonia" required 
-                            onChange={(event) =>{setColonia(event.target.value)}} />
-                            </div>
-                            
-                            <div className="col-md-6">
-                            <label htmlFor="cpostal">CP</label>
-                            <input 
-                            type="text" 
-                            className="form-control" 
-                            id="cpostal" 
-                            name="cpostal" 
-                            placeholder="Código Postal" required 
-                            onChange={(event) =>{setCp(event.target.value)}} />
-                            </div>
-                        </div>
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                            <label htmlFor="colonia">Ciudad</label>
-                            <input 
-                            type="text" 
-                            className="form-control" 
-                            id="ciudad" 
-                            name="ciudad" 
-                            placeholder="Ciudad" required 
-                            onChange={(event) =>{setCiudad(event.target.value)}} />
-                            </div>
-                            
-                            <div className="col-md-6">
-                            <label htmlFor="celectoral">Clave Electoral</label>
-                            <input 
-                            type="text" 
-                            className="form-control" 
-                            id="celectoral" 
-                            name="celectoral" 
-                            placeholder="Clave electoral"  required 
-                            onChange={(event) =>{setClave(event.target.value)}} />
-                            </div>
-                        </div>
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                            <label htmlFor="curp">CURP</label>
-                            <input 
-                            type="text" 
-                            className="form-control" 
-                            id="curp" 
-                            name="curp" 
-                            placeholder="CURP" required 
-                            onChange={(event) =>{setCurp(event.target.value)}} />
-                            </div>
-                            
-                            <div className="col-md-6">
-                            <label htmlFor="fnacimiento">Fecha de Nacimiento</label>
-                            <input 
-                            type="date" 
-                            className="form-control" 
-                            id="fnacimiento" 
-                            name="fnacimiento" 
-                            placeholder="Fecha de Nacimiento" required 
-                            onChange={(event) =>{setFecha(event.target.value)}}/>
-                            </div>
-                        </div>
-                        <div className="mb-3">
-                        <label htmlFor="secc">Sección</label>
-                        <input 
-                        type="text" 
-                        className="form-control" 
-                        id="secc" 
-                        name="secc" 
-                        placeholder="Sección" required 
-                        onChange={(event) =>{setSeccion(event.target.value)}}/>
-                        </div>
-                       
-                        
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-3">
-                            <label htmlFor="df">Distrito Federal</label>
-                            <input 
-                            type="number" 
-                            className="form-control" 
-                            id="df" 
-                            name="df" required 
-                            onChange={(event) =>{setDfederal(event.target.value)}} />
-                            </div>
-                            
-                            <div className="col-md-3">
-                            <label htmlFor="dl">Distrito Local</label>
-                            <input 
-                            type="number" 
-                            className="form-control" 
-                            id="dl" 
-                            name="dl" required 
-                            onChange={(event) =>{setDlocal(event.target.value)}} />
-                            </div>
-                            <div className="col-md-3">
-                            <button onClick={submitSeccion}  className="btn btn-primary btn-sm distritos" type="submit">Asignar Distritos</button>
-                            </div>
-                            <div className="col-md-3">
-                                <label className="small mb-1" htmlFor="nivel">Nivel</label>
-                                <select 
-                                className="form-control"  
-                                id="nivel" 
+                            <div className="row gx-3 mb-3">
                                 
-                                name="nivel" required 
-                                onChange={(event) =>{setNivel(event.target.value)}}
-                                >
-                                    <option value="">Elije un nivel</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                  
-                                  </select>
+                                <div className="col-md-6">
+                                <label htmlFor="apaterno">Apellido Paterno</label>
+                                <input 
+                                type="text" 
+                                className="form-control" 
+                                id="apaterno" 
+                                name="apaterno" 
+                                placeholder="Apellido Paterno" required 
+                                onChange={(event) =>{setApaterno(event.target.value)}} />
+            
+                                </div>
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="amaterno">Apellido Materno</label>
+                                <input 
+                                type="text" 
+                                className="form-control" 
+                                id="amaterno" 
+                                name="amaterno" 
+                                placeholder="Apellido Materno" required 
+                                onChange={(event) =>{setAmaterno(event.target.value)}}/>
+                                </div>
                             </div>
-                        </div>
-                        <hr></hr>
-
-                        <div className="row gx-3 mb-3">
+                          
+                            <div className="row gx-3 mb-3">
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="calle">Calle</label>
+                                <input 
+                                type="text" 
+                                className="form-control" 
+                                id="calle" 
+                                name="calle" 
+                                placeholder="Calle" required 
+                                onChange={(event) =>{setCalle(event.target.value)}}/>
+                                </div>
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="numero">No.</label>
+                                <input 
+                                type="text" 
+                                className="form-control" 
+                                id="numero" 
+                                name="numero" 
+                                placeholder="Número" required 
+                                onChange ={(event) =>{setNumero(event.target.value)}} />
+                                </div>
+                            </div>
+                            <div className="row gx-3 mb-3">
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="colonia">Colonia</label>
+                                <input 
+                                type="text" 
+                                className="form-control" 
+                                id="colonia" 
+                                name="colonia" 
+                                placeholder="Colonia" required 
+                                onChange={(event) =>{setColonia(event.target.value)}} />
+                                </div>
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="cpostal">CP</label>
+                                <input 
+                                type="text" 
+                                className="form-control" 
+                                id="cpostal" 
+                                name="cpostal" 
+                                placeholder="Código Postal" required 
+                                onChange={(event) =>{setCp(event.target.value)}} />
+                                </div>
+                            </div>
+                            <div className="row gx-3 mb-3">
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="colonia">Ciudad</label>
+                                <input 
+                                type="text" 
+                                className="form-control" 
+                                id="ciudad" 
+                                name="ciudad" 
+                                placeholder="Ciudad" required 
+                                onChange={(event) =>{setCiudad(event.target.value)}} />
+                                
+                                </div>
+                                
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="celectoral">Clave Electoral</label>
+                                <input 
+                                type="text" 
+                                className="form-control" 
+                                id="celectoral" 
+                                name="celectoral" 
+                                placeholder="Clave electoral"  required 
+                                onChange={(event) =>{setClave(event.target.value)}} />
+                                </div>
+                            </div>
+                            <input type="hidden" readOnly id="direc"/>
                             
-                            <div className="col-md-6">
-                            <label htmlFor="cel">No. Celular</label>
+                            <div className="row gx-3 mb-3">
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="curp">CURP</label>
+                                <input 
+                                type="text" 
+                                className="form-control" 
+                                id="curp" 
+                                name="curp" 
+                                placeholder="CURP" required 
+                                onChange={(event) =>{setCurp(event.target.value)}} />
+                                </div>
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="fnacimiento">Fecha de Nacimiento</label>
+                                <input 
+                                type="date" 
+                                className="form-control" 
+                                id="fnacimiento" 
+                                name="fnacimiento" 
+                                placeholder="Fecha de Nacimiento" required 
+                                onChange={(event) =>{setFecha(event.target.value)}}/>
+                                </div>
+                            </div>
+                            <div className="mb-3">
+                            <label htmlFor="secc">Sección</label>
                             <input 
                             type="text" 
                             className="form-control" 
-                            id="cel" 
-                            name="cel" required 
-                            onChange={(event) =>{setCelular(event.target.value)}} />
+                            id="secc" 
+                            name="secc" 
+                            placeholder="Sección" required 
+                            onChange={(event) =>{setSeccion(event.target.value)}}/>
                             </div>
+                          
                             
-                            <div className="col-md-6">
-                            <label htmlFor="email">Email</label>
-                            <input 
-                            type="email" 
-                            className="form-control" 
-                            id="email" 
-                            name="email" 
-                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required 
-                            onChange={(event) =>{setEmail(event.target.value)}}/>
-                            </div>
-                        </div>
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                            <label htmlFor="fb">Facebook</label>
-                            <input 
-                            type="text" 
-                            className="form-control" 
-                            id="fb" 
-                            name="fb" 
-                            placeholder=""  required 
-                            onChange={(event) =>{setFacebook(event.target.value)}}/>
-                            </div>
-                            
-                            <div className="col-md-6">
-                            <label htmlFor="tw">Twitter</label>
-                            <input 
-                            type="text" 
-                            className="form-control" 
-                            id="tw" 
-                            name="tw" 
-                            placeholder=""  required 
-                            onChange={(event) =>{setTwitter(event.target.value)}} />
-                            </div>
-                        </div>
-
-                        <div className="mb-3">
-                        <label htmlFor="otrared">Otra red social</label>
-                        <input 
-                        type="text" 
-                        className="form-control" 
-                        id="otrared" 
-                        name="otrared" 
-                        placeholder=""  required 
-                        onChange={(event) =>{setOtra(event.target.value)}}/>
-                        </div>
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                            <label htmlFor="otrared">Contacto</label>
-                            <input 
-                            type="text" 
-                            className="form-control" 
-                            id="contacto" 
-                            name="contacto" 
-                            placeholder=""  required 
-                            onChange={(event) =>{setContacto(event.target.value)}} />
-                            </div>
-                            
-                            <div className="col-md-6">
-                            <label htmlFor="otrared">No. Celular de Contacto</label>
-                            <input 
-                            type="text" 
-                            className="form-control" 
-                            id="nocontacto" 
-                            name="nocontacto" 
-                            placeholder=""  required 
-                            onChange={(event) =>{setCelcontacto(event.target.value)}} />
-                            </div>
-                        </div>
-                        <hr></hr>
-                        <div className="mb-3">
-                        <label htmlFor="tw">Descripción de Apoyo</label>
-                        <input 
-                        type="text" 
-                        className="form-control" 
-                        id="descapoyo" 
-                        name="descapoyo" 
-                        placeholder=""  required 
-                        onChange={(event) =>{setDescapoyo(event.target.value)}} />
-                        </div>
-
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-4">
-                                <label className="small mb-1" htmlFor="tipoapoyo">Tipo de Apoyo</label>
-                                <select 
-                                  className="form-control mr-1" 
-                                  id="tipoapoyo" 
-                                  name="tipoapoyo" required 
-                                  onChange={(event) =>{setTipoapoyo(event.target.value)}}
-                                  >
-                                      <option value="" >Selecciona alguna opcion</option>
-                                      <option value="Económico">Económico</option>
-                                      <option value="Especia">Especie</option>
-                                      <option value="Con terceros">Con terceros</option>
+                            <div className="row gx-3 mb-3">
+                                
+                                <div className="col-md-3">
+                                <label htmlFor="df">Distrito Federal</label>
+                                <input 
+                                type="number" 
+                                className="form-control" 
+                                id="df" 
+                                name="df" required 
+                                onChange={(event) =>{setDfederal(event.target.value)}} />
+                                </div>
+                                
+                                <div className="col-md-3">
+                                <label htmlFor="dl">Distrito Local</label>
+                                <input 
+                                type="number" 
+                                className="form-control" 
+                                id="dl" 
+                                name="dl" required 
+                                onChange={(event) =>{setDlocal(event.target.value)}} />
+                                </div>
+                                <div className="col-md-3">
+                                <button onClick={submitSeccion}  className="btn btn-primary btn-sm distritos" type="submit">Asignar Distritos</button>
+                                </div>
+                                <div className="col-md-3">
+                                    <label className="small mb-1" htmlFor="nivel">Nivel</label>
+                                    <select 
+                                    className="form-control"  
+                                    id="nivel" 
                                     
-                                  </select>
+                                    name="nivel" required 
+                                    onChange={(event) =>{setNivel(event.target.value)}}
+                                    >
+                                        <option value="">Elije un nivel</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                      
+                                      </select>
+                                </div>
                             </div>
-                            
-                            <div className="col-md-4">
-                            <label htmlFor="tw">Monto de Apoyo</label>
+                            <hr></hr>
+
+                            <div className="row gx-3 mb-3">
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="cel">No. Celular</label>
+                                <input 
+                                type="text" 
+                                className="form-control" 
+                                id="cel" 
+                                name="cel" required 
+                                onChange={(event) =>{setCelular(event.target.value)}} />
+                                </div>
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="email">Email</label>
+                                <input 
+                                type="email" 
+                                className="form-control" 
+                                id="email" 
+                                name="email" 
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required 
+                                onChange={(event) =>{setEmail(event.target.value)}}/>
+                                </div>
+                            </div>
+                            <div className="row gx-3 mb-3">
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="fb">Facebook</label>
+                                <input 
+                                type="text" 
+                                className="form-control" 
+                                id="fb" 
+                                name="fb" 
+                                placeholder=""  required 
+                                onChange={(event) =>{setFacebook(event.target.value)}}/>
+                                </div>
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="tw">Twitter</label>
+                                <input 
+                                type="text" 
+                                className="form-control" 
+                                id="tw" 
+                                name="tw" 
+                                placeholder=""  required 
+                                onChange={(event) =>{setTwitter(event.target.value)}} />
+                                </div>
+                            </div>
+
+                            <div className="mb-3">
+                            <label htmlFor="otrared">Otra red social</label>
                             <input 
-                            type="number" 
+                            type="text" 
                             className="form-control" 
-                            id="montoapoyo" 
-                            name="montoapoyo" 
+                            id="otrared" 
+                            name="otrared" 
                             placeholder=""  required 
-                            onChange={(event) =>{setMonto(event.target.value)}} />
+                            onChange={(event) =>{setOtra(event.target.value)}}/>
                             </div>
-                            <div className="col-md-4">
-                                <label className="small mb-1" htmlFor="alcanceapoyo">Alcance de Apoyo</label>
-                                <select 
-                                className="form-control mr-1" 
-                                id="alcanceapoyo" 
-                                name="alcanceapoyo" required 
-                                onChange={(event) =>{setAlcance(event.target.value)}}
-                                >
-                                    <option value="">Selecciona alguna opcion</option>
-                                    <option value="Personal">Personal</option>
-                                    <option value="Familiar">Familiar</option>
-                                    <option value="Comunitario">Comunitario</option>
+                            <div className="row gx-3 mb-3">
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="otrared">Contacto</label>
+                                <input 
+                                type="text" 
+                                className="form-control" 
+                                id="contacto" 
+                                name="contacto" 
+                                placeholder=""  required 
+                                onChange={(event) =>{setContacto(event.target.value)}} />
+                                </div>
+                                
+                                <div className="col-md-6">
+                                <label htmlFor="otrared">No. Celular de Contacto</label>
+                                <input 
+                                type="text" 
+                                className="form-control" 
+                                id="nocontacto" 
+                                name="nocontacto" 
+                                placeholder=""  required 
+                                onChange={(event) =>{setCelcontacto(event.target.value)}} />
+                                </div>
+                            </div>
+                            <hr></hr>
+                            <div className="mb-3">
+                            <label htmlFor="tw">Descripción de Apoyo</label>
+                            <input 
+                            type="text" 
+                            className="form-control" 
+                            id="descapoyo" 
+                            name="descapoyo" 
+                            placeholder=""  required 
+                            onChange={(event) =>{setDescapoyo(event.target.value)}} />
+                            </div>
+
+                            <div className="row gx-3 mb-3">
+                                
+                                <div className="col-md-4">
+                                    <label className="small mb-1" htmlFor="tipoapoyo">Tipo de Apoyo</label>
+                                    <select 
+                                      className="form-control mr-1" 
+                                      id="tipoapoyo" 
+                                      name="tipoapoyo" required 
+                                      onChange={(event) =>{setTipoapoyo(event.target.value)}}
+                                      >
+                                          <option value="" >Selecciona alguna opcion</option>
+                                          <option value="Económico">Económico</option>
+                                          <option value="Especia">Especie</option>
+                                          <option value="Con terceros">Con terceros</option>
+                                        
+                                      </select>
+                                </div>
+                                
+                                <div className="col-md-4">
+                                <label htmlFor="tw">Monto de Apoyo</label>
+                                <input 
+                                type="number" 
+                                className="form-control" 
+                                id="montoapoyo" 
+                                name="montoapoyo" 
+                                placeholder=""  required 
+                                onChange={(event) =>{setMonto(event.target.value)}} />
+                                </div>
+                                <div className="col-md-4">
+                                    <label className="small mb-1" htmlFor="alcanceapoyo">Alcance de Apoyo</label>
+                                    <select 
+                                    className="form-control mr-1" 
+                                    id="alcanceapoyo" 
+                                    name="alcanceapoyo" required 
+                                    onChange={(event) =>{setAlcance(event.target.value)}}
+                                    >
+                                        <option value="">Selecciona alguna opcion</option>
+                                        <option value="Personal">Personal</option>
+                                        <option value="Familiar">Familiar</option>
+                                        <option value="Comunitario">Comunitario</option>
+                                      
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="row gx-3 mb-3">
+                                
+                                <div className="col-md-4">
                                   
-                                </select>
+                                </div>
+                                
+                                <div className="col-md-4">
+                                <button className="btn btn-primary" onClick={atras} type="button">Regresar</button>
+                                </div>
+                                <div className="col-md-4">
+                                    <button className="btn btn-primary" onClick={submitReview} type="button">Guardar cambios</button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-4">
-                               
-                            </div>
-                            
-                            <div className="col-md-4">
-                            <button className="btn btn-primary" onClick={atras} type="button">Regresar</button>
-                            </div>
-                            <div className="col-md-4">
-                                <button className="btn btn-primary" onClick={submitReview} type="button">Guardar cambios</button>
-                            </div>
-                        </div>
-                        
-                        
-                        
-                        
-                    
-                </div>
+                    </div>
+            </div>
+            <div className="col-xl-8" id='right'>
+            
+            {changeCenter==false &&(
+              <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
+                <GoogleMap
+                  id="rectangle-example"
+                  mapContainerStyle={mapContainerStyle}
+                  zoom={9}
+                  center={{lat:coordenadas[0],lng:coordenadas[1]}}
+                  options={option}
+ 
+                >
+                </GoogleMap>
+              </LoadScript>
+            )}
+            {changeCenter==true &&(
+              <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
+                <GoogleMap
+                  id="rectangle-example"
+                  mapContainerStyle={mapContainerStyle}
+                  zoom={18}
+                  center={{lat:newCoordenadas[0],lng:newCoordenadas[1]}}
+                  options={option}
+                  
+                  
+                  
+                >
+              <Marker
+              draggable={true}
+              position={{lat:newCoordenadas[0],lng:newCoordenadas[1]}}>
+              
+              </Marker>
+                
+                
+             
+          
+                </GoogleMap>
+              </LoadScript>
+            )}
+              
+            
+              
             </div>
         </div>
+        
     </div>
-</div>
+
 
         
 
-    </div>
+    
     /*
     <div className="divmap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous"/>

@@ -8,46 +8,34 @@ const mysql= require('mysql')
 const { response } = require('express')
 const Client = require("@googlemaps/google-maps-services-js").Client;
 
-/*
-import {Client} from "@googlemaps/google-maps-services-js";
 
-async function getDriverLocationNearAddress(streetAddress){
-    const geocodingClient = new Client({});
-    let params = {
-            address: streetAddress,
-            components: 'country:US',
-            key: AIzaSyDZxgUG7MfFXKj_zPyvUdclvgrcKSSZsZ8
-        }; 
-    
-        console.log('retrieving lat, lng for ' + streetAddress);
-        geocodingClient.geocode({
-            params:params
-        })
-        .then((response)=>{
-            console.log('status: ' + response.data.status);
-            console.log(response.data.results[0].geometry.location.lat);
-            console.log(response.data.results[0].geometry.location.lng);
-            return response;
-        })
-        .catch((error)=>{
-            console.log('error retrieving geocoded results');
-        });
-    }
-    */
 
+
+//CONEXION BASE DE DATOS LOCAL
 const db= mysql.createConnection({
     user:'root',
     host:'localhost',
-    password:'sime123',
+    password:'',
     database:'sime'
 })
+//CONEXION BASE DE DATOS EN SERVIDOR
 
-const r=[]
+/*const db= mysql.createConnection({
+  user:'root',
+  host:'localhost',
+  password:'sime123',
+  database:'sime'
+})
+*/
+
+
 const  getDriverLocationNearAddress =async (streetAddress)=>{
     const geocodingClient =new Client({});
+    let code={}
     let params = {
             address: streetAddress,
-            key: 'AIzaSyDZxgUG7MfFXKj_zPyvUdclvgrcKSSZsZ8'
+            key: 'AIzaSyDZxgUG7MfFXKj_zPyvUdclvgrcKSSZsZ8',
+            components: 'country:MX',
         }; 
     
         console.log('retrieving lat, lng for ' + streetAddress);
@@ -60,21 +48,15 @@ const  getDriverLocationNearAddress =async (streetAddress)=>{
             //console.log(response.data.results[0].geometry.location.lat);
            
             //console.log(response.data.results[0].geometry.location.lng);
-            r['lat']=response.data.results[0].geometry.location.lat;
-            r['lng']=response.data.results[0].geometry.location.lng;
-            console.log(r)
-            return r;
+            code['lat']=response.data.results[0].geometry.location.lat;
+            code['lng']=response.data.results[0].geometry.location.lng;
+            console.log(code)
+            return code
         })
         .catch((error)=>{
             console.log('error retrieving geocoded results',error);
         });
     }
-/*const db= mysql.createConnection({
-  user:'root',
-  host:'localhost',
-  password:'',
-  database:'sime'
-})*/
 
 
 const credential= JSON.parse(JSON.stringify({
@@ -309,8 +291,9 @@ app.post("/uploadD", upload.single('file'), (req, res) => {
             res.send(JSON.stringify(x)) 
           )
         })
-
+       
       });
+      
 
   }
 });
@@ -327,10 +310,23 @@ app.post('/api/distritos/',(req,res)=>{
       });
 })
 
+app.post('/mapa/',(req,res)=>{
+    const sqlInsert="SELECT id,CONCAT(apaterno,' ',amaterno,' ', nombres) AS nombre, lat,lng,calle,numero,colonia,cp,ciudad from apoyo;";
+    console.log(sqlInsert);
+    db.query(sqlInsert,(err,result) =>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            res.send(JSON.stringify(result))
+        }
+      });
+})
+
 
 
 app.post('/apoyos',(req,res) =>{
-    db.query("SELECT *FROM apoyo",(err,result)=>{
+    db.query("SELECT *FROM apoyo inner join apoyos on apoyo.id=apoyos.id_persona;",(err,result)=>{
         if(err){
             console.log(err)
         }
@@ -368,9 +364,11 @@ app.post('/api/insert/',(req,res)=>{
     const alcance_apoyo=req.body.alcance_apoyo
     const contacto =req.body.contacto
     const no_celcontacto=req.body.no_celcontacto
+    const lat=req.body.lat
+    const lng=req.body.lng
 
     const sql2="SELECT max(id) as id FROM img_ine"
-    const sqlInsert="INSERT INTO apoyo (apaterno,amaterno,nombres,calle,numero,colonia,cp,ciudad,clave_elector,curp,fecha_nacimiento,seccion,distrito_federal,distrito_local,nivel,no_celular,email,facebook,twitter,otra_red,contacto,no_celcontacto,img) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
+    const sqlInsert="INSERT INTO apoyo (apaterno,amaterno,nombres,calle,numero,colonia,cp,ciudad,clave_elector,curp,fecha_nacimiento,seccion,distrito_federal,distrito_local,nivel,no_celular,email,facebook,twitter,otra_red,contacto,no_celcontacto,lat,lng,img) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
     const persona_id="SELECT max(id) as id FROM apoyo"
     const sql3= "INSERT INTO apoyos (descripcion,tipo,monto,alcance,id_persona) VALUES (?,?,?,?,?)"
     db.query(sql2,(err,result) =>{
@@ -383,7 +381,7 @@ app.post('/api/insert/',(req,res)=>{
             clave_elector,curp,fecha_nacimiento,
             seccion,distrito_federal,distrito_local,nivel,
             no_celular,email,facebook,twitter,otra_red,
-            contacto,no_celcontacto,
+            contacto,no_celcontacto,lat,lng,
             id_image],(err,result) =>{
               
               if(err){
@@ -452,6 +450,54 @@ app.delete('/deleteApoyo/:id',(req,res) =>{
         }
     })
 })
+
+app.post('/getLoc/',(req,res) =>{
+    const direccion= req.body.direccion
+    console.log(direccion)
+    const geocodingClient =new Client({});
+    let code={}
+    let params = {
+            address: direccion,
+            key: 'AIzaSyDZxgUG7MfFXKj_zPyvUdclvgrcKSSZsZ8',
+            components: 'country:MX',
+        }; 
+    
+        console.log('retrieving lat, lng for ' + direccion);
+        geocodingClient.geocode({
+            params:params
+        })
+        .then((response)=>{
+            //console.log('status: ' + response.data.status);
+    
+            //console.log(response.data.results[0].geometry.location.lat);
+           
+            //console.log(response.data.results[0].geometry.location.lng);
+            code['lat']=response.data.results[0].geometry.location.lat;
+            code['lng']=response.data.results[0].geometry.location.lng;
+            console.log(code)
+            res.send(code)
+        })
+        .catch((error)=>{
+            console.log('error retrieving geocoded results',error);
+        });
+    
+        
+        
+
+      });
+
+    /*db.query("DELETE FROM apoyo WHERE id=?",id,(err,result)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            res.send(result)
+        }
+    })*/
+
+
+
+/*REVISAR*/
 app.put('/apoyo/update/:id',(req,res) =>{
     console.log(req.body)
     

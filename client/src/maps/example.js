@@ -2,7 +2,7 @@ import React,{ useState } from 'react';
 import { GoogleMap, KmlLayer, LoadScript, InfoWindow,Marker,Polyline,Rectangle } from '@react-google-maps/api';
 import config from './config.json';
 import './maps.css';
-
+import Axios from 'axios';
 
 const mapContainerStyle = {
   width: '74vw', height: '98vh'
@@ -14,6 +14,7 @@ const divStyle = {
   height:'10px',
   fontSize:'10px'
 }
+
 const option = {
 
   mapTypeControl: true,
@@ -43,6 +44,11 @@ const onClick = click =>{
   )
 }
 
+const onPosition = click =>{
+	console.log('click: ',click
+	)
+  }
+
 const positions = [
   
   {id:1,persona:'Persona 1',lat: 19.913155136181825, lng:    -100.23615130148286},
@@ -68,12 +74,20 @@ const onMouseOver = mouse =>{
 function Example() {
   const [infoWindowOpen, setInfoWindowOpen] = useState(false);
   const [peopleInfo, setPeopleInfo] = useState([]);
-  
+  const [list,setList]=useState([]);
   const persona='Persona 1';
   const showInfoWindow = () => {
     setInfoWindowOpen(true);
    
   };
+  const getList=()=>{
+        Axios.post("http://localhost:3001/mapa"
+        //"http://54.219.124.66:3001/apoyos"
+        ).then((response) =>{
+          setList(response.data)
+          console.log(response);
+        });
+      };
     return ( 
      <div className='divmap'>
      <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
@@ -99,10 +113,10 @@ function Example() {
 						<button className="btn btn-light" type="button"><i className="fa fa-search"></i></button>
 					</div>
 					</div>
-					</form>
+					</form>{getList()}
 					<div className="card-body">
-
-					{positions.map(val=>{
+					
+					{list.map((val,key)=>{
 						return(
 						<label className="custom-control custom-checkbox">
 					<input
@@ -113,8 +127,8 @@ function Example() {
 							setPeopleInfo([
 								...peopleInfo,
 								{
-								id:val.id ,
-								persona:val.persona,
+								id:val.id,
+								persona:val.nombre,
 								lat:val.lat,
 								lng:val.lng
 								},
@@ -129,7 +143,7 @@ function Example() {
 					
 						value={val.id}
 					/>
-					<div className="custom-control-label">{val.persona} 
+					<div className="custom-control-label">{val.nombre} 
 					</div>
 						</label>
 						)
@@ -166,6 +180,8 @@ function Example() {
       position={{lat:val.lat,lng:val.lng}}
       label={val.persona}
       onClick={showInfoWindow}
+	 draggable={true}
+	 onPositionChanged={onPosition}
     >
       
       {/*persona == val.persona*/

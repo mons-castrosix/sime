@@ -38,14 +38,7 @@ const center = {
 const onLoad = rectangle => {
   console.log('rectangle: ', rectangle)
 }
-const descrip=[]
-const onClick = click =>{
-  
-  descrip['datos']=click.featureData.description.split('<br>')
-  console.log('click: ',descrip
-  )
-  
-}
+
 
 
 
@@ -58,7 +51,14 @@ const onMouseOver = mouse =>{
 function Resultados() {
   const [infoWindowOpen, setInfoWindowOpen] = useState(false);
   const [peopleInfo, setPeopleInfo] = useState([]);
+  const descrip=[]
+const onClick = click =>{
   
+  descrip['datos']=click.featureData.description.split('<br>')
+  console.log('click: ',descrip
+  )
+  
+}
   
     return ( 
      <div className='divmap'>
@@ -69,7 +69,7 @@ function Resultados() {
       <div className='row'>
       <aside className='col-md-3'>
       <div className="card">
-		
+      
     
 	
 	
