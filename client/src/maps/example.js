@@ -80,16 +80,16 @@ function Example() {
 	
 	const getList = () => {
 		if(value== "apoyos"){
-			Axios.post("http://localhost:3001/mapa-apoyos"
-			//"http://54.219.124.66:3001/apoyos"
+			Axios.post(//"http://localhost:3001/mapa-apoyos"
+			"http://54.219.124.66:3001/mapa-apoyos"
 		).then((response) => {
 			setList(response.data)
 			console.log(response);
 		});
 		}
 		if(value== "estructura"){
-			Axios.post("http://localhost:3001/mapa-estructura"
-			//"http://54.219.124.66:3001/apoyos"
+			Axios.post(//"http://localhost:3001/mapa-estructura"
+			"http://54.219.124.66:3001/mapa-estructura"
 		).then((response) => {
 			setList(response.data)
 			console.log(response);

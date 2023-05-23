@@ -12,21 +12,21 @@ const Client = require("@googlemaps/google-maps-services-js").Client;
 
 
 //CONEXION BASE DE DATOS LOCAL
-const db = mysql.createConnection({
+/*const db = mysql.createConnection({
   user: 'root',
   host: 'localhost',
   password: '',
   database: 'sime'
-})
+})*/
 //CONEXION BASE DE DATOS EN SERVIDOR
 
-/*const db= mysql.createConnection({
+const db= mysql.createConnection({
   user:'root',
   host:'localhost',
   password:'sime123',
   database:'sime'
 })
-*/
+
 
 
 const getDriverLocationNearAddress = async (streetAddress) => {
