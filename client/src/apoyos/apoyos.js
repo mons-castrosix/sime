@@ -129,8 +129,8 @@ function Apoyos() {
     
     try {
       const res = await Axios.post(
-        //"http://54.219.124.66:3001/uploadD",
-        "http://localhost:3001/uploadD",
+        "http://54.219.124.66:3001/uploadD",
+        //"http://localhost:3001/uploadD",
         formData
       );
 
@@ -182,8 +182,8 @@ function Apoyos() {
   const submitReview = () => {
 
 
-    Axios.post(//"http://54.219.124.66:3001/api/insert",
-      "http://localhost:3001/api/insert",
+    Axios.post("http://54.219.124.66:3001/api/insert",
+      //"http://localhost:3001/api/insert",
       {
 
         apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -205,8 +205,8 @@ function Apoyos() {
   const submitSeccion = () => {
 
 
-    Axios.post("http://localhost:3001/api/distritos"
-    /*"http://54.219.124.66:3001/api/distritos"*/, {
+    Axios.post(//"http://localhost:3001/api/distritos"
+    "http://54.219.124.66:3001/api/distritos", {
         seccion: document.getElementById("secc").value
       }).then((res) => {
 
@@ -227,7 +227,7 @@ function Apoyos() {
   const getLocation = () => {
     var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
     document.getElementById("direc").setAttribute('value', direccion)
-    Axios.post("http://localhost:3001/getLoc/", { direccion: document.getElementById("direc").value }).then((res) => {
+    Axios.post(/*"http://localhost:3001/getLoc/"*/"http://54.219.124.66:3001/getLoc", { direccion: document.getElementById("direc").value }).then((res) => {
       console.log(res)
 
       var lat = res.data.lat
@@ -327,7 +327,7 @@ function Apoyos() {
                   required: true,
                 })}
                 placeholder='latitud'
-                 
+                type="hidden"
                 name="lat" id='lat' 
                 
                 value={newCoordenadas[0] || ''}/> 
@@ -336,7 +336,7 @@ function Apoyos() {
                   required: true,
                 })}
               placeholder='longitud' 
-               
+               type='hidden'
               name='lng' 
               id='lng' 
               value={newCoordenadas[1] || ''}/>

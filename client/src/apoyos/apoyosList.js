@@ -33,8 +33,8 @@ function ApoyosList() {
     const [globalFilter, setGlobalFilter] = useState({global: { value: null, matchMode: FilterMatchMode.CONTAINS }});
     const dt = useRef(null);
     const getList = () => {
-        Axios.post("http://localhost:3001/apoyos"
-            //"http://54.219.124.66:3001/apoyos"
+        Axios.post(//"http://localhost:3001/apoyos"
+            "http://54.219.124.66:3001/apoyos"
         ).then((response) => {
             //FILTRAR CAMPOS PARA TABLA
             var resultado = JSON.stringify(response.data);
@@ -68,7 +68,7 @@ function ApoyosList() {
 
 
     const deleteApoyo = (id) => {
-        Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/"+id*/"http://localhost:3001/deleteApoyo/" + id).then(() => {
+        Axios.delete("http://54.219.124.66:3001/deleteApoyo/"+id /*"http://localhost:3001/deleteApoyo/" + id*/).then(() => {
             alert("ELIMINADO")
             navigate('/apoyos')
         })

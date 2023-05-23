@@ -45,8 +45,8 @@ function ViewAp() {
     const [tipoApoyo, setTipoapoyo] = useState('');
     
     const getList = () => {
-        Axios.post(//"http://localhost:3001/apoyoId",{id:id}
-            "http://localhost:3001/apoyos-view/" + id,
+        Axios.post("http://localhost:3001/apoyos-view/"+id,
+            //"http://localhost:3001/apoyos-view/" + id,
         ).then((response) => {
             setList(response.data)
             console.log(list)
