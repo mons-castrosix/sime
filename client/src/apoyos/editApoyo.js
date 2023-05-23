@@ -1,392 +1,1017 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import apoyo from './apoyos.png'
 import Axios from 'axios';
+import './apoyos.css';
+import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.js'
+import 'primeicons/primeicons.css';
+import { useForm } from "react-hook-form";
+import Header from '../header/header';
+import { GoogleMap, KmlLayer, LoadScript, InfoWindow, Marker, Polyline, Rectangle } from '@react-google-maps/api';
+import config from '../maps/config.json';
+import ScriptTag from 'react-script-tag';
+import { useParams } from 'react-router-dom';
+const mapContainerStyle = {
+    width: '100%', height: '98vh', overflow: 'hidden'
+};
+const divStyle = {
+    background: `white`,
 
-  
-function EditApp() {
-  const navigate=useNavigate();
-  const {id}=useParams();
-  const [aPaterno,setApaterno]= useState('');
-  const [aMaterno,setAmaterno]=useState(null);
-  const [nombres,setNombres]=useState('');
-  const [calle,setCalle]=useState('');
-  const [numero,setNumero]=useState('');
-  const [colonia,setColonia]=useState('');
-  const [cp,setCp]=useState('');
-  const [ciudad,setCiudad]=useState('');
-  const [claveElectoral,setClave]=useState('');
-  const [curp,setCurp]= useState('');
-  const [fecha,setFecha]=useState('');
-  const [seccion,setSeccion]=useState('');
-  const [dfederal,setDfederal]=useState(0);
-  const [dLocal,setDlocal]=useState(0);
-  const [celular, setCelular]=useState('');
-  const [email, setEmail]=useState('');
-  const [facebook, setFacebook]=useState('');
-  const [twitter, setTwitter]=useState('');
-  const [otra, setOtra]=useState('');
-  const [descrApoyo, setDescapoyo]=useState('');
-  const [monto, setMonto]=useState(0);
-  const [contacto, setContacto]=useState('');
-  const [celContacto, setCelcontacto]=useState('');
-  const [list,setList]=useState([])
-  const [nivel,setNivel]=useState(0);
-  const [alcance, setAlcance]=useState('');
-  const [tipoApoyo, setTipoapoyo]=useState('');
-  const getList=()=>{
-    Axios.post("http://localhost:3001/apoyoId",{id:id}
-    //"http://54.219.124.66:3001/apoyos"
-    ).then((response) =>{
-      setList(response.data)
-      //console.log(list)
-      document.getElementById("amaterno").setAttribute('value',list[0].amaterno)
-      document.getElementById("apaterno").setAttribute('value',list[0].apaterno)
-      document.getElementById("nombre").setAttribute('value',list[0].nombres)
-      document.getElementById("calle").setAttribute('value',list[0].calle)
-      document.getElementById("numero").setAttribute('value',list[0].numero)
-      document.getElementById("colonia").setAttribute('value',list[0].colonia)
-      document.getElementById("cpostal").setAttribute('value',list[0].cp)
-      document.getElementById("ciudad").setAttribute('value',list[0].ciudad)
-      document.getElementById("celectoral").setAttribute('value',list[0].clave_elector)
-      document.getElementById("curp").setAttribute('value',list[0].curp)
-      var f= list[0].fecha_nacimiento
-      //var f=moment(fecha).utc().format('MM/DD/YYYY')
-      //console.log(f)
-      
-      document.getElementById("fnacimiento").setAttribute('value',f)
-      document.getElementById("dfederal").setAttribute('value',list[0].distrito_federal)
-      document.getElementById("dlocal").setAttribute('value',list[0].distrito_local)
-      document.getElementById("nivel").selectedIndex= list[0].nivel //select
-      document.getElementById("ncelular").setAttribute('value',list[0].no_celular)
-      document.getElementById("secc").setAttribute('value',list[0].seccion)
-      document.getElementById("email").setAttribute('value',list[0].email)
-      document.getElementById("facebook").setAttribute('value',list[0].facebook)
-      document.getElementById("twitter").setAttribute('value',list[0].twitter)
-      document.getElementById("ncelular").setAttribute('value',list[0].no_celular)
-      document.getElementById("otrared").setAttribute('value',list[0].otra_red)
-      document.getElementById("descapoyo").setAttribute('value',list[0].descripcion)
-      
-      if(list[0].alcance =='Personal'){
-        document.getElementById("alcanceapoyo").selectedIndex= 1
-        setAlcance(document.getElementById("alcanceapoyo").value)
-      }else{
-        if(list[0].alcance =='Familiar'){
-            document.getElementById("alcanceapoyo").selectedIndex= 2
-            setAlcance(document.getElementById("alcanceapoyo").value)
-        }
-        if(list[0].alcance=='Comunitario'){
-            document.getElementById("alcanceapoyo").selectedIndex= 3
-            setAlcance(document.getElementById("alcanceapoyo").value)
-        }
-      }
+    width: '50px',
+    height: '10px',
+    fontSize: '10px'
+}
+const option = {
 
-      if(list[0].tipo == 'Económico'){
-        document.getElementById("tipoapoyo").selectedIndex= 1
-        setTipoapoyo(document.getElementById("tipoapoyo").value)
-      }
-      else{
-        if(list[0].tipo == 'Especie'){
-            document.getElementById("tipoapoyo").selectedIndex= 2
-        }
-        if(list[0].tipo == 'Con terceros'){
-            document.getElementById("tipoapoyo").selectedIndex= 3
-        }
-      }
-      document.getElementById("monto").setAttribute('value',list[0].monto)
-      document.getElementById("contacto").setAttribute('value',list[0].contacto)
-      document.getElementById("celcontacto").setAttribute('value',list[0].no_celcontacto)
-      setApaterno(document.getElementById("apaterno").value)
-      
-      setAmaterno(document.getElementById("amaterno").value)
-      setNombres(document.getElementById("nombre").value)
-      setCalle(document.getElementById("calle").value)
-      setNivel(document.getElementById("nivel").selectedIndex= list[0].nivel)
-      //setTipoapoyo(document.getElementById("tipoapoyo").selectedIndex= list[0].tipo)
-     
-      //setAlcance(document.getElementById("alcanceapoyo").selectedIndex=list[0].alcance)
-      setTwitter(document.getElementById("twitter").value)
-      setFacebook(document.getElementById("facebook").value)
-      setNumero(document.getElementById("numero").value)
-      setColonia(document.getElementById("colonia").value)
-      setCp(document.getElementById("cpostal").value)
-      setCiudad(document.getElementById("ciudad").value)
-      setClave(document.getElementById("celectoral").value)
-      setCurp(document.getElementById("curp").value)
-      setFecha(document.getElementById("fnacimiento").value)
-      setSeccion(document.getElementById("secc").value)
-      setDfederal(document.getElementById("dfederal").value)
-      setDlocal(document.getElementById("dlocal").value)
-      setContacto(document.getElementById("contacto").value)
-      setOtra(document.getElementById("otrared").value)
-      setMonto(document.getElementById("monto").value)
-      setCelcontacto(document.getElementById("celcontacto").value)
-      setEmail(document.getElementById("email").value)
-      setCelular(document.getElementById("ncelular").value)
-      setDescapoyo(document.getElementById("descapoyo").value)
+    mapTypeControl: true,
+    scaleControl: true,
+    streetViewControl: true,
+    fullscreenControl: true,
+    clickableIcons: true,
+    streetViewPanorama: true,
 
-    });
-  }
-  const submitReview = () =>{
-    console.log(facebook)
-
-    Axios.put(//"http://54.219.124.66:3001/api/insert",
-    "http://localhost:3001/apoyo/update/"+id,
-    {
-    apaterno:aPaterno,amaterno:aMaterno,nombres:nombres,calle:calle,numero:numero,colonia:colonia,cp:cp,
-    ciudad:ciudad,clave_elector:claveElectoral,curp:curp,fecha_nacimiento:fecha,seccion:seccion,distrito_federal:dfederal,
-    distrito_local:dLocal,nivel:nivel,no_celular:celular,email:email,facebook:facebook,twitter:twitter,
-    otra_red:otra,descripcion_apoyo:descrApoyo,apoyo_tipo:tipoApoyo,monto_apoyo:monto,alcance_apoyo:alcance,contacto:contacto,
-    no_celcontacto:celContacto
-    }).then(() => {
-      console.log("succes")
-      alert("ACTUALIZADO")
-      navigate('/apoyos')
-
-    });
-    
-      
-  }
-  const atras = () =>{ 
-    let path = '/apoyos'; 
-    navigate(path);
-  }
-
-  
-  
-  return (
-    <div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous"/>
-       <div className="container-xl px-4 mt-4">
-   
-    <nav className="nav nav-borders">
-        
-    </nav>
-    
-    <div className="row">
-        <div className="col-xl-12">
-            
-            <div className="card mb-4">
-                <div className="card-header">Detalles</div>
-                <div className="card-body">
-                    <form onLoad={getList()}>
-                        
-                        <div className="mb-3">
-                            <label className="small mb-1" htmlFor="nombre">Nombre (s)</label>
-                            <input className="form-control" id="nombre" typnamee="text" name="nombre"  onChange={(event) =>{setNombres(event.target.value)}}/>
-                        </div>
-                       
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                                <label className="small mb-1" htmlFor="apaterno">Apellido Paterno</label>
-                                <input className="form-control" id="apaterno" type="text" name="apaterno"  onChange={(event) =>{setApaterno(event.target.value)}}/>
-                            </div>
-                            
-                            <div className="col-md-6">
-                                <label className="small mb-1" htmlFor="amaterno">Apellido Materno</label>
-                                <input className="form-control" id="amaterno" name='amaterno' type="text"    onChange={(event) =>{setAmaterno(event.target.value)}} />
-                            </div>
-                        </div>
-                       
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                                <label className="small mb-1" htmlFor="calle">Calle</label>
-                                <input className="form-control" id="calle" name='calle' type="text"  onChange={(event) =>{ setCalle(event.target.value)}} />
-                            </div>
-                            
-                            <div className="col-md-6">
-                                <label className="small mb-1" htmlFor="numero">No.</label>
-                                <input className="form-control" id="numero" type="text" name='numero'  onChange={(event) =>{setNumero(event.target.value)}} />
-                            </div>
-                        </div>
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                                <label className="small mb-1" htmlFor="colonia">Colonia</label>
-                                <input className="form-control" id="colonia" type="text" name='colonia'  onChange={(event) =>{setColonia(event.target.value)}} />
-                            </div>
-                            
-                            <div className="col-md-6">
-                                <label className="small mb-1" htmlFor="cp">CP</label>
-                                <input className="form-control" id="cpostal" type="text" name='cpostal'  onChange={(event) =>{setCp(event.target.value)}} />
-                            </div>
-                        </div>
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                                <label className="small mb-1" htmlFor="ciudad">Ciudad</label>
-                                <input className="form-control" id="ciudad" type="text" name='ciudad'  onChange={(event) =>{setCiudad(event.target.value)}} />
-                            </div>
-                            
-                            <div className="col-md-6">
-                                <label className="small mb-1" htmlFor="celectoral">Clave Electoral</label>
-                                <input className="form-control" id="celectoral" type="text" name='celectoral'  onChange={(event) =>{setClave(event.target.value)}} />
-                            </div>
-                        </div>
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                            <label className="small mb-1" htmlFor="descapoyo">CURP</label>
-                            <input className="form-control" id="curp" name='curp' type="text"  onChange={(event) =>{setCurp(event.target.value)}} />
-                            </div>
-                            
-                            <div className="col-md-6">
-                            <label className="small mb-1" htmlFor="descapoyo">Fecha de Nacimiento</label>
-                            <input className="form-control" id="fnacimiento" name='fnacimiento' type="text"  onChange={(event) =>{setCurp(event.target.value)}} />
-                            </div>
-                        </div>
-                        <div className="mb-3">
-                            <label className="small mb-1" htmlFor="otrared">Sección</label>
-                            <input className="form-control" id="secc" name='secc' type="text"  onChange={(event) =>{setSeccion(event.target.value)}}/>
-                        </div>
-                       
-                        
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-4">
-                                <label className="small mb-1" htmlFor="dfederal">Distrito Federal</label>
-                                <input className="form-control" id="dfederal" name='dfederal' type="text"  onChange={(event) =>{setDfederal(event.target.value)}} />
-                            </div>
-                            
-                            <div className="col-md-4">
-                                <label className="small mb-1" htmlFor="dlocal">Distrito Local</label>
-                                <input className="form-control" id="dlocal" name='dlocal' type="text"  onChange={(event) =>{setDlocal(event.target.value)}} />
-                            </div>
-                            <div className="col-md-4">
-                                <label className="small mb-1" htmlFor="nivel">Nivel</label>
-                                <select 
-                                className="form-control"  
-                                id="nivel" 
-                                
-                                name="nivel" required 
-                                onChange={(event) =>{setNivel(event.target.value)}}
-                                >
-                                    <option value="">Elije un nivel</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                  
-                                  </select>
-                            </div>
-                        </div>
-                        <hr></hr>
-
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                                <label className="small mb-1" htmlFor="ncelular">No. Celular</label>
-                                <input className="form-control" id="ncelular" name='ncelular' type="tel"  onChange={(event) =>{setCelular(event.target.value)}}/>
-                            </div>
-                            
-                            <div className="col-md-6">
-                            <label className="small mb-1" htmlFor="email">Email</label>
-                            <input className="form-control" id="email" name='email' type="email"  onChange={(event) =>{setEmail(event.target.value)}} />
-                            </div>
-                        </div>
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                                <label className="small mb-1" htmlFor="facebook">Facebook</label>
-                                <input className="form-control" name='facebook' id="facebook" type="text"  onChange={(event) =>{setFacebook(event.target.value)}} />
-                            </div>
-                            
-                            <div className="col-md-6">
-                                <label className="small mb-1" htmlFor="twitter">Twitter</label>
-                                <input className="form-control" id="twitter" name='twitter' type="text"  onChange={(event) =>{setTwitter(event.target.value)}} />
-                            </div>
-                        </div>
-
-                        <div className="mb-3">
-                            <label className="small mb-1" htmlFor="otrared">Otra red</label>
-                            <input className="form-control" id="otrared" name='otrared' type="text"  onChange={(event) =>{setOtra(event.target.value)}}/>
-                        </div>
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-6">
-                                <label className="small mb-1" htmlFor="contacto">Contacto</label>
-                                <input className="form-control" id="contacto" name='contacto' type="text"  onChange={(event) =>{setContacto(event.target.value)}}/>
-                            </div>
-                            
-                            <div className="col-md-6">
-                                <label className="small mb-1" htmlFor="celcontacto">No. Celular Contacto</label>
-                                <input className="form-control" id="celcontacto" name='celcontacto' type="text"  onChange={(event) =>{setCelcontacto(event.target.value)}} />
-                            </div>
-                        </div>
-                        <hr></hr>
-                        <div className="mb-3">
-                            <label className="small mb-1" htmlFor="descapoyo">Descripción de Apoyo</label>
-                            <input className="form-control" id="descapoyo" name='descapoyo' type="text"  onChange={(event) =>{setDescapoyo(event.target.value)}} />
-                        </div>
-
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-4">
-                                <label className="small mb-1" htmlFor="tipoapoyo">Tipo de Apoyo</label>
-                                <select 
-                                  className="form-control mr-1" 
-                                  id="tipoapoyo" 
-                                  name="tipoapoyo" required 
-                                  onChange={(event) =>{setTipoapoyo(event.target.value)}}
-                                  >
-                                      <option value="" >Selecciona alguna opcion</option>
-                                      <option value="Económico">Económico</option>
-                                      <option value="Especia">Especie</option>
-                                      <option value="Con terceros">Con terceros</option>
-                                    
-                                  </select>
-                            </div>
-                            
-                            <div className="col-md-4">
-                                <label className="small mb-1" htmlFor="monto">Monto de Apoyo</label>
-                                <input className="form-control" id="monto" name='monto' type="text"  onChange={(event) =>{setMonto(event.target.value)}}/>
-                            </div>
-                            <div className="col-md-4">
-                                <label className="small mb-1" htmlFor="alcanceapoyo">Alcance de Apoyo</label>
-                                <select 
-                                className="form-control mr-1" 
-                                id="alcanceapoyo" 
-                                name="alcanceapoyo" required 
-                                onChange={(event) =>{setAlcance(event.target.value)}}
-                                >
-                                    <option value="">Selecciona alguna opcion</option>
-                                    <option value="Personal">Personal</option>
-                                    <option value="Familiar">Familiar</option>
-                                    <option value="Comunitario">Comunitario</option>
-                                  
-                                </select>
-                            </div>
-                        </div>
-                        <div className="row gx-3 mb-3">
-                            
-                            <div className="col-md-4">
-                               
-                            </div>
-                            
-                            <div className="col-md-4">
-                            <button className="btn btn-primary" onClick={atras} type="button">Regresar</button>
-                            </div>
-                            <div className="col-md-4">
-                                <button className="btn btn-primary" onClick={submitReview} type="button">Guardar cambios</button>
-                            </div>
-                        </div>
-                        
-                        
-                        
-                        
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-        
-
-    </div>
-
-  );
+};
+const optionMap = {
+    clickable: true,
+    preserveViewport: true,
+    screenOverlays: true,
+    suppressInfoWindows: false
 }
 
-export default EditApp;
+
+const onLoad = rectangle => {
+    console.log('rectangle: ', rectangle)
+}
+
+const onClick = click => {
+    console.log('click: ', click.featureData
+    )
+}
+
+const onPosition = click => {
+    console.log('click: ', click
+    )
+}
+
+
+function ViewAp() {
+
+    const { id } = useParams();
+
+
+
+
+
+    const [file, setFile] = useState("");
+    const [fileName, setFileName] = useState("");
+    const [aPaterno, setApaterno] = useState("");
+    const [aMaterno, setAmaterno] = useState("");
+    const [nombres, setNombres] = useState("");
+    const [calle, setCalle] = useState("");
+    const [numero, setNumero] = useState("");
+    const [colonia, setColonia] = useState("");
+    const [cp, setCp] = useState("");
+    const [ciudad, setCiudad] = useState("");
+    const [claveElectoral, setClave] = useState("");
+    const [curp, setCurp] = useState("");
+    const [fechaNacimiento, setFecha] = useState("");
+    const [seccion, setSeccion] = useState("");
+    const [dFederal, setDfederal] = useState("");
+    const [dLocal, setDlocal] = useState("");
+    const [nivel, setNivel] = useState("");
+    const [celular, setCelular] = useState("");
+    const [email, setEmail] = useState("");
+    const [facebook, setFacebook] = useState("");
+    const [twitter, setTwitter] = useState("");
+    const [otra, setOtra] = useState("");
+    const [descrApoyo, setDescapoyo] = useState("");
+    const [tipoApoyo, setTipoapoyo] = useState("");
+    const [monto, setMonto] = useState("");
+    const [alcance, setAlcance] = useState("");
+    const [contacto, setContacto] = useState("");
+    const [celContacto, setCelcontacto] = useState("");
+    const [selectedImage, setSelectedImage] = useState("");
+    const [coordenadas, setCoordenadas] = useState([19.36313799880912
+        , -101.81796480831713]);
+    const [newCoordenadas, setNewCoor] = useState([])
+    const [changeCenter, setChangeCenter] = useState(false);
+    const [list, setList] = useState([])
+    const navigate = useNavigate();
+    const getList = () => {
+        Axios.post(//"http://localhost:3001/apoyoId",{id:id}
+            "http://localhost:3001/apoyos-edit/" + id
+        ).then((res) => {
+            setList(res.data)
+            setValue("apaterno", res.data.apaterno);
+            setValue("amaterno", res.data.amaterno);
+            setValue("calle", res.data.calle);
+            setValue("numero", res.data.numero);
+            setValue("colonia", res.data.colonia);
+            setValue("cpostal", res.data.cp);
+            setValue("ciudad", res.data.ciudad);
+            setValue("celectoral", res.data.c_elector);
+            setValue("curp", res.data.curp);
+            setValue("fnacimiento", res.data.fecha_nacimiento);
+            setValue("secc", res.data.seccion);
+            setValue("df", res.data.distrito_federal);
+            setValue("dl", res.data.distrito_local);
+
+            console.log(res.data)
+        });
+    }
+
+    /*const center = {
+      lat: document.getElementById("lat").value,
+      lng:document.getElementById("lng").value
+    };*/
+
+    const [infoWindowOpen, setInfoWindowOpen] = useState(false);
+    const [peopleInfo, setPeopleInfo] = useState([]);
+
+    const persona = 'Persona 1';
+    const ref = useRef(null);
+
+    const atras = () => {
+        let path = '/apoyos';
+        navigate(path);
+    }
+    const saveFile = (e) => {
+        setFile(e.target.files[0]);
+        setFileName(e.target.files[0].name);
+    };
+    const onLoad = rectangle => {
+        console.log('rectangle: ', rectangle.latLng.lat());
+        console.log('rectangle: ', rectangle.latLng.lng());
+        setValue("lat", rectangle.latLng.lat())
+        setValue("lng", rectangle.latLng.lng())
+        setNewCoor([rectangle.latLng.lat(), rectangle.latLng.lng()])
+    }
+
+    const uploadFile1 = async (e) => {
+        const formData = new FormData();
+        console.log(fileName)
+        console.log(file)
+        formData.append("file", file);
+        formData.append("fileName", fileName);
+        //console.log(formData)
+
+        try {
+            const res = await Axios.post(
+                //"http://54.219.124.66:3001/uploadD",
+                "http://localhost:3001/uploadD",
+                formData
+            );
+
+
+            var fecha = res.data.fecha_nacimiento
+            fecha = fecha.split("/").reverse().join("-");
+            console.log(fecha)
+            setValue("nombre", res.data.nombres)
+
+            setValue("apaterno", res.data.apaterno);
+            setValue("amaterno", res.data.amaterno);
+            setValue("calle", res.data.calle);
+            setValue("numero", res.data.numero);
+            setValue("colonia", res.data.colonia);
+            setValue("cpostal", res.data.cp);
+            setValue("ciudad", res.data.ciudad);
+            setValue("celectoral", res.data.c_elector);
+            setValue("curp", res.data.curp);
+            setValue("fnacimiento", fecha);
+            setValue("secc", res.data.seccion);
+            setValue("df", res.data.distrito_federal);
+            setValue("dl", res.data.distrito_local);
+
+            setNombres(res.data.nombres)
+            setApaterno(res.data.apaterno);
+            setAmaterno(res.data.amaterno);
+            setCalle(res.data.calle);
+            setNumero(res.data.numero);
+            setColonia(res.data.colonia);
+            setCp(res.data.cp);
+            setCiudad(res.data.ciudad);
+            setClave(res.data.c_elector);
+            setCurp(res.data.curp);
+            setFecha(fecha);
+            setSeccion(res.data.seccion);
+            setDfederal(res.data.distrito_federal);
+            setDlocal(res.data.distrito_local);
+
+
+        } catch (ex) {
+            //console.log(ex);
+        }
+    };
+  
+
+    const submitReview = () => {
+
+
+        Axios.post(//"http://54.219.124.66:3001/api/insert",
+            "http://localhost:3001/api/insert",
+            {
+
+                apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
+                ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
+                distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
+                otra_red: otra, descripcion_apoyo: descrApoyo, apoyo_tipo: tipoApoyo, monto_apoyo: monto, alcance_apoyo: alcance, contacto: contacto,
+                no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value
+            }).then(() => {
+                console.log("succes")
+                //alert("AGREGADO")
+                navigate('/apoyos')
+
+            });
+        /*console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
+          + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel
+          + celular + email + facebook + twitter + otra + descrApoyo + tipoApoyo
+          + monto + alcance + contacto + celContacto+camera_ine)*/
+    }
+    const submitSeccion = () => {
+
+
+        Axios.post("http://localhost:3001/api/distritos"
+    /*"http://54.219.124.66:3001/api/distritos"*/, {
+                seccion: document.getElementById("secc").value
+            }).then((res) => {
+
+                console.log(res.data.df)
+
+                setDfederal(res.data.df)
+                setDlocal(res.data.dl)
+                setValue("dl", res.data.dl)
+                setValue("df", res.data.df)
+
+                console.log(seccion)
+
+
+            });
+
+    }
+
+    const getLocation = () => {
+        var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
+        document.getElementById("direc").setAttribute('value', direccion)
+        Axios.post("http://localhost:3001/getLoc/", { direccion: document.getElementById("direc").value }).then((res) => {
+            console.log(res)
+
+            var lat = res.data.lat
+            console.log(lat)
+            var lng = res.data.lng
+            console.log(lng)
+
+            setNewCoor([lat, lng])
+
+
+            setChangeCenter(true);
+
+
+        })
+    }
+
+
+    const limpiar = e => {
+        e.preventDefault()
+
+        // do something
+        setValue("nombre", "");
+        setValue("apaterno", "");
+        setValue("amaterno", "");
+        setValue("calle", "");
+        setValue("numero", "");
+        setValue("colonia", "");
+        setValue("cpostal", "");
+        setValue("ciudad", "");
+        setValue("celectoral", "");
+        setValue("curp", "");
+        setValue("fnacimiento", "");
+        setValue("secc", "");
+        setValue("df", "");
+        setValue("dl", "");
+        setValue("cel", "");
+        setValue("email", "");
+        setValue("fb", "");
+        setValue("tw", "");
+        setValue("otrared", "");
+        setValue("nivel", "");
+        setValue("contacto", "");
+        setValue("nocontacto", "");
+        setValue("descapoyo", "");
+        setValue("tipoapoyo", "");
+        setValue("montoapoyo", "");
+        setValue("alcanceapoyo", "");
+
+    }
+
+
+    // This function will be triggered when the "Remove This Image" button is clicked
+    const removeSelectedImage = () => {
+        setFile();
+    };
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+    useEffect(() => {
+        getList();
+    });
+    const handleRegistration = (data) => console.log(data);
+    const onSubmit = (data) => {
+
+        alert(JSON.stringify(data));
+        submitReview();
+    }; // your form submit function which will invoke after successful validation
+
+
+
+    return (
+        <div>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous" />
+
+
+            <Header></Header>
+
+
+            <div className="row">
+                <div className="col-5" >
+
+                    <div className="card-header text-center">REGISTRO DE APOYOS</div>
+                    <form onSubmit={handleSubmit(handleRegistration)}>
+                        <div className="card-body text-center vertical-scrollable ">
+
+                            <br></br>
+                            <input type="file"
+                                className="form-control"
+                                id="ine"
+                                capture='enviroment'
+                                name="ine"
+                                accept='image/*'
+                                encType="multipart/form-data"
+                                required onChange={saveFile} /> <br></br>
+                            <button onClick={uploadFile1} className="btn btn-dark btn-md cargar" type="submit">Cargar INE</button>
+                            <br />
+
+
+                            <input
+                                {...register("lat", {
+                                    required: true,
+                                })}
+                                placeholder='latitud'
+
+                                name="lat" id='lat'
+
+                                value={newCoordenadas[0] || ''} />
+                            <input
+                                {...register("lng", {
+                                    required: true,
+                                })}
+                                placeholder='longitud'
+
+                                name='lng'
+                                id='lng'
+                                value={newCoordenadas[1] || ''} />
+                            {file && (
+                                <div className='row'>
+                                    <div className='col-2'></div>
+                                    <div className='col-1'><button className='delete' onClick={removeSelectedImage} >
+                                        X
+                                    </button></div>
+                                    <div className='col-9'>
+                                        <div className='preview' >
+                                            <img
+                                                src={URL.createObjectURL(file)}
+                                                alt="Thumb"
+                                            />
+
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            )}
+                            <div className="row gx-3 mb-3">
+                                <div className=" col-12">
+                                    <label htmlFor="nombre">Nombre(s)</label>
+                                    <input
+                                        {...register("nombre", {
+                                            required: true,
+                                            pattern: /^[A-Za-z.\s_-]+$/
+
+                                        })}
+
+                                        className="form-control"
+                                        id="nombre"
+                                        name="nombre"
+
+
+                                        placeholder="Nombre (s)"
+                                        onChange={e => setNombres(e.target.value)}
+
+
+                                    />
+                                    {errors?.nombre?.type === "required" && <span className='eform'>Campo Vacio </span>}
+                                    {errors?.nombre?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                                    )}
+
+                                </div>
+                            </div>
+
+                            <div className="row gx-3 mb-3">
+                                <div className="col-md-6">
+                                    <label htmlFor="apaterno">Apellido Paterno</label>
+                                    <input
+                                        {...register("apaterno", {
+                                            required: true,
+                                            pattern: /^[A-Za-z.\s_-]+$/
+
+                                        })}
+
+                                        className="form-control"
+                                        id="apaterno"
+                                        name="apaterno"
+                                        placeholder="Apellido Paterno"
+                                        onChange={e => { setApaterno(e.target.value) }}
+
+                                    />
+
+                                    {errors?.apaterno?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.apaterno?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                                    )}
+
+                                </div>
+
+                                <div className="col-md-6">
+                                    <label htmlFor="amaterno">Apellido Materno</label>
+                                    <input
+                                        {...register("amaterno", {
+                                            required: true,
+                                            pattern: /^[A-Za-z.\s_-]+$/
+                                        })}
+
+                                        className="form-control"
+                                        id="amaterno"
+                                        name="amaterno"
+
+                                        placeholder="Apellido Materno"
+                                        onChange={e => { setAmaterno(e.target.value) }} />
+                                    {errors?.amaterno?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.amaterno?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div className="row gx-3 mb-3">
+
+                                <div className="col-md-8">
+                                    <label htmlFor="calle">Calle</label>
+                                    <input
+                                        {...register("calle", {
+                                            required: true,
+                                            pattern: /^[A-Za-z.\s_-]+$/
+                                        })}
+
+                                        className="form-control"
+                                        id="calle"
+                                        name="calle"
+
+                                        placeholder="Calle" required
+                                        onChange={e => { setCalle(e.target.value) }} />
+                                    {errors?.calle?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.calle?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                                    )}
+                                </div>
+
+                                <div className="col-md-4">
+                                    <label htmlFor="numero">No.</label>
+                                    <input
+                                        {...register("numero", {
+                                            required: true,
+                                            pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                        })}
+
+                                        className="form-control"
+                                        id="numero"
+                                        name="numero"
+
+                                        placeholder="Número" required
+                                        onChange={e => { setNumero(e.target.value) }} />
+                                    {errors?.numero?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.numero?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="row gx-3 mb-3">
+
+                                <div className="col-md-8">
+                                    <label htmlFor="colonia">Colonia</label>
+                                    <input
+                                        {...register("colonia", {
+                                            required: true,
+                                            pattern: /^[A-Za-z.\s_-]+$/
+                                        })}
+
+                                        className="form-control"
+                                        id="colonia"
+                                        name="colonia"
+
+                                        placeholder="Colonia" required
+                                        onChange={e => { setColonia(e.target.value) }} />
+                                    {errors?.colonia?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+                                </div>
+
+                                <div className="col-md-4">
+                                    <label htmlFor="cpostal">CP</label>
+                                    <input
+                                        {...register("cpostal", {
+                                            required: true,
+                                            pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                        })}
+
+                                        className="form-control"
+                                        id="cpostal"
+                                        name="cpostal"
+
+                                        placeholder="Código Postal" required
+                                        onChange={e => { setCp(e.target.value) }} />
+                                    {errors?.cpostal?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.cpostal?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="row gx-3 mb-3">
+
+                                <div className="col-md-6">
+                                    <label htmlFor="colonia">Ciudad</label>
+                                    <input
+                                        {...register("ciudad", {
+                                            required: true,
+                                            pattern: /^[A-Za-z.\s_-]+$/
+                                        })}
+
+                                        className="form-control"
+                                        id="ciudad"
+                                        name="ciudad"
+
+                                        placeholder="Ciudad" required
+                                        onChange={e => { setCiudad(e.target.value) }} />
+                                    {errors?.ciudad?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                </div>
+
+
+                                <div className="col-md-6">
+                                    <label htmlFor="celectoral">Clave Electoral</label>
+                                    <input
+                                        {...register("celectoral", {
+                                            required: true,
+                                            pattern: /^[a-zA-Z0-9]+$/
+                                        })}
+
+                                        className="form-control"
+                                        id="celectoral"
+                                        name="celectoral"
+
+                                        placeholder="Clave electoral" required
+                                        onChange={e => { setClave(e.target.value) }} />
+                                    {errors?.celectoral?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.celectoral?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres alfanumericos</span>
+                                    )}
+                                </div>
+                            </div>
+                            <input type="hidden" readOnly id="direc" />
+
+                            <div className="row gx-3 mb-3">
+
+                                <div className="col-md-6">
+                                    <label htmlFor="curp">CURP</label>
+                                    <input
+                                        {...register("curp", {
+                                            required: true,
+                                            pattern: /^[a-zA-Z0-9]+$/
+                                        })}
+
+                                        className="form-control"
+                                        id="curp"
+
+                                        name="curp"
+                                        placeholder="CURP" required
+                                        onChange={e => { setCurp(e.target.value) }} />
+                                    {errors?.curp?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.curp?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres alfanumericos</span>
+                                    )}
+                                </div>
+
+                                <div className="col-md-6">
+                                    <label htmlFor="fnacimiento">Fecha de Nacimiento</label>
+                                    <input
+                                        {...register("fnacimiento", {
+                                            required: true,
+
+                                        })}
+                                        type="date"
+                                        className="form-control"
+
+                                        id="fnacimiento"
+                                        name="fnacimiento"
+                                        placeholder="Fecha de Nacimiento" required
+                                        onChange={e => { setFecha(e.target.value) }} />
+                                    {errors?.fechanacimiento?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+                                </div>
+                            </div>
+
+
+                            <div className="row gx-3 mb-3">
+                                <div className="col-3 mb-3">
+                                    <label htmlFor="secc">Sección</label>
+                                    <input
+                                        {...register("secc", {
+                                            required: true,
+                                            pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                        })}
+
+                                        className="form-control"
+                                        id="secc"
+                                        name="secc"
+                                        placeholder="Sección" required
+                                        onChange={e => { setSeccion(e.target.value) }} />
+                                    {errors?.secc?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.secc?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                                    )}
+                                </div>
+
+
+                                <div className="col-4">
+                                    <label htmlFor="df">Distrito Federal</label>
+                                    <input
+                                        {...register("df", {
+                                            required: true,
+                                            pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                        })}
+
+                                        className="form-control"
+                                        id="df"
+
+                                        name="df" required
+                                        onChange={e => { setDfederal(e.target.value) }} />
+                                    {errors?.df?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.df?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                                    )}
+                                </div>
+
+                                <div className="col-4">
+                                    <label htmlFor="dl">Distrito Local</label>
+                                    <input
+                                        {...register("dl", {
+                                            required: true,
+                                            pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                        })}
+
+                                        className="form-control"
+                                        id="dl"
+
+                                        name="dl" required
+                                        onChange={e => { setDlocal(e.target.value) }} />
+                                    {errors?.dl?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.dl?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                                    )}
+                                </div>
+                                <div className="col-1">
+                                    <button onClick={submitSeccion} className="btn btn-primary btn-circle distritos" type="submit"><i className="pi pi-check"></i></button>
+                                </div>
+
+
+                            </div>
+                            <div className='row'>
+                                <div className='col-2'></div>
+                                <div className='col-8'>
+                                    <button className="btn btn-dark btn-md cargar" onClick={getLocation} type="button">Georeferenciar</button>
+                                </div>
+                                <div className='col-2'></div>
+                            </div>
+                            <hr id="division"></hr>
+                            <div className="row gx-3 mb-3">
+
+                                <div className="col-md-6">
+                                    <label htmlFor="cel">No. Celular</label>
+                                    <input
+                                        {...register("cel", {
+                                            required: true,
+                                            pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                        })}
+
+                                        className="form-control"
+                                        id="cel"
+                                        name="cel" required
+                                        onChange={e => { setCelular(e.target.value) }} />
+                                    {errors?.cel?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.cel?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                                    )}
+                                </div>
+
+                                <div className="col-md-6">
+                                    <label htmlFor="email">Email</label>
+                                    <input
+                                        {...register("email", {
+                                            required: true,
+                                            pattern: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/
+                                        })}
+                                        type="email"
+                                        className="form-control"
+                                        id="email"
+                                        name="email"
+                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required
+                                        onChange={e => { setEmail(e.target.value) }} />
+                                    {errors?.email?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.email?.type === "pattern" && (
+                                        <span className='eform'>Ingresa formato de correo electrónico</span>
+                                    )}
+                                </div>
+                            </div>
+
+
+                            <div className="row gx-3 mb-3">
+
+                                <div className="col-md-6">
+                                    <label htmlFor="fb">Facebook</label>
+                                    <input
+                                        {...register("fb", {
+                                            required: true,
+                                            pattern: /^[a-z][a-z\s]*$/
+                                        })}
+
+                                        className="form-control"
+                                        id="fb"
+                                        name="fb"
+                                        placeholder="" required
+                                        onChange={e => { setFacebook(e.target.value) }} />
+                                    {errors?.fb?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.fb?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                                    )}
+                                </div>
+
+                                <div className="col-md-6">
+                                    <label htmlFor="tw">Twitter</label>
+                                    <input
+                                        {...register("tw", {
+                                            required: true,
+                                            pattern: /^[a-z][a-z\s]*$/
+                                        })}
+
+                                        className="form-control"
+                                        id="tw"
+                                        name="tw"
+                                        placeholder="" required
+                                        onChange={e => { setTwitter(e.target.value) }} />
+                                    {errors?.tw?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.tw?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                                    )}
+                                </div>
+                            </div>
+                            <div className='row'>
+                                <div className='col-6'>
+                                    <div className="mb-3">
+                                        <label htmlFor="otrared">Otra red social</label>
+                                        <input
+                                            {...register("otrared", {
+                                                required: true,
+                                                pattern: /^[a-z][a-z\s]*$/
+                                            })}
+
+                                            className="form-control"
+                                            id="otrared"
+                                            name="otrared"
+                                            placeholder="" required
+                                            onChange={e => { setOtra(e.target.value) }} />
+                                        {errors?.otrared?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                        {errors?.otrared?.type === "pattern" && (
+                                            <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                                        )}
+                                    </div></div>
+                                <div className='col-6'>
+                                    <label className="small mb-1" htmlFor="nivel">Circulo</label>
+                                    <select
+                                        {...register("nivel", {
+                                            required: true,
+
+                                        })}
+                                        className="form-control"
+                                        id="nivel"
+
+                                        name="nivel" required
+                                        onChange={e => { setNivel(e.target.value) }}
+                                    >
+                                        <option value="">Que tan cercano es al@ candidat@</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+
+                                    </select>
+                                    {errors?.nivel?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
+                                </div>
+                            </div>
+                            <div className="row gx-3 mb-3">
+
+                                <div className="col-md-6">
+                                    <label htmlFor="otrared">Contacto a través de:</label>
+                                    <input
+                                        {...register("contacto", {
+                                            required: true,
+                                            pattern: /^[a-z][a-z\s]*$/
+                                        })}
+
+                                        className="form-control"
+                                        id="contacto"
+                                        name="contacto"
+                                        placeholder="" required
+                                        onChange={e => { setContacto(e.target.value) }} />
+                                    {errors?.contacto?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.contacto?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                                    )}
+                                </div>
+
+                                <div className="col-md-6">
+                                    <label htmlFor="otrared">No. Celular del contacto</label>
+                                    <input
+                                        {...register("nocontacto", {
+                                            required: true,
+                                            pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                        })}
+
+                                        className="form-control"
+                                        id="nocontacto"
+                                        name="nocontacto"
+                                        placeholder="" required
+                                        onChange={e => { setCelcontacto(e.target.value) }} />
+                                    {errors?.nocontacto?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.nocontacto?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                                    )}
+                                </div>
+                            </div>
+                            <hr></hr>
+                            <div className="mb-3">
+                                <label htmlFor="tw">Descripción de Apoyo</label>
+                                <textarea
+                                    {...register("descapoyo", {
+                                        required: true,
+                                        pattern: /^[A-Za-z.\s_-]+$/
+                                    })}
+
+                                    className="form-control"
+                                    id="descapoyo"
+                                    name="descapoyo"
+                                    placeholder="" required
+                                    onChange={e => { setDescapoyo(e.target.value) }} />
+                                {errors?.descapoyo?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                {errors?.descapoyo?.type === "pattern" && (
+                                    <span className='eform'>Ingresa solo caracteres alfabeticos</span>
+                                )}
+                            </div>
+
+                            <div className="row gx-3 mb-3">
+
+                                <div className="col-md-4">
+                                    <label className="small mb-1" htmlFor="tipoapoyo">Tipo de Apoyo</label>
+                                    <select
+                                        {...register("tipoapoyo", {
+                                            required: true,
+
+                                        })}
+                                        className="form-control mr-1"
+                                        id="tipoapoyo"
+                                        name="tipoapoyo" required
+                                        onChange={e => { setTipoapoyo(e.target.value) }}
+                                    >
+                                        <option value="" >Selecciona alguna opcion</option>
+                                        <option value="Económico">Económico</option>
+                                        <option value="Especia">Especie</option>
+                                        <option value="Con terceros">Con terceros</option>
+
+                                    </select>
+                                    {errors?.tipoapoyo?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
+                                </div>
+
+                                <div className="col-md-4">
+                                    <label htmlFor="tw">Monto de Apoyo</label>
+                                    <input
+                                        {...register("montoapoyo", {
+                                            required: true,
+                                            pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                        })}
+
+                                        className="form-control"
+                                        id="montoapoyo"
+                                        name="montoapoyo"
+                                        placeholder="" required
+                                        onChange={e => { setMonto(e.target.value) }} />
+                                    {errors?.montoapoyo?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                    {errors?.montoapoyo?.type === "pattern" && (
+                                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                                    )}
+                                </div>
+                                <div className="col-md-4">
+                                    <label className="small mb-1" htmlFor="alcanceapoyo">Alcance de Apoyo</label>
+                                    <select
+                                        {...register("alcanceapoyo", {
+                                            required: true,
+
+                                        })}
+                                        className="form-control mr-1"
+                                        id="alcanceapoyo"
+                                        name="alcanceapoyo" required
+                                        onChange={e => { setAlcance(e.target.value) }}
+                                    >
+                                        <option value="">Selecciona alguna opcion</option>
+                                        <option value="Personal">Personal</option>
+                                        <option value="Familiar">Familiar</option>
+                                        <option value="Comunitario">Comunitario</option>
+
+                                    </select>
+                                    {errors?.alcanceapoyo?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
+                                </div>
+                            </div>
+
+                            <div className="row gx-3 mb-3">
+
+                                <div className="col-md-2"></div>
+
+                                <div className="col-md-4">
+                                    <button className="btn btn-danger" onClick={limpiar} type="button">Limpiar datos</button>
+                                </div>
+                                <div className="col-md-4">
+                                    <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar cambios</button>
+                                    {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
+                                </div>
+                            </div>
+                            <br></br>
+                        </div></form>
+                </div>
+                <div className="col-7" >
+
+                    {changeCenter == false && (
+                        <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
+                            <GoogleMap
+                                id="rectangle-example"
+                                mapContainerStyle={mapContainerStyle}
+                                zoom={9}
+                                center={{ lat: coordenadas[0], lng: coordenadas[1] }}
+                                options={option}
+
+                            >
+                            </GoogleMap>
+                        </LoadScript>
+                    )}
+                    {changeCenter == true && (
+                        <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
+                            <GoogleMap
+                                id="rectangle-example"
+                                mapContainerStyle={mapContainerStyle}
+                                zoom={18}
+                                center={{ lat: newCoordenadas[0], lng: newCoordenadas[1] }}
+                                options={option}
+
+
+
+                            >
+                                <Marker
+                                    draggable={true}
+                                    onDragEnd={onLoad}
+                                    position={{ lat: newCoordenadas[0], lng: newCoordenadas[1] }}>
+
+                                </Marker>
+
+
+
+
+                            </GoogleMap>
+                        </LoadScript>
+                    )}
+
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+    );
+}
+
+export default ViewAp;

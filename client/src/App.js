@@ -13,23 +13,9 @@ function App() {
   
   return (
     <div>
-        <BrowserRouter> 
+       
           <Header></Header>
-          <Routes>
-                <Route path='/apoyos' element={<ApoyosList/>} />
-                <Route path='/apoyos/add-apoyo' element={<Apoyos/>} />
-                <Route name="view-apoyo" path='/apoyos/view-apoyo/:id' element={<ViewAp/>} />
-                <Route path='/mapa' element={<Map/>} />
-                <Route path='/apoyos/edit-apoyo/:id' element={<EditApp/>}></Route>
-                <Route path='/mapa/resultados-electorales-2021' element={<Resultados/>}></Route>
-              
-          </Routes>
-        </BrowserRouter> 
-        
-        
-        
 
-      
    
     </div>
     

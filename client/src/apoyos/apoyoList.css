@@ -1,0 +1,15 @@
+.view{
+    color: rgb(0, 153, 255);
+}
+.edit{
+    color: rgb(233, 233, 70);
+}
+.delet{
+    color: red;
+}
+
+.card{
+    border-radius: 1px;
+    padding: 2rem 2rem 2rem 2rem;
+    
+}
