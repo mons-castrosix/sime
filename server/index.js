@@ -24,7 +24,7 @@ const db= mysql.createConnection({
   user:'root',
   host:'localhost',
   password:'sime123',
-  database:'sime'
+  database:'mape'
 })
 
 
