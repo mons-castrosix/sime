@@ -57,7 +57,7 @@ function ApoyosList() {
             //console.log("objeto"+JSON.stringify(empObj))
             setList(empObj)
 
-            //console.log("LIST:  "+list)
+            console.log("LIST:  "+list)
             //console.log(response.data)
 
         });
@@ -102,7 +102,7 @@ function ApoyosList() {
         );
     };
     const rightToolbarTemplate = () => {
-        return <Button label="Nuevo Apoyo" rounded icon="pi pi-plus" onClick={nuevo} severity='info' className="mr-2" />
+        return <Button label="Agregar" rounded icon="pi pi-plus" onClick={nuevo} severity='info' className="mr-2" />
             ;
     };
     const exportColumns = columns.map((col) => ({ title: col.header, dataKey: col.field }));

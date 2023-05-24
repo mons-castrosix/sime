@@ -56,7 +56,7 @@ function EstructuraList() {
             //console.log("objeto"+JSON.stringify(empObj))
             setList(empObj)
 
-            //console.log("LIST:  "+list)
+            console.log("LIST:  "+list)
             //console.log(response.data)
 
         });
@@ -103,7 +103,7 @@ function EstructuraList() {
         );
     };
     const rightToolbarTemplate = () => {
-        return <Button label="Nueva Estructura" icon="pi pi-plus"  rounded severity='info' onClick={nuevo} className="mr-2" />
+        return <Button label="Agregar" icon="pi pi-plus"  rounded severity='info' onClick={nuevo} className="mr-2" />
             ;
     };
     const exportColumns = columns.map((col) => ({ title: col.header, dataKey: col.field }));

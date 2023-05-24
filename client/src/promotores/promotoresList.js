@@ -55,7 +55,7 @@ function PromotoresList() {
             //console.log("objeto"+JSON.stringify(empObj))
             setList(empObj)
 
-            //console.log("LIST:  "+list)
+            console.log("LIST:  "+list)
             //console.log(response.data)
 
         });
@@ -101,7 +101,7 @@ function PromotoresList() {
         );
     };
     const rightToolbarTemplate = () => {
-        return <Button label="Nuevo Promotor" icon="pi pi-plus" severity='info' rounded onClick={nuevo} className="mr-2" />
+        return <Button label="Agregar" icon="pi pi-plus" severity='info' rounded onClick={nuevo} className="mr-2" />
             ;
     };
     const exportColumns = columns.map((col) => ({ title: col.header, dataKey: col.field }));

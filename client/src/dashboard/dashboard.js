@@ -15,7 +15,7 @@ const Dashboard = () => {
   const options = { //data on the x-axis
     chart: { id: 'bar-chart' },
     xaxis: {
-      categories: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes"]
+      categories: ["1263","2710", "2722", "2729", "2748", ]
     }
   };
 
@@ -187,7 +187,7 @@ const options3= {
             <div class="row sparkboxes mt-4 mb-4">
               <div class="col-md-4">
                 <div class="box box1">
-                <h3>Apoyos por dia</h3>
+                <h3>Apoyos totales por sección</h3>
                 <Chart
             options={options}
             series={series}
@@ -198,7 +198,7 @@ const options3= {
               </div>
               <div class="col-md-4">
                 <div class="box box2">
-                <h2>Resultados por año</h2>
+                <h2>Metas de promovidos</h2>
                 <Chart
             options={options2}
             series={series2}
