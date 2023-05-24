@@ -27,13 +27,13 @@ import $ from 'jquery'
                 
                 <nav className="navbar navbar-expand-lg sticky-top p-0 px-4 px-lg-5">
                    
-                    <NavLink to='/inicio'  className="navbar-brand d-flex align-items-center"></NavLink>
+                    <NavLink to='/inicio'  className="navbar-brand d-flex align-items-center">
                     <img src={logo} alt="..." width="65" className="mr-3 rounded-circle img-thumbnail shadow-sm" />
                     <div className="media-body">
                         <h4 className="m-0" style={{color:'white'}}>MAPE</h4>
                         <p className="font-weight-light text-muted mb-0">PRD</p>
                     </div>
-                    
+                    </NavLink>
                     <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span className="navbar-toggler-icon"><img className='text-white' style={{width:'32px'}} src={menu}></img></span>
                     </button>
