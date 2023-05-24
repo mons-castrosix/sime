@@ -57,8 +57,8 @@ function ApoyosList() {
             //console.log("objeto"+JSON.stringify(empObj))
             setList(empObj)
 
-            console.log("LIST:  "+list)
-            //console.log(response.data)
+            //console.log("LIST:  "+list)
+            console.log(response.data)
 
         });
     }
