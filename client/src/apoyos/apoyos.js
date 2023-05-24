@@ -168,7 +168,7 @@ function Apoyos() {
       setSeccion(res.data.seccion);
       setDfederal(res.data.distrito_federal);
       setDlocal(res.data.distrito_local);
-
+      submitSeccion();
 
     } catch (ex) {
       //console.log(ex);
@@ -600,7 +600,7 @@ function Apoyos() {
 
 
               <div className="row gx-3 mb-3">
-                <div className="col-3 mb-3">
+                <div className="col-md-4 mb-3">
                   <label htmlFor="secc">Sección</label>
                   <input
                     {...register("secc", {
@@ -620,7 +620,7 @@ function Apoyos() {
                 </div>
 
 
-                <div className="col-4">
+                <div className="col-md-4">
                   <label htmlFor="df">Distrito Federal</label>
                   <input
                     {...register("df", {
@@ -639,7 +639,7 @@ function Apoyos() {
                   )}
                 </div>
 
-                <div className="col-4">
+                <div className="col-md-4">
                   <label htmlFor="dl">Distrito Local</label>
                   <input
                     {...register("dl", {
@@ -657,18 +657,16 @@ function Apoyos() {
                     <span className='eform'>Ingresa solamente caracteres numericos</span>
                   )}
                 </div>
-                <div className="col-1">
-                  <button onClick={submitSeccion} className="btn btn-primary btn-circle distritos" type="submit"><i className="pi pi-check"></i></button>
-                </div>
+               
 
 
               </div>
               <div className='row'>
-                <div className='col-2'></div>
-                <div className='col-8'>
-                  <button className="btn btn-dark btn-md cargar" onClick={getLocation} type="button">Georeferenciar</button>
+                <div className='col-md-2'></div>
+                <div className='col-md-8'>
+                  <button className="btn btn-dark btn-md cargar" onClick={getLocation} id="georeferenciar" type="button">Georeferenciar</button>
                 </div>
-                <div className='col-2'></div>
+                <div className='col-md-2'></div>
               </div>
               <hr id="division"></hr>
               <div className="row gx-3 mb-3">
@@ -753,7 +751,7 @@ function Apoyos() {
                 </div>
               </div>
               <div className='row'>
-                <div className='col-6'>
+                <div className='col-md-6'>
                   <div className="mb-3">
                     <label htmlFor="otrared">Otra red social</label>
                     <input
@@ -772,7 +770,7 @@ function Apoyos() {
                       <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
                     )}
                   </div></div>
-                <div className='col-6'>
+                <div className='col-md-6'>
                   <label className="small mb-1" htmlFor="nivel">Circulo</label>
                   <select
                     {...register("nivel", {
@@ -919,18 +917,22 @@ function Apoyos() {
 
               <div className="row gx-3 mb-3">
 
-                <div className="col-md-2"></div>
-
+                
+              <div className="col-md-2"></div>
                 <div className="col-md-4">
-                  <button className="btn btn-danger" onClick={limpiar} type="button">Limpiar datos</button>
+                  <button id="limpiar" className="btn btn-danger" onClick={limpiar} type="button"> Limpiar datos </button>
+                
                 </div>
                 <div className="col-md-4">
                   <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar cambios</button>
                   {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
                 </div>
+                <div className="col-md-2"></div>
+                
               </div>
               <br></br>
-            </div></form>
+            </div>
+          </form>
         </div>
         <div className="col-7" >
 

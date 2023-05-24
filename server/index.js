@@ -814,8 +814,9 @@ app.post('/api/insert-lider/', (req, res) => {
 
 
 });
-app.post('/lideres/:id', (req, res) => {
-  db.query("SELECT l.id as id,CONCAT(l.nombres,' ',l.apaterno,' ',l.amaterno) as nombres,clave_electoral,seccion,nombre_tipo FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id ", (err, result) => {
+app.post('/lideres-view/:id', (req, res) => {
+  const id = req.params.id
+  db.query("SELECT * FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id INNER JOIN secc_distrito sd ON l.id_Secc=sd.id where l.id=?",id, (err, result) => {
     if (err) {
       console.log(err)
     }
@@ -947,7 +948,7 @@ app.post('/api/insert-estructura', (req, res) => {
 
 });
 app.post('/estructura', (req, res) => {
-  db.query("SELECT CONCAT(re.nombres,' ',re.apaterno,' ',re.amaterno) AS nombre, re.clave_electoral,e.nombre AS nombre_equipo FROM registro_estructura re INNER JOIN equipo e ON re.id_equipo=e.id ", (err, result) => {
+  db.query("SELECT re.id,CONCAT(re.nombres,' ',re.apaterno,' ',re.amaterno) AS nombre, re.clave_electoral,e.nombre AS nombre_equipo FROM registro_estructura re INNER JOIN equipo e ON re.id_equipo=e.id ", (err, result) => {
     if (err) {
       console.log(err)
     }
@@ -973,8 +974,9 @@ app.post('/estructura', (req, res) => {
   })
 })
 
-app.delete('/deleteEst/:id', (req, res) => {
+app.delete('/deleteEstructura/:id', (req, res) => {
   const id = req.params.id
+  console.log(req.params)
   db.query("DELETE FROM registro_estructura WHERE id=?", id, (err, result) => {
     if (err) {
       console.log(err)
@@ -1072,7 +1074,7 @@ app.post('/insert-promotor', (req, res) => {
 });
 
 app.post('/promotores', (req, res) => {
-  db.query("SELECT CONCAT(rp.nombres,' ',rp.apaterno,' ',rp.amaterno) AS nombre,rp.clave_electoral,sd.secc FROM registro_promotores rp INNER JOIN secciones_responsabilidad sr ON rp.id=sr.promotor_id INNER JOIN secc_distrito sd ON sd.id=sr.seccion_id  ", (err, result) => {
+  db.query("SELECT rp.id,CONCAT(rp.nombres,' ',rp.apaterno,' ',rp.amaterno) AS nombre,rp.clave_electoral,sd.secc FROM registro_promotores rp INNER JOIN secciones_responsabilidad sr ON rp.id=sr.promotor_id INNER JOIN secc_distrito sd ON sd.id=sr.seccion_id  ", (err, result) => {
     if (err) {
       console.log(err)
     }
@@ -1094,6 +1096,19 @@ app.post('/promotores', (req, res) => {
       res.send(resultado)
 
 
+    }
+  })
+})
+app.delete('/deletePromotor/:id', (req, res) => {
+  const id = req.params.id
+  console.log(req.params)
+  db.query("DELETE FROM registro_promotores WHERE id=?", id, (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      res.send(result)
+      console.log(result)
     }
   })
 })

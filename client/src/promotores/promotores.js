@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 import Axios from 'axios';
-
+import '../apoyos/apoyos.css'
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.js'
@@ -144,8 +144,8 @@ function Promotores() {
 
         try {
             const res = await Axios.post(
-                //"http://54.219.124.66:3001/uploadD",
-                "http://localhost:3001/uploadD",
+                "http://54.219.124.66:3001/uploadD",
+                //"http://localhost:3001/uploadD",
                 formData
             );
 
@@ -196,8 +196,8 @@ function Promotores() {
 
     const submitReview = () => {
 
-            Axios.post(//"http://54.219.124.66:3001/api/insert",
-                "http://localhost:3001/insert-promotor",
+            Axios.post("http://54.219.124.66:3001/insert-promotor",
+               // "http://localhost:3001/insert-promotor",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -220,8 +220,8 @@ function Promotores() {
     const submitSeccion = () => {
 
 
-        Axios.post("http://localhost:3001/api/distritos"
-    /*"http://54.219.124.66:3001/api/distritos"*/, {
+        Axios.post(/*"http://localhost:3001/api/distritos"*/
+    "http://54.219.124.66:3001/api/distritos", {
                 seccion: document.getElementById("secc").value
             }).then((res) => {
 
@@ -243,7 +243,7 @@ function Promotores() {
     const getLocation = () => {
         var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
         document.getElementById("direc").setAttribute('value', direccion)
-        Axios.post("http://localhost:3001/getLoc/", { direccion: document.getElementById("direc").value }).then((res) => {
+        Axios.post(/*"http://localhost:3001/getLoc/"*/"http://54.219.124.66:3001/getLoc", { direccion: document.getElementById("direc").value }).then((res) => {
             console.log(res)
 
             var lat = res.data.lat
@@ -348,7 +348,7 @@ function Promotores() {
                                 encType="multipart/form-data"
                                 required onChange={saveFile} /> <br></br>
                             <button onClick={uploadFile1} className="btn btn-dark btn-md cargar" type="submit">Cargar INE</button>
-                            <br />
+                            <br /> <br></br>
 
 
                             <input
@@ -356,7 +356,7 @@ function Promotores() {
                                     required: true,
                                 })}
                                 placeholder='latitud'
-
+                                type='hidden'
                                 name="lat" id='lat'
 
                                 value={newCoordenadas[0] || ''} />
@@ -365,7 +365,7 @@ function Promotores() {
                                     required: true,
                                 })}
                                 placeholder='longitud'
-
+                                type='hidden'
                                 name='lng'
                                 id='lng'
                                 value={newCoordenadas[1] || ''} />
@@ -629,7 +629,7 @@ function Promotores() {
 
 
                             <div className="row gx-3 mb-3">
-                                <div className="col-3 mb-3">
+                                <div className="col-md-4 mb-3">
                                     <label htmlFor="secc">Sección</label>
                                     <input
                                         {...register("secc", {
@@ -649,7 +649,7 @@ function Promotores() {
                                 </div>
 
 
-                                <div className="col-4">
+                                <div className="col-md-4">
                                     <label htmlFor="df">Distrito Federal</label>
                                     <input
                                         {...register("df", {
@@ -668,7 +668,7 @@ function Promotores() {
                                     )}
                                 </div>
 
-                                <div className="col-4">
+                                <div className="col-md-4">
                                     <label htmlFor="dl">Distrito Local</label>
                                     <input
                                         {...register("dl", {
@@ -686,16 +686,14 @@ function Promotores() {
                                         <span className='eform'>Ingresa solamente caracteres numericos</span>
                                     )}
                                 </div>
-                                <div className="col-1">
-                                    <button onClick={submitSeccion} className="btn btn-primary btn-circle distritos" type="submit"><i className="pi pi-check"></i></button>
-                                </div>
+                                
 
 
                             </div>
                             <div className='row'>
                                 <div className='col-2'></div>
                                 <div className='col-8'>
-                                    <button className="btn btn-dark btn-md cargar" onClick={getLocation} type="button">Georeferenciar</button>
+                                    <button className="btn btn-dark btn-md cargar" id="georeferenciar" onClick={getLocation} type="button">Georeferenciar</button>
                                 </div>
                                 <div className='col-2'></div>
                             </div>
@@ -782,7 +780,7 @@ function Promotores() {
                                 </div>
                             </div>
                             <div className='row'>
-                                <div className='col-6'>
+                                <div className='col-md-6'>
                                     <div className="mb-3">
                                         <label htmlFor="otrared">Otra red social</label>
                                         <input
@@ -801,7 +799,7 @@ function Promotores() {
                                             <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
                                         )}
                                     </div></div>
-                                <div className='col-6'>
+                                <div className='col-md-6'>
                                     <label className="small mb-1" htmlFor="nivel">Circulo</label>
                                     <select
                                         {...register("nivel", {
@@ -886,7 +884,7 @@ function Promotores() {
                                 <div className="col-md-2"></div>
 
                                 <div className="col-md-4">
-                                    <button className="btn btn-danger" onClick={limpiar} type="button">Limpiar datos</button>
+                                    <button className="btn btn-danger" id='limpiar' onClick={limpiar} type="button">Limpiar datos</button>
                                 </div>
                                 <div className="col-md-4">
                                     <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar cambios</button>

@@ -8,6 +8,7 @@ import 'bootstrap/dist/js/bootstrap.js'
 import 'primeicons/primeicons.css';
 import { useForm } from "react-hook-form";
 import Header from '../header/header';
+import '../apoyos/apoyos.css'
 import { GoogleMap, KmlLayer, LoadScript, InfoWindow, Marker, Polyline, Rectangle } from '@react-google-maps/api';
 import config from '../maps/config.json';
 import ScriptTag from 'react-script-tag';
@@ -144,8 +145,8 @@ function Estructura() {
 
         try {
             const res = await Axios.post(
-                //"http://54.219.124.66:3001/uploadD",
-                "http://localhost:3001/uploadD",
+                "http://54.219.124.66:3001/uploadD",
+                //"http://localhost:3001/uploadD",
                 formData
             );
 
@@ -183,7 +184,7 @@ function Estructura() {
             setSeccion(res.data.seccion);
             setDfederal(res.data.distrito_federal);
             setDlocal(res.data.distrito_local);
-
+                submitSeccion();
 
         } catch (ex) {
             //console.log(ex);
@@ -196,8 +197,8 @@ function Estructura() {
 
     const submitReview = () => {
 
-            Axios.post(//"http://54.219.124.66:3001/api/insert",
-                "http://localhost:3001/api/insert-estructura",
+            Axios.post("http://54.219.124.66:3001/api/insert",
+                //"http://localhost:3001/api/insert-estructura",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -220,8 +221,8 @@ function Estructura() {
     const submitSeccion = () => {
 
 
-        Axios.post("http://localhost:3001/api/distritos"
-    /*"http://54.219.124.66:3001/api/distritos"*/, {
+        Axios.post(/*"http://localhost:3001/api/distritos"*/
+    "http://54.219.124.66:3001/api/distritos", {
                 seccion: document.getElementById("secc").value
             }).then((res) => {
 
@@ -243,7 +244,7 @@ function Estructura() {
     const getLocation = () => {
         var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
         document.getElementById("direc").setAttribute('value', direccion)
-        Axios.post("http://localhost:3001/getLoc/", { direccion: document.getElementById("direc").value }).then((res) => {
+        Axios.post(/*"http://localhost:3001/getLoc/"*/"http://54.219.124.66:3001/getLoc", { direccion: document.getElementById("direc").value }).then((res) => {
             console.log(res)
 
             var lat = res.data.lat
@@ -356,7 +357,7 @@ function Estructura() {
                                     required: true,
                                 })}
                                 placeholder='latitud'
-
+                                type='hidden'
                                 name="lat" id='lat'
 
                                 value={newCoordenadas[0] || ''} />
@@ -365,7 +366,7 @@ function Estructura() {
                                     required: true,
                                 })}
                                 placeholder='longitud'
-
+                                type='hidden'
                                 name='lng'
                                 id='lng'
                                 value={newCoordenadas[1] || ''} />
@@ -629,7 +630,7 @@ function Estructura() {
 
 
                             <div className="row gx-3 mb-3">
-                                <div className="col-3 mb-3">
+                                <div className="col-md-4 mb-3">
                                     <label htmlFor="secc">Sección</label>
                                     <input
                                         {...register("secc", {
@@ -649,7 +650,7 @@ function Estructura() {
                                 </div>
 
 
-                                <div className="col-4">
+                                <div className="col-md-4">
                                     <label htmlFor="df">Distrito Federal</label>
                                     <input
                                         {...register("df", {
@@ -668,7 +669,7 @@ function Estructura() {
                                     )}
                                 </div>
 
-                                <div className="col-4">
+                                <div className="col-md-4">
                                     <label htmlFor="dl">Distrito Local</label>
                                     <input
                                         {...register("dl", {
@@ -686,16 +687,14 @@ function Estructura() {
                                         <span className='eform'>Ingresa solamente caracteres numericos</span>
                                     )}
                                 </div>
-                                <div className="col-1">
-                                    <button onClick={submitSeccion} className="btn btn-primary btn-circle distritos" type="submit"><i className="pi pi-check"></i></button>
-                                </div>
+                                
 
 
                             </div>
                             <div className='row'>
                                 <div className='col-2'></div>
                                 <div className='col-8'>
-                                    <button className="btn btn-dark btn-md cargar" onClick={getLocation} type="button">Georeferenciar</button>
+                                    <button className="btn btn-dark btn-md cargar" id='georeferenciar' onClick={getLocation} type="button">Georeferenciar</button>
                                 </div>
                                 <div className='col-2'></div>
                             </div>
@@ -782,7 +781,7 @@ function Estructura() {
                                 </div>
                             </div>
                             <div className='row'>
-                                <div className='col-6'>
+                                <div className='col-md-6'>
                                     <div className="mb-3">
                                         <label htmlFor="otrared">Otra red social</label>
                                         <input
@@ -801,7 +800,7 @@ function Estructura() {
                                             <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
                                         )}
                                     </div></div>
-                                <div className='col-6'>
+                                <div className='col-md-6'>
                                     <label className="small mb-1" htmlFor="nivel">Circulo</label>
                                     <select
                                         {...register("nivel", {
@@ -831,7 +830,7 @@ function Estructura() {
 
 
 
-                                <div className="col-7">
+                                <div className="col-md-7">
                                     <label htmlFor="tipoapoyo">Pertenece al equipo</label>
 
                                     <select
@@ -857,7 +856,7 @@ function Estructura() {
                                     </select>
                                     {errors?.equipo?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
                                 </div>
-                                <div className='col-5'>
+                                <div className='col-md-5'>
                                     <label className="small mb-1" htmlFor="nivel">Seccion(es) de injerencia</label>
                                     <select
                                         {...register("seccInjerencia", {
@@ -915,7 +914,7 @@ function Estructura() {
                                 <div className="col-md-2"></div>
 
                                 <div className="col-md-4">
-                                    <button className="btn btn-danger" onClick={limpiar} type="button">Limpiar datos</button>
+                                    <button className="btn btn-danger" id='limpiar' onClick={limpiar} type="button">Limpiar datos</button>
                                 </div>
                                 <div className="col-md-4">
                                     <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar cambios</button>

@@ -182,10 +182,10 @@ function Example() {
 						<GoogleMap
 							id="rectangle-example"
 							mapContainerStyle={mapContainerStyle}
-							zoom={14}
+							
 							center={center}
 							options={option}
-							Zoom={13}
+							
 						>
 							{list.map(val => {
 								return (<Marker

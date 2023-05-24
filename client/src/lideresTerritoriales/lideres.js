@@ -11,6 +11,7 @@ import Header from '../header/header';
 import { GoogleMap, KmlLayer, LoadScript, InfoWindow, Marker, Polyline, Rectangle } from '@react-google-maps/api';
 import config from '../maps/config.json';
 import ScriptTag from 'react-script-tag';
+import '../apoyos/apoyos.css'
 const mapContainerStyle = {
     width: '100%', height: '98vh', overflow: 'hidden'
 };
@@ -143,8 +144,8 @@ function Lideres() {
 
         try {
             const res = await Axios.post(
-                //"http://54.219.124.66:3001/uploadD",
-                "http://localhost:3001/uploadD",
+                "http://54.219.124.66:3001/uploadD",
+                //"http://localhost:3001/uploadD",
                 formData
             );
 
@@ -182,7 +183,7 @@ function Lideres() {
             setSeccion(res.data.seccion);
             setDfederal(res.data.distrito_federal);
             setDlocal(res.data.distrito_local);
-
+            submitSeccion();
 
         } catch (ex) {
             //console.log(ex);
@@ -196,8 +197,8 @@ function Lideres() {
     const submitReview = () => {
 
         if (lider === "2") {    //lider partidista
-            Axios.post(//"http://54.219.124.66:3001/api/insert",
-                "http://localhost:3001/api/insert-lider",
+            Axios.post("http://54.219.124.66:3001/api/insert-lider",
+                //"http://localhost:3001/api/insert-lider",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -212,8 +213,8 @@ function Lideres() {
                 });
         }
         if (lider == "1") { //sacerdote
-            Axios.post(//"http://54.219.124.66:3001/api/insert",
-                "http://localhost:3001/api/insert-lider",
+            Axios.post("http://54.219.124.66:3001/api/insert-lider",
+                //"http://localhost:3001/api/insert-lider",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -228,8 +229,8 @@ function Lideres() {
                 });
         }
         if (lider == "3") { //maestro
-            Axios.post(//"http://54.219.124.66:3001/api/insert",
-                "http://localhost:3001/api/insert-lider",
+            Axios.post("http://54.219.124.66:3001/api/insert-lider",
+                //"http://localhost:3001/api/insert-lider",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -244,8 +245,8 @@ function Lideres() {
                 });
         }
         if (lider == "4") { // jefe de tenencia 
-            Axios.post(//"http://54.219.124.66:3001/api/insert",
-                "http://localhost:3001/api/insert-lider",
+            Axios.post("http://54.219.124.66:3001/api/insert-lider",
+                //"http://localhost:3001/api/insert-lider",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -260,8 +261,8 @@ function Lideres() {
                 });
         }
         if (lider == "5") { //encargado del orden
-            Axios.post(//"http://54.219.124.66:3001/api/insert",
-                "http://localhost:3001/api/insert-lider",
+            Axios.post("http://54.219.124.66:3001/api/insert-lider",
+                //"http://localhost:3001/api/insert-lider",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -276,8 +277,8 @@ function Lideres() {
                 });
         }
         if (lider == "6") { //asosiacion civil
-            Axios.post(//"http://54.219.124.66:3001/api/insert",
-                "http://localhost:3001/api/insert-lider",
+            Axios.post("http://54.219.124.66:3001/api/insert-lider",
+                //"http://localhost:3001/api/insert-lider",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -292,8 +293,8 @@ function Lideres() {
                 });
         }
         if (lider == "7") { //otro
-            Axios.post(//"http://54.219.124.66:3001/api/insert",
-                "http://localhost:3001/api/insert-lider",
+            Axios.post("http://54.219.124.66:3001/api/insert-lider",
+                //"http://localhost:3001/api/insert-lider",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -315,8 +316,8 @@ function Lideres() {
     const submitSeccion = () => {
 
 
-        Axios.post("http://localhost:3001/api/distritos"
-    /*"http://54.219.124.66:3001/api/distritos"*/, {
+        Axios.post(//"http://localhost:3001/api/distritos"
+    "http://54.219.124.66:3001/api/distritos", {
                 seccion: document.getElementById("secc").value
             }).then((res) => {
 
@@ -338,7 +339,7 @@ function Lideres() {
     const getLocation = () => {
         var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
         document.getElementById("direc").setAttribute('value', direccion)
-        Axios.post("http://localhost:3001/getLoc/", { direccion: document.getElementById("direc").value }).then((res) => {
+        Axios.post(/*"http://localhost:3001/getLoc/"*/"http://54.219.124.66:3001/getLoc", { direccion: document.getElementById("direc").value }).then((res) => {
             console.log(res)
 
             var lat = res.data.lat
@@ -362,43 +363,43 @@ function Lideres() {
         // do something
 
 
-        setValue("nombre","");
-        setValue("apaterno","");
-        setValue("amaterno","");
-        setValue("calle","");
-        setValue("numero","");
-        setValue("colonia","");
-        setValue("cpostal","");
-        setValue("ciudad","");
-        setValue("celectoral","");
-        setValue("curp","");
-        setValue("fnacimiento","");
-        setValue("secc","");
-        setValue("df","");
-        setValue("dl","");
-        setValue("cel","");
-        setValue("email","");
-        setValue("fb","");
-        setValue("tw","");
-        setValue("otrared","");
-        setValue("nivel","");
-        setValue("contacto","");
-        setValue("nocontacto","");
-        setValue("tipolider","");
-        setValue("observaciones","");
-        setValue("calleIglesia","");
-        setValue("noIglesia","");
-        setValue("coloniaIglesia","");
-        setValue("celebracion","");
-        setValue("seccInjerencia","");
-        setValue("partido","");
-        setValue("cargo","");
-        setValue("escuela","");
-        setValue("tenencia","");
-        setValue("coloniaOrden","");
-        setValue("asoCivil","");
-        setValue("institucion","");
-        
+        setValue("nombre", "");
+        setValue("apaterno", "");
+        setValue("amaterno", "");
+        setValue("calle", "");
+        setValue("numero", "");
+        setValue("colonia", "");
+        setValue("cpostal", "");
+        setValue("ciudad", "");
+        setValue("celectoral", "");
+        setValue("curp", "");
+        setValue("fnacimiento", "");
+        setValue("secc", "");
+        setValue("df", "");
+        setValue("dl", "");
+        setValue("cel", "");
+        setValue("email", "");
+        setValue("fb", "");
+        setValue("tw", "");
+        setValue("otrared", "");
+        setValue("nivel", "");
+        setValue("contacto", "");
+        setValue("nocontacto", "");
+        setValue("tipolider", "");
+        setValue("observaciones", "");
+        setValue("calleIglesia", "");
+        setValue("noIglesia", "");
+        setValue("coloniaIglesia", "");
+        setValue("celebracion", "");
+        setValue("seccInjerencia", "");
+        setValue("partido", "");
+        setValue("cargo", "");
+        setValue("escuela", "");
+        setValue("tenencia", "");
+        setValue("coloniaOrden", "");
+        setValue("asoCivil", "");
+        setValue("institucion", "");
+
 
     }
 
@@ -433,7 +434,7 @@ function Lideres() {
                     <form onSubmit={handleSubmit(handleRegistration)}>
                         <div className="card-body text-center vertical-scrollable ">
 
-                            <br></br>
+                            <br></br> <br></br>
                             <input type="file"
                                 className="form-control"
                                 id="ine"
@@ -451,7 +452,7 @@ function Lideres() {
                                     required: true,
                                 })}
                                 placeholder='latitud'
-
+                                type='hidden'
                                 name="lat" id='lat'
 
                                 value={newCoordenadas[0] || ''} />
@@ -460,7 +461,7 @@ function Lideres() {
                                     required: true,
                                 })}
                                 placeholder='longitud'
-
+                                type='hidden'
                                 name='lng'
                                 id='lng'
                                 value={newCoordenadas[1] || ''} />
@@ -485,7 +486,7 @@ function Lideres() {
                                 </div>
                             )}
                             <div className="row gx-3 mb-3">
-                                <div className=" col-12">
+                                <div className=" col-md-12">
                                     <label htmlFor="nombre">Nombre(s)</label>
                                     <input
                                         {...register("nombre", {
@@ -724,7 +725,7 @@ function Lideres() {
 
 
                             <div className="row gx-3 mb-3">
-                                <div className="col-3 mb-3">
+                                <div className="col-md-4 mb-3">
                                     <label htmlFor="secc">Sección</label>
                                     <input
                                         {...register("secc", {
@@ -744,7 +745,7 @@ function Lideres() {
                                 </div>
 
 
-                                <div className="col-4">
+                                <div className="col-md-4">
                                     <label htmlFor="df">Distrito Federal</label>
                                     <input
                                         {...register("df", {
@@ -763,7 +764,7 @@ function Lideres() {
                                     )}
                                 </div>
 
-                                <div className="col-4">
+                                <div className="col-md-4">
                                     <label htmlFor="dl">Distrito Local</label>
                                     <input
                                         {...register("dl", {
@@ -782,7 +783,6 @@ function Lideres() {
                                     )}
                                 </div>
                                 <div className="col-1">
-                                    <button onClick={submitSeccion} className="btn btn-primary btn-circle distritos" type="submit"><i className="pi pi-check"></i></button>
                                 </div>
 
 
@@ -1207,7 +1207,7 @@ function Lideres() {
                                                                 <option value="3">Docente</option>
                                                                 <option value="4">Administrador</option>
                                                                 <option value="5">Otro</option>
-                                                                
+
 
                                                             </select>
                                                             {errors?.partido?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
@@ -1360,7 +1360,7 @@ function Lideres() {
                                         } break;
                                         default: {
                                             return (
-                                               <span></span>
+                                                <span></span>
                                             )
                                         }
                                             break;

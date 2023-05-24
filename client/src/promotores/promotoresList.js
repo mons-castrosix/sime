@@ -32,8 +32,8 @@ function PromotoresList() {
     const [globalFilter, setGlobalFilter] = useState(null);
     const dt = useRef(null);
     const getList = () => {
-        Axios.post("http://localhost:3001/promotores"
-            //"http://54.219.124.66:3001/apoyos"
+        Axios.post(//"http://localhost:3001/promotores"
+            "http://54.219.124.66:3001/promotores"
         ).then((response) => {
             //FILTRAR CAMPOS PARA TABLA
             var resultado = JSON.stringify(response.data);
@@ -66,14 +66,14 @@ function PromotoresList() {
 
 
     const deleteApoyo = (id) => {
-        Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/"+id*/"http://localhost:3001/deleteApoyo/" + id).then(() => {
+        Axios.delete("http://54.219.124.66:3001/deleteApoyo/"+id/*"http://localhost:3001/deletePromotor/" + id*/).then(() => {
             //alert("ELIMINADO")
-            navigate('/apoyos')
+            navigate('/promotores')
         })
 
     }
     const atras = () => {
-        let path = '/apoyos';
+        let path = '/promotores';
         navigate(path);
     }
     const nuevo = () => {
@@ -223,7 +223,7 @@ function PromotoresList() {
 
             <Header></Header>
 
-            <div className="container">
+            
 
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
@@ -232,9 +232,11 @@ function PromotoresList() {
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous" />
-                <div className='apoyos'>
-                    <div className="container">
-                        {getList()}
+                {getList()}
+                <div className='row'>
+                <div className='col-md-1'></div>
+                    <div className="col-md-10">
+                        
                         <div className="table-responsive">
                             <div className="table-wrapper">
 
@@ -249,7 +251,7 @@ function PromotoresList() {
                                         resizableColumns showGridlines
                                         rowsPerPageOptions={[5, 10, 25]}
                                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+                                        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
                                         tableStyle={{ minWidth: '50rem' }}
                                         globalFilterFields={['DF']}
                                         header={header}>
@@ -266,7 +268,7 @@ function PromotoresList() {
                             </div>
                         </div>
                     </div>
-
+                    <div className='col-md-1'></div>
 
                 </div>
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -286,7 +288,7 @@ function PromotoresList() {
                         </div>
                     </div>
                 </div>
-            </div></div>
+            </div>
     );
 }
 

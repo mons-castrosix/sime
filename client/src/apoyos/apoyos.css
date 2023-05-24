@@ -5,6 +5,7 @@
 .eform {
     color: #bf1650 !important;
   }
+ 
   
   .eform::before {
     display: inline;
@@ -126,22 +127,45 @@ padding: 10px;
         margin-top: 9px;
         margin-left: -8px;
     }
+    
   }
   
   @media only screen and (min-width: 355px) and (max-width:414px) {
     .preview img{
-        width: 14rem;
+        width: 8rem;
         
     }
     .preview img{
-        margin-top: 20px;
-        margin-left: 30px;
+        margin-top: 40px;
+        margin-left: 8px;
     }
+    .delete {
+        position: absolute;
+        margin-top:22px;
+        margin-left: -22px !important;
+        
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        background-color: rgba(255, 255, 255, 0.912);
+        color: rgb(231, 28, 28);
+        font-size: 16px;
+        
+        border: none;
+        cursor: pointer;
+        border-radius: 1px;
+        text-align: center;
+      }
+      #limpiar{
+        margin-bottom: 12px;
+      }
+      #georeferenciar{
+        margin-left: -18px;
+      }
    
   }
 .delete{
   position: absolute;
-  top: 14%;
+  top: 18%;
   margin-left: 15px;
   
   transform: translate(-50%, -50%);

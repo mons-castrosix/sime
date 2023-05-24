@@ -47,34 +47,37 @@ function ViewLideres() {
 
     const getList = () => {
         Axios.post(//"http://localhost:3001/apoyoId",{id:id}
-            "http://localhost:3001/apoyos-view/" + id,
+            "http://localhost:3001/lideres-view/" + id,
         ).then((response) => {
             setList(response.data)
-            console.log(list)
+          console.log(list)
             document.getElementById("amaterno").setAttribute('value', list[0].amaterno)
             document.getElementById("apaterno").setAttribute('value', list[0].apaterno)
             document.getElementById("nombre").setAttribute('value', list[0].nombres)
             document.getElementById("calle").setAttribute('value', list[0].calle)
             document.getElementById("numero").setAttribute('value', list[0].numero)
             document.getElementById("colonia").setAttribute('value', list[0].colonia)
-            document.getElementById("cp").setAttribute('value', list[0].cp)
+            document.getElementById("cpostal").setAttribute('value', list[0].cp)
             document.getElementById("ciudad").setAttribute('value', list[0].ciudad)
-            document.getElementById("celectoral").setAttribute('value', list[0].clave_elector)
-            document.getElementById("dfederal").setAttribute('value', list[0].distrito_federal)
-            document.getElementById("dlocal").setAttribute('value', list[0].distrito_local)
+            document.getElementById("celectoral").setAttribute('value', list[0].clave_electoral)
+            document.getElementById("df").setAttribute('value', list[0].df)
+            document.getElementById("dl").setAttribute('value', list[0].dl)
+            document.getElementById("curp").setAttribute('value', list[0].curp)
+            document.getElementById("secc").setAttribute('value', list[0].seccion)
 
             document.getElementById("nivel").selectedIndex = list[0].nivel //select
-            document.getElementById("ncelular").setAttribute('value', list[0].no_celular)
+            document.getElementById("cel").setAttribute('value', list[0].no_celular)
             document.getElementById("email").setAttribute('value', list[0].email)
-            document.getElementById("facebook").setAttribute('value', list[0].facebook)
-            document.getElementById("twitter").setAttribute('value', list[0].twitter)
+            document.getElementById("fb").setAttribute('value', list[0].facebook)
+            document.getElementById("tw").setAttribute('value', list[0].twitter)
             document.getElementById("ncelular").setAttribute('value', list[0].no_celular)
             document.getElementById("otrared").setAttribute('value', list[0].otra_red)
-            document.getElementById("descapoyo").setAttribute('value', list[0].descripcion)
+            document.getElementById("nocontacto").setAttribute('value', list[0].no_celcontacto)
+            document.getElementById("contacto").setAttribute('value', list[0].contacto)
             //select
-            var t = list[0].tipo
-            if (t == 'Especie') {
-                document.getElementById("tipoapoyo").selectedIndex = 2
+            var t = list[0].id_tipoLider
+            if (t == 'Maestro') {
+                document.getElementById("tipolider").selectedIndex = 2
             }
             else {
                 if (t == 'Económico') {
@@ -86,26 +89,10 @@ function ViewLideres() {
                     }
                 }
             }
-            document.getElementById("monto").setAttribute('value', list[0].monto)
-
-            //select
-            var a = list[0].alcance
-            if (a == 'Personal') {
-                document.getElementById("alcanceapoyo").selectedIndex = 1
-            }
-            else {
-                if (a == 'Familiar') {
-                    document.getElementById("alcanceapoyo").selectedIndex = 2
-                }
-                else {
-                    if (a == 'Comunitario') {
-                        document.getElementById("alcanceapoyo").selectedIndex = 3
-                    }
-                }
-            }
-            document.getElementById("contacto").setAttribute('value', list[0].contacto)
+           
+           
             document.getElementById("celcontacto").setAttribute('value', list[0].no_celcontacto)
-            setNewCoor([list[0].lat,list[0].lng])
+           
 
         });
     }
@@ -520,7 +507,7 @@ function ViewLideres() {
                                 id="rectangle-example"
                                 mapContainerStyle={mapContainerStyle}
                                 zoom={18}
-                                center={{ lat: newCoordenadas[0], lng: newCoordenadas[1] }}
+                                center={{ lat: list.lat, lng: list.lng }}
                                 options={option}
 
 

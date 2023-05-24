@@ -33,8 +33,8 @@ function EstructuraList() {
     const [globalFilter, setGlobalFilter] = useState(null);
     const dt = useRef(null);
     const getList = () => {
-        Axios.post("http://localhost:3001/estructura"
-            //"http://54.219.124.66:3001/apoyos"
+        Axios.post(//"http://localhost:3001/estructura"
+            "http://54.219.124.66:3001/apoyos"
         ).then((response) => {
             //FILTRAR CAMPOS PARA TABLA
             var resultado = JSON.stringify(response.data);
@@ -50,7 +50,7 @@ function EstructuraList() {
                 });
                 Object.assign(item, { ver: <Link className='view' to={""} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
                 Object.assign(item, { editar: <Link className='edit' to={"" } title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
-                Object.assign(item, { eliminar: <Link className='delet'  onClick={() => { setId(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
+                Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
 
             });
             //console.log("objeto"+JSON.stringify(empObj))
@@ -61,13 +61,15 @@ function EstructuraList() {
 
         });
     }
+    
+
     var arr = [];
     const reformattedArray = list.map((val, key) => { { arr.push("df", val.distrito_federal) } });
     var distf = JSON.stringify(arr)
 
 
     const deleteApoyo = (id) => {
-        Axios.delete("http://localhost:3001/deleteEst/" + id).then(() => {
+        Axios.delete(/*"http://localhost:3001/deleteEstructura/"*/"http://54.219.124.66:3001/deleteEstructura" + id).then(() => {
             //alert("ELIMINADO")
             navigate('/estructura')
         })
@@ -228,7 +230,7 @@ function EstructuraList() {
             <Column header="Equipo"></Column>
             
             <Column header="ver"></Column>
-            <Column header="editar"></Column>
+            <Column header="eliminar"></Column>
         </Row>
     </ColumnGroup>);
     return (
@@ -237,7 +239,7 @@ function EstructuraList() {
 
             <Header></Header>
 
-            <div className="container">
+            
 
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
@@ -246,9 +248,11 @@ function EstructuraList() {
                 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous" />
-                <div className='apoyos'>
-                    <div className="container">
-                        {getList()}
+                {getList()}
+                <div className='row'>
+                <div className='col-md-1'></div>
+                    <div className="col-md-10">
+                        
                         <div className="table-responsive">
                             <div className="table-wrapper">
 
@@ -273,14 +277,15 @@ function EstructuraList() {
                                         <Column field="clave_electoral" header="Clave Electoral" style={{ minWidth: '12rem' }} />
                                     
                                         <Column field="nombre_equipo" header="Equipo" style={{ minWidth: '12rem' }} />
-                                        <Column field="ver" header="Ver" style={{ minWidth: '12rem' }} />
-                                        <Column field="eliminar" header="Eliminar" style={{ minWidth: '12rem' }} />
+                                        <Column field="ver" header="Ver" style={{ minWidth: '8rem' }} />
+                                        <Column field="eliminar" header="Eliminar" style={{ minWidth: '8rem' }} />
 
                                     </DataTable>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div className='col-md-1'></div>
 
 
                 </div>
@@ -301,7 +306,7 @@ function EstructuraList() {
                         </div>
                     </div>
                 </div>
-            </div></div>
+            </div>
     );
 }
 
