@@ -288,7 +288,7 @@ function Apoyos() {
   const handleRegistration = (data) => console.log(data);
   const onSubmit = (data) => {
     
-    alert(JSON.stringify(data));
+    //alert(JSON.stringify(data));
     submitReview();
   }; // your form submit function which will invoke after successful validation
 
