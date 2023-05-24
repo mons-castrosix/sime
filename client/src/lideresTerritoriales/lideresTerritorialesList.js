@@ -33,7 +33,7 @@ function LideresList() {
     const dt = useRef(null);
     const getList = () => {
         Axios.post(//"http://localhost:3001/lideres"
-            "http://54.219.124.66:3001/apoyos"
+            "http://54.219.124.66:3001/lideres"
         ).then((response) => {
             //FILTRAR CAMPOS PARA TABLA
             var resultado = JSON.stringify(response.data);

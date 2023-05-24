@@ -32,7 +32,7 @@ function RepresentantesList() {
     const [globalFilter, setGlobalFilter] = useState(null);
     const dt = useRef(null);
     const getList = () => {
-        Axios.post("http://localhost:3001/lideres"
+        Axios.post("http://localhost:3001/representantes"
             //"http://54.219.124.66:3001/apoyos"
         ).then((response) => {
             //FILTRAR CAMPOS PARA TABLA
