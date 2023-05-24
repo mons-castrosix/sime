@@ -717,7 +717,7 @@ function Apoyos() {
                   <input
                     {...register("fb", {
                       required: true,
-                      pattern: /^[a-z][a-z\s]*$/
+                      pattern: /^[A-Za-z.\s_-]+$/
                     })}
                    
                     className="form-control"
@@ -736,7 +736,7 @@ function Apoyos() {
                   <input
                     {...register("tw", {
                       required: true,
-                      pattern: /^[a-z][a-z\s]*$/
+                      pattern: /^[A-Za-z.\s_-]+$/
                     })}
                     
                     className="form-control"
@@ -757,7 +757,7 @@ function Apoyos() {
                     <input
                       {...register("otrared", {
                         required: true,
-                        pattern: /^[a-z][a-z\s]*$/
+                        pattern: /^[A-Za-z.\s_-]+$/
                       })}
                       
                       className="form-control"
@@ -799,7 +799,7 @@ function Apoyos() {
                   <input
                     {...register("contacto", {
                       required: true,
-                      pattern: /^[a-z][a-z\s]*$/
+                      pattern:/^[A-Za-z.\s_-]+$/
                     })}
                     
                     className="form-control"

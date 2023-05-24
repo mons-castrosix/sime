@@ -843,7 +843,7 @@ function Lideres() {
                                     <input
                                         {...register("fb", {
                                             required: true,
-                                            pattern: /^[a-z][a-z\s]*$/
+                                            pattern: /^[A-Za-z.\s_-]+$/
                                         })}
 
                                         className="form-control"
@@ -862,7 +862,7 @@ function Lideres() {
                                     <input
                                         {...register("tw", {
                                             required: true,
-                                            pattern: /^[a-z][a-z\s]*$/
+                                            pattern: /^[A-Za-z.\s_-]+$/
                                         })}
 
                                         className="form-control"
@@ -883,7 +883,7 @@ function Lideres() {
                                         <input
                                             {...register("otrared", {
                                                 required: true,
-                                                pattern: /^[a-z][a-z\s]*$/
+                                                pattern: /^[A-Za-z.\s_-]+$/
                                             })}
 
                                             className="form-control"
@@ -925,7 +925,7 @@ function Lideres() {
                                     <input
                                         {...register("contacto", {
                                             required: true,
-                                            pattern: /^[a-z][a-z\s]*$/
+                                            pattern: /^[A-Za-z.\s_-]+$/
                                         })}
 
                                         className="form-control"
@@ -1010,7 +1010,7 @@ function Lideres() {
                                                             <input
                                                                 {...register("calleIglesia", {
                                                                     required: true,
-                                                                    pattern: /^[a-z][a-z\s]*$/
+                                                                    pattern: /^[A-Za-z.\s_-]+$/
                                                                 })}
 
                                                                 className="form-control"
@@ -1046,7 +1046,7 @@ function Lideres() {
                                                             <input
                                                                 {...register("coloniaIglesia", {
                                                                     required: true,
-                                                                    pattern: /^[a-z][a-z\s]*$/
+                                                                    pattern: /^[A-Za-z.\s_-]+$/
                                                                 })}
                                                                 type="coloniaIglesia"
                                                                 className="form-control"
@@ -1067,7 +1067,7 @@ function Lideres() {
                                                             <input
                                                                 {...register("celebracion", {
                                                                     required: true,
-                                                                    pattern: /^[a-z][a-z\s]*$/
+                                                                    pattern: /^[A-Za-z.\s_-]+$/
                                                                 })}
 
                                                                 className="form-control"
@@ -1175,7 +1175,7 @@ function Lideres() {
                                                             <input
                                                                 {...register("escuela", {
                                                                     required: true,
-                                                                    pattern: /^[a-z][a-z\s]*$/
+                                                                    pattern: /^[A-Za-z.\s_-]+$/
                                                                 })}
 
                                                                 className="form-control"
@@ -1229,7 +1229,7 @@ function Lideres() {
                                                         <input
                                                             {...register("tenencia", {
                                                                 required: true,
-                                                                pattern: /^[a-z][a-z\s]*$/
+                                                                pattern: /^[A-Za-z.\s_-]+$/
                                                             })}
 
                                                             className="form-control"
@@ -1258,7 +1258,7 @@ function Lideres() {
                                                         <input
                                                             {...register("coloniaOrden", {
                                                                 required: true,
-                                                                pattern: /^[a-z][a-z\s]*$/
+                                                                pattern: /^[A-Za-z.\s_-]+$/
                                                             })}
 
                                                             className="form-control"
@@ -1283,7 +1283,7 @@ function Lideres() {
                                                         <input
                                                             {...register("asoCivil", {
                                                                 required: true,
-                                                                pattern: /^[a-z][a-z\s]*$/
+                                                                pattern: /^[A-Za-z.\s_-]+$/
                                                             })}
 
                                                             className="form-control"
@@ -1300,7 +1300,7 @@ function Lideres() {
                                                         <input
                                                             {...register("cargo", {
                                                                 required: true,
-                                                                pattern: /^[a-z][a-z\s]*$/
+                                                                pattern: /^[A-Za-z.\s_-]+$/
                                                             })}
 
                                                             className="form-control"
@@ -1326,7 +1326,7 @@ function Lideres() {
                                                         <input
                                                             {...register("institucion", {
                                                                 required: true,
-                                                                pattern: /^[a-z][a-z\s]*$/
+                                                                pattern: /^[A-Za-z.\s_-]+$/
                                                             })}
 
                                                             className="form-control"
@@ -1343,7 +1343,7 @@ function Lideres() {
                                                         <input
                                                             {...register("cargo", {
                                                                 required: true,
-                                                                pattern: /^[a-z][a-z\s]*$/
+                                                                pattern: /^[A-Za-z.\s_-]+$/
                                                             })}
 
                                                             className="form-control"

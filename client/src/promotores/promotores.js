@@ -746,7 +746,7 @@ function Promotores() {
                                     <input
                                         {...register("fb", {
                                             required: true,
-                                            pattern: /^[a-z][a-z\s]*$/
+                                            pattern: /^[A-Za-z.\s_-]+$/
                                         })}
 
                                         className="form-control"
@@ -765,7 +765,7 @@ function Promotores() {
                                     <input
                                         {...register("tw", {
                                             required: true,
-                                            pattern: /^[a-z][a-z\s]*$/
+                                            pattern: /^[A-Za-z.\s_-]+$/
                                         })}
 
                                         className="form-control"
@@ -786,7 +786,7 @@ function Promotores() {
                                         <input
                                             {...register("otrared", {
                                                 required: true,
-                                                pattern: /^[a-z][a-z\s]*$/
+                                                pattern: /^[A-Za-z.\s_-]+$/
                                             })}
 
                                             className="form-control"

@@ -747,7 +747,7 @@ function Estructura() {
                                     <input
                                         {...register("fb", {
                                             required: true,
-                                            pattern: /^[a-z][a-z\s]*$/
+                                            pattern: /^[A-Za-z.\s_-]+$/
                                         })}
 
                                         className="form-control"
@@ -766,7 +766,7 @@ function Estructura() {
                                     <input
                                         {...register("tw", {
                                             required: true,
-                                            pattern: /^[a-z][a-z\s]*$/
+                                            pattern: /^[A-Za-z.\s_-]+$/
                                         })}
 
                                         className="form-control"
@@ -787,7 +787,7 @@ function Estructura() {
                                         <input
                                             {...register("otrared", {
                                                 required: true,
-                                                pattern: /^[a-z][a-z\s]*$/
+                                                pattern: /^[A-Za-z.\s_-]+$/
                                             })}
 
                                             className="form-control"
