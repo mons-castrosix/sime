@@ -365,7 +365,7 @@ console.log(resultado)
 })
 
 app.post('/apoyos', (req, res) => {
-  db.query("SELECT a.id,CONCAT(a.nombres,' ',a.apaterno,' ',a.amaterno) AS nombre,a.clave_elector, a.distrito_local, a.distrito_federal FROM apoyo a INNER JOIN apoyos ap ON a.id=ap.id_persona;", (err, result) => {
+  db.query("SELECT a.id,CONCAT(a.nombres,' ',a.apaterno,' ',a.amaterno) AS nombre,ap.tipo,ap.alcance,a.seccion FROM apoyo a INNER JOIN apoyos ap ON a.id=ap.id_persona;", (err, result) => {
     if (err) {
       console.log(err)
     }
@@ -854,7 +854,7 @@ app.delete('/deleteLider/:id', (req, res) => {
   })
 })
 app.post('/lideres', (req, res) => {
-  db.query("SELECT l.id as id,CONCAT(l.nombres,' ',l.apaterno,' ',l.amaterno) as nombres,clave_electoral,seccion,nombre_tipo FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id ", (err, result) => {
+  db.query("SELECT l.id as id,CONCAT(l.nombres,' ',l.apaterno,' ',l.amaterno) as nombres,clave_electoral,seccion,nombre_tipo,l.no_celular FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id ", (err, result) => {
     if (err) {
       console.log(err)
     }
@@ -948,7 +948,7 @@ app.post('/api/insert-estructura', (req, res) => {
 
 });
 app.post('/estructura', (req, res) => {
-  db.query("SELECT re.id,CONCAT(re.nombres,' ',re.apaterno,' ',re.amaterno) AS nombre, re.clave_electoral,e.nombre AS nombre_equipo FROM registro_estructura re INNER JOIN equipo e ON re.id_equipo=e.id ", (err, result) => {
+  db.query("SELECT re.id,CONCAT(re.nombres,' ',re.apaterno,' ',re.amaterno) AS nombre, re.clave_electoral,e.nombre AS nombre_equipo,seccion FROM registro_estructura re INNER JOIN equipo e ON re.id_equipo=e.id ", (err, result) => {
     if (err) {
       console.log(err)
     }
@@ -1074,7 +1074,7 @@ app.post('/insert-promotor', (req, res) => {
 });
 
 app.post('/promotores', (req, res) => {
-  db.query("SELECT rp.id,CONCAT(rp.nombres,' ',rp.apaterno,' ',rp.amaterno) AS nombre,rp.clave_electoral,sd.secc FROM registro_promotores rp INNER JOIN secciones_responsabilidad sr ON rp.id=sr.promotor_id INNER JOIN secc_distrito sd ON sd.id=sr.seccion_id  ", (err, result) => {
+  db.query("SELECT rp.id,CONCAT(rp.nombres,' ',rp.apaterno,' ',rp.amaterno) AS nombre,rp.clave_electoral,sd.secc,rp.no_celular FROM registro_promotores rp INNER JOIN secciones_responsabilidad sr ON rp.id=sr.promotor_id INNER JOIN secc_distrito sd ON sd.id=sr.seccion_id  ", (err, result) => {
     if (err) {
       console.log(err)
     }

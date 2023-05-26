@@ -86,8 +86,8 @@ function EstructuraList() {
     const columns = [
         { field: 'id', header: 'ID' },
         { field: 'nombre', header: 'Nombre Completo' },
-        { field: 'clave_electoral', header: 'Clave Electoral' },
         { field: 'nombre_equipo', header: 'Equipo' },
+        { field: 'seccion', header: 'Sección' },
 
       
 
@@ -225,9 +225,9 @@ function EstructuraList() {
         </Row>
         <Row>
             <Column header="Nombre Completo"></Column>
-            <Column header="Clave Electoral"></Column>
-        
             <Column header="Equipo"></Column>
+        
+            <Column header="Sección"></Column>
             
             <Column header="ver"></Column>
             <Column header="eliminar"></Column>
@@ -269,14 +269,13 @@ function EstructuraList() {
                                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                         currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
                                         tableStyle={{ minWidth: '50rem' }}
-                                        globalFilterFields={['nombre','clave_electoral','nombre_equipo']}
+                                        globalFilterFields={['nombre','seccion','nombre_equipo']}
                                         filters={filters}
                                         header={header}>
                                         
-                                        <Column field="nombre" header="Nombre Completo" style={{ minWidth: '12rem' }} />
-                                        <Column field="clave_electoral" header="Clave Electoral" style={{ minWidth: '12rem' }} />
-                                    
+                                        <Column field="nombre" header="Nombre Completo" style={{ minWidth: '12rem' }} />                                    
                                         <Column field="nombre_equipo" header="Equipo" style={{ minWidth: '12rem' }} />
+                                        <Column field="seccion" header="Seccion" style={{ minWidth: '12rem' }} />
                                         <Column field="ver" header="Ver" style={{ minWidth: '8rem' }} />
                                         <Column field="eliminar" header="Eliminar" style={{ minWidth: '8rem' }} />
 

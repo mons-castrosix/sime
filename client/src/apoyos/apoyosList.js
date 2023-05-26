@@ -68,7 +68,7 @@ function ApoyosList() {
 
 
     const deleteApoyo = (id) => {
-        Axios.delete("http://54.219.124.66:3001/deleteApoyo/"+id /*"http://localhost:3001/deleteApoyo/" + id*/).then(() => {
+        Axios.delete("http://54.219.124.66:3001/deleteApoyo/"+id /* "http://localhost:3001/deleteApoyo/" + id*/).then(() => {
             alert("ELIMINADO")
             navigate('/apoyos')
         })
@@ -85,9 +85,9 @@ function ApoyosList() {
     const columns = [
         { field: 'id', header: 'ID' },
         { field: 'nombre', header: 'Nombre Completo' },
-        { field: 'clave_elector', header: 'Clave Electoral' },
-        { field: 'distrito_local', header: 'Distrito Local' },
-        { field: 'distrito_federal', header: 'Distrito Federal' },
+        { field: 'tipo', header: 'Tipo de apoyo' },
+        { field: 'alcance', header: 'Alcance de apoyo' },
+        { field: 'seccion', header: 'Sección' },
     
 
     ];
@@ -221,14 +221,14 @@ function ApoyosList() {
     const headerGroup = (<ColumnGroup>
         <Row>
             <Column header="" colSpan={4}></Column>
-            <Column header="Acciones" colSpan={3}></Column>
+            <Column header="Acciones" style={{textAlign:'center'}}  colSpan={3}></Column>
             
         </Row>
         <Row>
             <Column header="Nombre Completo"></Column>
-            <Column header="Clave Electoral"></Column>
-            <Column header="Distrito Local"></Column>
-            <Column header="Distrito Federal"></Column>
+            <Column header="Tipo de apoyo"></Column>
+            <Column header="Alcance de apoyo"></Column>
+            <Column header="Sección"></Column>
             <Column header="Ver"></Column>
             <Column header="Editar"></Column>
             <Column header="Eliminar"></Column>
@@ -272,12 +272,12 @@ function ApoyosList() {
                                             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                             currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
                                             tableStyle={{ minWidth: '50rem' }}
-                                            globalFilterFields={['nombre','clave_elector','distrito_local','distrito_federal']}
+                                            globalFilterFields={['nombre','tipo','alcance','seccion']}
                                             header={header}>
                                             <Column field="nombre" header="Nombre Completo" style={{ minWidth: '12rem' }} />
-                                            <Column field="clave_elector" header="Clave Electoral" style={{ minWidth: '12rem' }} />
-                                            <Column field="distrito_local" header="Distrito Local" style={{ minWidth: '6rem' }} />
-                                            <Column field="distrito_federal" filterField="Distrito Federal" filter header="Distrito F" style={{ minWidth: '6rem' }} />
+                                            <Column field="tipo" header="Tipo de apoyo" style={{ minWidth: '12rem' }} />
+                                            <Column field="alcance" header="Alcance de apoyo" style={{ minWidth: '6rem' }} />
+                                            <Column field="seccion" filterField="Sección" filter header="Distrito F" style={{ minWidth: '6rem' }} />
                                             
                                             <Column field="ver" header="Ver" style={{ minWidth: '4rem' }} />
                                             <Column field="editar" header="Editar" style={{ minWidth: '4rem' }} />

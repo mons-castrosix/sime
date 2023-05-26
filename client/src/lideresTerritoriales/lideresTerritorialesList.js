@@ -84,9 +84,9 @@ function LideresList() {
         { field: 'id', header: 'ID' },
        
         { field: 'nombres', header: 'Nombre Completo' },
-        { field: 'clave_electoral', header: 'Clave de elector' },
-        { field: 'seccion', header: 'Seccion' },
-        { field: 'nombre_tipo', header: 'Tipo Lider' },
+        { field: 'nombre_tipo', header: 'Tipo líder' },
+        { field: 'seccion', header: 'Sección' },
+        { field: 'no_celular', header: 'Teléfono' },
       
 
     ];
@@ -225,9 +225,9 @@ function LideresList() {
         <Row>
            
             <Column header="Nombre Completo"></Column>
-            <Column header="Clave Electoral"></Column>
+            <Column header="Tipo líder"></Column>
             <Column header="Seccion"></Column>
-            <Column header="Tipo Lider"></Column>
+            <Column header="Teléfono"></Column>
             <Column header="ver"></Column>
             <Column header="editar"></Column>
             <Column header="eliminar"></Column>
@@ -270,13 +270,13 @@ function LideresList() {
                                         currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
                                         tableStyle={{ minWidth: '50rem' }}
                                         filters={filters}
-                                        globalFilterFields={['nombres','clave_electoral','seccion','nombre_tipo']}
+                                        globalFilterFields={['nombres','no_celular','seccion','nombre_tipo']}
                                         header={header}>
                                         
                                         <Column field="nombres" header="Nombre Completo" style={{ minWidth: '12rem' }} />
-                                        <Column field="clave_electoral" header="Clave Electoral" style={{ minWidth: '12rem' }} />
+                                        <Column field="nombre_tipo" header="Tipo líder" style={{ minWidth: '12rem' }} />
                                         <Column field="seccion" header="Sección" style={{ minWidth: '8rem' }} />
-                                        <Column field="nombre_tipo" header="Tipo Lider" style={{ minWidth: '12rem' }} />
+                                        <Column field="no_celular" header="Teléfono" style={{ minWidth: '12rem' }} />
                                         <Column field="ver" header="Ver" style={{ minWidth: '4rem' }} />
                                         <Column field="editar" header="Editar" style={{ minWidth: '4rem' }} />
                                         <Column field="eliminar" header="Eliminar" style={{ minWidth: '4rem' }} />

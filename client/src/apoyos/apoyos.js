@@ -870,6 +870,7 @@ function Apoyos() {
                     <option value="Económico">Económico</option>
                     <option value="Especia">Especie</option>
                     <option value="Con terceros">Con terceros</option>
+                    <option value="Otros">Con terceros</option>
 
                   </select>
                   {errors?.tipoapoyo?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
@@ -909,7 +910,7 @@ function Apoyos() {
                     <option value="Personal">Personal</option>
                     <option value="Familiar">Familiar</option>
                     <option value="Comunitario">Comunitario</option>
-
+                    <option value="Otros">Con terceros</option>
                   </select>
                   {errors?.alcanceapoyo?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
                 </div>
@@ -924,7 +925,7 @@ function Apoyos() {
                 
                 </div>
                 <div className="col-md-4">
-                  <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar cambios</button>
+                  <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar apoyo</button>
                   {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
                 </div>
                 <div className="col-md-2"></div>

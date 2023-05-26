@@ -1094,7 +1094,7 @@ function Lideres() {
                                                                 name="seccInjerencia" required
                                                                 onChange={e => { setSeccionInjerencia(e.target.value) }}
                                                             >
-                                                                <option value="">Elije una o más secciones</option>
+                                                                <option value="">Elige una o más secciones</option>
                                                                 <option value="1">1</option>
                                                                 <option value="2">2</option>
                                                                 <option value="3">3</option>
@@ -1126,7 +1126,7 @@ function Lideres() {
                                                                 name="partido" required
                                                                 onChange={e => { setPartido(e.target.value) }}
                                                             >
-                                                                <option value="">Elije una o más secciones</option>
+                                                                <option value="">Elige una opción</option>
                                                                 <option value="1">PAN</option>
                                                                 <option value="2">PRI</option>
                                                                 <option value="3">PRD</option>
@@ -1152,7 +1152,7 @@ function Lideres() {
                                                                 name="seccInjerencia" required
                                                                 onChange={e => { setSeccionInjerencia(e.target.value) }}
                                                             >
-                                                                <option value="">Elije una o más secciones</option>
+                                                                <option value="">Elige una o más secciones</option>
                                                                 <option value="1">1</option>
                                                                 <option value="2">2</option>
                                                                 <option value="3">3</option>
@@ -1201,7 +1201,7 @@ function Lideres() {
                                                                 name="cargo" required
                                                                 onChange={e => { setPartido(e.target.value) }}
                                                             >
-                                                                <option value="">Elije una o opción</option>
+                                                                <option value="">Elige una o opción</option>
                                                                 <option value="1">Director</option>
                                                                 <option value="2">Subdirector</option>
                                                                 <option value="3">Docente</option>

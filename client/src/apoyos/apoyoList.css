@@ -13,3 +13,6 @@
     padding: 2rem 2rem 2rem 2rem;
     
 }
+.p-column-resizer span{
+margin-left: 15px !important;
+}

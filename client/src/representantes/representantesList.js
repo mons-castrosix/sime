@@ -253,7 +253,7 @@ function RepresentantesList() {
                                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
                                         tableStyle={{ minWidth: '50rem' }}
-                                        globalFilterFields={['DF']}
+                                        globalFilterFields={['']}
                                         header={header}>
                                         <Column field="apaterno" header="Apellido Paterno" style={{ minWidth: '12rem' }} />
                                         <Column field="amaterno" header="Apellido Materno" style={{ minWidth: '12rem' }} />

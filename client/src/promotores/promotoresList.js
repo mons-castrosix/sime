@@ -84,8 +84,8 @@ function PromotoresList() {
         { field: 'id', header: 'ID' },
         
         { field: 'nombre', header: 'Nombre Completo' },
-        { field: 'clave_electoral', header: 'Clave Electoral' },
-        { field: 'secc', header: 'Seccion de Responsabilidad' },
+        { field: 'no_celular', header: 'Núm, de celular' },
+        { field: 'secc', header: 'Sección (es) de Responsabilidad' },
        
       
 
@@ -210,8 +210,8 @@ function PromotoresList() {
         <Row>
            
             <Column header="Nombre Completo"></Column>
-            <Column header="Clave Electoral"></Column>
-            <Column header="Seccion de Responsabilidad"></Column>
+            <Column header="Núm de Celular"></Column>
+            <Column header="Seccion (es) de Responsabilidad"></Column>
            
             <Column header="ver"></Column>
             <Column header="editar"></Column>
@@ -256,9 +256,9 @@ function PromotoresList() {
                                         globalFilterFields={['DF']}
                                         header={header}>
                                         
-                                        <Column field="nombre" header="Nombre Completo" style={{ minWidth: '12rem' }} />
-                                        <Column field="clave_electoral" header="Clave Electoral" style={{ minWidth: '12rem' }} />
-                                        <Column field="secc" header="Seccion de Responsabilidad" style={{ minWidth: '7rem' }} />
+                                        <Column field="nombre" header="Nombre completo" style={{ minWidth: '12rem' }} />
+                                        <Column field="no_celular" header="Núm. de celular" style={{ minWidth: '12rem' }} />
+                                        <Column field="secc" header="Seccion (es) de Responsabilidad" style={{ minWidth: '7rem' }} />
                                        
                                         <Column field="ver" header="Ver" style={{ minWidth: '12rem' }} />
                                         <Column field="eliminar" header="Eliminar" style={{ minWidth: '12rem' }} />
