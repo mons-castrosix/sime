@@ -1067,9 +1067,10 @@ function Lideres() {
                                                             <input
                                                                 {...register("celebracion", {
                                                                     required: true,
-                                                                    pattern: /^[A-Za-z.\s_-]+$/
+                                                                    
                                                                 })}
-
+                                                                type="date"
+                    
                                                                 className="form-control"
                                                                 id="celebracion"
                                                                 name="celebracion" required
