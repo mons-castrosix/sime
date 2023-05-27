@@ -1227,16 +1227,30 @@ function Lideres() {
                                                     </div>
 
                                                     <div className="col-md-7">
-                                                        <input
-                                                            {...register("tenencia", {
-                                                                required: true,
-                                                                pattern: /^[A-Za-z.\s_-]+$/
-                                                            })}
+                                                       
+                                                            <select
+                                                                {...register("tenencia", {
+                                                                    required: true,
 
-                                                            className="form-control"
-                                                            id="tenencia"
-                                                            name="tenencia" required
-                                                            onChange={e => { setTenencia(e.target.value) }} />
+                                                                })}
+                                                                className="form-control"
+                                                                id="tenencia"
+
+                                                                name="tenencia" required
+                                                                onChange={e => { setTenencia(e.target.value) }}
+                                                            >
+                                                                <option value="">Elige una o más secciones</option>
+                                                                <option value="2">Jesús del Monte</option>
+                                                                <option value="3">Capula</option>
+                                                                <option value="4">Puerto de Buenavista</option>
+                                                                <option value="5">San Antonio</option>
+                                                                <option value="6">Bosque Monarca</option>
+                                                                <option value="7">San Nicolás Obispo</option>
+                                                                <option value="8">San Juanito Itzicuaro</option>
+                                                                <option value="9">El Durazno</option>
+                                                                <option value="10">Atapaneo</option>
+                                                                <option value="11">Tiripetío</option>
+                                                            </select>
                                                         {errors?.tenencia?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                                         {errors?.tenencia?.type === "pattern" && (
                                                             <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
