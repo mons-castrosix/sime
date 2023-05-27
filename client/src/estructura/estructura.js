@@ -477,7 +477,7 @@ function Estructura() {
                                         id="calle"
                                         name="calle"
 
-                                        placeholder="Calle" required
+                                        placeholder="Calle" 
                                         onChange={e => { setCalle(e.target.value) }} />
                                     {errors?.calle?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.calle?.type === "pattern" && (
@@ -497,7 +497,7 @@ function Estructura() {
                                         id="numero"
                                         name="numero"
 
-                                        placeholder="Número" required
+                                        placeholder="Número" 
                                         onChange={e => { setNumero(e.target.value) }} />
                                     {errors?.numero?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.numero?.type === "pattern" && (
@@ -519,7 +519,7 @@ function Estructura() {
                                         id="colonia"
                                         name="colonia"
 
-                                        placeholder="Colonia" required
+                                        placeholder="Colonia" 
                                         onChange={e => { setColonia(e.target.value) }} />
                                     {errors?.colonia?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
@@ -537,7 +537,7 @@ function Estructura() {
                                         id="cpostal"
                                         name="cpostal"
 
-                                        placeholder="Código Postal" required
+                                        placeholder="Código Postal" 
                                         onChange={e => { setCp(e.target.value) }} />
                                     {errors?.cpostal?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.cpostal?.type === "pattern" && (
@@ -559,7 +559,7 @@ function Estructura() {
                                         id="ciudad"
                                         name="ciudad"
 
-                                        placeholder="Ciudad" required
+                                        placeholder="Ciudad" 
                                         onChange={e => { setCiudad(e.target.value) }} />
                                     {errors?.ciudad?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                 </div>
@@ -577,7 +577,7 @@ function Estructura() {
                                         id="celectoral"
                                         name="celectoral"
 
-                                        placeholder="Clave electoral" required
+                                        placeholder="Clave electoral" 
                                         onChange={e => { setClave(e.target.value) }} />
                                     {errors?.celectoral?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.celectoral?.type === "pattern" && (
@@ -601,7 +601,7 @@ function Estructura() {
                                         id="curp"
 
                                         name="curp"
-                                        placeholder="CURP" required
+                                        placeholder="CURP" 
                                         onChange={e => { setCurp(e.target.value) }} />
                                     {errors?.curp?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.curp?.type === "pattern" && (
@@ -621,7 +621,7 @@ function Estructura() {
 
                                         id="fnacimiento"
                                         name="fnacimiento"
-                                        placeholder="Fecha de Nacimiento" required
+                                        placeholder="Fecha de Nacimiento" 
                                         onChange={e => { setFecha(e.target.value) }} />
                                     {errors?.fechanacimiento?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
@@ -641,7 +641,7 @@ function Estructura() {
                                         className="form-control"
                                         id="secc"
                                         name="secc"
-                                        placeholder="Sección" required
+                                        placeholder="Sección" 
                                         onChange={e => { setSeccion(e.target.value) }} />
                                     {errors?.secc?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.secc?.type === "pattern" && (
@@ -661,7 +661,7 @@ function Estructura() {
                                         className="form-control"
                                         id="df"
 
-                                        name="df" required
+                                        name="df" 
                                         onChange={e => { setDfederal(e.target.value) }} />
                                     {errors?.df?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.df?.type === "pattern" && (
@@ -680,7 +680,7 @@ function Estructura() {
                                         className="form-control"
                                         id="dl"
 
-                                        name="dl" required
+                                        name="dl" 
                                         onChange={e => { setDlocal(e.target.value) }} />
                                     {errors?.dl?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.dl?.type === "pattern" && (
@@ -711,7 +711,7 @@ function Estructura() {
 
                                         className="form-control"
                                         id="cel"
-                                        name="cel" required
+                                        name="cel" 
                                         onChange={e => { setCelular(e.target.value) }} />
                                     {errors?.cel?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.cel?.type === "pattern" && (
@@ -723,16 +723,15 @@ function Estructura() {
                                     <label htmlFor="email">Email</label>
                                     <input
                                         {...register("email", {
-                                            required: true,
+                                          //  required: true,
                                             pattern: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/
                                         })}
                                         type="email"
                                         className="form-control"
                                         id="email"
                                         name="email"
-                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required
+                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
                                         onChange={e => { setEmail(e.target.value) }} />
-                                    {errors?.email?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.email?.type === "pattern" && (
                                         <span className='eform'>Ingresa formato de correo electrónico</span>
                                     )}
@@ -745,39 +744,33 @@ function Estructura() {
                                 <div className="col-md-6">
                                     <label htmlFor="fb">Facebook</label>
                                     <input
-                                        {...register("fb", {
-                                            required: true,
-                                            pattern: /^[A-Za-z.\s_-]+$/
-                                        })}
+                                        //{...register("fb", {
+                                        //    required: true,
+                                        //-    pattern: /^[A-Za-z.\s_-]+$/
+                                        //})}
 
                                         className="form-control"
                                         id="fb"
                                         name="fb"
-                                        placeholder="" required
+                                        placeholder="" 
                                         onChange={e => { setFacebook(e.target.value) }} />
-                                    {errors?.fb?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                    {errors?.fb?.type === "pattern" && (
-                                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
-                                    )}
+                                   
                                 </div>
 
                                 <div className="col-md-6">
                                     <label htmlFor="tw">Twitter</label>
                                     <input
-                                        {...register("tw", {
-                                            required: true,
-                                            pattern: /^[A-Za-z.\s_-]+$/
-                                        })}
+                                        //{...register("tw", {
+                                         //   required: true,
+                                           // pattern: /^[A-Za-z.\s_-]+$/
+                                        //})}
 
                                         className="form-control"
                                         id="tw"
                                         name="tw"
-                                        placeholder="" required
+                                        placeholder="" 
                                         onChange={e => { setTwitter(e.target.value) }} />
-                                    {errors?.tw?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                    {errors?.tw?.type === "pattern" && (
-                                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
-                                    )}
+                                    
                                 </div>
                             </div>
                             <div className='row'>
@@ -785,32 +778,29 @@ function Estructura() {
                                     <div className="mb-3">
                                         <label htmlFor="otrared">Otra red social</label>
                                         <input
-                                            {...register("otrared", {
-                                                required: true,
-                                                pattern: /^[A-Za-z.\s_-]+$/
-                                            })}
+                                            //{...register("otrared", {
+                                              //  required: true,
+                                                //pattern: /^[A-Za-z.\s_-]+$/
+                                            //})}
 
                                             className="form-control"
                                             id="otrared"
                                             name="otrared"
-                                            placeholder="" required
+                                            placeholder="" 
                                             onChange={e => { setOtra(e.target.value) }} />
-                                        {errors?.otrared?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                        {errors?.otrared?.type === "pattern" && (
-                                            <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
-                                        )}
+                                        
                                     </div></div>
                                 <div className='col-md-6'>
                                     <label className="small mb-1" htmlFor="nivel">Circulo</label>
                                     <select
-                                        {...register("nivel", {
-                                            required: true,
+                                        //{...register("nivel", {
+                                         //   required: true,
 
-                                        })}
+                                        //})}
                                         className="form-control"
                                         id="nivel"
 
-                                        name="nivel" required
+                                        name="nivel" 
                                         onChange={e => { setNivel(e.target.value) }}
                                     >
                                         <option value="">Que tan cercano es al@ candidat@</option>
@@ -819,7 +809,6 @@ function Estructura() {
                                         <option value="3">3</option>
 
                                     </select>
-                                    {errors?.nivel?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
                                 </div>
                             </div>
                             
@@ -901,7 +890,7 @@ function Estructura() {
                                     className="form-control"
                                     id="observaciones"
                                     name="observaciones"
-                                    placeholder="" required
+                                    placeholder=""
                                     onChange={e => { setObservaciones(e.target.value) }} />
                                 {errors?.observaciones?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                 {errors?.obsrvaciones?.type === "pattern" && (
