@@ -144,8 +144,8 @@ function Promovidos() {
 
         try {
             const res = await Axios.post(
-                //"http://54.219.124.66:3001/uploadD",
-                "http://localhost:3001/uploadD",
+                "http://54.219.124.66:3001/uploadD",
+                //"http://localhost:3001/uploadD",
                 formData
             );
 
@@ -183,7 +183,7 @@ function Promovidos() {
             setSeccion(res.data.seccion);
             setDfederal(res.data.distrito_federal);
             setDlocal(res.data.distrito_local);
-                submitSeccion();
+            submitSeccion();
 
         } catch (ex) {
             //console.log(ex);
