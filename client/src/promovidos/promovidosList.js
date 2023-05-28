@@ -23,7 +23,7 @@ import { Row } from 'primereact/row';
 import "primereact/resources/primereact.min.css";
 import 'primeicons/primeicons.css';
 
-function PromotoresList() {
+function PromovidosList() {
     const [id, setId] = useState(0);
     const [list, setList] = useState([])
     const [listDF, setListDF] = useState([])
@@ -32,8 +32,8 @@ function PromotoresList() {
     const [globalFilter, setGlobalFilter] = useState(null);
     const dt = useRef(null);
     const getList = () => {
-        Axios.post("http://localhost:3001/promotores"
-            //"http://54.219.124.66:3001/promotores"
+        Axios.post(//"http://localhost:3001/promovidos"
+            "http://54.219.124.66:3001/promovidos"
         ).then((response) => {
             //FILTRAR CAMPOS PARA TABLA
             var resultado = JSON.stringify(response.data);
@@ -66,27 +66,28 @@ function PromotoresList() {
 
 
     const deleteApoyo = (id) => {
-        Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/"+id*/"http://localhost:3001/deletePromotor/" + id).then(() => {
+        Axios.delete("http://54.219.124.66:3001/deleteApoyo/"+id/*"http://localhost:3001/deletePromovido/" + id*/).then(() => {
             //alert("ELIMINADO")
-            navigate('/promotores')
+            navigate('/promovidos')
         })
 
     }
     const atras = () => {
-        let path = '/promotores';
+        let path = '/promovidos';
         navigate(path);
     }
     const nuevo = () => {
-        let path = '/promotores/add/';
+        let path = '/promovidos/add/';
         navigate(path);
     }
     const columns = [
         { field: 'id', header: 'ID' },
         
         { field: 'nombre', header: 'Nombre Completo' },
-        { field: 'no_celular', header: 'Núm, de celular' },
-        { field: 'secc', header: 'Sección (es) de Responsabilidad' },
-       
+        { field: 'no_celular', header: 'Núm de celular' },
+        { field: 'seccion', header: 'Sección' },
+        { field: 'nombre2', header: 'Promovido por' },
+
       
 
     ];
@@ -96,7 +97,7 @@ function PromotoresList() {
     const leftToolbarTemplate = () => {
         return (
             <div className="flex flex-wrap gap-2">
-                <h3 style={{ color: 'black' }}>Lista de Promotores</h3>
+                <h3 style={{ color: 'black' }}>Lista de Promovidos</h3>
             </div>
         );
     };
@@ -211,10 +212,11 @@ function PromotoresList() {
            
             <Column header="Nombre Completo"></Column>
             <Column header="Núm de Celular"></Column>
-            <Column header="Seccion (es) de Responsabilidad"></Column>
+            <Column header="Sección"></Column>
+            <Column header="Promovido por"></Column>
            
             <Column header="ver"></Column>
-            <Column header="editar"></Column>
+            <Column header="eliminar"></Column>
         </Row>
     </ColumnGroup>);
     return (
@@ -253,13 +255,14 @@ function PromotoresList() {
                                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                         currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
                                         tableStyle={{ minWidth: '50rem' }}
-                                        globalFilterFields={['DF']}
+                                        globalFilterFields={['nombre','no_celular','seccion','nombre2']}
                                         header={header}>
                                         
                                         <Column field="nombre" header="Nombre completo" style={{ minWidth: '12rem' }} />
                                         <Column field="no_celular" header="Núm. de celular" style={{ minWidth: '12rem' }} />
-                                        <Column field="secc" header="Seccion (es) de Responsabilidad" style={{ minWidth: '7rem' }} />
-                                       
+                                        <Column field="seccion" header="Sección " style={{ minWidth: '7rem' }} />
+                                        <Column field="nombre2" header="Promovido por" style={{ minWidth: '7rem' }} />
+
                                         <Column field="ver" header="Ver" style={{ minWidth: '12rem' }} />
                                         <Column field="eliminar" header="Eliminar" style={{ minWidth: '12rem' }} />
 
@@ -294,4 +297,4 @@ function PromotoresList() {
 
 
 
-export default PromotoresList;
+export default PromovidosList;

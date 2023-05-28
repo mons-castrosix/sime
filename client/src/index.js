@@ -21,6 +21,8 @@ import Representantes from './representantes/representantes';
 import RepresentantesList from './representantes/representantesList';
 import Promotores from './promotores/promotores';
 import PromotoresList from './promotores/promotoresList';
+import Promovidos from './promovidos/promovidos';
+import PromovidosList from './promovidos/promovidosList';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -51,6 +53,9 @@ root.render(
 
                  <Route path='/promotores' element={<PromotoresList/>} />
                  <Route path='/promotores/add' element={<Promotores/>} />
+
+                 <Route path='/promovidos' element={<PromovidosList/>} />
+                 <Route path='/promovidos/add' element={<Promovidos/>} />
 
 
            </Routes>

@@ -1112,3 +1112,101 @@ app.delete('/deletePromotor/:id', (req, res) => {
     }
   })
 })
+
+
+///------------------------ PROMOVIDOS ----------------------------
+app.post('/insert-promovido', (req, res) => {
+  console.log(req.body)
+
+  const apaterno = req.body.apaterno
+  const amaterno = req.body.amaterno
+  const nombres = req.body.nombres
+  const calle = req.body.calle
+  const numero = req.body.numero
+  const colonia = req.body.colonia
+  const cp = req.body.cp
+  const ciudad = req.body.ciudad
+  const clave_elector = req.body.clave_elector
+  const curp = req.body.curp
+  const fecha_nacimiento = req.body.fecha_nacimiento
+  const seccion = req.body.seccion
+  const distrito_federal = req.body.distrito_federal
+  const distrito_local = req.body.distrito_local
+  const nivel = req.body.nivel
+  const no_celular = req.body.no_celular
+  const email = req.body.email
+  const facebook = req.body.facebook
+  const twitter = req.body.twitter
+  const otra_red = req.body.otra_red
+  const contacto = req.body.contacto
+  const no_celcontacto = req.body.no_celcontacto
+  const lat = req.body.lat
+  const lng = req.body.lng
+  const lider = req.body.id_tipoLider
+  const id_Secc = req.body.id_Secc
+  const observaciones = req.body.observaciones
+  const injerencia = req.body.injerencia
+  const promotor = req.body.id_promotor
+
+
+  const sql2 = "SELECT max(id) as id FROM img_ine"
+  const sql3 = "SELECT max(id) as id FROM registro_promotores"
+  const sqlInsert = "INSERT INTO registro_promovidos (nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,fecha_nacimiento,curp,clave_electoral,seccion,id_Secc,no_celular, email,facebook,twitter,otra_red,circulo,observaciones,lat,lng,img,id_promotor) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
+  const response = []
+  db.query(sql2, (err, result) => {
+    const id_image = result[0].id
+
+
+    db.query(sqlInsert, [
+      nombres, apaterno, amaterno, calle, numero, colonia, cp, ciudad, fecha_nacimiento, curp, clave_elector, seccion, id_Secc, no_celular, email, facebook, twitter, otra_red, nivel,
+      observaciones, lat, lng, id_image,promotor], (err, result) => {
+        if (err) {
+          console.log(err);
+        }
+        else {
+          response.push(true)
+
+        }
+      });
+
+   
+
+  });
+
+
+
+  if (response[0] == true ) {
+    res.send("Agregado")
+  }
+  else {
+    res.send("No Agregado")
+  }
+
+
+});
+app.post('/promovidos', (req, res) => {
+  db.query("SELECT a.id,CONCAT(a.nombres,' ',a.apaterno,' ',a.amaterno) AS nombre,a.no_celular,a.seccion,CONCAT(b.nombres,' ',b.apaterno,' ',b.amaterno) AS nombre2 FROM registro_promovidos a INNER JOIN registro_promotores b ON a.id_promotor= b.id ;", (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
+      var resultado = JSON.stringify(result);
+      var empObj = JSON.parse(resultado);
+      /*var id="";
+      empObj.forEach((item) => {
+          Object.entries(item).forEach(([key, val]) => {
+              if(key=="id"){
+                  id=JSON.stringify(val);
+                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+            
+          });
+          Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
+        });
+        console.log(empObj)*/
+      res.send(resultado)
+
+
+    }
+  })
+})
