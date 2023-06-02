@@ -1486,20 +1486,13 @@ function Lideres() {
                             <div className="mb-3">
                                 <label htmlFor="tw">Observaciones</label>
                                 <textarea
-                                    {...register("observaciones", {
-                                        required: true,
-                                        pattern: /^[A-Za-z.\s_-]+$/
-                                    })}
-
+                                   
                                     className="form-control"
                                     id="observaciones"
                                     name="observaciones"
                                     placeholder=""
                                     onChange={e => { setObservaciones(e.target.value) }} />
-                                {errors?.observaciones?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                {errors?.obsrvaciones?.type === "pattern" && (
-                                    <span className='eform'>Ingresa solo caracteres alfabeticos</span>
-                                )}
+                               
                             </div>
 
                             <div className="row gx-3 mb-3">
