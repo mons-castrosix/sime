@@ -77,7 +77,7 @@ function RepresentantesList() {
         navigate(path);
     }
     const nuevo = () => {
-        let path = '/estructura/add/';
+        let path = '/representantes/add/';
         navigate(path);
     }
     const columns = [
@@ -97,7 +97,7 @@ function RepresentantesList() {
     const leftToolbarTemplate = () => {
         return (
             <div className="flex flex-wrap gap-2">
-                <h3 style={{ color: 'black' }}>Lista de Estructura</h3>
+                <h3 style={{ color: 'black' }}>Lista de Representantes</h3>
             </div>
         );
     };

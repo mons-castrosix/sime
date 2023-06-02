@@ -33,7 +33,7 @@ const mapContainerStyle = {
     suppressInfoWindows: false
   }
   const onLoad = rectangle => {
-    console.log('rectangle: ', rectangle)
+    //console.log('rectangle: ', rectangle)
   }
 function ViewAp() {
     const navigate = useNavigate();
@@ -44,12 +44,13 @@ function ViewAp() {
     const [newCoordenadas, setNewCoor] = useState([])
     const [tipoApoyo, setTipoapoyo] = useState('');
     
+    
     const getList = () => {
-        Axios.post("http://54.219.124.66:3001/apoyos-view/"+id,
-            //"http://localhost:3001/apoyos-view/" + id,
+        Axios.post(//"http://54.219.124.66:3001/apoyos-view/"+id,
+            "http://localhost:3001/apoyos-view/" + id,
         ).then((response) => {
             setList(response.data)
-            console.log(list)
+            //console.log(list)
             document.getElementById("amaterno").setAttribute('value', list[0].amaterno)
             document.getElementById("apaterno").setAttribute('value', list[0].apaterno)
             document.getElementById("nombre").setAttribute('value', list[0].nombres)
@@ -82,8 +83,13 @@ function ViewAp() {
                 else {
                     if (t == 'Con terceros') {
                         document.getElementById("tipoapoyo").selectedIndex = 3
+                    }else{if (t == 'Otros') {
+                        document.getElementById("tipoapoyo").selectedIndex = 4
+                    }
+
                     }
                 }
+               
             }
             document.getElementById("monto").setAttribute('value', list[0].monto)
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Axios from 'axios';
-
+import Swal from 'sweetalert2';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { BrowserRouter, NavLink, Routes, Route, Switch, Link, usena } from 'react-router-dom';
@@ -32,8 +32,8 @@ function LideresList() {
     const [globalFilter, setGlobalFilter] = useState(null);
     const dt = useRef(null);
     const getList = () => {
-        Axios.post(//"http://localhost:3001/lideres"
-            "http://54.219.124.66:3001/lideres"
+        Axios.post("http://localhost:3001/lideres"
+            //"http://54.219.124.66:3001/lideres"
         ).then((response) => {
             //FILTRAR CAMPOS PARA TABLA
             var resultado = JSON.stringify(response.data);
@@ -47,8 +47,8 @@ function LideresList() {
                     }
 
                 });
-                Object.assign(item, { ver: <Link className='view' to={"" } title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
-                Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
+                Object.assign(item, { ver: <Link className='view' to={'/lideres/view/'+id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
+                Object.assign(item, { editar: <Link className='edit' title="Edit"    data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
                 Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
 
             });
@@ -56,7 +56,7 @@ function LideresList() {
             setList(empObj)
 
             //console.log("LIST:  "+list)
-            console.log(response.data)
+            //console.log(response.data)
 
         });
     }
@@ -66,10 +66,39 @@ function LideresList() {
 
 
     const deleteApoyo = (id) => {
-        Axios.delete("http://54.219.124.66:3001/deleteApoyo/"+id/*"http://localhost:3001/deleteLider/" + id*/).then(() => {
-            //alert("ELIMINADO")
-            navigate('/lideres')
-        })
+        Axios.delete(/*"http://54.219.124.66:3001/deleteLider/"+id*/"http://localhost:3001/deleteLider/" + id).then(() => {
+            Swal.fire({
+                title: 'Registro líder territorial',
+                text: 'eliminado correctamente',
+                icon: 'success',
+                confirmButtonText: 'De acuerdo'
+            })
+        }).catch(error => {
+            Swal.fire({
+                title: 'Error!',
+                text: error.message,
+                icon: 'error',
+                confirmButtonText: 'De acuerdo'
+            })
+        });
+
+    }
+    const viewApoyo = (id) => {
+        Axios.delete(/*"http://54.219.124.66:3001/deleteLider/"+id*/"http://localhost:3001/lideres-view/" + id).then(() => {
+            Swal.fire({
+                title: 'Registro líder territorial',
+                text: 'eliminado correctamente',
+                icon: 'success',
+                confirmButtonText: 'De acuerdo'
+            })
+        }).catch(error => {
+            Swal.fire({
+                title: 'Error!',
+                text: error.message,
+                icon: 'error',
+                confirmButtonText: 'De acuerdo'
+            })
+        });
 
     }
     const atras = () => {

@@ -1,6 +1,7 @@
 import React, { useState, useRef,useEffect } from 'react';
 import apoyo from './apoyos.png'
 import Axios from 'axios';
+import Swal from 'sweetalert2';
 import './apoyos.css';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -40,17 +41,15 @@ const optionMap = {
 
 
 const onLoad = rectangle => {
-  console.log('rectangle: ', rectangle)
+  //console.log('rectangle: ', rectangle)
 }
 
 const onClick = click => {
-  console.log('click: ', click.featureData
-  )
+  //console.log('click: ', click.featureData)
 }
 
 const onPosition = click => {
-  console.log('click: ', click
-  )
+  //console.log('click: ', click)
 }
 
 
@@ -112,8 +111,8 @@ function Apoyos() {
     setFileName(e.target.files[0].name);
   };
   const onLoad = rectangle => {
-    console.log('rectangle: ', rectangle.latLng.lat());
-    console.log('rectangle: ', rectangle.latLng.lng());
+    //console.log('rectangle: ', rectangle.latLng.lat());
+    //console.log('rectangle: ', rectangle.latLng.lng());
     setValue("lat",rectangle.latLng.lat())
     setValue("lng",rectangle.latLng.lng())
     setNewCoor([rectangle.latLng.lat(), rectangle.latLng.lng()])
@@ -122,22 +121,22 @@ function Apoyos() {
   const uploadFile1 = async (e) => {
     const formData = new FormData();
     console.log(fileName)
-    console.log(file)
+    //console.log(file)
     formData.append("file", file);
     formData.append("fileName", fileName);
     //console.log(formData)
     
     try {
       const res = await Axios.post(
-        "http://54.219.124.66:3001/uploadD",
-        //"http://localhost:3001/uploadD",
+        //"http://54.219.124.66:3001/uploadD",
+        "http://localhost:3001/uploadD",
         formData
       );
 
       
       var fecha= res.data.fecha_nacimiento
       fecha = fecha.split("/").reverse().join("-");
-      console.log(fecha)
+      //console.log(fecha)
         setValue("nombre",res.data.nombres)
      
       setValue("apaterno",res.data.apaterno);
@@ -175,15 +174,15 @@ function Apoyos() {
     }
   };
   useEffect(() => {
-    console.log(nombres);
-    console.log(aPaterno);
+    //console.log(nombres);
+    //console.log(aPaterno);
   }, [nombres,aPaterno,aMaterno,calle,numero,colonia,cp,ciudad,fechaNacimiento,seccion,dFederal,dLocal]);
 
   const submitReview = () => {
 
 
-    Axios.post("http://54.219.124.66:3001/api/insert",
-      //"http://localhost:3001/api/insert",
+    Axios.post(//"http://54.219.124.66:3001/api/insert",
+      "http://localhost:3001/api/insert",
       {
 
         apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -192,11 +191,26 @@ function Apoyos() {
         otra_red: otra, descripcion_apoyo: descrApoyo, apoyo_tipo: tipoApoyo, monto_apoyo: monto, alcance_apoyo: alcance, contacto: contacto,
         no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value
       }).then(() => {
-        console.log("succes")
-        //alert("AGREGADO")
-        navigate('/apoyos')
+        Swal.fire({
+          title: 'Registro de apoyo',
+          text: "Agregado existosamente",
+          icon: 'success',
+          confirmButtonColor: '#716add',
+          confirmButtonText: 'De acuerdo'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate('/apoyos')
+          }
+        })
 
-      });
+      }).catch(error => {
+        Swal.fire({
+            title: 'Error!',
+            text: error.message,
+            icon: 'error',
+            confirmButtonText: 'Cool'
+        })
+    });
     /*console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
       + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel
       + celular + email + facebook + twitter + otra + descrApoyo + tipoApoyo
@@ -205,8 +219,8 @@ function Apoyos() {
   const submitSeccion = () => {
 
 
-    Axios.post(//"http://localhost:3001/api/distritos"
-    "http://54.219.124.66:3001/api/distritos", {
+    Axios.post("http://localhost:3001/api/distritos"
+    /*"http://54.219.124.66:3001/api/distritos"*/, {
         seccion: document.getElementById("secc").value
       }).then((res) => {
 
@@ -227,13 +241,13 @@ function Apoyos() {
   const getLocation = () => {
     var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
     document.getElementById("direc").setAttribute('value', direccion)
-    Axios.post(/*"http://localhost:3001/getLoc/"*/"http://54.219.124.66:3001/getLoc", { direccion: document.getElementById("direc").value }).then((res) => {
+    Axios.post("http://localhost:3001/getLoc/"/*"http://54.219.124.66:3001/getLoc"*/, { direccion: document.getElementById("direc").value }).then((res) => {
       console.log(res)
 
       var lat = res.data.lat
-      console.log(lat)
+      //console.log(lat)
       var lng = res.data.lng
-      console.log(lng)
+      //console.log(lng)
 
       setNewCoor([lat, lng])
       
@@ -770,7 +784,7 @@ function Apoyos() {
                      // required: true,
 
                     //})}
-                    className="form-control"
+                    className="form-select"
                     id="nivel"
 
                     name="nivel" 
@@ -810,7 +824,7 @@ function Apoyos() {
                       //pattern: /^(0|[1-9]\d*)(\.\d+)?$/
                     //})}
                     
-                    className="form-control"
+                    className="form-select"
                     id="nocontacto"
                     name="nocontacto"
                     placeholder="" 
@@ -847,7 +861,7 @@ function Apoyos() {
                       required: true,
 
                     })}
-                    className="form-control mr-1"
+                    className="form-select"
                     id="tipoapoyo"
                     name="tipoapoyo" 
                     onChange={e=> { setTipoapoyo(e.target.value) }}
@@ -856,7 +870,7 @@ function Apoyos() {
                     <option value="Económico">Económico</option>
                     <option value="Especia">Especie</option>
                     <option value="Con terceros">Con terceros</option>
-                    <option value="Otros">Con terceros</option>
+                    <option value="Otros">Otros</option>
 
                   </select>
                   {errors?.tipoapoyo?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
@@ -887,7 +901,7 @@ function Apoyos() {
                       required: true,
 
                     })}
-                    className="form-control mr-1"
+                    className="form-select"
                     id="alcanceapoyo"
                     name="alcanceapoyo" 
                     onChange={e=> { setAlcance(e.target.value) }}
@@ -896,7 +910,7 @@ function Apoyos() {
                     <option value="Personal">Personal</option>
                     <option value="Familiar">Familiar</option>
                     <option value="Comunitario">Comunitario</option>
-                    <option value="Otros">Con terceros</option>
+                    <option value="Otros">Otros</option>
                   </select>
                   {errors?.alcanceapoyo?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
                 </div>

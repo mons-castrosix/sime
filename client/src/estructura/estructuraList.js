@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Axios from 'axios';
-
+import Swal from 'sweetalert2';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { BrowserRouter, NavLink, Routes, Route, Switch, Link, usena } from 'react-router-dom';
@@ -33,8 +33,8 @@ function EstructuraList() {
     const [globalFilter, setGlobalFilter] = useState(null);
     const dt = useRef(null);
     const getList = () => {
-        Axios.post(//"http://localhost:3001/estructura"
-            "http://54.219.124.66:3001/estructura"
+        Axios.post("http://localhost:3001/estructura"
+            //"http://54.219.124.66:3001/estructura"
         ).then((response) => {
             //FILTRAR CAMPOS PARA TABLA
             var resultado = JSON.stringify(response.data);
@@ -48,7 +48,7 @@ function EstructuraList() {
                     }
 
                 });
-                Object.assign(item, { ver: <Link className='view' to={""} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
+                Object.assign(item, { ver: <Link className='view' to={'/estructura/view/'+id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
                 Object.assign(item, { editar: <Link className='edit' to={"" } title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
                 Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
 
@@ -57,7 +57,7 @@ function EstructuraList() {
             setList(empObj)
 
             //console.log("LIST:  "+list)
-            console.log(response.data)
+            //console.log(response.data)
 
         });
     }
@@ -69,10 +69,25 @@ function EstructuraList() {
 
 
     const deleteApoyo = (id) => {
-        Axios.delete(/*"http://localhost:3001/deleteEstructura/"*/"http://54.219.124.66:3001/deleteEstructura" + id).then(() => {
-            //alert("ELIMINADO")
-            navigate('/estructura')
-        })
+        Axios.delete("http://localhost:3001/deleteEstructura/"+id/*"http://54.219.124.66:3001/deleteEstructura" + id*/).then(() => {
+            Swal.fire({
+                title: 'Registro estructura',
+                text: 'eliminado correctamente',
+                icon: 'success',
+                confirmButtonText: 'De acuerdo'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                 navigate('/estructura');
+                }
+            });
+        }).catch(error => {
+            Swal.fire({
+                title: 'Error!',
+                text: error.message,
+                icon: 'error',
+                confirmButtonText: 'De acuerdo'
+            })
+        });
 
     }
     const atras = () => {

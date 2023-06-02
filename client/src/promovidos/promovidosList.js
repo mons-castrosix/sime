@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Axios from 'axios';
-
+import Swal from 'sweetalert2';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { BrowserRouter, NavLink, Routes, Route, Switch, Link, usena } from 'react-router-dom';
@@ -32,8 +32,8 @@ function PromovidosList() {
     const [globalFilter, setGlobalFilter] = useState(null);
     const dt = useRef(null);
     const getList = () => {
-        Axios.post(//"http://localhost:3001/promovidos"
-            "http://54.219.124.66:3001/promovidos"
+        Axios.post("http://localhost:3001/promovidos"
+            //"http://54.219.124.66:3001/promovidos"
         ).then((response) => {
             //FILTRAR CAMPOS PARA TABLA
             var resultado = JSON.stringify(response.data);
@@ -47,7 +47,7 @@ function PromovidosList() {
                     }
 
                 });
-                Object.assign(item, { ver: <Link className='view' to={""} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
+                Object.assign(item, { ver: <Link className='view' to={'/promovidos/view/'+id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
                 Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
                 Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
 
@@ -66,10 +66,28 @@ function PromovidosList() {
 
 
     const deleteApoyo = (id) => {
-        Axios.delete("http://54.219.124.66:3001/deleteApoyo/"+id/*"http://localhost:3001/deletePromovido/" + id*/).then(() => {
-            //alert("ELIMINADO")
-            navigate('/promovidos')
-        })
+        Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/"+id*/"http://localhost:3001/deletePromovido/" + id).then(() => {
+            
+        Swal.fire({
+            title: 'Registro promotor',
+            text: 'eliminado correctamente',
+            icon: 'success',
+            confirmButtonText: 'De acuerdo'
+        }).then((result) => {
+            if (result.isConfirmed) {
+             navigate('/promovidos');
+            }
+        }).catch(error => {
+            Swal.fire({
+                title: 'Error!',
+                text: error.message,
+                icon: 'error',
+                confirmButtonText: 'De acuerdo'
+            })
+        });
+
+
+    })
 
     }
     const atras = () => {
@@ -204,7 +222,7 @@ function PromovidosList() {
     };
     const headerGroup = (<ColumnGroup>
         <Row>
-            <Column header="" colSpan={3}></Column>
+            <Column header="" colSpan={4}></Column>
             <Column header="Acciones" colSpan={2}></Column>
             
         </Row>
@@ -263,8 +281,8 @@ function PromovidosList() {
                                         <Column field="seccion" header="Sección " style={{ minWidth: '7rem' }} />
                                         <Column field="nombre2" header="Promovido por" style={{ minWidth: '7rem' }} />
 
-                                        <Column field="ver" header="Ver" style={{ minWidth: '12rem' }} />
-                                        <Column field="eliminar" header="Eliminar" style={{ minWidth: '12rem' }} />
+                                        <Column field="ver" header="Ver" style={{ minWidth: '4rem' }} />
+                                        <Column field="eliminar" header="Eliminar" style={{ minWidth: '4rem' }} />
 
                                     </DataTable>
                                 </div>

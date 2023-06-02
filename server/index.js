@@ -12,20 +12,20 @@ const Client = require("@googlemaps/google-maps-services-js").Client;
 
 
 //CONEXION BASE DE DATOS LOCAL
-/*const db = mysql.createConnection({
+const db = mysql.createConnection({
   user: 'root',
   host: 'localhost',
   password: '',
   database: 'sime'
-})*/
+})
 //CONEXION BASE DE DATOS EN SERVIDOR
-
+/*
 const db= mysql.createConnection({
   user:'root',
   host:'localhost',
   password:'sime123',
   database:'mape'
-})
+})*/
 
 
 
@@ -285,7 +285,7 @@ app.post("/uploadD", upload.single('file'), (req, res) => {
       const sqlInsert2 = "SELECT ruta from img_ine WHERE id=" + result[0].id
       db.query(sqlInsert2, (err, result) => {
         ruta = './images/' + result[0].ruta
-        console.log(ruta)
+        //console.log(ruta)
         const data = '';
         detectTextD(ruta).then((x) =>
           res.send(JSON.stringify(x))
@@ -300,11 +300,42 @@ app.post("/uploadD", upload.single('file'), (req, res) => {
 
 app.post('/api/distritos/', (req, res) => {
   const seccion = req.body.seccion
-  console.log(seccion)
+  //console.log(seccion)
   const sqlInsert = "SELECT id,df,dl FROM secc_distrito WHERE secc =" + seccion + " ;"
-  console.log(sqlInsert)
+  //console.log(sqlInsert)
   db.query(sqlInsert, (err, result) => {
     res.send(result[0])
+    console.log(result[0].dl)
+    console.log(err)
+  });
+})
+
+app.post('/api/distritosAll/', (req, res) => {
+ 
+  const sqlInsert = "SELECT id as value,secc as name FROM secc_distrito;" ;
+  //console.log(sqlInsert)
+  db.query(sqlInsert, (err, result) => {
+    res.send(result)
+    console.log(result[0].dl)
+    console.log(err)
+  });
+})
+app.post('/api/promotoresAll/', (req, res) => {
+ 
+  const sqlInsert = "SELECT id,CONCAT(apaterno,' ',amaterno,' ', nombres) AS nombre FROM registro_promotores;" ;
+  //console.log(sqlInsert)
+  db.query(sqlInsert, (err, result) => {
+    res.send(result)
+   
+    console.log(err)
+  });
+})
+app.post('/api/equipoAll/', (req, res) => {
+ 
+  const sqlInsert = "SELECT *FROM equipo" ;
+  //console.log(sqlInsert)
+  db.query(sqlInsert, (err, result) => {
+    res.send(result)
     console.log(result[0].dl)
     console.log(err)
   });
@@ -455,7 +486,7 @@ app.post('/api/insert/', (req, res) => {
         (err, result) => {
 
           if (err) {
-            console.log(err);
+            res.send(err);
           }
           else {
             response.push(true);
@@ -499,10 +530,12 @@ app.delete('/deleteApoyo/:id', (req, res) => {
   db.query("DELETE FROM apoyo WHERE id=?", id, (err, result) => {
     if (err) {
       console.log(err)
+      res.send(err);
     }
     else {
-      res.send(result)
-      console.log(result)
+      console.log(result);
+      res.send({status: 404, msg: "No user found"});
+      //res.status().send(200); 
     }
   })
 })
@@ -657,6 +690,8 @@ app.post('/api/insert-lider/', (req, res) => {
   const sql2 = "SELECT max(id) as id FROM img_ine"
   const sqlInsert = "INSERT INTO lideres_t (nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,fecha_nacimiento,curp,clave_electoral,seccion,id_Secc,no_celular, email,facebook,twitter,otra_red,circulo,contacto,no_celcontacto,observaciones,lat,lng,img,id_tipoLider) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
   const lider_id = "SELECT max(id) as id FROM lideres_t";
+  const secc_resp = "INSERT INTO secciones_injerencia_lider (lider_id,seccion_id) VALUES (?,?) ";
+
   var sql3 = "";
   var parametros = [];
 
@@ -681,8 +716,8 @@ app.post('/api/insert-lider/', (req, res) => {
 
       const id_p = result[0].id
       if (lider == 1) {
-        sql3 = "INSERT INTO domicilio_iglesia (calle,no_ext,colonia,fiesta_patronal,seccion_injerencia,id_lider) VALUES (?,?,?,?,?,?)"
-        parametros = [calleIglesia, numIglesia, colIglesia, fiesta, injerencia, id_p]
+        sql3 = "INSERT INTO domicilio_iglesia (calle,no_ext,colonia,fiesta_patronal,id_lider) VALUES (?,?,?,?,?)"
+        parametros = [calleIglesia, numIglesia, colIglesia, fiesta, id_p]
         db.query(sql3, parametros,
           (err, result) => {
 
@@ -695,10 +730,22 @@ app.post('/api/insert-lider/', (req, res) => {
 
             }
           });
+          for (let i = 0; i < injerencia.length; i++) {
+            db.query(secc_resp, [id_p, injerencia[i]], (err, result) => {
+              if (err) {
+                console.log(err);
+              }
+              else {
+                response.push(true);
+      
+      
+              }
+            })
+          }
       }
       if (lider == 2) {
-        sql3 = "INSERT INTO lider_partidista (partido_id,injerencia,id_lider) VALUES (?,?,?)"
-        parametros = [partido_id, injerencia, id_p]
+        sql3 = "INSERT INTO lider_partidista (partido_id,id_lider) VALUES (?,?)"
+        parametros = [partido_id, id_p]
         db.query(sql3, parametros,
           (err, result) => {
 
@@ -711,6 +758,18 @@ app.post('/api/insert-lider/', (req, res) => {
 
             }
           });
+          for (let i = 0; i < injerencia.length; i++) {
+            db.query(secc_resp, [id_p, injerencia[i]], (err, result) => {
+              if (err) {
+                console.log(err);
+              }
+              else {
+                response.push(true);
+      
+      
+              }
+            })
+          }
       }
       if (lider == 3) {
         sql3 = "INSERT INTO cargo_escuela (nombre_escuela,cargo,id_lider) VALUES (?,?,?)"
@@ -816,7 +875,7 @@ app.post('/api/insert-lider/', (req, res) => {
 });
 app.post('/lideres-view/:id', (req, res) => {
   const id = req.params.id
-  db.query("SELECT * FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id INNER JOIN secc_distrito sd ON l.id_Secc=sd.id where l.id=?",id, (err, result) => {
+  db.query('SELECT l.nombres,l.apaterno,l.amaterno,l.calle,l.numero,l.colonia,.l.cp,l.ciudad, DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,l.curp,l.clave_electoral,l.seccion,l.id_Secc,l.no_celular,l.email,l.facebook,l.twitter,l.otra_red,l.circulo,l.contacto,l.no_celcontacto,l.observaciones,l.lat,l.lng,l.id_tipoLider ,t.nombre_tipo,sd.df,sd.dl FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id INNER JOIN secc_distrito sd ON l.id_Secc=sd.id where l.id=?',id, (err, result) => {
     if (err) {
       console.log(err)
     }
@@ -856,7 +915,7 @@ app.delete('/deleteLider/:id', (req, res) => {
 app.post('/lideres', (req, res) => {
   db.query("SELECT l.id as id,CONCAT(l.nombres,' ',l.apaterno,' ',l.amaterno) as nombres,clave_electoral,seccion,nombre_tipo,l.no_celular FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id ", (err, result) => {
     if (err) {
-      console.log(err)
+      res.send(err);
     }
     else {
       acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
@@ -919,15 +978,17 @@ app.post('/api/insert-estructura', (req, res) => {
 
 
   const sql2 = "SELECT max(id) as id FROM img_ine"
-  const sqlInsert = "INSERT INTO registro_estructura (nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,fecha_nacimiento,curp,clave_electoral,seccion,id_Secc,no_celular, email,facebook,twitter,otra_red,circulo,observaciones,lat,lng,img,id_equipo,injerencia) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
-  const lider_id = "SELECT max(id) as id FROM lideres_t";
+  const sqlInsert = "INSERT INTO registro_estructura (nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,fecha_nacimiento,curp,clave_electoral,seccion,id_Secc,no_celular, email,facebook,twitter,otra_red,circulo,observaciones,lat,lng,img,id_equipo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
+  const lider_id = "SELECT max(id) as id FROM registro_estructura";
+  const secc_resp = "INSERT INTO secciones_injerencia_estructura (estructura_id,seccion_id) VALUES (?,?) ";
+
   db.query(sql2, (err, result) => {
     const id_image = result[0].id
     const response = []
 
     db.query(sqlInsert, [
       nombres, apaterno, amaterno, calle, numero, colonia, cp, ciudad, fecha_nacimiento, curp, clave_elector, seccion, id_Secc, no_celular, email, facebook, twitter, otra_red, nivel,
-      observaciones, lat, lng, id_image, equipo, injerencia], (err, result) => {
+      observaciones, lat, lng, id_image, equipo], (err, result) => {
 
         if (err) {
           console.log(err);
@@ -936,6 +997,22 @@ app.post('/api/insert-estructura', (req, res) => {
           response.push(true)
 
         }
+      });
+      db.query(lider_id, (err, result) => {
+        const id_p = result[0].id
+        for (let i = 0; i < injerencia.length; i++) {
+          db.query(secc_resp, [id_p, injerencia[i]], (err, result) => {
+            if (err) {
+              response.send(err);
+            }
+            else {
+              response.push(true);
+    
+    
+            }
+          })
+        }
+        
       });
   });
   if (response[0] == true) {
@@ -973,13 +1050,39 @@ app.post('/estructura', (req, res) => {
     }
   })
 })
+app.post('/estructura-view/:id', (req, res) => {
+  const id = req.params.id
+  db.query('SELECT  nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,curp,clave_electoral,seccion, no_celular, email,facebook, twitter, otra_red, circulo,observaciones,lat,lng,id_equipo,sd.df,sd.dl FROM registro_estructura INNER JOIN secc_distrito sd ON sd.id=registro_estructura.id_Secc where registro_estructura.id=?',id, (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
+      var resultado = JSON.stringify(result);
+      var empObj = JSON.parse(resultado);
+      /*var id="";
+      empObj.forEach((item) => {
+          Object.entries(item).forEach(([key, val]) => {
+              if(key=="id"){
+                  id=JSON.stringify(val);
+                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+            
+          });
+          Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
+        });
+        console.log(empObj)*/
+      res.send(resultado)
 
+
+    }
+  })
+})
 app.delete('/deleteEstructura/:id', (req, res) => {
   const id = req.params.id
   console.log(req.params)
   db.query("DELETE FROM registro_estructura WHERE id=?", id, (err, result) => {
     if (err) {
-      console.log(err)
+      res.send(err)
     }
     else {
       res.send(result)
@@ -987,7 +1090,37 @@ app.delete('/deleteEstructura/:id', (req, res) => {
     }
   })
 })
+app.post('/injerenciaEstructura/:id', (req, res) => {
+  const id = req.params.id
+  console.log(id)
+  const sqlInsert = "SELECT sie.seccion_id FROM secciones_injerencia_estructura  sie INNER JOIN secc_distrito sd ON sie.seccion_id=sd.id WHERE sie.estructura_id=?;" ;
+  //console.log(sqlInsert)
+  db.query(sqlInsert,id, (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
+      var resultado = JSON.stringify(result);
+      console.log(result)
+      var empObj = JSON.parse(resultado);
+      /*var id="";
+      empObj.forEach((item) => {
+          Object.entries(item).forEach(([key, val]) => {
+              if(key=="id"){
+                  id=JSON.stringify(val);
+                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+            
+          });
+          Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
+        });
+        console.log(empObj)*/
+      res.send(result)
 
+
+    }
+  });
+})
 
 //--------------------------------- PROMOTORES -----------------------------------------------------------//
 app.post('/insert-promotor', (req, res) => {
@@ -1020,14 +1153,14 @@ app.post('/insert-promotor', (req, res) => {
   const lider = req.body.id_tipoLider
   const id_Secc = req.body.id_Secc
   const observaciones = req.body.observaciones
-  const injerencia = req.body.injerencia
+  const injerencias = req.body.injerencias
   const equipo = req.body.idEquipo
 
 
   const sql2 = "SELECT max(id) as id FROM img_ine"
   const sql3 = "SELECT max(id) as id FROM registro_promotores"
   const sqlInsert = "INSERT INTO registro_promotores (nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,fecha_nacimiento,curp,clave_electoral,seccion,id_Secc,no_celular, email,facebook,twitter,otra_red,circulo,observaciones,lat,lng,img) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
-  const secc_resp = "INSERT INTO secciones_responsabilidad (promotor_id,seccion_id) VALUES (?,?) ";
+  const secc_resp = "INSERT INTO secciones_responsabilidad_promotores (promotor_id,seccion_id) VALUES (?,?) ";
   const response = []
   db.query(sql2, (err, result) => {
     const id_image = result[0].id
@@ -1037,7 +1170,7 @@ app.post('/insert-promotor', (req, res) => {
       nombres, apaterno, amaterno, calle, numero, colonia, cp, ciudad, fecha_nacimiento, curp, clave_elector, seccion, id_Secc, no_celular, email, facebook, twitter, otra_red, nivel,
       observaciones, lat, lng, id_image], (err, result) => {
         if (err) {
-          console.log(err);
+          res.send(err);
         }
         else {
           response.push(true)
@@ -1047,16 +1180,19 @@ app.post('/insert-promotor', (req, res) => {
 
     db.query(sql3, (err, result) => {
       const id_p = result[0].id
-      db.query(secc_resp, [id_p, id_Secc], (err, result) => {
-        if (err) {
-          console.log(err);
-        }
-        else {
-          response.push(true);
-
-
-        }
-      })
+      for (let i = 0; i < injerencias.length; i++) {
+        db.query(secc_resp, [id_p, injerencias[i]], (err, result) => {
+          if (err) {
+            console.log(err);
+          }
+          else {
+            response.push(true);
+  
+  
+          }
+        })
+      }
+      
     });
 
   });
@@ -1074,7 +1210,7 @@ app.post('/insert-promotor', (req, res) => {
 });
 
 app.post('/promotores', (req, res) => {
-  db.query("SELECT rp.id,CONCAT(rp.nombres,' ',rp.apaterno,' ',rp.amaterno) AS nombre,rp.clave_electoral,sd.secc,rp.no_celular FROM registro_promotores rp INNER JOIN secciones_responsabilidad sr ON rp.id=sr.promotor_id INNER JOIN secc_distrito sd ON sd.id=sr.seccion_id  ", (err, result) => {
+  db.query("SELECT rp.id,CONCAT(rp.nombres,' ',rp.apaterno,' ',rp.amaterno) AS nombre,rp.no_celular,sd.secc,srp.promotor_id FROM  registro_promotores rp INNER JOIN secciones_responsabilidad_promotores srp ON rp.id=srp.promotor_id INNER JOIN secc_distrito sd ON srp.seccion_id=sd.id  ", (err, result) => {
     if (err) {
       console.log(err)
     }
@@ -1104,7 +1240,7 @@ app.delete('/deletePromotor/:id', (req, res) => {
   console.log(req.params)
   db.query("DELETE FROM registro_promotores WHERE id=?", id, (err, result) => {
     if (err) {
-      console.log(err)
+      res.send(err)
     }
     else {
       res.send(result)
@@ -1112,7 +1248,64 @@ app.delete('/deletePromotor/:id', (req, res) => {
     }
   })
 })
+app.post('/promotores-view/:id', (req, res) => {
+  const id = req.params.id
+  db.query('SELECT  nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,curp,clave_electoral,seccion, no_celular, email,facebook, twitter, otra_red,id_Secc, circulo,observaciones,lat,lng,sd.df,sd.dl FROM registro_promotores INNER JOIN secc_distrito sd ON sd.id=registro_promotores.id_Secc WHERE registro_promotores.id=?',id, (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
+      var resultado = JSON.stringify(result);
+      var empObj = JSON.parse(resultado);
+      /*var id="";
+      empObj.forEach((item) => {
+          Object.entries(item).forEach(([key, val]) => {
+              if(key=="id"){
+                  id=JSON.stringify(val);
+                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+            
+          });
+          Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
+        });
+        console.log(empObj)*/
+      res.send(resultado)
 
+
+    }
+  })
+})
+app.post('/responsabilidadPromotor/:id', (req, res) => {
+  const id = req.params.id
+  console.log(id)
+  const sqlInsert = "SELECT srp.seccion_id FROM secciones_responsabilidad_promotores  srp INNER JOIN secc_distrito sd ON srp.seccion_id=sd.id WHERE srp.promotor_id=?;" ;
+  //console.log(sqlInsert)
+  db.query(sqlInsert,id, (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
+      var resultado = JSON.stringify(result);
+      console.log(result)
+      var empObj = JSON.parse(resultado);
+      /*var id="";
+      empObj.forEach((item) => {
+          Object.entries(item).forEach(([key, val]) => {
+              if(key=="id"){
+                  id=JSON.stringify(val);
+                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+            
+          });
+          Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
+        });
+        console.log(empObj)*/
+      res.send(result)
+
+
+    }
+  });
+})
 
 ///------------------------ PROMOVIDOS ----------------------------
 app.post('/insert-promovido', (req, res) => {
@@ -1204,6 +1397,34 @@ app.post('/promovidos', (req, res) => {
           Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
         });
         console.log(empObj)*/
+      res.send(resultado)
+
+
+    }
+  })
+})
+app.post('/promovidos-view/:id', (req, res) => {
+  const id = req.params.id
+  db.query('SELECT  r.nombres,r.apaterno,r.amaterno,r.calle,r.numero,r.colonia,r.cp,r.ciudad,DATE_FORMAT(r.fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,r.curp,r.clave_electoral,r.seccion, r.no_celular, r.email,r.facebook, r.twitter, r.otra_red,r.id_Secc,r.circulo,r.observaciones,r.lat,r.lng,sd.df,sd.dl,rp.id AS promotor FROM registro_promovidos r INNER JOIN secc_distrito sd ON sd.id=r.id_Secc INNER JOIN registro_promotores rp ON rp.id=r.id_promotor WHERE r.id=?',id, (err, result) => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
+      var resultado = JSON.stringify(result);
+      var empObj = JSON.parse(resultado);
+      /*var id="";
+      empObj.forEach((item) => {
+          Object.entries(item).forEach(([key, val]) => {
+              if(key=="id"){
+                  id=JSON.stringify(val);
+                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+            
+          });
+          Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
+        });
+        console.log(empObj)*/
+        console.log(resultado)
       res.send(resultado)
 
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Axios from 'axios';
-
+import Swal from 'sweetalert2';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { BrowserRouter, NavLink, Routes, Route, Switch, Link, usena } from 'react-router-dom';
@@ -47,7 +47,7 @@ function PromotoresList() {
                     }
 
                 });
-                Object.assign(item, { ver: <Link className='view' to={""} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
+                Object.assign(item, { ver: <Link className='view' to={'/promotores/view/'+id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
                 Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
                 Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
 
@@ -67,8 +67,23 @@ function PromotoresList() {
 
     const deleteApoyo = (id) => {
         Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/"+id*/"http://localhost:3001/deletePromotor/" + id).then(() => {
-            //alert("ELIMINADO")
-            navigate('/promotores')
+            Swal.fire({
+                title: 'Registro promotor',
+                text: 'eliminado correctamente',
+                icon: 'success',
+                confirmButtonText: 'De acuerdo'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                 navigate('/promotores');
+                }
+            }).catch(error => {
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message,
+                    icon: 'error',
+                    confirmButtonText: 'De acuerdo'
+                })
+            });
         })
 
     }
@@ -193,14 +208,22 @@ function PromotoresList() {
         );
     };
     const representativeBodyTemplate = (rowData) => {
-        const representative = rowData.distrito_federal;
-
         return (
             <div className="flex align-items-center gap-2">
-                <span>{representative}</span>
+                <span className="font-bold">{rowData.nombre}</span>
+                
             </div>
         );
     };
+    const representativeBodyTemplate2 = (rowData) => {
+        return (
+            <div className="flex align-items-center gap-2">
+                <span className="font-bold">{rowData.no_celular}</span>
+                
+            </div>
+        );
+    };;
+    
     const headerGroup = (<ColumnGroup>
         <Row>
             <Column header="" colSpan={3}></Column>
@@ -253,15 +276,16 @@ function PromotoresList() {
                                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                                         currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
                                         tableStyle={{ minWidth: '50rem' }}
-                                        globalFilterFields={['DF']}
-                                        header={header}>
+                                        globalFilterFields={['nombre','no_celular','secc']}
+                                        header={header}
+                                        rowGroupMode="rowspan" groupRowsBy={['nombre','no_celular']}>
                                         
-                                        <Column field="nombre" header="Nombre completo" style={{ minWidth: '12rem' }} />
-                                        <Column field="no_celular" header="Núm. de celular" style={{ minWidth: '12rem' }} />
+                                        <Column field="nombre" header="Nombre completo" style={{ minWidth: '12rem' }} body={representativeBodyTemplate} />
+                                        <Column field="no_celular" header="Núm. de celular" style={{ minWidth: '12rem' }} body={representativeBodyTemplate2} />
                                         <Column field="secc" header="Seccion (es) de Responsabilidad" style={{ minWidth: '7rem' }} />
                                        
-                                        <Column field="ver" header="Ver" style={{ minWidth: '12rem' }} />
-                                        <Column field="eliminar" header="Eliminar" style={{ minWidth: '12rem' }} />
+                                        <Column field="ver" header="Ver" style={{ minWidth: '4rem' }} />
+                                        <Column field="eliminar" header="Eliminar" style={{ minWidth: '4rem' }} />
 
                                     </DataTable>
                                 </div>

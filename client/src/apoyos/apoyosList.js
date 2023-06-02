@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Axios from 'axios';
-
+import Swal from 'sweetalert2';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { BrowserRouter, NavLink, Routes, Route, Switch, Link, usena } from 'react-router-dom';
@@ -30,11 +30,11 @@ function ApoyosList() {
     const [listDF, setListDF] = useState([])
 
     const navigate = useNavigate();
-    const [globalFilter, setGlobalFilter] = useState({global: { value: null, matchMode: FilterMatchMode.CONTAINS }});
+    const [globalFilter, setGlobalFilter] = useState({ global: { value: null, matchMode: FilterMatchMode.CONTAINS } });
     const dt = useRef(null);
     const getList = () => {
-        Axios.post(//"http://localhost:3001/apoyos"
-            "http://54.219.124.66:3001/apoyos"
+        Axios.post("http://localhost:3001/apoyos"
+            //"http://54.219.124.66:3001/apoyos"
         ).then((response) => {
             //FILTRAR CAMPOS PARA TABLA
             var resultado = JSON.stringify(response.data);
@@ -44,7 +44,7 @@ function ApoyosList() {
                 Object.entries(item).forEach(([key, val]) => {
                     if (key == "id") {
                         id = JSON.stringify(val);
-                        
+
                         //console.log(`key-${key}-val-${JSON.stringify(val)}`)
                     }
 
@@ -68,11 +68,26 @@ function ApoyosList() {
 
 
     const deleteApoyo = (id) => {
-        Axios.delete("http://54.219.124.66:3001/deleteApoyo/"+id /* "http://localhost:3001/deleteApoyo/" + id*/).then(() => {
-            alert("ELIMINADO")
-            navigate('/apoyos')
-        })
+        Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/" + id */ "http://localhost:3001/deleteApoyo/" + id).then(() => {
 
+            Swal.fire({
+                title: 'Registro apoyo',
+                text: 'eliminado correctamente',
+                icon: 'success',
+                confirmButtonText: 'De acuerdo'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                 navigate('/apoyos');
+                }
+            });
+        }).catch(error => {
+            Swal.fire({
+                title: 'Error!',
+                text: error.message,
+                icon: 'error',
+                confirmButtonText: 'De acuerdo'
+            })
+        });
     }
     const atras = () => {
         let path = '/apoyos';
@@ -88,7 +103,7 @@ function ApoyosList() {
         { field: 'tipo', header: 'Tipo de apoyo' },
         { field: 'alcance', header: 'Alcance de apoyo' },
         { field: 'seccion', header: 'Sección' },
-    
+
 
     ];
     const exportCSV = () => {
@@ -143,41 +158,42 @@ function ApoyosList() {
     };
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS }
-        
+
     });
     const [globalFilterValue, setGlobalFilterValue] = useState("");
     const onGlobalFilterChange = (e) => {
         const value = e.target.value;
         let _filters = { ...filters };
-    
+
         _filters["global"].value = value;
-    
+
         setFilters(_filters);
         setGlobalFilterValue(value);
-        
-      };
 
+    };
+  
+ 
     const [selectedCities, setSelectedCities] = useState(null);
     const header = (
         <div>
 
-            
+
             <div className='row'>
                 <div className='col-8'>
-                <div className="flex align-items-center justify-content-end gap-4">
-                <Button type="button" icon="pi pi-file" rounded onClick={() => exportCSV(false)} data-pr-tooltip="CSV" />
-                <Button type="button" icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" />
-                <Button type="button" icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf} data-pr-tooltip="PDF" />
-            </div>
+                    <div className="flex align-items-center justify-content-end gap-4">
+                        <Button type="button" icon="pi pi-file" rounded onClick={() => exportCSV(false)} data-pr-tooltip="CSV" />
+                        <Button type="button" icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" />
+                        <Button type="button" icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf} data-pr-tooltip="PDF" />
+                    </div>
                 </div>
                 <div className='col-4'>
                     <span className="p-input-icon-left">
                         <i className="pi pi-search" />
                         <InputText
-            value={globalFilterValue}
-            onChange={onGlobalFilterChange}
-            placeholder="Buscar"
-          />
+                            value={globalFilterValue}
+                            onChange={onGlobalFilterChange}
+                            placeholder="Buscar"
+                        />
                     </span>
                 </div>
 
@@ -221,8 +237,8 @@ function ApoyosList() {
     const headerGroup = (<ColumnGroup>
         <Row>
             <Column header="" colSpan={4}></Column>
-            <Column header="Acciones" style={{textAlign:'center'}}  colSpan={3}></Column>
-            
+            <Column header="Acciones" style={{ textAlign: 'center' }} colSpan={3}></Column>
+
         </Row>
         <Row>
             <Column header="Nombre Completo"></Column>
@@ -240,78 +256,78 @@ function ApoyosList() {
 
             <Header></Header>
 
-           
-
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
-                <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css" integrity="sha512-giQeaPns4lQTBMRpOOHsYnGw1tGVzbAIHUyHRgn7+6FmiEgGGjaG0T2LZJmAPMzRCl+Cug0ItQ2xDZpTmEc+CQ==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous" />
-                
-                   
-                        {getList()}
-                        <div className='row'>
-                        <div className='col-md-1'></div>
-                        <div className='col-md-10'>
-                            <div className="table-responsive">
-                                <div className="table-wrapper">
-
-                                    <div className="card rounded">
-                                        <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
-                                        <DataTable
-                                            ref={dt}
-                                            value={list}
-                                            paginator
-                                            rows={10}
-                                            filters={filters}
-                                            headerColumnGroup={headerGroup}
-                                            resizableColumns showGridlines
-                                            rowsPerPageOptions={[5, 10, 25]}
-                                            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                                            currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
-                                            tableStyle={{ minWidth: '50rem' }}
-                                            globalFilterFields={['nombre','tipo','alcance','seccion']}
-                                            header={header}>
-                                            <Column field="nombre" header="Nombre Completo" style={{ minWidth: '12rem' }} />
-                                            <Column field="tipo" header="Tipo de apoyo" style={{ minWidth: '12rem' }} />
-                                            <Column field="alcance" header="Alcance de apoyo" style={{ minWidth: '6rem' }} />
-                                            <Column field="seccion" filterField="Sección" filter header="Distrito F" style={{ minWidth: '6rem' }} />
-                                            
-                                            <Column field="ver" header="Ver" style={{ minWidth: '4rem' }} />
-                                            <Column field="editar" header="Editar" style={{ minWidth: '4rem' }} />
-                                            <Column field="eliminar" header="Editar" style={{ minWidth: '4rem' }} />
-
-                                        </DataTable>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-md-1'></div>
-                        </div>
-                   
 
 
-              
-                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css" integrity="sha512-giQeaPns4lQTBMRpOOHsYnGw1tGVzbAIHUyHRgn7+6FmiEgGGjaG0T2LZJmAPMzRCl+Cug0ItQ2xDZpTmEc+CQ==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous" />
 
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div className="modal-body">
-                                <p>¿Estás seguro de eliminar este registro?</p>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" onClick={atras} className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" className="btn btn-primary " data-bs-dismiss="modal" aria-label="Close" onClick={() => { deleteApoyo(id) }}>Aceptar</button>
+
+            {getList()}
+            <div className='row'>
+                <div className='col-md-1'></div>
+                <div className='col-md-10'>
+                    <div className="table-responsive">
+                        <div className="table-wrapper">
+
+                            <div className="card rounded">
+                                <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
+                                <DataTable
+                                    ref={dt}
+                                    value={list}
+                                    paginator
+                                    rows={10}
+                                    filters={filters}
+                                    headerColumnGroup={headerGroup}
+                                    resizableColumns showGridlines
+                                    rowsPerPageOptions={[5, 10, 25]}
+                                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                                    currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
+                                    tableStyle={{ minWidth: '50rem' }}
+                                    globalFilterFields={['nombre', 'tipo', 'alcance', 'seccion']}
+                                    header={header}>
+                                    <Column field="nombre" header="Nombre Completo" style={{ minWidth: '12rem' }} />
+                                    <Column field="tipo" header="Tipo de apoyo" style={{ minWidth: '12rem' }} />
+                                    <Column field="alcance" header="Alcance de apoyo" style={{ minWidth: '6rem' }} />
+                                    <Column field="seccion" filterField="Sección" filter header="Distrito F" style={{ minWidth: '6rem' }} />
+
+                                    <Column field="ver" header="Ver" style={{ minWidth: '4rem' }} />
+                                    <Column field="editar" header="Editar" style={{ minWidth: '4rem' }} />
+                                    <Column field="eliminar" header="Editar" style={{ minWidth: '4rem' }} />
+
+                                </DataTable>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div className='col-md-1'></div>
             </div>
+
+
+
+
+            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <p>¿Estás seguro de eliminar este registro?</p>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" onClick={atras} className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-primary " data-bs-dismiss="modal" aria-label="Close" onClick={() => { deleteApoyo(id) }}>Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
 

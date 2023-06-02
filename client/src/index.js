@@ -23,6 +23,9 @@ import Promotores from './promotores/promotores';
 import PromotoresList from './promotores/promotoresList';
 import Promovidos from './promovidos/promovidos';
 import PromovidosList from './promovidos/promovidosList';
+import ViewEstructura from './estructura/viewEstructura';
+import ViewPromotores from './promotores/viewPromotores';
+import ViewPromovidos from './promovidos/viewPromovidos';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -48,15 +51,19 @@ root.render(
 
                  <Route path='/estructura' element={<EstructuraList/>} />
                  <Route path='/estructura/add' element={<Estructura/>} />
-                 <Route path='/representantes' element={<RepresentantesList/>} />
-                 <Route path='/representantes/add' element={<Representantes/>} />
+                 <Route path='/estructura/view/:id' element={<ViewEstructura/>} />
 
                  <Route path='/promotores' element={<PromotoresList/>} />
                  <Route path='/promotores/add' element={<Promotores/>} />
+                 <Route path='/promotores/view/:id' element={<ViewPromotores/>} />
 
                  <Route path='/promovidos' element={<PromovidosList/>} />
                  <Route path='/promovidos/add' element={<Promovidos/>} />
+                 <Route path='/promovidos/view/:id' element={<ViewPromovidos/>} />
 
+
+                 <Route path='/representantes' element={<RepresentantesList/>} />
+                 <Route path='/representantes/add' element={<Representantes/>} />
 
            </Routes>
          </BrowserRouter>

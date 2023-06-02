@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-
+import { MultiSelect } from 'primereact/multiselect';
 import Axios from 'axios';
 import '../apoyos/apoyos.css'
 import { useNavigate } from 'react-router-dom';
@@ -11,6 +11,7 @@ import Header from '../header/header';
 import { GoogleMap, KmlLayer, LoadScript, InfoWindow, Marker, Polyline, Rectangle } from '@react-google-maps/api';
 import config from '../maps/config.json';
 import ScriptTag from 'react-script-tag';
+import Swal from 'sweetalert2';
 const mapContainerStyle = {
     width: '100%', height: '98vh', overflow: 'hidden'
 };
@@ -105,8 +106,8 @@ function Promovidos() {
     const [idSecc, setidSecc] = useState("");
     const [equipo, setEquipo] = useState("");
     const navigate = useNavigate();
-
-
+    const [list, setList] = useState([])
+    
     /*const center = {
       lat: document.getElementById("lat").value,
       lng:document.getElementById("lng").value
@@ -144,8 +145,8 @@ function Promovidos() {
 
         try {
             const res = await Axios.post(
-                "http://54.219.124.66:3001/uploadD",
-                //"http://localhost:3001/uploadD",
+                //"http://54.219.124.66:3001/uploadD",
+                "http://localhost:3001/uploadD",
                 formData
             );
 
@@ -196,8 +197,8 @@ function Promovidos() {
 
     const submitReview = () => {
 
-            Axios.post("http://54.219.124.66:3001/insert-promovido",
-                //"http://localhost:3001/insert-promovido",
+            Axios.post(//"http://54.219.124.66:3001/insert-promovido",
+                "http://localhost:3001/insert-promovido",
                 //"http://ec2-54-219-124-66.us-west-1.compute.amazonaws.com:3001/insert-promovido",
                 {
 
@@ -206,11 +207,27 @@ function Promovidos() {
                     distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
                     otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_promotor: promotor, observaciones: observaciones
                 }).then(() => {
-                    console.log("succes")
-                    alert("AGREGADO")
+                Swal.fire({
+                  title: 'Registro de promovidos',
+                  text: "Agregado existosamente",
+                  icon: 'success',
+                  confirmButtonColor: '#716add',
+                  confirmButtonText: 'De acuerdo'
+                }).then((result) => {
+                  if (result.isConfirmed) {
                     navigate('/promovidos')
+                  }
+                })
+        
+              }).catch(error => {
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message,
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                })
+            });
 
-                });
         
        
         /*console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
@@ -218,11 +235,27 @@ function Promovidos() {
           + celular + email + facebook + twitter + otra + descrApoyo + tipoApoyo
           + monto + alcance + contacto + celContacto+camera_ine)*/
     }
+    const promotoresList = () => {
+
+
+        Axios.post("http://localhost:3001/api/promotoresAll"
+            /*"http://54.219.124.66:3001/api/distritos"*/, {
+           
+        }).then((response) => {
+            var resultado = JSON.stringify(response.data);
+            var empObj = JSON.parse(resultado);
+          setList(empObj)
+          console.log(response)
+
+
+        });
+
+    }
     const submitSeccion = () => {
 
 
-        Axios.post(/*"http://ec2-54-219-124-66.us-west-1.compute.amazonaws.com:3001/api/distritos"*/
-    "http://54.219.124.66:3001/api/distritos", {
+        Axios.post("http://localhost:3001/api/distritos"
+    /*"http://54.219.124.66:3001/api/distritos"*/, {
                 seccion: document.getElementById("secc").value
             }).then((res) => {
 
@@ -233,18 +266,20 @@ function Promovidos() {
                 setidSecc(res.data.id)
                 setValue("dl", res.data.dl)
                 setValue("df", res.data.df)
-
+setidSecc(res.data.id)
                 console.log(seccion)
 
 
             });
 
     }
+    
+   
 
     const getLocation = () => {
         var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
         document.getElementById("direc").setAttribute('value', direccion)
-        Axios.post(/*"http://ec2-54-219-124-66.us-west-1.compute.amazonaws.com:3001/getLoc/"*/"http://54.219.124.66:3001/getLoc", { direccion: document.getElementById("direc").value }).then((res) => {
+        Axios.post("http://localhost:3001/getLoc/"/*"http://54.219.124.66:3001/getLoc"*/, { direccion: document.getElementById("direc").value }).then((res) => {
             console.log(res)
 
             var lat = res.data.lat
@@ -797,7 +832,7 @@ function Promovidos() {
                                         //    required: true,
 
                                         //})}
-                                        className="form-control"
+                                        className="form-select"
                                         id="nivel"
 
                                         name="nivel" 
@@ -817,25 +852,28 @@ function Promovidos() {
 
                             <div className="row gx-3 mb-3">
                                 <div className='col-12'>
-                                    <label className="small mb-1" htmlFor="nivel">Seccion(es) de responsabilidad</label>
+                                {promotoresList()}
+                                    <label className="small mb-1" htmlFor="nivel">Promovido por:</label>
                                     <select
                                         {...register("promovidopor", {
                                             required: true,
 
                                         })}
-                                        className="form-control"
+                                        className="form-select"
                                         id="promovidopor"
 
                                         name="promovidopor" 
                                         onChange={e => { setPromotor(e.target.value) }}
                                     >
-                                        <option value="">Elije una o más secciones</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        <option value="">Elige un promotor <i className='pi-angle-down'></i></option>
+                                        {list.map(val => {
+                                        
+                                            return(<option value={val.id}>{val.nombre}</option> );
+                                        })}
+                                                         
 
                                     </select>
-                                    {errors?.seccInjerencia?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
+                                    {errors?.promovidopor?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
                                 </div>
 
                             </div>
@@ -877,7 +915,7 @@ function Promovidos() {
                                     <button className="btn btn-danger" id='limpiar' onClick={limpiar} type="button">Limpiar datos</button>
                                 </div>
                                 <div className="col-md-4">
-                                    <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar cambios</button>
+                                    <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar Promovido</button>
                                     {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
                                 </div>
                             </div>

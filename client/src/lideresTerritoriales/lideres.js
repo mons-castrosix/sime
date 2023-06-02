@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-
+import { MultiSelect } from 'primereact/multiselect';
 import Axios from 'axios';
-
+import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.js'
@@ -41,17 +41,15 @@ const optionMap = {
 
 
 const onLoad = rectangle => {
-    console.log('rectangle: ', rectangle)
+    //console.log('rectangle: ', rectangle)
 }
 
 const onClick = click => {
-    console.log('click: ', click.featureData
-    )
+    //console.log('click: ', click.featureData)
 }
 
 const onPosition = click => {
-    console.log('click: ', click
-    )
+    //console.log('click: ', click)
 }
 
 
@@ -105,7 +103,8 @@ function Lideres() {
     const [lider, setLider] = useState("");
     const [idSecc, setidSecc] = useState("");
     const navigate = useNavigate();
-
+    const [list, setList] = useState([])
+    const [selectedSeccion, setSelectedSeccion] = useState(null);
 
     /*const center = {
       lat: document.getElementById("lat").value,
@@ -127,8 +126,8 @@ function Lideres() {
         setFileName(e.target.files[0].name);
     };
     const onLoad = rectangle => {
-        console.log('rectangle: ', rectangle.latLng.lat());
-        console.log('rectangle: ', rectangle.latLng.lng());
+        //console.log('rectangle: ', rectangle.latLng.lat());
+        //console.log('rectangle: ', rectangle.latLng.lng());
         setValue("lat", rectangle.latLng.lat())
         setValue("lng", rectangle.latLng.lng())
         setNewCoor([rectangle.latLng.lat(), rectangle.latLng.lng()])
@@ -136,23 +135,23 @@ function Lideres() {
 
     const uploadFile1 = async (e) => {
         const formData = new FormData();
-        console.log(fileName)
-        console.log(file)
+        //console.log(fileName)
+        //console.log(file)
         formData.append("file", file);
         formData.append("fileName", fileName);
         //console.log(formData)
 
         try {
             const res = await Axios.post(
-                "http://54.219.124.66:3001/uploadD",
-                //"http://localhost:3001/uploadD",
+                //"http://54.219.124.66:3001/uploadD",
+                "http://localhost:3001/uploadD",
                 formData
             );
 
 
             var fecha = res.data.fecha_nacimiento
             fecha = fecha.split("/").reverse().join("-");
-            console.log(fecha)
+            //console.log(fecha)
             setValue("nombre", res.data.nombres)
 
             setValue("apaterno", res.data.apaterno);
@@ -190,15 +189,15 @@ function Lideres() {
         }
     };
     useEffect(() => {
-        console.log(nombres);
-        console.log(aPaterno);
+        //console.log(nombres);
+        //console.log(aPaterno);
     }, [nombres, aPaterno, aMaterno, calle, numero, colonia, cp, ciudad, fechaNacimiento, seccion, dFederal, dLocal]);
 
     const submitReview = () => {
 
         if (lider === "2") {    //lider partidista
-            Axios.post("http://54.219.124.66:3001/api/insert-lider",
-                //"http://localhost:3001/api/insert-lider",
+            Axios.post(//"http://54.219.124.66:3001/api/insert-lider",
+                "http://localhost:3001/api/insert-lider",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -206,15 +205,31 @@ function Lideres() {
                     distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
                     otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, observaciones: observaciones, id_tipoLider: lider, partido_id: partido, injerencia: seccionInjerencia
                 }).then(() => {
-                    console.log("succes")
-                    //alert("AGREGADO")
-                    navigate('/lideres')
+                    Swal.fire({
+                        title: 'Registro de líder territorial',
+                        text: "Agregado existosamente",
+                        icon: 'success',
+                        confirmButtonColor: '#716add',
+                        confirmButtonText: 'De acuerdo'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                         navigate('/lideres');
+                        }
+                      })
+                    
 
+                }).catch(error => {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.message,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
                 });
         }
         if (lider == "1") { //sacerdote
-            Axios.post("http://54.219.124.66:3001/api/insert-lider",
-                //"http://localhost:3001/api/insert-lider",
+            Axios.post(//"http://54.219.124.66:3001/api/insert-lider",
+                "http://localhost:3001/api/insert-lider",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -222,15 +237,31 @@ function Lideres() {
                     distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
                     otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, observaciones: observaciones, id_tipoLider: lider, calleiglesia: calleIglesia, no_extinglesia: numeroIglesia, coloniaIglesia: coloniaIglesia, fiesta_patronal: celebracion, injerencia: seccionInjerencia
                 }).then(() => {
-                    console.log("succes")
-                    //alert("AGREGADO")
-                    navigate('/lideres')
+                    Swal.fire({
+                        title: 'Registro de líder territorial',
+                        text: "Agregado existosamente",
+                        icon: 'success',
+                        confirmButtonColor: '#716add',
+                        confirmButtonText: 'De acuerdo'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                         navigate('/lideres');
+                        }
+                      })
+                    
 
+                }).catch(error => {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.message,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
                 });
         }
         if (lider == "3") { //maestro
-            Axios.post("http://54.219.124.66:3001/api/insert-lider",
-                //"http://localhost:3001/api/insert-lider",
+            Axios.post(//"http://54.219.124.66:3001/api/insert-lider",
+                "http://localhost:3001/api/insert-lider",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -238,15 +269,31 @@ function Lideres() {
                     distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
                     otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, observaciones: observaciones, id_tipoLider: lider, escuela: escuela, cargo: cargo
                 }).then(() => {
-                    console.log("succes")
-                    //alert("AGREGADO")
-                    navigate('/lideres')
+                    Swal.fire({
+                        title: 'Registro de líder territorial',
+                        text: "Agregado existosamente",
+                        icon: 'success',
+                        confirmButtonColor: '#716add',
+                        confirmButtonText: 'De acuerdo'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                         navigate('/lideres');
+                        }
+                      })
+                    
 
+                }).catch(error => {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.message,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
                 });
         }
         if (lider == "4") { // jefe de tenencia 
-            Axios.post("http://54.219.124.66:3001/api/insert-lider",
-                //"http://localhost:3001/api/insert-lider",
+            Axios.post(//"http://54.219.124.66:3001/api/insert-lider",
+                "http://localhost:3001/api/insert-lider",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -254,15 +301,31 @@ function Lideres() {
                     distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
                     otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, observaciones: observaciones, id_tipoLider: lider, tenencia: tenencia
                 }).then(() => {
-                    console.log("succes")
-                    //alert("AGREGADO")
-                    navigate('/lideres')
+                    Swal.fire({
+                        title: 'Registro de líder territorial',
+                        text: "Agregado existosamente",
+                        icon: 'success',
+                        confirmButtonColor: '#716add',
+                        confirmButtonText: 'De acuerdo'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                         navigate('/lideres');
+                        }
+                      })
+                    
 
+                }).catch(error => {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.message,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
                 });
         }
         if (lider == "5") { //encargado del orden
-            Axios.post("http://54.219.124.66:3001/api/insert-lider",
-                //"http://localhost:3001/api/insert-lider",
+            Axios.post(//"http://54.219.124.66:3001/api/insert-lider",
+                "http://localhost:3001/api/insert-lider",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -270,15 +333,31 @@ function Lideres() {
                     distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
                     otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, observaciones: observaciones, id_tipoLider: lider, coloniaEncargado: coloniaEncargado
                 }).then(() => {
-                    console.log("succes")
-                    //alert("AGREGADO")
-                    navigate('/lideres')
+                    Swal.fire({
+                        title: 'Registro de líder territorial',
+                        text: "Agregado existosamente",
+                        icon: 'success',
+                        confirmButtonColor: '#716add',
+                        confirmButtonText: 'De acuerdo'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                         navigate('/lideres');
+                        }
+                      })
+                    
 
+                }).catch(error => {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.message,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
                 });
         }
         if (lider == "6") { //asosiacion civil
-            Axios.post("http://54.219.124.66:3001/api/insert-lider",
-                //"http://localhost:3001/api/insert-lider",
+            Axios.post(//"http://54.219.124.66:3001/api/insert-lider",
+                "http://localhost:3001/api/insert-lider",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -286,15 +365,31 @@ function Lideres() {
                     distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
                     otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, observaciones: observaciones, id_tipoLider: lider, nombreAc: nombreAC, cargo: cargo
                 }).then(() => {
-                    console.log("succes")
-                    //alert("AGREGADO")
-                    navigate('/lideres')
+                    Swal.fire({
+                        title: 'Registro de líder territorial',
+                        text: "Agregado existosamente",
+                        icon: 'success',
+                        confirmButtonColor: '#716add',
+                        confirmButtonText: 'De acuerdo'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                         navigate('/lideres');
+                        }
+                      })
+                    
 
+                }).catch(error => {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.message,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
                 });
         }
         if (lider == "7") { //otro
-            Axios.post("http://54.219.124.66:3001/api/insert-lider",
-                //"http://localhost:3001/api/insert-lider",
+            Axios.post(//"http://54.219.124.66:3001/api/insert-lider",
+                "http://localhost:3001/api/insert-lider",
                 {
 
                     apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -302,10 +397,26 @@ function Lideres() {
                     distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
                     otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, observaciones: observaciones, id_tipoLider: lider, nombre: nombreInstitucion, cargo: cargo
                 }).then(() => {
-                    console.log("succes")
-                    //alert("AGREGADO")
-                    navigate('/lideres')
+                    Swal.fire({
+                        title: 'Registro de líder territorial',
+                        text: "Agregado existosamente",
+                        icon: 'success',
+                        confirmButtonColor: '#716add',
+                        confirmButtonText: 'De acuerdo'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                         navigate('/lideres');
+                        }
+                      })
+                    
 
+                }).catch(error => {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.message,
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    })
                 });
         }
         /*console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
@@ -316,20 +427,35 @@ function Lideres() {
     const submitSeccion = () => {
 
 
-        Axios.post(//"http://localhost:3001/api/distritos"
-    "http://54.219.124.66:3001/api/distritos", {
-                seccion: document.getElementById("secc").value
-            }).then((res) => {
+        Axios.post("http://localhost:3001/api/distritos"
+            /*"http://54.219.124.66:3001/api/distritos"*/, {
+            seccion: document.getElementById("secc").value
+        }).then((res) => {
 
-                console.log(res.data.df)
+            //console.log(res.data.df)
 
-                setDfederal(res.data.df)
-                setDlocal(res.data.dl)
-                setidSecc(res.data.id)
-                setValue("dl", res.data.dl)
-                setValue("df", res.data.df)
+            setDfederal(res.data.df)
+            setDlocal(res.data.dl)
+            setidSecc(res.data.id)
+            setValue("dl", res.data.dl)
+            setValue("df", res.data.df)
 
-                console.log(seccion)
+            //console.log(seccion)
+
+
+        });
+
+    }
+    const submitSecciones = () => {
+
+
+        Axios.post("http://localhost:3001/api/distritosAll"
+            /*"http://54.219.124.66:3001/api/distritos"*/, {
+
+            }).then((response) => {
+                var resultado = JSON.stringify(response.data);
+                var empObj = JSON.parse(resultado);
+                setList(empObj)
 
 
             });
@@ -339,13 +465,13 @@ function Lideres() {
     const getLocation = () => {
         var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
         document.getElementById("direc").setAttribute('value', direccion)
-        Axios.post(/*"http://localhost:3001/getLoc/"*/"http://54.219.124.66:3001/getLoc", { direccion: document.getElementById("direc").value }).then((res) => {
-            console.log(res)
+        Axios.post("http://localhost:3001/getLoc/"/*"http://54.219.124.66:3001/getLoc"*/, { direccion: document.getElementById("direc").value }).then((res) => {
+            //console.log(res)
 
             var lat = res.data.lat
-            console.log(lat)
+            //console.log(lat)
             var lng = res.data.lng
-            console.log(lng)
+            //console.log(lng)
 
             setNewCoor([lat, lng])
 
@@ -572,7 +698,7 @@ function Lideres() {
                                         id="calle"
                                         name="calle"
 
-                                        placeholder="Calle" 
+                                        placeholder="Calle"
                                         onChange={e => { setCalle(e.target.value) }} />
                                     {errors?.calle?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.calle?.type === "pattern" && (
@@ -592,7 +718,7 @@ function Lideres() {
                                         id="numero"
                                         name="numero"
 
-                                        placeholder="Número" 
+                                        placeholder="Número"
                                         onChange={e => { setNumero(e.target.value) }} />
                                     {errors?.numero?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.numero?.type === "pattern" && (
@@ -614,7 +740,7 @@ function Lideres() {
                                         id="colonia"
                                         name="colonia"
 
-                                        placeholder="Colonia" 
+                                        placeholder="Colonia"
                                         onChange={e => { setColonia(e.target.value) }} />
                                     {errors?.colonia?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
@@ -654,7 +780,7 @@ function Lideres() {
                                         id="ciudad"
                                         name="ciudad"
 
-                                        placeholder="Ciudad" 
+                                        placeholder="Ciudad"
                                         onChange={e => { setCiudad(e.target.value) }} />
                                     {errors?.ciudad?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                 </div>
@@ -672,7 +798,7 @@ function Lideres() {
                                         id="celectoral"
                                         name="celectoral"
 
-                                        placeholder="Clave electoral" 
+                                        placeholder="Clave electoral"
                                         onChange={e => { setClave(e.target.value) }} />
                                     {errors?.celectoral?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.celectoral?.type === "pattern" && (
@@ -696,7 +822,7 @@ function Lideres() {
                                         id="curp"
 
                                         name="curp"
-                                        placeholder="CURP" 
+                                        placeholder="CURP"
                                         onChange={e => { setCurp(e.target.value) }} />
                                     {errors?.curp?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.curp?.type === "pattern" && (
@@ -716,7 +842,7 @@ function Lideres() {
 
                                         id="fnacimiento"
                                         name="fnacimiento"
-                                        placeholder="Fecha de Nacimiento" 
+                                        placeholder="Fecha de Nacimiento"
                                         onChange={e => { setFecha(e.target.value) }} />
                                     {errors?.fechanacimiento?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
@@ -736,7 +862,7 @@ function Lideres() {
                                         className="form-control"
                                         id="secc"
                                         name="secc"
-                                        placeholder="Sección" 
+                                        placeholder="Sección"
                                         onChange={e => { setSeccion(e.target.value) }} />
                                     {errors?.secc?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.secc?.type === "pattern" && (
@@ -756,7 +882,7 @@ function Lideres() {
                                         className="form-control"
                                         id="df"
 
-                                        name="df" 
+                                        name="df"
                                         onChange={e => { setDfederal(e.target.value) }} />
                                     {errors?.df?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.df?.type === "pattern" && (
@@ -775,7 +901,7 @@ function Lideres() {
                                         className="form-control"
                                         id="dl"
 
-                                        name="dl" 
+                                        name="dl"
                                         onChange={e => { setDlocal(e.target.value) }} />
                                     {errors?.dl?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.dl?.type === "pattern" && (
@@ -819,7 +945,7 @@ function Lideres() {
                                     <label htmlFor="email">Email</label>
                                     <input
                                         {...register("email", {
-                                        //    required: true,
+                                            //    required: true,
                                             pattern: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/
                                         })}
                                         type="email"
@@ -828,7 +954,7 @@ function Lideres() {
                                         name="email"
                                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                         onChange={e => { setEmail(e.target.value) }} />
-                                   {errors?.email?.type === "pattern" && (
+                                    {errors?.email?.type === "pattern" && (
                                         <span className='eform'>Ingresa formato de correo electrónico</span>
                                     )}
                                 </div>
@@ -841,16 +967,16 @@ function Lideres() {
                                     <label htmlFor="fb">Facebook</label>
                                     <input
                                         //{...register("fb", {
-                                          //  required: true,
-                                            //pattern: /^[A-Za-z.\s_-]+$/
+                                        //  required: true,
+                                        //pattern: /^[A-Za-z.\s_-]+$/
                                         //})}
 
                                         className="form-control"
                                         id="fb"
                                         name="fb"
-                                        placeholder="" 
+                                        placeholder=""
                                         onChange={e => { setFacebook(e.target.value) }} />
-                                    
+
                                 </div>
 
                                 <div className="col-md-6">
@@ -858,15 +984,15 @@ function Lideres() {
                                     <input
                                         //{...register("tw", {
                                         //    required: true,
-                                          //  pattern: /^[A-Za-z.\s_-]+$/
+                                        //  pattern: /^[A-Za-z.\s_-]+$/
                                         //})}
 
                                         className="form-control"
                                         id="tw"
                                         name="tw"
-                                        placeholder="" 
+                                        placeholder=""
                                         onChange={e => { setTwitter(e.target.value) }} />
-                                   
+
                                 </div>
                             </div>
                             <div className='row'>
@@ -874,17 +1000,17 @@ function Lideres() {
                                     <div className="mb-3">
                                         <label htmlFor="otrared">Otra red social</label>
                                         <input
-                                           // {...register("otrared", {
+                                            // {...register("otrared", {
                                             //    required: true,
-                                             //   pattern: /^[A-Za-z.\s_-]+$/
+                                            //   pattern: /^[A-Za-z.\s_-]+$/
                                             //})}
 
                                             className="form-control"
                                             id="otrared"
                                             name="otrared"
-                                            placeholder="" 
+                                            placeholder=""
                                             onChange={e => { setOtra(e.target.value) }} />
-                                       
+
                                     </div></div>
                                 <div className='col-6'>
                                     <label className="small mb-1" htmlFor="nivel">Circulo</label>
@@ -893,10 +1019,10 @@ function Lideres() {
                                         //    required: true,
 
                                         //})}
-                                        className="form-control"
+                                        className="form-select"
                                         id="nivel"
 
-                                        name="nivel" 
+                                        name="nivel"
                                         onChange={e => { setNivel(e.target.value) }}
                                     >
                                         <option value="">Que tan cercano es al@ candidat@</option>
@@ -920,9 +1046,9 @@ function Lideres() {
                                         className="form-control"
                                         id="contacto"
                                         name="contacto"
-                                        placeholder="" 
+                                        placeholder=""
                                         onChange={e => { setContacto(e.target.value) }} />
-                                    
+
                                 </div>
 
                                 <div className="col-md-6">
@@ -936,9 +1062,9 @@ function Lideres() {
                                         className="form-control"
                                         id="nocontacto"
                                         name="nocontacto"
-                                        placeholder="" 
+                                        placeholder=""
                                         onChange={e => { setCelcontacto(e.target.value) }} />
-                                   
+
                                 </div>
                             </div>
                             <hr id="division"></hr>
@@ -956,9 +1082,9 @@ function Lideres() {
                                             required: true,
 
                                         })}
-                                        className="form-control mr-1"
+                                        className="form-select"
                                         id="tipolider"
-                                        name="tipolider" 
+                                        name="tipolider"
                                         onChange={e => { setLider(e.target.value); console.log(e.target.value) }}
                                     >
                                         <option value="">Selecciona alguna opcion</option>
@@ -998,7 +1124,7 @@ function Lideres() {
 
                                                                 className="form-control"
                                                                 id="calleIglesia"
-                                                                name="calleIglesia" 
+                                                                name="calleIglesia"
                                                                 onChange={e => { setCalleIglesia(e.target.value) }} />
                                                             {errors?.calleIglesia?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                                             {errors?.calleIglesia?.type === "pattern" && (
@@ -1050,13 +1176,13 @@ function Lideres() {
                                                             <input
                                                                 {...register("celebracion", {
                                                                     required: true,
-                                                                    
+
                                                                 })}
                                                                 type="date"
-                    
+
                                                                 className="form-control"
                                                                 id="celebracion"
-                                                                name="celebracion" 
+                                                                name="celebracion"
                                                                 onChange={e => { setCelebracion(e.target.value) }} />
                                                             {errors?.celebracion?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                                             {errors?.celebracion?.type === "pattern" && (
@@ -1067,28 +1193,19 @@ function Lideres() {
 
                                                         <div className='col-6'>
                                                             <label className="small mb-1" htmlFor="nivel">Seccion(es) de injerencia</label>
-                                                            <select
-                                                                {...register("seccInjerencia", {
-                                                                    required: true,
+                                                            {submitSecciones()}
+                                                            <MultiSelect
 
-                                                                })}
-                                                                className="form-control"
-                                                                id="seccInjerencia"
+                                                                value={seccionInjerencia}
+                                                                onChange={(e) => setSeccionInjerencia(e.value)}
+                                                                options={list} optionLabel="name"
+                                                                filter placeholder="Selecciona una o más secciones" className="w-full md:w-20rem form-select" required />
 
-                                                                name="seccInjerencia" 
-                                                                onChange={e => { setSeccionInjerencia(e.target.value) }}
-                                                            >
-                                                                <option value="">Elige una o más secciones</option>
-                                                                <option value="1">1</option>
-                                                                <option value="2">2</option>
-                                                                <option value="3">3</option>
-
-                                                            </select>
                                                             {errors?.seccInjerencia?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
                                                         </div>
                                                     </div>
                                                 </div>
-                                            )
+                                            );
                                         }
                                             break;
 
@@ -1107,7 +1224,7 @@ function Lideres() {
                                                                 className="form-control"
                                                                 id="partido"
 
-                                                                name="partido" 
+                                                                name="partido"
                                                                 onChange={e => { setPartido(e.target.value) }}
                                                             >
                                                                 <option value="">Elige una opción</option>
@@ -1125,23 +1242,14 @@ function Lideres() {
                                                         </div>
                                                         <div className='col-6'>
                                                             <label className="small mb-1" htmlFor="nivel">Seccion(es) de injerencia</label>
-                                                            <select
-                                                                {...register("seccInjerencia", {
-                                                                    required: true,
+                                                            {submitSecciones()}
+                                                            <MultiSelect
 
-                                                                })}
-                                                                className="form-control"
-                                                                id="seccInjerencia"
+                                                                value={seccionInjerencia}
+                                                                onChange={(e) => setSeccionInjerencia(e.value)}
+                                                                options={list} optionLabel="name"
+                                                                filter placeholder="Selecciona una o más secciones" className="w-full md:w-20rem form-select" required />
 
-                                                                name="seccInjerencia" 
-                                                                onChange={e => { setSeccionInjerencia(e.target.value) }}
-                                                            >
-                                                                <option value="">Elige una o más secciones</option>
-                                                                <option value="1">1</option>
-                                                                <option value="2">2</option>
-                                                                <option value="3">3</option>
-
-                                                            </select>
                                                             {errors?.seccInjerencia?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
                                                         </div>
                                                     </div>
@@ -1164,7 +1272,7 @@ function Lideres() {
 
                                                                 className="form-control"
                                                                 id="escuela"
-                                                                name="escuela" 
+                                                                name="escuela"
                                                                 onChange={e => { setEscuela(e.target.value) }} />
                                                             {errors?.escuela?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                                             {errors?.escuela?.type === "pattern" && (
@@ -1182,7 +1290,7 @@ function Lideres() {
                                                                 className="form-control"
                                                                 id="cargo"
 
-                                                                name="cargo" 
+                                                                name="cargo"
                                                                 onChange={e => { setPartido(e.target.value) }}
                                                             >
                                                                 <option value="">Elige una o opción</option>
@@ -1210,30 +1318,30 @@ function Lideres() {
                                                     </div>
 
                                                     <div className="col-md-7">
-                                                       
-                                                            <select
-                                                                {...register("tenencia", {
-                                                                    required: true,
 
-                                                                })}
-                                                                className="form-control"
-                                                                id="tenencia"
+                                                        <select
+                                                            {...register("tenencia", {
+                                                                required: true,
 
-                                                                name="tenencia" 
-                                                                onChange={e => { setTenencia(e.target.value) }}
-                                                            >
-                                                                <option value="">Elige una tenencia</option>
-                                                                <option value="2">Jesús del Monte</option>
-                                                                <option value="3">Capula</option>
-                                                                <option value="4">Puerto de Buenavista</option>
-                                                                <option value="5">San Antonio</option>
-                                                                <option value="6">Bosque Monarca</option>
-                                                                <option value="7">San Nicolás Obispo</option>
-                                                                <option value="8">San Juanito Itzicuaro</option>
-                                                                <option value="9">El Durazno</option>
-                                                                <option value="10">Atapaneo</option>
-                                                                <option value="11">Tiripetío</option>
-                                                            </select>
+                                                            })}
+                                                            className="form-control"
+                                                            id="tenencia"
+
+                                                            name="tenencia"
+                                                            onChange={e => { setTenencia(e.target.value) }}
+                                                        >
+                                                            <option value="">Elige una tenencia</option>
+                                                            <option value="2">Jesús del Monte</option>
+                                                            <option value="3">Capula</option>
+                                                            <option value="4">Puerto de Buenavista</option>
+                                                            <option value="5">San Antonio</option>
+                                                            <option value="6">Bosque Monarca</option>
+                                                            <option value="7">San Nicolás Obispo</option>
+                                                            <option value="8">San Juanito Itzicuaro</option>
+                                                            <option value="9">El Durazno</option>
+                                                            <option value="10">Atapaneo</option>
+                                                            <option value="11">Tiripetío</option>
+                                                        </select>
                                                         {errors?.tenencia?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                                         {errors?.tenencia?.type === "pattern" && (
                                                             <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
@@ -1261,7 +1369,7 @@ function Lideres() {
 
                                                             className="form-control"
                                                             id="coloniaOrden"
-                                                            name="coloniaOrden" 
+                                                            name="coloniaOrden"
                                                             onChange={e => { setColoniaEncargado(e.target.value) }} />
                                                         {errors?.coloniaOrden?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                                         {errors?.coloniaOrden?.type === "pattern" && (
@@ -1286,7 +1394,7 @@ function Lideres() {
 
                                                             className="form-control"
                                                             id="asoCivil"
-                                                            name="asoCivil" 
+                                                            name="asoCivil"
                                                             onChange={e => { setNombreAC(e.target.value) }} />
                                                         {errors?.asoCivil?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                                         {errors?.asoCivil?.type === "pattern" && (
@@ -1303,7 +1411,7 @@ function Lideres() {
 
                                                             className="form-control"
                                                             id="cargo"
-                                                            name="cargo" 
+                                                            name="cargo"
                                                             onChange={e => { setCargo(e.target.value) }} />
                                                         {errors?.cargo?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                                         {errors?.cargo?.type === "pattern" && (
@@ -1329,7 +1437,7 @@ function Lideres() {
 
                                                             className="form-control"
                                                             id="institucion"
-                                                            name="institucion" 
+                                                            name="institucion"
                                                             onChange={e => { setNombreInstitucion(e.target.value) }} />
                                                         {errors?.institucion?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                                         {errors?.institucion?.type === "pattern" && (
@@ -1386,7 +1494,7 @@ function Lideres() {
                                     className="form-control"
                                     id="observaciones"
                                     name="observaciones"
-                                    placeholder="" 
+                                    placeholder=""
                                     onChange={e => { setObservaciones(e.target.value) }} />
                                 {errors?.observaciones?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                 {errors?.obsrvaciones?.type === "pattern" && (
@@ -1402,7 +1510,7 @@ function Lideres() {
                                     <button className="btn btn-danger" onClick={limpiar} type="button">Limpiar datos</button>
                                 </div>
                                 <div className="col-md-4">
-                                    <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar cambios</button>
+                                    <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar Lider</button>
                                     {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
                                 </div>
                             </div>

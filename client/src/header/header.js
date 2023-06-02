@@ -44,7 +44,7 @@ import $ from 'jquery'
                             <NavLink to='/estructura'  className="nav-item nav-link ">Estructura</NavLink>
                             <NavLink to='/promotores'  className="nav-item nav-link ">Promotores</NavLink>
                             <NavLink to='/promovidos'  className="nav-item nav-link ">Promovidos</NavLink>
-                            <NavLink  className="nav-item nav-link ">Representantes</NavLink>
+                            <NavLink to='/representantes' className="nav-item nav-link ">Representantes</NavLink>
                             <NavLink  className="nav-item nav-link">Resultados Electorales</NavLink>
                             <NavLink  className="nav-item nav-link ">Metas</NavLink>
                             <NavLink to='/mapa' className="nav-item nav-link ">Mapa</NavLink>

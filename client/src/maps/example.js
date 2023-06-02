@@ -11,8 +11,8 @@ const mapContainerStyle = {
 const divStyle = {
 	background: `white`,
 
-	width: '50px',
-	height: '10px',
+	width: '100px',
+	height: '50px',
 	fontSize: '10px'
 }
 
@@ -57,6 +57,7 @@ function Example() {
 	const [peopleInfo, setPeopleInfo] = useState([]);
 	const [list, setList] = useState([]);
 	const [value, setValue] = useState("")
+	const [icono, setIcono] = useState("")
 	const persona = 'Persona 1';
 	const showInfoWindow = () => {
 		setInfoWindowOpen(true);
@@ -80,19 +81,19 @@ function Example() {
 	
 	const getList = () => {
 		if(value== "apoyos"){
-			Axios.post(//"http://localhost:3001/mapa-apoyos"
-			"http://54.219.124.66:3001/mapa-apoyos"
+			Axios.post("http://localhost:3001/mapa-apoyos"
+			//"http://54.219.124.66:3001/mapa-apoyos"
 		).then((response) => {
 			setList(response.data)
-			console.log(response);
+			//console.log(response);
 		});
 		}
 		if(value== "estructura"){
-			Axios.post(//"http://localhost:3001/mapa-estructura"
-			"http://54.219.124.66:3001/mapa-estructura"
+			Axios.post("http://localhost:3001/mapa-estructura"
+			//"http://54.219.124.66:3001/mapa-estructura"
 		).then((response) => {
 			setList(response.data)
-			console.log(response);
+		//	console.log(response);
 		});
 		}
 		
@@ -138,6 +139,7 @@ function Example() {
 												onChange={(e) => {
 													if (e.target.checked) {
 														setValue("estructura");
+														setIcono('http://maps.google.com/mapfiles/kml/paddle/blu-blank.png')
 													}
 												}}
 
@@ -153,6 +155,7 @@ function Example() {
 												onChange={(e) => {
 													if (e.target.checked) {
 														setValue("apoyos");
+														setIcono("http://maps.google.com/mapfiles/kml/paddle/grn-blank.png")
 													}
 												}}
 
@@ -183,6 +186,7 @@ function Example() {
 							id="rectangle-example"
 							mapContainerStyle={mapContainerStyle}
 							
+							
 							center={center}
 							options={option}
 							
@@ -194,6 +198,7 @@ function Example() {
 									position={{ lat: parseFloat(val.lat), lng:parseFloat( val.lng )}}
 									label={val.persona}
 									onClick={showInfoWindow}
+									icon={icono} 
 									draggable={true}
 									onDragEnd={(e) => { console.log('dragEnd', e.nativeEvent.coordinate) }}
 								>
@@ -201,11 +206,11 @@ function Example() {
 									{/*persona == val.persona*/
 										infoWindowOpen && (
 											<InfoWindow
-												key={`marker-${val.persona}`}
+												key={`marker-${val.id}`}
 												visible={true}
 
 												onCloseClick={() => setInfoWindowOpen(false)}>
-												<div style={divStyle}>{val.persona}</div>
+												<div style={divStyle}>{val.nombre}</div>
 											</InfoWindow>
 										)}
 								</Marker>);

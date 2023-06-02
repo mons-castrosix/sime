@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-
+import { MultiSelect } from 'primereact/multiselect';
 import Axios from 'axios';
+import Swal from 'sweetalert2';
 import '../apoyos/apoyos.css'
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -105,7 +106,9 @@ function Promotores() {
     const [idSecc, setidSecc] = useState("");
     const [equipo, setEquipo] = useState("");
     const navigate = useNavigate();
-
+    const [list, setList] = useState([])
+    const [selectedCities, setSelectedCities] = useState(null);
+    
 
     /*const center = {
       lat: document.getElementById("lat").value,
@@ -117,7 +120,7 @@ function Promotores() {
 
     const persona = 'Persona 1';
     const ref = useRef(null);
-
+    {console.log(selectedCities)}
     const atras = () => {
         let path = '/apoyos';
         navigate(path);
@@ -144,8 +147,8 @@ function Promotores() {
 
         try {
             const res = await Axios.post(
-                "http://54.219.124.66:3001/uploadD",
-                //"http://localhost:3001/uploadD",
+                //"http://54.219.124.66:3001/uploadD",
+                "http://localhost:3001/uploadD",
                 formData
             );
 
@@ -196,22 +199,37 @@ function Promotores() {
 
     const submitReview = () => {
 
-            Axios.post("http://54.219.124.66:3001/insert-promotor",
-               // "http://localhost:3001/insert-promotor",
-                {
+        Axios.post(//"http://54.219.124.66:3001/insert-promotor",
+            "http://localhost:3001/insert-promotor",
+            {
 
-                    apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
-                    ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
-                    distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
-                    otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, observaciones: observaciones
-                }).then(() => {
-                    console.log("succes")
-                    //alert("AGREGADO")
+                apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
+                ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
+                distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
+                otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, observaciones: observaciones,injerencias:selectedCities
+            }).then(() => {
+                Swal.fire({
+                  title: 'Registro de promotor',
+                  text: "Agregado existosamente",
+                  icon: 'success',
+                  confirmButtonColor: '#716add',
+                  confirmButtonText: 'De acuerdo'
+                }).then((result) => {
+                  if (result.isConfirmed) {
                     navigate('/promotores')
-
-                });
+                  }
+                })
         
-       
+              }).catch(error => {
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message,
+                    icon: 'error',
+                    confirmButtonText: 'Cool'
+                })
+            });
+
+
         /*console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
           + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel
           + celular + email + facebook + twitter + otra + descrApoyo + tipoApoyo
@@ -220,30 +238,45 @@ function Promotores() {
     const submitSeccion = () => {
 
 
-        Axios.post(/*"http://localhost:3001/api/distritos"*/
-    "http://54.219.124.66:3001/api/distritos", {
-                seccion: document.getElementById("secc").value
-            }).then((res) => {
+        Axios.post("http://localhost:3001/api/distritos"
+            /*"http://54.219.124.66:3001/api/distritos"*/, {
+            seccion: document.getElementById("secc").value
+        }).then((res) => {
 
-                console.log(res.data.df)
+            //console.log(res.data.df)
 
-                setDfederal(res.data.df)
-                setDlocal(res.data.dl)
-                setidSecc(res.data.id)
-                setValue("dl", res.data.dl)
-                setValue("df", res.data.df)
+            setDfederal(res.data.df)
+            setDlocal(res.data.dl)
+            setidSecc(res.data.id)
+            setValue("dl", res.data.dl)
+            setValue("df", res.data.df)
 
-                console.log(seccion)
+            console.log(seccion)
 
 
-            });
+        });
+
+    }
+    const submitSecciones = () => {
+
+
+        Axios.post("http://localhost:3001/api/distritosAll"
+            /*"http://54.219.124.66:3001/api/distritos"*/, {
+           
+        }).then((response) => {
+            var resultado = JSON.stringify(response.data);
+            var empObj = JSON.parse(resultado);
+          setList(empObj)
+
+
+        });
 
     }
 
     const getLocation = () => {
         var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
         document.getElementById("direc").setAttribute('value', direccion)
-        Axios.post(/*"http://localhost:3001/getLoc/"*/"http://54.219.124.66:3001/getLoc", { direccion: document.getElementById("direc").value }).then((res) => {
+        Axios.post("http://localhost:3001/getLoc/"/*"http://54.219.124.66:3001/getLoc"*/, { direccion: document.getElementById("direc").value }).then((res) => {
             console.log(res)
 
             var lat = res.data.lat
@@ -476,7 +509,7 @@ function Promotores() {
                                         id="calle"
                                         name="calle"
 
-                                        placeholder="Calle" 
+                                        placeholder="Calle"
                                         onChange={e => { setCalle(e.target.value) }} />
                                     {errors?.calle?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.calle?.type === "pattern" && (
@@ -496,7 +529,7 @@ function Promotores() {
                                         id="numero"
                                         name="numero"
 
-                                        placeholder="Número" 
+                                        placeholder="Número"
                                         onChange={e => { setNumero(e.target.value) }} />
                                     {errors?.numero?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.numero?.type === "pattern" && (
@@ -518,7 +551,7 @@ function Promotores() {
                                         id="colonia"
                                         name="colonia"
 
-                                        placeholder="Colonia" 
+                                        placeholder="Colonia"
                                         onChange={e => { setColonia(e.target.value) }} />
                                     {errors?.colonia?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
@@ -536,7 +569,7 @@ function Promotores() {
                                         id="cpostal"
                                         name="cpostal"
 
-                                        placeholder="Código Postal" 
+                                        placeholder="Código Postal"
                                         onChange={e => { setCp(e.target.value) }} />
                                     {errors?.cpostal?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.cpostal?.type === "pattern" && (
@@ -558,7 +591,7 @@ function Promotores() {
                                         id="ciudad"
                                         name="ciudad"
 
-                                        placeholder="Ciudad" 
+                                        placeholder="Ciudad"
                                         onChange={e => { setCiudad(e.target.value) }} />
                                     {errors?.ciudad?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                 </div>
@@ -576,7 +609,7 @@ function Promotores() {
                                         id="celectoral"
                                         name="celectoral"
 
-                                        placeholder="Clave electoral" 
+                                        placeholder="Clave electoral"
                                         onChange={e => { setClave(e.target.value) }} />
                                     {errors?.celectoral?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.celectoral?.type === "pattern" && (
@@ -600,7 +633,7 @@ function Promotores() {
                                         id="curp"
 
                                         name="curp"
-                                        placeholder="CURP" 
+                                        placeholder="CURP"
                                         onChange={e => { setCurp(e.target.value) }} />
                                     {errors?.curp?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.curp?.type === "pattern" && (
@@ -620,7 +653,7 @@ function Promotores() {
 
                                         id="fnacimiento"
                                         name="fnacimiento"
-                                        placeholder="Fecha de Nacimiento" 
+                                        placeholder="Fecha de Nacimiento"
                                         onChange={e => { setFecha(e.target.value) }} />
                                     {errors?.fechanacimiento?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
@@ -640,7 +673,7 @@ function Promotores() {
                                         className="form-control"
                                         id="secc"
                                         name="secc"
-                                        placeholder="Sección" 
+                                        placeholder="Sección"
                                         onChange={e => { setSeccion(e.target.value) }} />
                                     {errors?.secc?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.secc?.type === "pattern" && (
@@ -660,7 +693,7 @@ function Promotores() {
                                         className="form-control"
                                         id="df"
 
-                                        name="df" 
+                                        name="df"
                                         onChange={e => { setDfederal(e.target.value) }} />
                                     {errors?.df?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.df?.type === "pattern" && (
@@ -679,14 +712,14 @@ function Promotores() {
                                         className="form-control"
                                         id="dl"
 
-                                        name="dl" 
+                                        name="dl"
                                         onChange={e => { setDlocal(e.target.value) }} />
                                     {errors?.dl?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.dl?.type === "pattern" && (
                                         <span className='eform'>Ingresa solamente caracteres numericos</span>
                                     )}
                                 </div>
-                                
+
 
 
                             </div>
@@ -710,7 +743,7 @@ function Promotores() {
 
                                         className="form-control"
                                         id="cel"
-                                        name="cel" 
+                                        name="cel"
                                         onChange={e => { setCelular(e.target.value) }} />
                                     {errors?.cel?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.cel?.type === "pattern" && (
@@ -722,14 +755,14 @@ function Promotores() {
                                     <label htmlFor="email">Email</label>
                                     <input
                                         {...register("email", {
-                                           // required: true,
+                                            // required: true,
                                             pattern: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/
                                         })}
                                         type="email"
                                         className="form-control"
                                         id="email"
                                         name="email"
-                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                         onChange={e => { setEmail(e.target.value) }} />
                                     {errors?.email?.type === "pattern" && (
                                         <span className='eform'>Ingresa formato de correo electrónico</span>
@@ -744,32 +777,32 @@ function Promotores() {
                                     <label htmlFor="fb">Facebook</label>
                                     <input
                                         //{...register("fb", {
-                                          //0  required: true,
-                                            //pattern: /^[A-Za-z.\s_-]+$/
+                                        //0  required: true,
+                                        //pattern: /^[A-Za-z.\s_-]+$/
                                         //})}
 
                                         className="form-control"
                                         id="fb"
                                         name="fb"
-                                        placeholder="" 
+                                        placeholder=""
                                         onChange={e => { setFacebook(e.target.value) }} />
-                                   
+
                                 </div>
 
                                 <div className="col-md-6">
                                     <label htmlFor="tw">Twitter</label>
                                     <input
                                         //{...register("tw", {
-                                          //  required: true,
-                                            //pattern: /^[A-Za-z.\s_-]+$/
+                                        //  required: true,
+                                        //pattern: /^[A-Za-z.\s_-]+$/
                                         //})}
 
                                         className="form-control"
                                         id="tw"
                                         name="tw"
-                                        placeholder="" 
+                                        placeholder=""
                                         onChange={e => { setTwitter(e.target.value) }} />
-                                   
+
                                 </div>
                             </div>
                             <div className='row'>
@@ -785,9 +818,9 @@ function Promotores() {
                                             className="form-control"
                                             id="otrared"
                                             name="otrared"
-                                            placeholder="" 
+                                            placeholder=""
                                             onChange={e => { setOtra(e.target.value) }} />
-                                        
+
                                     </div></div>
                                 <div className='col-md-6'>
                                     <label className="small mb-1" htmlFor="nivel">Circulo</label>
@@ -796,10 +829,10 @@ function Promotores() {
                                         //    required: true,
 
                                         //})}
-                                        className="form-control"
+                                        className="form-select"
                                         id="nivel"
 
-                                        name="nivel" 
+                                        name="nivel"
                                         onChange={e => { setNivel(e.target.value) }}
                                     >
                                         <option value="">Que tan cercano es al@ candidat@</option>
@@ -810,30 +843,21 @@ function Promotores() {
                                     </select>
                                 </div>
                             </div>
-                           
+
                             <hr id="division"></hr>
 
 
                             <div className="row gx-3 mb-3">
-                                <div className='col-12'>
+                                <div className='col-md-12'>
+                                {submitSecciones()}
                                     <label className="small mb-1" htmlFor="nivel">Seccion(es) de responsabilidad</label>
-                                    <select
-                                        {...register("seccInjerencia", {
-                                            required: true,
-
-                                        })}
-                                        className="form-control"
-                                        id="seccInjerencia"
-
-                                        name="seccInjerencia" 
-                                        onChange={e => { setSeccionInjerencia(e.target.value) }}
-                                    >
-                                        <option value="">Elije una o más secciones</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-
-                                    </select>
+                                    <MultiSelect   
+                                      
+                                        value={selectedCities} 
+                                        onChange={(e) => setSelectedCities(e.value)} 
+                                        options={list} optionLabel="name" 
+                filter placeholder="Selecciona una o más secciones"  className="w-full md:w-20rem form-select" required/>
+                                    
                                     {errors?.seccInjerencia?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
                                 </div>
 
@@ -860,7 +884,7 @@ function Promotores() {
                                     className="form-control"
                                     id="observaciones"
                                     name="observaciones"
-                                    placeholder="" 
+                                    placeholder=""
                                     onChange={e => { setObservaciones(e.target.value) }} />
                                 {errors?.observaciones?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                 {errors?.obsrvaciones?.type === "pattern" && (
@@ -876,7 +900,7 @@ function Promotores() {
                                     <button className="btn btn-danger" id='limpiar' onClick={limpiar} type="button">Limpiar datos</button>
                                 </div>
                                 <div className="col-md-4">
-                                    <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar cambios</button>
+                                    <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar Promotor</button>
                                     {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
                                 </div>
                             </div>
