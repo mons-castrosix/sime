@@ -2,6 +2,7 @@
     margin-top: 2px; 
 }
 
+
 .eform {
     color: #bf1650 !important;
   }
@@ -16,15 +17,37 @@
     overflow-y: hidden; /* Hide vertical scrollbar */
     overflow-x: hidden; /* Hide horizontal scrollbar */
 }
-.vertical-scrollable {
-    position: absolute;
+.card-header{
+    width: 102%;
+    background-color: rgb(128, 130, 133) !important;
+    color: white;
+}
+#ineButton,#georeferenciar{
+    background-color: rgb(179,40,45);
+    border-color: rgb(128, 130, 133);
+    margin-bottom: 2rem;
+}
+.card-body {
+   
     top: 50px;
     bottom: 100px;
     left: 0;
     
     width: 102%;
-    overflow-y: scroll;
+    max-height: 35rem;
+    overflow-y: auto;
 }
+
+input:focus, textarea:focus, select:focus, .p-multiselect:focus{
+    outline: none !important;
+    border-color:rgb(179,40,45) !important;
+    box-shadow: 0 0 3px rgb(179,40,45) !important;
+    -moz-box-shadow: 0 0 3px rgb(179,40,45)  !important;
+    -webkit-box-shadow: 0 0 3px rgb(179,40,45)  !important;
+  }
+
+
+
 .btn-circle {
     width: 30px;
     height: 30px;
@@ -118,7 +141,7 @@ padding: 10px;
     margin-left: -10px;
     margin-top: 2rem;
 }
-@media only screen and (width: 820px) {
+@media only screen and (min-width: 749px) and (max-width:890px) {
     .preview img{
         width: 20rem;
         
@@ -126,6 +149,19 @@ padding: 10px;
     .preview img{
         margin-top: 9px;
         margin-left: -8px;
+    }
+    .card-header{
+        width: 102%;
+    }
+    .card-body {
+       
+        top: 50px;
+        bottom: 100px;
+        left: 0;
+        
+        width: 102%;
+        max-height: 45rem;
+        overflow-y: auto;
     }
     
   }

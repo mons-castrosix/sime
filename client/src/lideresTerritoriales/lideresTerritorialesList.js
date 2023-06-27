@@ -130,7 +130,7 @@ function LideresList() {
         );
     };
     const rightToolbarTemplate = () => {
-        return <Button label="Agregar" icon="pi pi-plus" rounded severity='info' onClick={nuevo} className="mr-2" />
+        return <Button label="Agregar" id='agregaApoyo' icon="pi pi-plus" rounded severity='info' onClick={nuevo} className="mr-2" />
             ;
     };
     const exportColumns = columns.map((col) => ({ title: col.header, dataKey: col.field }));
@@ -192,9 +192,9 @@ function LideresList() {
             <div className='row'>
                 <div className='col-8'>
                 <div className="flex align-items-center justify-content-end gap-4">
-                <Button type="button" icon="pi pi-file" rounded onClick={() => exportCSV(false)} data-pr-tooltip="CSV" />
-                <Button type="button" icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" />
-                <Button type="button" icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf} data-pr-tooltip="PDF" />
+                <Button type="button" id='copy' icon="pi pi-file" rounded onClick={() => exportCSV(false)} data-pr-tooltip="CSV" />
+                <Button type="button" id='excel' icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" />
+                <Button type="button" id='pdf' icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf} data-pr-tooltip="PDF" />
             </div>
                 </div>
                 <div className='col-4'>
@@ -248,7 +248,7 @@ function LideresList() {
     const headerGroup = (<ColumnGroup>
         <Row>
             <Column header="" colSpan={4}></Column>
-            <Column header="Acciones" colSpan={3}></Column>
+            <Column header="Acciones" style={{ paddingLeft: '125px' }} colSpan={3}></Column>
             
         </Row>
         <Row>

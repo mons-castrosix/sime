@@ -78,30 +78,30 @@ function Example() {
 
 
 	];
-	
+
 	const getList = () => {
-		if(value== "apoyos"){
+		if (value == "apoyos") {
 			Axios.post("http://localhost:3001/mapa-apoyos"
-			//"http://54.219.124.66:3001/mapa-apoyos"
-		).then((response) => {
-			setList(response.data)
-			//console.log(response);
-		});
+				//"http://54.219.124.66:3001/mapa-apoyos"
+			).then((response) => {
+				setList(response.data)
+				//console.log(response);
+			});
 		}
-		if(value== "estructura"){
+		if (value == "estructura") {
 			Axios.post("http://localhost:3001/mapa-estructura"
-			//"http://54.219.124.66:3001/mapa-estructura"
-		).then((response) => {
-			setList(response.data)
-		//	console.log(response);
-		});
+				//"http://54.219.124.66:3001/mapa-estructura"
+			).then((response) => {
+				setList(response.data)
+				//	console.log(response);
+			});
 		}
-		
+
 	};
-	
+
 	return (
 		<div >
-		<Header></Header>
+			<Header></Header>
 
 			<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
 			<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -109,83 +109,61 @@ function Example() {
 			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous" />
 			<link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet" />
 			<script src="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.js"></script>
-			<div className='row'>
-				<aside className='col-md-3 filter-group'>
-					<div className="card">
-						<article className="filter-group">
-							<header className="card-header">
-								<a href="#" data-bs-toggle="collapse" data-bs-target="#collapse_1" aria-expanded="true" className="">
-									<i className="icon-control fa fa-chevron-down"></i>
-									<h6 className="title">Filtros</h6>
-								</a>
-							</header>
-							<div className="filter-content collapse show" id="collapse_1" >
-								<div className="card-body">
-									<form className="pb-3">
-										<div className="input-group">
-											<input type="text" className="form-control" placeholder="Search" />
-											<div className="input-group-append">
-												<button className="btn btn-light" type="button"><i className="fa fa-search"></i></button>
-											</div>
-										</div>
-									</form>{getList()}
-									<div className="card-body">
-										
 
-										<label className="custom-control custom-checkbox">
-											<input
-												type="checkbox"
-												className="custom-control-input"
-												onChange={(e) => {
-													if (e.target.checked) {
-														setValue("estructura");
-														setIcono('http://maps.google.com/mapfiles/kml/paddle/blu-blank.png')
-													}
-												}}
+			<div className="row">
+				<div className="col-4" >
+					<div className="card " >
+						<div className="card-header text-center">
+							GEOREFERENCIAR REGISTROS
+						</div>
+						<div className="card-body rounded-3  text-center bg-light">
+							{getList()}
 
-												value="Estructura"
-											/>
-											<div className="custom-control-label">Estructura
-											</div>
-										</label>
-										<label className="custom-control custom-checkbox">
-											<input
-												type="checkbox"
-												className="custom-control-input"
-												onChange={(e) => {
-													if (e.target.checked) {
-														setValue("apoyos");
-														setIcono("http://maps.google.com/mapfiles/kml/paddle/grn-blank.png")
-													}
-												}}
+							<label className="custom-control custom-checkbox">
+								<input
+									type="checkbox"
+									className="custom-control-input"
+									onChange={(e) => {
+										if (e.target.checked) {
+											setValue("estructura");
+											setIcono('http://maps.google.com/mapfiles/kml/paddle/blu-blank.png')
+										}
+									}}
 
-												value="Estructura"
-											/>
-											<div className="custom-control-label">Apoyos
-											</div>
-										</label>
-										
-
-
-									</div>
-
-
+									value="Estructura"
+								/>
+								<div className="custom-control-label">Estructura
 								</div>
-							</div>
-						</article>
+							</label>
+							<label className="custom-control custom-checkbox">
+								<input
+									type="checkbox"
+									className="custom-control-input"
+									onChange={(e) => {
+										if (e.target.checked) {
+											setValue("apoyos");
+											setIcono("http://maps.google.com/mapfiles/kml/paddle/grn-blank.png")
+										}
+									}}
 
+									value="Estructura"
+								/>
+								<div className="custom-control-label">Apoyos
+								</div>
+							</label>
 
-
+						</div>
 					</div>
 
-				</aside>
-				<main className='col-md-9 col-lg-9 col-9'>
+				</div>
+				<div className="col-8" >
 
-					<LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
+					
+<LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
 						<GoogleMap
 							id="rectangle-example"
 							mapContainerStyle={mapContainerStyle}
-							
+							zoom={13}
 							
 							center={center}
 							options={option}
@@ -228,10 +206,11 @@ function Example() {
 
 						</GoogleMap>
 					</LoadScript>
-				</main>
 
+
+
+				</div>
 			</div>
-
 		</div>
 	);
 

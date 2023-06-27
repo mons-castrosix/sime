@@ -107,7 +107,7 @@ function Promovidos() {
     const [equipo, setEquipo] = useState("");
     const navigate = useNavigate();
     const [list, setList] = useState([])
-    
+
     /*const center = {
       lat: document.getElementById("lat").value,
       lng:document.getElementById("lng").value
@@ -197,29 +197,29 @@ function Promovidos() {
 
     const submitReview = () => {
 
-            Axios.post(//"http://54.219.124.66:3001/insert-promovido",
-                "http://localhost:3001/insert-promovido",
-                //"http://ec2-54-219-124-66.us-west-1.compute.amazonaws.com:3001/insert-promovido",
-                {
+        Axios.post(//"http://54.219.124.66:3001/insert-promovido",
+            "http://localhost:3001/insert-promovido",
+            //"http://ec2-54-219-124-66.us-west-1.compute.amazonaws.com:3001/insert-promovido",
+            {
 
-                    apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
-                    ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
-                    distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
-                    otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_promotor: promotor, observaciones: observaciones
-                }).then(() => {
+                apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
+                ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
+                distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
+                otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_promotor: promotor, observaciones: observaciones
+            }).then(() => {
                 Swal.fire({
-                  title: 'Registro de promovidos',
-                  text: "Agregado existosamente",
-                  icon: 'success',
-                  confirmButtonColor: '#716add',
-                  confirmButtonText: 'De acuerdo'
+                    title: 'Registro de promovidos',
+                    text: "Agregado existosamente",
+                    icon: 'success',
+                    confirmButtonColor: '#716add',
+                    confirmButtonText: 'De acuerdo'
                 }).then((result) => {
-                  if (result.isConfirmed) {
-                    navigate('/promovidos')
-                  }
+                    if (result.isConfirmed) {
+                        navigate('/promovidos')
+                    }
                 })
-        
-              }).catch(error => {
+
+            }).catch(error => {
                 Swal.fire({
                     title: 'Error!',
                     text: error.message,
@@ -228,8 +228,8 @@ function Promovidos() {
                 })
             });
 
-        
-       
+
+
         /*console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
           + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel
           + celular + email + facebook + twitter + otra + descrApoyo + tipoApoyo
@@ -240,15 +240,15 @@ function Promovidos() {
 
         Axios.post("http://localhost:3001/api/promotoresAll"
             /*"http://54.219.124.66:3001/api/distritos"*/, {
-           
-        }).then((response) => {
-            var resultado = JSON.stringify(response.data);
-            var empObj = JSON.parse(resultado);
-          setList(empObj)
-          console.log(response)
+
+            }).then((response) => {
+                var resultado = JSON.stringify(response.data);
+                var empObj = JSON.parse(resultado);
+                setList(empObj)
+                console.log(response)
 
 
-        });
+            });
 
     }
     const submitSeccion = () => {
@@ -266,15 +266,15 @@ function Promovidos() {
                 setidSecc(res.data.id)
                 setValue("dl", res.data.dl)
                 setValue("df", res.data.df)
-setidSecc(res.data.id)
+                setidSecc(res.data.id)
                 console.log(seccion)
 
 
             });
 
     }
-    
-   
+
+
 
     const getLocation = () => {
         var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
@@ -369,10 +369,12 @@ setidSecc(res.data.id)
 
             <div className="row">
                 <div className="col-5" >
+                    <div className="card ">
+                        <div className="card-header text-center">REGISTRO DE PROMOVIDOS</div>
+                        <div class="card-body rounded-3  text-center bg-light">
 
-                    <div className="card-header text-center">REGISTRO DE PROMOVIDOS</div>
-                    <form onSubmit={handleSubmit(handleRegistration)}>
-                        <div className="card-body text-center vertical-scrollable ">
+                        <form onSubmit={handleSubmit(handleRegistration)}>
+
 
                             <br></br>
                             <input type="file"
@@ -383,7 +385,7 @@ setidSecc(res.data.id)
                                 accept='image/*'
                                 encType="multipart/form-data"
                                 onChange={saveFile} /> <br></br>
-                            <button onClick={uploadFile1} className="btn btn-dark btn-md cargar" type="submit">Cargar INE</button>
+                            <button onClick={uploadFile1} id='ineButton' className="btn btn-dark btn-md cargar" type="submit">Cargar INE</button>
                             <br /> <br></br>
 
 
@@ -512,7 +514,7 @@ setidSecc(res.data.id)
                                         id="calle"
                                         name="calle"
 
-                                        placeholder="Calle" 
+                                        placeholder="Calle"
                                         onChange={e => { setCalle(e.target.value) }} />
                                     {errors?.calle?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.calle?.type === "pattern" && (
@@ -532,7 +534,7 @@ setidSecc(res.data.id)
                                         id="numero"
                                         name="numero"
 
-                                        placeholder="Número" 
+                                        placeholder="Número"
                                         onChange={e => { setNumero(e.target.value) }} />
                                     {errors?.numero?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.numero?.type === "pattern" && (
@@ -554,7 +556,7 @@ setidSecc(res.data.id)
                                         id="colonia"
                                         name="colonia"
 
-                                        placeholder="Colonia" 
+                                        placeholder="Colonia"
                                         onChange={e => { setColonia(e.target.value) }} />
                                     {errors?.colonia?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
@@ -572,7 +574,7 @@ setidSecc(res.data.id)
                                         id="cpostal"
                                         name="cpostal"
 
-                                        placeholder="Código Postal" 
+                                        placeholder="Código Postal"
                                         onChange={e => { setCp(e.target.value) }} />
                                     {errors?.cpostal?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.cpostal?.type === "pattern" && (
@@ -594,7 +596,7 @@ setidSecc(res.data.id)
                                         id="ciudad"
                                         name="ciudad"
 
-                                        placeholder="Ciudad" 
+                                        placeholder="Ciudad"
                                         onChange={e => { setCiudad(e.target.value) }} />
                                     {errors?.ciudad?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                 </div>
@@ -612,7 +614,7 @@ setidSecc(res.data.id)
                                         id="celectoral"
                                         name="celectoral"
 
-                                        placeholder="Clave electoral" 
+                                        placeholder="Clave electoral"
                                         onChange={e => { setClave(e.target.value) }} />
                                     {errors?.celectoral?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.celectoral?.type === "pattern" && (
@@ -636,7 +638,7 @@ setidSecc(res.data.id)
                                         id="curp"
 
                                         name="curp"
-                                        placeholder="CURP" 
+                                        placeholder="CURP"
                                         onChange={e => { setCurp(e.target.value) }} />
                                     {errors?.curp?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.curp?.type === "pattern" && (
@@ -656,7 +658,7 @@ setidSecc(res.data.id)
 
                                         id="fnacimiento"
                                         name="fnacimiento"
-                                        placeholder="Fecha de Nacimiento" 
+                                        placeholder="Fecha de Nacimiento"
                                         onChange={e => { setFecha(e.target.value) }} />
                                     {errors?.fechanacimiento?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
@@ -676,7 +678,7 @@ setidSecc(res.data.id)
                                         className="form-control"
                                         id="secc"
                                         name="secc"
-                                        placeholder="Sección" 
+                                        placeholder="Sección"
                                         onChange={e => { setSeccion(e.target.value) }} />
                                     {errors?.secc?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.secc?.type === "pattern" && (
@@ -696,7 +698,7 @@ setidSecc(res.data.id)
                                         className="form-control"
                                         id="df"
 
-                                        name="df" 
+                                        name="df"
                                         onChange={e => { setDfederal(e.target.value) }} />
                                     {errors?.df?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.df?.type === "pattern" && (
@@ -715,14 +717,14 @@ setidSecc(res.data.id)
                                         className="form-control"
                                         id="dl"
 
-                                        name="dl" 
+                                        name="dl"
                                         onChange={e => { setDlocal(e.target.value) }} />
                                     {errors?.dl?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.dl?.type === "pattern" && (
                                         <span className='eform'>Ingresa solamente caracteres numericos</span>
                                     )}
                                 </div>
-                                
+
 
 
                             </div>
@@ -746,7 +748,7 @@ setidSecc(res.data.id)
 
                                         className="form-control"
                                         id="cel"
-                                        name="cel" 
+                                        name="cel"
                                         onChange={e => { setCelular(e.target.value) }} />
                                     {errors?.cel?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.cel?.type === "pattern" && (
@@ -758,14 +760,14 @@ setidSecc(res.data.id)
                                     <label htmlFor="email">Email</label>
                                     <input
                                         {...register("email", {
-                                           // required: true,
+                                            // required: true,
                                             pattern: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/
                                         })}
                                         type="email"
                                         className="form-control"
                                         id="email"
                                         name="email"
-                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                                         onChange={e => { setEmail(e.target.value) }} />
                                     {errors?.email?.type === "pattern" && (
                                         <span className='eform'>Ingresa formato de correo electrónico</span>
@@ -780,32 +782,32 @@ setidSecc(res.data.id)
                                     <label htmlFor="fb">Facebook</label>
                                     <input
                                         //{...register("fb", {
-                                          //0  required: true,
-                                            //pattern: /^[A-Za-z.\s_-]+$/
+                                        //0  required: true,
+                                        //pattern: /^[A-Za-z.\s_-]+$/
                                         //})}
 
                                         className="form-control"
                                         id="fb"
                                         name="fb"
-                                        placeholder="" 
+                                        placeholder=""
                                         onChange={e => { setFacebook(e.target.value) }} />
-                                   
+
                                 </div>
 
                                 <div className="col-md-6">
                                     <label htmlFor="tw">Twitter</label>
                                     <input
                                         //{...register("tw", {
-                                          //  required: true,
-                                            //pattern: /^[A-Za-z.\s_-]+$/
+                                        //  required: true,
+                                        //pattern: /^[A-Za-z.\s_-]+$/
                                         //})}
 
                                         className="form-control"
                                         id="tw"
                                         name="tw"
-                                        placeholder="" 
+                                        placeholder=""
                                         onChange={e => { setTwitter(e.target.value) }} />
-                                   
+
                                 </div>
                             </div>
                             <div className='row'>
@@ -821,9 +823,9 @@ setidSecc(res.data.id)
                                             className="form-control"
                                             id="otrared"
                                             name="otrared"
-                                            placeholder="" 
+                                            placeholder=""
                                             onChange={e => { setOtra(e.target.value) }} />
-                                        
+
                                     </div></div>
                                 <div className='col-md-6'>
                                     <label className="small mb-1" htmlFor="nivel">Circulo</label>
@@ -835,7 +837,7 @@ setidSecc(res.data.id)
                                         className="form-select"
                                         id="nivel"
 
-                                        name="nivel" 
+                                        name="nivel"
                                         onChange={e => { setNivel(e.target.value) }}
                                     >
                                         <option value="">Que tan cercano es al@ candidat@</option>
@@ -846,13 +848,13 @@ setidSecc(res.data.id)
                                     </select>
                                 </div>
                             </div>
-                           
+
                             <hr id="division"></hr>
 
 
                             <div className="row gx-3 mb-3">
                                 <div className='col-12'>
-                                {promotoresList()}
+                                    {promotoresList()}
                                     <label className="small mb-1" htmlFor="nivel">Promovido por:</label>
                                     <select
                                         {...register("promovidopor", {
@@ -862,15 +864,15 @@ setidSecc(res.data.id)
                                         className="form-select"
                                         id="promovidopor"
 
-                                        name="promovidopor" 
+                                        name="promovidopor"
                                         onChange={e => { setPromotor(e.target.value) }}
                                     >
                                         <option value="">Elige un promotor <i className='pi-angle-down'></i></option>
                                         {list.map(val => {
-                                        
-                                            return(<option value={val.id}>{val.nombre}</option> );
+
+                                            return (<option value={val.id}>{val.nombre}</option>);
                                         })}
-                                                         
+
 
                                     </select>
                                     {errors?.promovidopor?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
@@ -891,14 +893,14 @@ setidSecc(res.data.id)
                             <div className="mb-3">
                                 <label htmlFor="tw">Observaciones</label>
                                 <textarea
-                                   
+
 
                                     className="form-control"
                                     id="observaciones"
                                     name="observaciones"
-                                    placeholder="" 
+                                    placeholder=""
                                     onChange={e => { setObservaciones(e.target.value) }} />
-                               
+
                             </div>
 
                             <div className="row gx-3 mb-3">
@@ -914,7 +916,9 @@ setidSecc(res.data.id)
                                 </div>
                             </div>
                             <br></br>
-                        </div></form>
+                        </form>
+                        </div>
+                    </div>
                 </div>
                 <div className="col-7" >
 

@@ -211,12 +211,12 @@ function Lideres() {
                         icon: 'success',
                         confirmButtonColor: '#716add',
                         confirmButtonText: 'De acuerdo'
-                      }).then((result) => {
+                    }).then((result) => {
                         if (result.isConfirmed) {
-                         navigate('/lideres');
+                            navigate('/lideres');
                         }
-                      })
-                    
+                    })
+
 
                 }).catch(error => {
                     Swal.fire({
@@ -243,12 +243,12 @@ function Lideres() {
                         icon: 'success',
                         confirmButtonColor: '#716add',
                         confirmButtonText: 'De acuerdo'
-                      }).then((result) => {
+                    }).then((result) => {
                         if (result.isConfirmed) {
-                         navigate('/lideres');
+                            navigate('/lideres');
                         }
-                      })
-                    
+                    })
+
 
                 }).catch(error => {
                     Swal.fire({
@@ -275,12 +275,12 @@ function Lideres() {
                         icon: 'success',
                         confirmButtonColor: '#716add',
                         confirmButtonText: 'De acuerdo'
-                      }).then((result) => {
+                    }).then((result) => {
                         if (result.isConfirmed) {
-                         navigate('/lideres');
+                            navigate('/lideres');
                         }
-                      })
-                    
+                    })
+
 
                 }).catch(error => {
                     Swal.fire({
@@ -307,12 +307,12 @@ function Lideres() {
                         icon: 'success',
                         confirmButtonColor: '#716add',
                         confirmButtonText: 'De acuerdo'
-                      }).then((result) => {
+                    }).then((result) => {
                         if (result.isConfirmed) {
-                         navigate('/lideres');
+                            navigate('/lideres');
                         }
-                      })
-                    
+                    })
+
 
                 }).catch(error => {
                     Swal.fire({
@@ -339,12 +339,12 @@ function Lideres() {
                         icon: 'success',
                         confirmButtonColor: '#716add',
                         confirmButtonText: 'De acuerdo'
-                      }).then((result) => {
+                    }).then((result) => {
                         if (result.isConfirmed) {
-                         navigate('/lideres');
+                            navigate('/lideres');
                         }
-                      })
-                    
+                    })
+
 
                 }).catch(error => {
                     Swal.fire({
@@ -371,12 +371,12 @@ function Lideres() {
                         icon: 'success',
                         confirmButtonColor: '#716add',
                         confirmButtonText: 'De acuerdo'
-                      }).then((result) => {
+                    }).then((result) => {
                         if (result.isConfirmed) {
-                         navigate('/lideres');
+                            navigate('/lideres');
                         }
-                      })
-                    
+                    })
+
 
                 }).catch(error => {
                     Swal.fire({
@@ -403,12 +403,12 @@ function Lideres() {
                         icon: 'success',
                         confirmButtonColor: '#716add',
                         confirmButtonText: 'De acuerdo'
-                      }).then((result) => {
+                    }).then((result) => {
                         if (result.isConfirmed) {
-                         navigate('/lideres');
+                            navigate('/lideres');
                         }
-                      })
-                    
+                    })
+
 
                 }).catch(error => {
                     Swal.fire({
@@ -429,21 +429,21 @@ function Lideres() {
 
         Axios.post("http://localhost:3001/api/distritos"
             /*"http://54.219.124.66:3001/api/distritos"*/, {
-            seccion: document.getElementById("secc").value
-        }).then((res) => {
+                seccion: document.getElementById("secc").value
+            }).then((res) => {
 
-            //console.log(res.data.df)
+                //console.log(res.data.df)
 
-            setDfederal(res.data.df)
-            setDlocal(res.data.dl)
-            setidSecc(res.data.id)
-            setValue("dl", res.data.dl)
-            setValue("df", res.data.df)
+                setDfederal(res.data.df)
+                setDlocal(res.data.dl)
+                setidSecc(res.data.id)
+                setValue("dl", res.data.dl)
+                setValue("df", res.data.df)
 
-            //console.log(seccion)
+                //console.log(seccion)
 
 
-        });
+            });
 
     }
     const submitSecciones = () => {
@@ -555,12 +555,14 @@ function Lideres() {
 
             <div className="row">
                 <div className="col-5" >
+                    <div className="card ">
+                        <div className="card-header text-center">
+                            REGISTRO DE LIDERES TERRITORIALES
+                        </div><div className="card-body rounded-3  text-center bg-light">
+                        <form onSubmit={handleSubmit(handleRegistration)}>
 
-                    <div className="card-header text-center">REGISTRO DE LIDERES TERRITORIALES</div>
-                    <form onSubmit={handleSubmit(handleRegistration)}>
-                        <div className="card-body text-center vertical-scrollable ">
 
-                            <br></br> <br></br>
+                            <br></br>
                             <input type="file"
                                 className="form-control"
                                 id="ine"
@@ -569,7 +571,7 @@ function Lideres() {
                                 accept='image/*'
                                 encType="multipart/form-data"
                                 onChange={saveFile} /> <br></br>
-                            <button onClick={uploadFile1} className="btn btn-dark btn-md cargar" type="submit">Cargar INE</button>
+                            <button onClick={uploadFile1} id='ineButton' className="btn btn-dark btn-md cargar" type="submit">Cargar INE</button>
                             <br />
 
 
@@ -916,7 +918,7 @@ function Lideres() {
                             <div className='row'>
                                 <div className='col-2'></div>
                                 <div className='col-8'>
-                                    <button className="btn btn-dark btn-md cargar" onClick={getLocation} type="button">Georeferenciar</button>
+                                    <button className="btn btn-dark btn-md cargar" id='georeferenciar' onClick={getLocation} type="button">Georeferenciar</button>
                                 </div>
                                 <div className='col-2'></div>
                             </div>
@@ -1486,13 +1488,13 @@ function Lideres() {
                             <div className="mb-3">
                                 <label htmlFor="tw">Observaciones</label>
                                 <textarea
-                                   
+
                                     className="form-control"
                                     id="observaciones"
                                     name="observaciones"
                                     placeholder=""
                                     onChange={e => { setObservaciones(e.target.value) }} />
-                               
+
                             </div>
 
                             <div className="row gx-3 mb-3">
@@ -1508,7 +1510,11 @@ function Lideres() {
                                 </div>
                             </div>
                             <br></br>
-                        </div></form>
+                        </form>
+                    </div>
+                    </div>
+                    
+
                 </div>
                 <div className="col-7" >
 

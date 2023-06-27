@@ -1,4 +1,4 @@
-import React, { useState, useRef,useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import apoyo from './apoyos.png'
 import Axios from 'axios';
 import Swal from 'sweetalert2';
@@ -89,7 +89,7 @@ function Apoyos() {
   const [changeCenter, setChangeCenter] = useState(false);
 
   const navigate = useNavigate();
-  
+
 
   /*const center = {
     lat: document.getElementById("lat").value,
@@ -100,7 +100,7 @@ function Apoyos() {
   const [peopleInfo, setPeopleInfo] = useState([]);
 
   const persona = 'Persona 1';
-  const ref = useRef(null); 
+  const ref = useRef(null);
 
   const atras = () => {
     let path = '/apoyos';
@@ -113,11 +113,11 @@ function Apoyos() {
   const onLoad = rectangle => {
     //console.log('rectangle: ', rectangle.latLng.lat());
     //console.log('rectangle: ', rectangle.latLng.lng());
-    setValue("lat",rectangle.latLng.lat())
-    setValue("lng",rectangle.latLng.lng())
+    setValue("lat", rectangle.latLng.lat())
+    setValue("lng", rectangle.latLng.lng())
     setNewCoor([rectangle.latLng.lat(), rectangle.latLng.lng()])
   }
- 
+
   const uploadFile1 = async (e) => {
     const formData = new FormData();
     console.log(fileName)
@@ -125,7 +125,7 @@ function Apoyos() {
     formData.append("file", file);
     formData.append("fileName", fileName);
     //console.log(formData)
-    
+
     try {
       const res = await Axios.post(
         //"http://54.219.124.66:3001/uploadD",
@@ -133,25 +133,25 @@ function Apoyos() {
         formData
       );
 
-      
-      var fecha= res.data.fecha_nacimiento
+
+      var fecha = res.data.fecha_nacimiento
       fecha = fecha.split("/").reverse().join("-");
       //console.log(fecha)
-        setValue("nombre",res.data.nombres)
-     
-      setValue("apaterno",res.data.apaterno);
-      setValue("amaterno",res.data.amaterno);
-      setValue("calle",res.data.calle);
-      setValue("numero",res.data.numero);
-      setValue("colonia",res.data.colonia);
-      setValue("cpostal",res.data.cp);
-      setValue("ciudad",res.data.ciudad);
-      setValue("celectoral",res.data.c_elector);
-      setValue("curp",res.data.curp);
-      setValue("fnacimiento",fecha);
-      setValue("secc",res.data.seccion);
-      setValue("df",res.data.distrito_federal);
-      setValue("dl",res.data.distrito_local);
+      setValue("nombre", res.data.nombres)
+
+      setValue("apaterno", res.data.apaterno);
+      setValue("amaterno", res.data.amaterno);
+      setValue("calle", res.data.calle);
+      setValue("numero", res.data.numero);
+      setValue("colonia", res.data.colonia);
+      setValue("cpostal", res.data.cp);
+      setValue("ciudad", res.data.ciudad);
+      setValue("celectoral", res.data.c_elector);
+      setValue("curp", res.data.curp);
+      setValue("fnacimiento", fecha);
+      setValue("secc", res.data.seccion);
+      setValue("df", res.data.distrito_federal);
+      setValue("dl", res.data.distrito_local);
 
       setNombres(res.data.nombres)
       setApaterno(res.data.apaterno);
@@ -176,7 +176,7 @@ function Apoyos() {
   useEffect(() => {
     //console.log(nombres);
     //console.log(aPaterno);
-  }, [nombres,aPaterno,aMaterno,calle,numero,colonia,cp,ciudad,fechaNacimiento,seccion,dFederal,dLocal]);
+  }, [nombres, aPaterno, aMaterno, calle, numero, colonia, cp, ciudad, fechaNacimiento, seccion, dFederal, dLocal]);
 
   const submitReview = () => {
 
@@ -205,12 +205,12 @@ function Apoyos() {
 
       }).catch(error => {
         Swal.fire({
-            title: 'Error!',
-            text: error.message,
-            icon: 'error',
-            confirmButtonText: 'Cool'
+          title: 'Error!',
+          text: error.message,
+          icon: 'error',
+          confirmButtonText: 'Cool'
         })
-    });
+      });
     /*console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
       + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel
       + celular + email + facebook + twitter + otra + descrApoyo + tipoApoyo
@@ -225,11 +225,11 @@ function Apoyos() {
       }).then((res) => {
 
         console.log(res.data.df)
-        
+
         setDfederal(res.data.df)
         setDlocal(res.data.dl)
-        setValue("dl",res.data.dl)
-        setValue("df",res.data.df)
+        setValue("dl", res.data.dl)
+        setValue("df", res.data.df)
 
         console.log(seccion)
 
@@ -250,7 +250,7 @@ function Apoyos() {
       //console.log(lng)
 
       setNewCoor([lat, lng])
-      
+
 
       setChangeCenter(true);
 
@@ -263,50 +263,50 @@ function Apoyos() {
     e.preventDefault()
 
     // do something
-    setValue("nombre","");
-    setValue("apaterno","");
-    setValue("amaterno","");
-    setValue("calle","");
-    setValue("numero","");
-    setValue("colonia","");
-    setValue("cpostal","");
-    setValue("ciudad","");
-    setValue("celectoral","");
-    setValue("curp","");
-    setValue("fnacimiento","");
-    setValue("secc","");
-    setValue("df","");
-    setValue("dl","");
-    setValue("cel","");
-    setValue("email","");
-    setValue("fb","");
-    setValue("tw","");
-    setValue("otrared","");
-    setValue("nivel","");
-    setValue("contacto","");
-    setValue("nocontacto","");
-    setValue("descapoyo","");
-    setValue("tipoapoyo","");
-    setValue("montoapoyo","");
-    setValue("alcanceapoyo","");
+    setValue("nombre", "");
+    setValue("apaterno", "");
+    setValue("amaterno", "");
+    setValue("calle", "");
+    setValue("numero", "");
+    setValue("colonia", "");
+    setValue("cpostal", "");
+    setValue("ciudad", "");
+    setValue("celectoral", "");
+    setValue("curp", "");
+    setValue("fnacimiento", "");
+    setValue("secc", "");
+    setValue("df", "");
+    setValue("dl", "");
+    setValue("cel", "");
+    setValue("email", "");
+    setValue("fb", "");
+    setValue("tw", "");
+    setValue("otrared", "");
+    setValue("nivel", "");
+    setValue("contacto", "");
+    setValue("nocontacto", "");
+    setValue("descapoyo", "");
+    setValue("tipoapoyo", "");
+    setValue("montoapoyo", "");
+    setValue("alcanceapoyo", "");
 
   }
- 
+
 
   // This function will be triggered when the "Remove This Image" button is clicked
   const removeSelectedImage = () => {
     setFile();
   };
-  const { register, handleSubmit,setValue, formState: { errors }} = useForm();
-  
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+
   const handleRegistration = (data) => console.log(data);
   const onSubmit = (data) => {
-    
+
     //alert(JSON.stringify(data));
     submitReview();
   }; // your form submit function which will invoke after successful validation
 
- 
+
 
   return (
     <div>
@@ -318,622 +318,628 @@ function Apoyos() {
 
       <div className="row">
         <div className="col-5" >
+          <div className="card " >
+            <div className="card-header text-center">
+              REGISTRO DE APOYOS
+            </div>
+            <div class="card-body rounded-3  text-center bg-light">
+            <form onSubmit={handleSubmit(handleRegistration)}>
+               
 
-          <div className="card-header text-center">REGISTRO DE APOYOS</div>
-          <form onSubmit={handleSubmit(handleRegistration)}>
-            <div className="card-body text-center vertical-scrollable ">
-
-              <br></br>
-              <input type="file"
-                className="form-control"
-                id="ine"
-                capture='enviroment'
-                name="ine"
-                accept='image/*'
-                encType="multipart/form-data"
-                onChange={saveFile} /> <br></br>
-              <button onClick={uploadFile1} className="btn btn-dark btn-md cargar" type="submit">Cargar INE</button>
-              <br />
+                  <br></br>
+                  <input type="file"
+                    className="form-control"
+                    id="ine"
+                    capture='enviroment'
+                    name="ine"
+                    accept='image/*'
+                    encType="multipart/form-data"
+                    onChange={saveFile} /> <br></br>
+                  <button onClick={uploadFile1} className="btn btn-dark btn-md cargar" id='ineButton' type="submit">Cargar INE</button>
+                  <br />
 
 
-              <input
-                {...register("lat", {
-                  required: true,
-                })}
-                placeholder='latitud'
-                type="hidden"
-                name="lat" id='lat' 
-                
-                value={newCoordenadas[0] || ''}/> 
-              <input 
-              {...register("lng", {
-                  required: true,
-                })}
-              placeholder='longitud' 
-               type='hidden'
-              name='lng' 
-              id='lng' 
-              value={newCoordenadas[1] || ''}/>
-              {file && (
-                <div className='row'>
-                  <div className='col-2'></div>
-                  <div className='col-1'><button className='delete' onClick={removeSelectedImage} >
-                    X
-                  </button></div>
-                  <div className='col-9'>
-                    <div className='preview' >
-                      <img
-                        src={URL.createObjectURL(file)}
-                        alt="Thumb"
+                  <input
+                    {...register("lat", {
+                      required: true,
+                    })}
+                    placeholder='latitud'
+                    type="hidden"
+                    name="lat" id='lat'
+
+                    value={newCoordenadas[0] || ''} />
+                  <input
+                    {...register("lng", {
+                      required: true,
+                    })}
+                    placeholder='longitud'
+                    type='hidden'
+                    name='lng'
+                    id='lng'
+                    value={newCoordenadas[1] || ''} />
+                  {file && (
+                    <div className='row'>
+                      <div className='col-2'></div>
+                      <div className='col-1'><button className='delete' onClick={removeSelectedImage} >
+                        X
+                      </button></div>
+                      <div className='col-9'>
+                        <div className='preview' >
+                          <img
+                            src={URL.createObjectURL(file)}
+                            alt="Thumb"
+                          />
+
+
+                        </div>
+                      </div>
+
+
+                    </div>
+                  )}
+                  <div className="row gx-3 mb-3">
+                    <div className=" col-12">
+                      <label htmlFor="nombre">Nombre(s)</label>
+                      <input
+                        {...register("nombre", {
+                          required: true,
+                          pattern: /^[A-Za-z.\s_-]+$/
+
+                        })}
+
+                        className="form-control"
+                        id="nombre"
+                        name="nombre"
+
+
+                        placeholder="Nombre (s)"
+                        onChange={e => setNombres(e.target.value)}
+
+
+                      />
+                      {errors?.nombre?.type === "required" && <span className='eform'>Campo Vacio </span>}
+                      {errors?.nombre?.type === "pattern" && (
+                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                      )}
+
+                    </div>
+                  </div>
+
+                  <div className="row gx-3 mb-3">
+                    <div className="col-md-6">
+                      <label htmlFor="apaterno">Apellido Paterno</label>
+                      <input
+                        {...register("apaterno", {
+                          required: true,
+                          pattern: /^[A-Za-z.\s_-]+$/
+
+                        })}
+
+                        className="form-control"
+                        id="apaterno"
+                        name="apaterno"
+                        placeholder="Apellido Paterno"
+                        onChange={e => { setApaterno(e.target.value) }}
                       />
 
+                      {errors?.apaterno?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                      {errors?.apaterno?.type === "pattern" && (
+                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                      )}
+
+                    </div>
+
+                    <div className="col-md-6">
+                      <label htmlFor="amaterno">Apellido Materno</label>
+                      <input
+                        {...register("amaterno", {
+                          required: true,
+                          pattern: /^[A-Za-z.\s_-]+$/
+                        })}
+
+                        className="form-control"
+                        id="amaterno"
+                        name="amaterno"
+
+                        placeholder="Apellido Materno"
+                        onChange={e => { setAmaterno(e.target.value) }} />
+                      {errors?.amaterno?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                      {errors?.amaterno?.type === "pattern" && (
+                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="row gx-3 mb-3">
+
+                    <div className="col-md-8">
+                      <label htmlFor="calle">Calle</label>
+                      <input
+                        {...register("calle", {
+                          required: true,
+                          pattern: /^[A-Za-z.\s_-]+$/
+                        })}
+
+                        className="form-control"
+                        id="calle"
+                        name="calle"
+
+                        placeholder="Calle"
+                        onChange={e => { setCalle(e.target.value) }} />
+                      {errors?.calle?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                      {errors?.calle?.type === "pattern" && (
+                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                      )}
+                    </div>
+
+                    <div className="col-md-4">
+                      <label htmlFor="numero">No.</label>
+                      <input
+                        {...register("numero", {
+                          required: true,
+                          pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                        })}
+
+                        className="form-control"
+                        id="numero"
+                        name="numero"
+
+                        placeholder="Número"
+                        onChange={e => { setNumero(e.target.value) }} />
+                      {errors?.numero?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                      {errors?.numero?.type === "pattern" && (
+                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="row gx-3 mb-3">
+
+                    <div className="col-md-8">
+                      <label htmlFor="colonia">Colonia</label>
+                      <input
+                        {...register("colonia", {
+                          required: true,
+                          pattern: /^[A-Za-z.\s_-]+$/
+                        })}
+
+                        className="form-control"
+                        id="colonia"
+                        name="colonia"
+
+                        placeholder="Colonia"
+                        onChange={e => { setColonia(e.target.value) }} />
+                      {errors?.colonia?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+                    </div>
+
+                    <div className="col-md-4">
+                      <label htmlFor="cpostal">CP</label>
+                      <input
+                        {...register("cpostal", {
+                          required: true,
+                          pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                        })}
+
+                        className="form-control"
+                        id="cpostal"
+                        name="cpostal"
+
+                        placeholder="Código Postal"
+                        onChange={e => { setCp(e.target.value) }} />
+                      {errors?.cpostal?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                      {errors?.cpostal?.type === "pattern" && (
+                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="row gx-3 mb-3">
+
+                    <div className="col-md-6">
+                      <label htmlFor="colonia">Ciudad</label>
+                      <input
+                        {...register("ciudad", {
+                          required: true,
+                          pattern: /^[A-Za-z.\s_-]+$/
+                        })}
+
+                        className="form-control"
+                        id="ciudad"
+                        name="ciudad"
+
+                        placeholder="Ciudad"
+                        onChange={e => { setCiudad(e.target.value) }} />
+                      {errors?.ciudad?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                    </div>
+
+
+                    <div className="col-md-6">
+                      <label htmlFor="celectoral">Clave Electoral</label>
+                      <input
+                        {...register("celectoral", {
+                          required: true,
+                          pattern: /^[a-zA-Z0-9]+$/
+                        })}
+
+                        className="form-control"
+                        id="celectoral"
+                        name="celectoral"
+
+                        placeholder="Clave electoral"
+                        onChange={e => { setClave(e.target.value) }} />
+                      {errors?.celectoral?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                      {errors?.celectoral?.type === "pattern" && (
+                        <span className='eform'>Ingresa solamente caracteres alfanumericos</span>
+                      )}
+                    </div>
+                  </div>
+                  <input type="hidden" readOnly id="direc" />
+
+                  <div className="row gx-3 mb-3">
+
+                    <div className="col-md-6">
+                      <label htmlFor="curp">CURP</label>
+                      <input
+                        {...register("curp", {
+                          required: true,
+                          pattern: /^[a-zA-Z0-9]+$/
+                        })}
+
+                        className="form-control"
+                        id="curp"
+
+                        name="curp"
+                        placeholder="CURP"
+                        onChange={e => { setCurp(e.target.value) }} />
+                      {errors?.curp?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                      {errors?.curp?.type === "pattern" && (
+                        <span className='eform'>Ingresa solamente caracteres alfanumericos</span>
+                      )}
+                    </div>
+
+                    <div className="col-md-6">
+                      <label htmlFor="fnacimiento">Fecha de Nacimiento</label>
+                      <input
+                        {...register("fnacimiento", {
+                          required: true,
+
+                        })}
+                        type="date"
+                        className="form-control"
+
+                        id="fnacimiento"
+                        name="fnacimiento"
+                        placeholder="Fecha de Nacimiento"
+                        onChange={e => { setFecha(e.target.value) }} />
+                      {errors?.fechanacimiento?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
                     </div>
                   </div>
 
 
-                </div>
-              )}
-              <div className="row gx-3 mb-3">
-                <div className=" col-12">
-                  <label htmlFor="nombre">Nombre(s)</label>
-                  <input
-                    {...register("nombre", {
-                      required: true,
-                      pattern: /^[A-Za-z.\s_-]+$/
-                      
-                    })}
-                    
-                    className="form-control"
-                    id="nombre"
-                    name="nombre"
-                    
-                    
-                    placeholder="Nombre (s)"
-                    onChange={e => setNombres(e.target.value) }
-                    
-                   
-                  />
-                  {errors?.nombre?.type === "required" && <span className='eform'>Campo Vacio </span>}
-                  {errors?.nombre?.type === "pattern" && (
-                    <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
-                  )}
+                  <div className="row gx-3 mb-3">
+                    <div className="col-md-4 mb-3">
+                      <label htmlFor="secc">Sección</label>
+                      <input
+                        {...register("secc", {
+                          required: true,
+                          pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                        })}
 
-                </div>
-              </div>
-
-              <div className="row gx-3 mb-3">
-                <div className="col-md-6">
-                  <label htmlFor="apaterno">Apellido Paterno</label>
-                  <input
-                    {...register("apaterno", {
-                      required: true,
-                      pattern: /^[A-Za-z.\s_-]+$/
-
-                    })}
-                    
-                    className="form-control"
-                    id="apaterno"
-                    name="apaterno"
-                    placeholder="Apellido Paterno" 
-                    onChange={e => { setApaterno(e.target.value) }}
-                    />
-                    
-                  {errors?.apaterno?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                  {errors?.apaterno?.type === "pattern" && (
-                    <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
-                  )}
-
-                </div>
-
-                <div className="col-md-6">
-                  <label htmlFor="amaterno">Apellido Materno</label>
-                  <input
-                    {...register("amaterno", {
-                      required: true,
-                      pattern: /^[A-Za-z.\s_-]+$/
-                    })}
-                    
-                    className="form-control"
-                    id="amaterno"
-                    name="amaterno"
-                    
-                    placeholder="Apellido Materno" 
-                    onChange={e => { setAmaterno(e.target.value) }} />
-                  {errors?.amaterno?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                  {errors?.amaterno?.type === "pattern" && (
-                    <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
-                  )}
-                </div>
-              </div>
-
-              <div className="row gx-3 mb-3">
-
-                <div className="col-md-8">
-                  <label htmlFor="calle">Calle</label>
-                  <input
-                    {...register("calle", {
-                      required: true,
-                      pattern: /^[A-Za-z.\s_-]+$/
-                    })}
-                    
-                    className="form-control"
-                    id="calle"
-                    name="calle"
-                    
-                    placeholder="Calle" 
-                    onChange={e => { setCalle(e.target.value) }} />
-                  {errors?.calle?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                  {errors?.calle?.type === "pattern" && (
-                    <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
-                  )}
-                </div>
-
-                <div className="col-md-4">
-                  <label htmlFor="numero">No.</label>
-                  <input
-                    {...register("numero", {
-                      required: true,
-                      pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                    })}
-                    
-                    className="form-control"
-                    id="numero"
-                    name="numero"
-                    
-                    placeholder="Número" 
-                    onChange={e => { setNumero(e.target.value) }} />
-                  {errors?.numero?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                  {errors?.numero?.type === "pattern" && (
-                    <span className='eform'>Ingresa solamente caracteres numericos</span>
-                  )}
-                </div>
-              </div>
-              <div className="row gx-3 mb-3">
-
-                <div className="col-md-8">
-                  <label htmlFor="colonia">Colonia</label>
-                  <input
-                    {...register("colonia", {
-                      required: true,
-                      pattern: /^[A-Za-z.\s_-]+$/
-                    })}
-                    
-                    className="form-control"
-                    id="colonia"
-                    name="colonia"
-                   
-                    placeholder="Colonia" 
-                    onChange={e => { setColonia(e.target.value) }} />
-                  {errors?.colonia?.type === "required" && <span className='eform'>Campo Vacio</span>}
-
-                </div>
-
-                <div className="col-md-4">
-                  <label htmlFor="cpostal">CP</label>
-                  <input
-                    {...register("cpostal", {
-                      required: true,
-                      pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                    })}
-                    
-                    className="form-control"
-                    id="cpostal"
-                    name="cpostal"
-                    
-                    placeholder="Código Postal" 
-                    onChange={e => { setCp(e.target.value) }} />
-                  {errors?.cpostal?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                  {errors?.cpostal?.type === "pattern" && (
-                    <span className='eform'>Ingresa solamente caracteres numericos</span>
-                  )}
-                </div>
-              </div>
-              <div className="row gx-3 mb-3">
-
-                <div className="col-md-6">
-                  <label htmlFor="colonia">Ciudad</label>
-                  <input
-                    {...register("ciudad", {
-                      required: true,
-                      pattern: /^[A-Za-z.\s_-]+$/
-                    })}
-                    
-                    className="form-control"
-                    id="ciudad"
-                    name="ciudad"
-                   
-                    placeholder="Ciudad" 
-                    onChange={e => { setCiudad(e.target.value) }} />
-                  {errors?.ciudad?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                </div>
+                        className="form-control"
+                        id="secc"
+                        name="secc"
+                        placeholder="Sección"
+                        onChange={e => { setSeccion(e.target.value) }} />
+                      {errors?.secc?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                      {errors?.secc?.type === "pattern" && (
+                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                      )}
+                    </div>
 
 
-                <div className="col-md-6">
-                  <label htmlFor="celectoral">Clave Electoral</label>
-                  <input
-                    {...register("celectoral", {
-                      required: true,
-                      pattern: /^[a-zA-Z0-9]+$/
-                    })}
-                    
-                    className="form-control"
-                    id="celectoral"
-                    name="celectoral"
-                    
-                    placeholder="Clave electoral" 
-                    onChange={e => { setClave(e.target.value) }} />
-                  {errors?.celectoral?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                  {errors?.celectoral?.type === "pattern" && (
-                    <span className='eform'>Ingresa solamente caracteres alfanumericos</span>
-                  )}
-                </div>
-              </div>
-              <input type="hidden" readOnly id="direc" />
+                    <div className="col-md-4">
+                      <label htmlFor="df">Distrito Federal</label>
+                      <input
+                        {...register("df", {
+                          required: true,
+                          pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                        })}
 
-              <div className="row gx-3 mb-3">
+                        className="form-control"
+                        id="df"
 
-                <div className="col-md-6">
-                  <label htmlFor="curp">CURP</label>
-                  <input
-                    {...register("curp", {
-                      required: true,
-                      pattern: /^[a-zA-Z0-9]+$/
-                    })}
-                    
-                    className="form-control"
-                    id="curp"
-                    
-                    name="curp"
-                    placeholder="CURP" 
-                    onChange={e => { setCurp(e.target.value) }} />
-                  {errors?.curp?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                  {errors?.curp?.type === "pattern" && (
-                    <span className='eform'>Ingresa solamente caracteres alfanumericos</span>
-                  )}
-                </div>
+                        name="df"
+                        onChange={e => { setDfederal(e.target.value) }} />
+                      {errors?.df?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                      {errors?.df?.type === "pattern" && (
+                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                      )}
+                    </div>
 
-                <div className="col-md-6">
-                  <label htmlFor="fnacimiento">Fecha de Nacimiento</label>
-                  <input
-                    {...register("fnacimiento", {
-                      required: true,
+                    <div className="col-md-4">
+                      <label htmlFor="dl">Distrito Local</label>
+                      <input
+                        {...register("dl", {
+                          required: true,
+                          pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                        })}
 
-                    })}
-                    type="date"
-                    className="form-control"
-                    
-                    id="fnacimiento"
-                    name="fnacimiento"
-                    placeholder="Fecha de Nacimiento" 
-                    onChange={e => { setFecha(e.target.value) }} />
-                  {errors?.fechanacimiento?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                        className="form-control"
+                        id="dl"
 
-                </div>
-              </div>
+                        name="dl"
+                        onChange={e => { setDlocal(e.target.value) }} />
+                      {errors?.dl?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                      {errors?.dl?.type === "pattern" && (
+                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                      )}
+                    </div>
 
 
-              <div className="row gx-3 mb-3">
-                <div className="col-md-4 mb-3">
-                  <label htmlFor="secc">Sección</label>
-                  <input
-                    {...register("secc", {
-                      required: true,
-                      pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                    })}
-                    
-                    className="form-control"
-                    id="secc"
-                    name="secc"
-                    placeholder="Sección" 
-                    onChange={e => { setSeccion(e.target.value) }} />
-                  {errors?.secc?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                  {errors?.secc?.type === "pattern" && (
-                    <span className='eform'>Ingresa solamente caracteres numericos</span>
-                  )}
-                </div>
+
+                  </div>
+                  <div className='row'>
+                    <div className='col-md-2'></div>
+                    <div className='col-md-8'>
+                      <button className="btn btn-dark btn-md cargar" onClick={getLocation} id="georeferenciar" type="button">Georeferenciar</button>
+                    </div>
+                    <div className='col-md-2'></div>
+                  </div>
+                  <hr id="division"></hr>
+                  <div className="row gx-3 mb-3">
+
+                    <div className="col-md-6">
+                      <label htmlFor="cel">No. Celular</label>
+                      <input
+                        {...register("cel", {
+                          required: true,
+                          pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                        })}
+
+                        className="form-control"
+                        id="cel"
+                        name="cel"
+                        onChange={e => { setCelular(e.target.value) }} />
+                      {errors?.cel?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                      {errors?.cel?.type === "pattern" && (
+                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                      )}
+                    </div>
+
+                    <div className="col-md-6">
+                      <label htmlFor="email">Email</label>
+                      <input
+                        {...register("email", {
+                          //required: true,
+                          pattern: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/
+                        })}
+                        type="email"
+                        className="form-control"
+                        id="email"
+                        name="email"
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                        onChange={e => { setEmail(e.target.value) }} />
+                      {errors?.email?.type === "pattern" && (
+                        <span className='eform'>Ingresa formato de correo electrónico</span>
+                      )}
+                    </div>
+                  </div>
 
 
-                <div className="col-md-4">
-                  <label htmlFor="df">Distrito Federal</label>
-                  <input
-                    {...register("df", {
-                      required: true,
-                      pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                    })}
-                    
-                    className="form-control"
-                    id="df"
-                   
-                    name="df" 
-                    onChange={e => { setDfederal(e.target.value) }} />
-                  {errors?.df?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                  {errors?.df?.type === "pattern" && (
-                    <span className='eform'>Ingresa solamente caracteres numericos</span>
-                  )}
-                </div>
+                  <div className="row gx-3 mb-3">
 
-                <div className="col-md-4">
-                  <label htmlFor="dl">Distrito Local</label>
-                  <input
-                    {...register("dl", {
-                      required: true,
-                      pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                    })}
-                    
-                    className="form-control"
-                    id="dl"
-                    
-                    name="dl" 
-                    onChange={e => { setDlocal(e.target.value) }} />
-                  {errors?.dl?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                  {errors?.dl?.type === "pattern" && (
-                    <span className='eform'>Ingresa solamente caracteres numericos</span>
-                  )}
-                </div>
-               
-
-
-              </div>
-              <div className='row'>
-                <div className='col-md-2'></div>
-                <div className='col-md-8'>
-                  <button className="btn btn-dark btn-md cargar" onClick={getLocation} id="georeferenciar" type="button">Georeferenciar</button>
-                </div>
-                <div className='col-md-2'></div>
-              </div>
-              <hr id="division"></hr>
-              <div className="row gx-3 mb-3">
-
-                <div className="col-md-6">
-                  <label htmlFor="cel">No. Celular</label>
-                  <input
-                    {...register("cel", {
-                      required: true,
-                      pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                    })}
-                    
-                    className="form-control"
-                    id="cel"
-                    name="cel" 
-                    onChange={e => { setCelular(e.target.value) }} />
-                  {errors?.cel?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                  {errors?.cel?.type === "pattern" && (
-                    <span className='eform'>Ingresa solamente caracteres numericos</span>
-                  )}
-                </div>
-
-                <div className="col-md-6">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    {...register("email", {
-                      //required: true,
-                      pattern: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/
-                    })}
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    name="email"
-                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
-                    onChange={e => { setEmail(e.target.value) }} />
-                  {errors?.email?.type === "pattern" && (
-                                        <span className='eform'>Ingresa formato de correo electrónico</span>
-                                    )}
-                </div>
-              </div>
-
-
-              <div className="row gx-3 mb-3">
-
-                <div className="col-md-6">
-                  <label htmlFor="fb">Facebook</label>
-                  <input
-                    //{...register("fb", {
-                      //required: true,
-                      //pattern: /^[A-Za-z.\s_-]+$/
-                    //})}
-                   
-                    className="form-control"
-                    id="fb"
-                    name="fb"
-                    placeholder="" 
-                    onChange={e => { setFacebook(e.target.value) }} />
-                  
-                </div>
-
-                <div className="col-md-6">
-                  <label htmlFor="tw">Twitter</label>
-                  <input
-                    //{...register("tw", {
-                      //required: true,
-                      //pattern: /^[A-Za-z.\s_-]+$/
-                    //})}
-                    
-                    className="form-control"
-                    id="tw"
-                    name="tw"
-                    placeholder="" 
-                    onChange={e => { setTwitter(e.target.value) }} />
-                  
-                </div>
-              </div>
-              <div className='row'>
-                <div className='col-md-6'>
-                  <div className="mb-3">
-                    <label htmlFor="otrared">Otra red social</label>
-                    <input
-                      //{...register("otrared", {
-                       // required: true,
+                    <div className="col-md-6">
+                      <label htmlFor="fb">Facebook</label>
+                      <input
+                        //{...register("fb", {
+                        //required: true,
                         //pattern: /^[A-Za-z.\s_-]+$/
-                      //})}
-                      
+                        //})}
+
+                        className="form-control"
+                        id="fb"
+                        name="fb"
+                        placeholder=""
+                        onChange={e => { setFacebook(e.target.value) }} />
+
+                    </div>
+
+                    <div className="col-md-6">
+                      <label htmlFor="tw">Twitter</label>
+                      <input
+                        //{...register("tw", {
+                        //required: true,
+                        //pattern: /^[A-Za-z.\s_-]+$/
+                        //})}
+
+                        className="form-control"
+                        id="tw"
+                        name="tw"
+                        placeholder=""
+                        onChange={e => { setTwitter(e.target.value) }} />
+
+                    </div>
+                  </div>
+                  <div className='row'>
+                    <div className='col-md-6'>
+                      <div className="mb-3">
+                        <label htmlFor="otrared">Otra red social</label>
+                        <input
+                          //{...register("otrared", {
+                          // required: true,
+                          //pattern: /^[A-Za-z.\s_-]+$/
+                          //})}
+
+                          className="form-control"
+                          id="otrared"
+                          name="otrared"
+                          placeholder=""
+                          onChange={e => { setOtra(e.target.value) }} />
+                        {errors?.otrared?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                        {errors?.otrared?.type === "pattern" && (
+                          <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                        )}
+                      </div></div>
+                    <div className='col-md-6'>
+                      <label className="small mb-1" htmlFor="nivel">Circulo</label>
+                      <select
+                        //{...register("nivel", {
+                        // required: true,
+
+                        //})}
+                        className="form-select"
+                        id="nivel"
+
+                        name="nivel"
+                        onChange={e => { setNivel(e.target.value) }}
+                      >
+                        <option value="">Que tan cercano es al@ candidat@</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+
+                      </select>
+                    </div>
+                  </div>
+                  <div className="row gx-3 mb-3">
+
+                    <div className="col-md-6">
+                      <label htmlFor="otrared">Contacto a través de:</label>
+                      <input
+                        //{...register("contacto", {
+                        //required: true,
+                        //pattern:/^[A-Za-z.\s_-]+$/
+                        //})}
+
+                        className="form-control"
+                        id="contacto"
+                        name="contacto"
+                        placeholder=""
+                        onChange={e => { setContacto(e.target.value) }} />
+
+                    </div>
+
+                    <div className="col-md-6">
+                      <label htmlFor="otrared">No. Celular del contacto</label>
+                      <input
+                        ///{...register("nocontacto", {
+                        //required: true,
+                        //pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                        //})}
+
+                        className="form-select"
+                        id="nocontacto"
+                        name="nocontacto"
+                        placeholder=""
+                        onChange={e => { setCelcontacto(e.target.value) }} />
+
+                    </div>
+                  </div>
+                  <hr></hr>
+                  <div className="mb-3">
+                    <label htmlFor="tw">Descripción de Apoyo</label>
+                    <textarea
+                      {...register("descapoyo", {
+                        required: true,
+                        pattern: /^[A-Za-z.\s_-]+$/
+                      })}
+
                       className="form-control"
-                      id="otrared"
-                      name="otrared"
-                      placeholder="" 
-                      onChange={e=> { setOtra(e.target.value) }} />
-                    {errors?.otrared?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                    {errors?.otrared?.type === "pattern" && (
-                      <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                      id="descapoyo"
+                      name="descapoyo"
+                      placeholder=""
+                      onChange={e => { setDescapoyo(e.target.value) }} />
+                    {errors?.descapoyo?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                    {errors?.descapoyo?.type === "pattern" && (
+                      <span className='eform'>Ingresa solo caracteres alfabeticos</span>
                     )}
-                  </div></div>
-                <div className='col-md-6'>
-                  <label className="small mb-1" htmlFor="nivel">Circulo</label>
-                  <select
-                    //{...register("nivel", {
-                     // required: true,
+                  </div>
 
-                    //})}
-                    className="form-select"
-                    id="nivel"
+                  <div className="row gx-3 mb-3">
 
-                    name="nivel" 
-                    onChange={e => { setNivel(e.target.value) }}
-                  >
-                    <option value="">Que tan cercano es al@ candidat@</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    <div className="col-md-4">
+                      <label className="small mb-1" htmlFor="tipoapoyo">Tipo de Apoyo</label>
+                      <select
+                        {...register("tipoapoyo", {
+                          required: true,
 
-                  </select>
-                </div>
-              </div>
-              <div className="row gx-3 mb-3">
+                        })}
+                        className="form-select"
+                        id="tipoapoyo"
+                        name="tipoapoyo"
+                        onChange={e => { setTipoapoyo(e.target.value) }}
+                      >
+                        <option value="" >Selecciona alguna opcion</option>
+                        <option value="Económico">Económico</option>
+                        <option value="Especia">Especie</option>
+                        <option value="Con terceros">Con terceros</option>
+                        <option value="Otros">Otros</option>
 
-                <div className="col-md-6">
-                  <label htmlFor="otrared">Contacto a través de:</label>
-                  <input
-                    //{...register("contacto", {
-                      //required: true,
-                      //pattern:/^[A-Za-z.\s_-]+$/
-                    //})}
-                    
-                    className="form-control"
-                    id="contacto"
-                    name="contacto"
-                    placeholder="" 
-                    onChange={e => { setContacto(e.target.value) }} />
-                  
-                </div>
+                      </select>
+                      {errors?.tipoapoyo?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
+                    </div>
 
-                <div className="col-md-6">
-                  <label htmlFor="otrared">No. Celular del contacto</label>
-                  <input
-                    ///{...register("nocontacto", {
-                      //required: true,
-                      //pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                    //})}
-                    
-                    className="form-select"
-                    id="nocontacto"
-                    name="nocontacto"
-                    placeholder="" 
-                    onChange={e=> { setCelcontacto(e.target.value) }} />
-                  
-                </div>
-              </div>
-              <hr></hr>
-              <div className="mb-3">
-                <label htmlFor="tw">Descripción de Apoyo</label>
-                <textarea
-                  {...register("descapoyo", {
-                    required: true,
-                    pattern:/^[A-Za-z.\s_-]+$/
-                  })}
-                  
-                  className="form-control"
-                  id="descapoyo"
-                  name="descapoyo"
-                  placeholder="" 
-                  onChange={e => { setDescapoyo(e.target.value) }} />
-                {errors?.descapoyo?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                {errors?.descapoyo?.type === "pattern" && (
-                  <span className='eform'>Ingresa solo caracteres alfabeticos</span>
-                )}
-              </div>
+                    <div className="col-md-4">
+                      <label htmlFor="tw">Monto de Apoyo</label>
+                      <input
+                        {...register("montoapoyo", {
+                          required: true,
+                          pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                        })}
 
-              <div className="row gx-3 mb-3">
+                        className="form-control"
+                        id="montoapoyo"
+                        name="montoapoyo"
+                        placeholder=""
+                        onChange={e => { setMonto(e.target.value) }} />
+                      {errors?.montoapoyo?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                      {errors?.montoapoyo?.type === "pattern" && (
+                        <span className='eform'>Ingresa solamente caracteres numericos</span>
+                      )}
+                    </div>
+                    <div className="col-md-4">
+                      <label className="small mb-1" htmlFor="alcanceapoyo">Alcance de Apoyo</label>
+                      <select
+                        {...register("alcanceapoyo", {
+                          required: true,
 
-                <div className="col-md-4">
-                  <label className="small mb-1" htmlFor="tipoapoyo">Tipo de Apoyo</label>
-                  <select
-                    {...register("tipoapoyo", {
-                      required: true,
+                        })}
+                        className="form-select"
+                        id="alcanceapoyo"
+                        name="alcanceapoyo"
+                        onChange={e => { setAlcance(e.target.value) }}
+                      >
+                        <option value="">Selecciona alguna opcion</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Familiar">Familiar</option>
+                        <option value="Comunitario">Comunitario</option>
+                        <option value="Otros">Otros</option>
+                      </select>
+                      {errors?.alcanceapoyo?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
+                    </div>
+                  </div>
 
-                    })}
-                    className="form-select"
-                    id="tipoapoyo"
-                    name="tipoapoyo" 
-                    onChange={e=> { setTipoapoyo(e.target.value) }}
-                  >
-                    <option value="" >Selecciona alguna opcion</option>
-                    <option value="Económico">Económico</option>
-                    <option value="Especia">Especie</option>
-                    <option value="Con terceros">Con terceros</option>
-                    <option value="Otros">Otros</option>
+                  <div className="row gx-3 mb-3">
 
-                  </select>
-                  {errors?.tipoapoyo?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
-                </div>
 
-                <div className="col-md-4">
-                  <label htmlFor="tw">Monto de Apoyo</label>
-                  <input
-                    {...register("montoapoyo", {
-                      required: true,
-                      pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                    })}
-                    
-                    className="form-control"
-                    id="montoapoyo"
-                    name="montoapoyo"
-                    placeholder="" 
-                    onChange={e => { setMonto(e.target.value) }} />
-                  {errors?.montoapoyo?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                  {errors?.montoapoyo?.type === "pattern" && (
-                    <span className='eform'>Ingresa solamente caracteres numericos</span>
-                  )}
-                </div>
-                <div className="col-md-4">
-                  <label className="small mb-1" htmlFor="alcanceapoyo">Alcance de Apoyo</label>
-                  <select
-                    {...register("alcanceapoyo", {
-                      required: true,
+                    <div className="col-md-2"></div>
+                    <div className="col-md-4">
+                      <button id="limpiar" className="btn btn-danger" onClick={limpiar} type="button"> Limpiar datos </button>
 
-                    })}
-                    className="form-select"
-                    id="alcanceapoyo"
-                    name="alcanceapoyo" 
-                    onChange={e=> { setAlcance(e.target.value) }}
-                  >
-                    <option value="">Selecciona alguna opcion</option>
-                    <option value="Personal">Personal</option>
-                    <option value="Familiar">Familiar</option>
-                    <option value="Comunitario">Comunitario</option>
-                    <option value="Otros">Otros</option>
-                  </select>
-                  {errors?.alcanceapoyo?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
-                </div>
-              </div>
+                    </div>
+                    <div className="col-md-4">
+                      <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar apoyo</button>
+                      {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
+                    </div>
+                    <div className="col-md-2"></div>
 
-              <div className="row gx-3 mb-3">
-
+                  </div>
+                  <br></br>
                 
-              <div className="col-md-2"></div>
-                <div className="col-md-4">
-                  <button id="limpiar" className="btn btn-danger" onClick={limpiar} type="button"> Limpiar datos </button>
-                
-                </div>
-                <div className="col-md-4">
-                  <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar apoyo</button>
-                  {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
-                </div>
-                <div className="col-md-2"></div>
-                
-              </div>
-              <br></br>
+              </form>
             </div>
-          </form>
+          </div>
+          
         </div>
         <div className="col-7" >
 

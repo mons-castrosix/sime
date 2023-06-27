@@ -5,7 +5,7 @@ import 'bootstrap/dist/js/bootstrap.js'
 import '../assets/bootstrap-icons/bootstrap-icons.css'
 import '../assets/boxicons/css/boxicons.min.css'
 import './header.css'
-import logo from './mape.png'
+import logo from './mape_morena.png'
 import menu from './menu.png'
 import Apoyos from '../apoyos/apoyos';
 import $ from 'jquery'

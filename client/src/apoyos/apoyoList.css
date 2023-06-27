@@ -7,7 +7,30 @@
 .delet{
     color: red;
 }
+#copy{
+    background-color: #BB3D42;
+    border-color: #BB3D42;
+}
+#excel{
+    background-color: #78787A;
+    border-color: #78787A;
+}
+#pdf{
+    background-color: #C25357;
+    border-color: #C25357;
+}
+#agregaApoyo{
+    background-color: #998999; ;
+    border-color: #998999;
+}
 
+#agregaApoyo:hover{
+    background-color: #C25357;
+    border-color: #C25357;
+}
+.p-column-title{
+    margin-left: 20px;
+}
 .card{
     border-radius: 1px;
     padding: 2rem 2rem 2rem 2rem;

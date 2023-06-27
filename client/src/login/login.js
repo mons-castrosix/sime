@@ -1,25 +1,18 @@
 import React from 'react';
 import './login.css'
 import mape from './GeoMapa.png'
+import mapemorena from './mape_morena.png'
 import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.js'
 
 function Login() {
-  const headlineStyle = {
-    margin:"0;",
-    padding: "0;",
-    background: "url('./GeoMapa.png') no-repeat center top;",
-    backgroundSize: "cover;",
-    fontFamily: "sans-serif;",
-    height: "100vh;"
-    
-}
+  
   return (
     <div id="body">
       <div className="login-box">
 
-      <img className="avatar" src={mape} alt="logo MAPE"/>
+      <img className="avatar" src={mapemorena} alt="logo MAPE"/>
       <h1>MAPE</h1>
       <form>
         
