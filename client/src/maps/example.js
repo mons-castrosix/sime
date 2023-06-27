@@ -114,7 +114,7 @@ function Example() {
 				<div className="col-4" >
 					<div className="card " >
 						<div className="card-header text-center">
-							GEOREFERENCIAR REGISTROS
+							GEOREFERENCIAR REGISTROS EN MAPA
 						</div>
 						<div className="card-body rounded-3  text-center bg-light">
 							{getList()}
