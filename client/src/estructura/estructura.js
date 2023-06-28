@@ -156,19 +156,19 @@ function Estructura() {
             //console.log(fecha)
             setValue("nombre", res.data.nombres)
 
-            setValue("apaterno", res.data.apaterno);
-            setValue("amaterno", res.data.amaterno);
-            setValue("calle", res.data.calle);
-            setValue("numero", res.data.numero);
-            setValue("colonia", res.data.colonia);
-            setValue("cpostal", res.data.cp);
-            setValue("ciudad", res.data.ciudad);
-            setValue("celectoral", res.data.c_elector);
-            setValue("curp", res.data.curp);
-            setValue("fnacimiento", fecha);
-            setValue("secc", res.data.seccion);
-            setValue("df", res.data.distrito_federal);
-            setValue("dl", res.data.distrito_local);
+            setValue("apaterno", res.data.apaterno, { shouldValidate: true, shouldDirty: true });
+            setValue("amaterno", res.data.amaterno, { shouldValidate: true, shouldDirty: true });
+            setValue("calle", res.data.calle, { shouldValidate: true, shouldDirty: true });
+            setValue("numero", res.data.numero, { shouldValidate: true, shouldDirty: true });
+            setValue("colonia", res.data.colonia, { shouldValidate: true, shouldDirty: true });
+            setValue("cpostal", res.data.cp, { shouldValidate: true, shouldDirty: true });
+            setValue("ciudad", res.data.ciudad, { shouldValidate: true, shouldDirty: true });
+            setValue("celectoral", res.data.c_elector, { shouldValidate: true, shouldDirty: true });
+            setValue("curp", res.data.curp, { shouldValidate: true, shouldDirty: true });
+            setValue("fnacimiento", fecha, { shouldValidate: true, shouldDirty: true });
+            setValue("secc", res.data.seccion, { shouldValidate: true, shouldDirty: true });
+            setValue("df", res.data.distrito_federal, { shouldValidate: true, shouldDirty: true });
+            setValue("dl", res.data.distrito_local, { shouldValidate: true, shouldDirty: true });
 
             setNombres(res.data.nombres)
             setApaterno(res.data.apaterno);
@@ -261,8 +261,8 @@ function Estructura() {
                 setDfederal(res.data.df)
                 setDlocal(res.data.dl)
                 setidSecc(res.data.id)
-                setValue("dl", res.data.dl)
-                setValue("df", res.data.df)
+                setValue("dl", res.data.dl, { shouldValidate: true, shouldDirty: true })
+                setValue("df", res.data.df, { shouldValidate: true, shouldDirty: true })
 
                 //console.log(seccion)
 
@@ -297,7 +297,8 @@ function Estructura() {
             //console.log(lng)
 
             setNewCoor([lat, lng])
-
+            setValue("lat", lat, { shouldValidate: true, shouldDirty: true })
+            setValue("lng", lng, { shouldValidate: true, shouldDirty: true })
 
             setChangeCenter(true);
 
@@ -310,7 +311,6 @@ function Estructura() {
         e.preventDefault()
 
         // do something
-
 
         setValue("nombre", "");
         setValue("apaterno", "");
@@ -611,7 +611,7 @@ function Estructura() {
 
 
                             <div className="col-md-6">
-                                <label htmlFor="celectoral">Clave Electoral</label>
+                                <label htmlFor="celectoral">Clave de elector</label>
                                 <input
                                     {...register("celectoral", {
                                         required: true,
@@ -751,7 +751,7 @@ function Estructura() {
                                 <input
                                     {...register("cel", {
                                         required: true,
-                                        pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                        
                                     })}
 
                                     className="form-control"
@@ -759,9 +759,7 @@ function Estructura() {
                                     name="cel"
                                     onChange={e => { setCelular(e.target.value) }} />
                                 {errors?.cel?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                {errors?.cel?.type === "pattern" && (
-                                    <span className='eform'>Ingresa solamente caracteres numericos</span>
-                                )}
+                                
                             </div>
 
                             <div className="col-md-6">
@@ -836,7 +834,7 @@ function Estructura() {
 
                                 </div></div>
                             <div className='col-md-6'>
-                                <label className="small mb-1" htmlFor="nivel">Circulo</label>
+                                <label className="small mb-1" htmlFor="nivel">Círculo</label>
                                 <select
                                     //{...register("nivel", {
                                     //   required: true,

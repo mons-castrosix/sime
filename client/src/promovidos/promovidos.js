@@ -154,21 +154,21 @@ function Promovidos() {
             var fecha = res.data.fecha_nacimiento
             fecha = fecha.split("/").reverse().join("-");
             console.log(fecha)
-            setValue("nombre", res.data.nombres)
+            setValue("nombre", res.data.nombres, { shouldValidate: true, shouldDirty: true })
 
-            setValue("apaterno", res.data.apaterno);
-            setValue("amaterno", res.data.amaterno);
-            setValue("calle", res.data.calle);
-            setValue("numero", res.data.numero);
-            setValue("colonia", res.data.colonia);
-            setValue("cpostal", res.data.cp);
-            setValue("ciudad", res.data.ciudad);
-            setValue("celectoral", res.data.c_elector);
-            setValue("curp", res.data.curp);
-            setValue("fnacimiento", fecha);
-            setValue("secc", res.data.seccion);
-            setValue("df", res.data.distrito_federal);
-            setValue("dl", res.data.distrito_local);
+            setValue("apaterno", res.data.apaterno, { shouldValidate: true, shouldDirty: true });
+            setValue("amaterno", res.data.amaterno, { shouldValidate: true, shouldDirty: true });
+            setValue("calle", res.data.calle, { shouldValidate: true, shouldDirty: true });
+            setValue("numero", res.data.numero, { shouldValidate: true, shouldDirty: true });
+            setValue("colonia", res.data.colonia, { shouldValidate: true, shouldDirty: true });
+            setValue("cpostal", res.data.cp, { shouldValidate: true, shouldDirty: true });
+            setValue("ciudad", res.data.ciudad, { shouldValidate: true, shouldDirty: true });
+            setValue("celectoral", res.data.c_elector, { shouldValidate: true, shouldDirty: true });
+            setValue("curp", res.data.curp, { shouldValidate: true, shouldDirty: true });
+            setValue("fnacimiento", fecha, { shouldValidate: true, shouldDirty: true });
+            setValue("secc", res.data.seccion, { shouldValidate: true, shouldDirty: true });
+            setValue("df", res.data.distrito_federal, { shouldValidate: true, shouldDirty: true });
+            setValue("dl", res.data.distrito_local, { shouldValidate: true, shouldDirty: true });
 
             setNombres(res.data.nombres)
             setApaterno(res.data.apaterno);
@@ -264,8 +264,8 @@ function Promovidos() {
                 setDfederal(res.data.df)
                 setDlocal(res.data.dl)
                 setidSecc(res.data.id)
-                setValue("dl", res.data.dl)
-                setValue("df", res.data.df)
+                setValue("dl", res.data.dl, { shouldValidate: true, shouldDirty: true })
+                setValue("df", res.data.df, { shouldValidate: true, shouldDirty: true })
                 setidSecc(res.data.id)
                 console.log(seccion)
 
@@ -288,7 +288,8 @@ function Promovidos() {
             console.log(lng)
 
             setNewCoor([lat, lng])
-
+            setValue("lat", lat, { shouldValidate: true, shouldDirty: true })
+            setValue("lng", lng, { shouldValidate: true, shouldDirty: true })
 
             setChangeCenter(true);
 
@@ -527,7 +528,7 @@ function Promovidos() {
                                     <input
                                         {...register("numero", {
                                             required: true,
-                                            pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                            
                                         })}
 
                                         className="form-control"
@@ -537,9 +538,7 @@ function Promovidos() {
                                         placeholder="Número"
                                         onChange={e => { setNumero(e.target.value) }} />
                                     {errors?.numero?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                    {errors?.numero?.type === "pattern" && (
-                                        <span className='eform'>Ingresa solamente caracteres numericos</span>
-                                    )}
+                                   
                                 </div>
                             </div>
                             <div className="row gx-3 mb-3">
@@ -603,7 +602,7 @@ function Promovidos() {
 
 
                                 <div className="col-md-6">
-                                    <label htmlFor="celectoral">Clave Electoral</label>
+                                    <label htmlFor="celectoral">Clave de elector</label>
                                     <input
                                         {...register("celectoral", {
                                             required: true,
@@ -828,7 +827,7 @@ function Promovidos() {
 
                                     </div></div>
                                 <div className='col-md-6'>
-                                    <label className="small mb-1" htmlFor="nivel">Circulo</label>
+                                    <label className="small mb-1" htmlFor="nivel">Círculo</label>
                                     <select
                                         //{...register("nivel", {
                                         //    required: true,

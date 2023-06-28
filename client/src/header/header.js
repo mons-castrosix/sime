@@ -31,7 +31,7 @@ import $ from 'jquery'
                     <img src={logo} alt="..." width="65" className="mr-3 rounded-circle img-thumbnail shadow-sm" />
                     <div className="media-body">
                         <h4 className="m-0" style={{color:'white'}}>MAPE</h4>
-                        <p className="font-weight-light text-muted mb-0">PRD</p>
+                        <p style={{color:'white'}} className=" mb-0">Nombre del candidato</p>
                     </div>
                     </NavLink>
                     <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">

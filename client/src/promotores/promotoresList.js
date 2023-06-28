@@ -27,7 +27,7 @@ function PromotoresList() {
     const [id, setId] = useState(0);
     const [list, setList] = useState([])
     const [listDF, setListDF] = useState([])
-
+    const [list2, setList2] = useState([])
     const navigate = useNavigate();
     const [globalFilter, setGlobalFilter] = useState(null);
     const dt = useRef(null);
@@ -37,7 +37,9 @@ function PromotoresList() {
         ).then((response) => {
             //FILTRAR CAMPOS PARA TABLA
             var resultado = JSON.stringify(response.data);
+            setList2(JSON.parse(resultado));
             var empObj = JSON.parse(resultado);
+
             var id = "";
             empObj.forEach((item) => {
                 Object.entries(item).forEach(([key, val]) => {
@@ -145,7 +147,7 @@ function PromotoresList() {
     };
     const exportExcel = () => {
         import('xlsx').then((xlsx) => {
-            const worksheet = xlsx.utils.json_to_sheet(list);
+            const worksheet = xlsx.utils.json_to_sheet(list2);
             const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
             const excelBuffer = xlsx.write(workbook, {
                 bookType: 'xlsx',
