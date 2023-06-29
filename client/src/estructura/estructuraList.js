@@ -52,7 +52,7 @@ function EstructuraList() {
                 });
                 Object.assign(item, { ver: <Link className='view' to={'/estructura/view/'+id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
                 Object.assign(item, { editar: <Link className='edit' to={"" } title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
-                Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
+                Object.assign(item, { eliminar: <Link className='delet'  onClick={() => { deleteApoyo(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
 
             });
             //console.log("objeto"+JSON.stringify(empObj))
@@ -71,7 +71,18 @@ function EstructuraList() {
 
 
     const deleteApoyo = (id) => {
-        Axios.delete("http://localhost:3001/deleteEstructura/"+id/*"http://54.219.124.66:3001/deleteEstructura" + id*/).then(() => {
+        alert(id);
+        Swal.fire({
+            title: '¿Estás seguro de eliminar este registro?',
+            text: 'No se podrán revertir los cambios',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'De acuerdo',
+            cancelButtonText:'Cancelar',
+            
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Axios.delete("http://localhost:3001/deleteEstructura/"+id/*"http://54.219.124.66:3001/deleteEstructura" + id*/).then(() => {
             Swal.fire({
                 title: 'Registro estructura',
                 text: 'eliminado correctamente',
@@ -90,6 +101,13 @@ function EstructuraList() {
                 confirmButtonText: 'De acuerdo'
             })
         });
+            }
+        });
+       
+       
+       
+       
+        
 
     }
     const atras = () => {

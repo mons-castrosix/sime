@@ -50,7 +50,7 @@ function LideresList() {
                 });
                 Object.assign(item, { ver: <Link className='view' to={'/lideres/view/'+id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
                 Object.assign(item, { editar: <Link className='edit' title="Edit"    data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
-                Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
+                Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal"  onClick={() => { deleteApoyo(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
 
             });
             //console.log("objeto"+JSON.stringify(empObj))

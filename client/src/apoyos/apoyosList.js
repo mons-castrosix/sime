@@ -52,7 +52,7 @@ function ApoyosList() {
                 });
                 Object.assign(item, { ver: <Link className='view' to={"/apoyos/view-apoyo/" + id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
                 Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
-                Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
+                Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" onClick={() => { deleteApoyo(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
 
             });
             //console.log("objeto"+JSON.stringify(empObj))
@@ -69,26 +69,40 @@ function ApoyosList() {
 
 
     const deleteApoyo = (id) => {
-        Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/" + id */ "http://localhost:3001/deleteApoyo/" + id).then(() => {
+        alert(id);
+        Swal.fire({
+            title: '¿Estás seguro de eliminar este registro?',
+            text: 'No se podrán revertir los cambios',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'De acuerdo',
+            cancelButtonText:'Cancelar',
+            
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/" + id */ "http://localhost:3001/deleteApoyo/" + id).then(() => {
 
-            Swal.fire({
-                title: 'Registro apoyo',
-                text: 'eliminado correctamente',
-                icon: 'success',
-                confirmButtonText: 'De acuerdo'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                 navigate('/apoyos');
-                }
+                Swal.fire({
+                    title: 'Registro apoyo',
+                    text: 'eliminado correctamente',
+                    icon: 'success',
+                    confirmButtonText: 'De acuerdo'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                     navigate('/apoyos');
+                    }
+                });
+            }).catch(error => {
+                Swal.fire({
+                    title: 'Error!',
+                    text: error.message,
+                    icon: 'error',
+                    confirmButtonText: 'De acuerdo'
+                })
             });
-        }).catch(error => {
-            Swal.fire({
-                title: 'Error!',
-                text: error.message,
-                icon: 'error',
-                confirmButtonText: 'De acuerdo'
-            })
+            }
         });
+        
     }
     const atras = () => {
         let path = '/apoyos';

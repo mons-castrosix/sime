@@ -178,8 +178,8 @@ promotoresList()
                 <div className="col-6">
                     <br></br><br></br>
                     <div className="card">
-                        <div className="card-header">Detalles</div>
-                        <div className="card-body">
+                        <div className="card-header text-center">Detalles</div>
+                        <div className="card-body rounded-3 text-center bg-light">
                             <form onLoad={getList()}>
 
                                 <div className="row gx-3 mb-3">

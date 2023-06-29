@@ -205,7 +205,7 @@ function Promovidos() {
                 apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
                 ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
                 distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
-                otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_promotor: promotor, observaciones: observaciones
+                otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_promotor: promotor, observaciones: observaciones,id_Secc: idSecc
             }).then(() => {
                 Swal.fire({
                     title: 'Registro de promovidos',
@@ -372,7 +372,7 @@ function Promovidos() {
                 <div className="col-5" >
                     <div className="card ">
                         <div className="card-header text-center">REGISTRO DE PROMOVIDOS</div>
-                        <div class="card-body rounded-3  text-center bg-light">
+                        <div className="card-body rounded-3  text-center bg-light">
 
                         <form onSubmit={handleSubmit(handleRegistration)}>
 
@@ -678,7 +678,7 @@ function Promovidos() {
                                         id="secc"
                                         name="secc"
                                         placeholder="Sección"
-                                        onChange={e => { setSeccion(e.target.value) }} />
+                                        onChange={e => { setSeccion(e.target.value); submitSeccion();}} />
                                     {errors?.secc?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     {errors?.secc?.type === "pattern" && (
                                         <span className='eform'>Ingresa solamente caracteres numericos</span>
@@ -866,7 +866,7 @@ function Promovidos() {
                                         name="promovidopor"
                                         onChange={e => { setPromotor(e.target.value) }}
                                     >
-                                        <option value="">Elige un promotor <i className='pi-angle-down'></i></option>
+                                        <option value="">Elige un promotor </option>
                                         {list.map(val => {
 
                                             return (<option value={val.id}>{val.nombre}</option>);

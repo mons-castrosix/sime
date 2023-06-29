@@ -303,10 +303,18 @@ app.post('/api/distritos/', (req, res) => {
   //console.log(seccion)
   const sqlInsert = "SELECT id,df,dl FROM secc_distrito WHERE secc =" + seccion + " ;"
   //console.log(sqlInsert)
+  if(seccion)
   db.query(sqlInsert, (err, result) => {
-    res.send(result[0])
-    console.log(result[0].dl)
-    console.log(err)
+    if (err) {
+      console.log(err)
+     
+    }
+    else {
+      res.send(result[0])
+    
+    }
+   
+    
   });
 })
 
@@ -1025,7 +1033,7 @@ app.post('/api/insert-estructura', (req, res) => {
 
 });
 app.post('/estructura', (req, res) => {
-  db.query("SELECT re.id,CONCAT(re.nombres,' ',re.apaterno,' ',re.amaterno) AS nombre, re.clave_electoral,e.nombre AS nombre_equipo,seccion FROM registro_estructura re INNER JOIN equipo e ON re.id_equipo=e.id ", (err, result) => {
+  db.query("SELECT re.id,CONCAT(re.nombres,' ',re.apaterno,' ',re.amaterno) AS nombre, re.clave_electoral,e.nombre AS nombre_equipo,seccion FROM registro_estructura re INNER JOIN equipo e ON re.id_equipo=e.id; ", (err, result) => {
     if (err) {
       console.log(err)
     }

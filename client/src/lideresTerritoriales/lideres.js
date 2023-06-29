@@ -864,7 +864,7 @@ function Lideres() {
                                             id="secc"
                                             name="secc"
                                             placeholder="Sección"
-                                            onChange={e => { setSeccion(e.target.value) }} />
+                                            onChange={e => { setSeccion(e.target.value);submitSeccion(); }} />
                                         {errors?.secc?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                         {errors?.secc?.type === "pattern" && (
                                             <span className='eform'>Ingresa solamente caracteres numericos</span>

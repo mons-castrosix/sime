@@ -381,7 +381,7 @@ function Estructura() {
                 <div className="card " >
                 <div className="card-header text-center">REGISTRO DE ESTRUCTURA</div>
 
-                <div class="card-body rounded-3  text-center bg-light">
+                <div className="card-body rounded-3  text-center bg-light">
                    <form onSubmit={handleSubmit(handleRegistration)}>
 
                         <br></br>
@@ -687,7 +687,7 @@ function Estructura() {
                                     id="secc"
                                     name="secc"
                                     placeholder="Sección"
-                                    onChange={e => { setSeccion(e.target.value) }} />
+                                    onChange={e => { setSeccion(e.target.value); submitSeccion(); }} />
                                 {errors?.secc?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                 {errors?.secc?.type === "pattern" && (
                                     <span className='eform'>Ingresa solamente caracteres numericos</span>
