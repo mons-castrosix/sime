@@ -369,7 +369,7 @@ function Promotores() {
                 <div className="col-5" >
                     <div className="card " >
                         <div className="card-header text-center">REGISTRO DE PROMOTORES</div>
-                        <div class="card-body rounded-3  text-center bg-light">
+                        <div className="card-body rounded-3  text-center bg-light">
                             <form onSubmit={handleSubmit(handleRegistration)}>
 
                         <br></br>

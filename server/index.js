@@ -910,6 +910,7 @@ app.post('/lideres-view/:id', (req, res) => {
 })
 app.delete('/deleteLider/:id', (req, res) => {
   const id = req.params.id
+
   db.query("DELETE FROM lideres_t WHERE id=?", id, (err, result) => {
     if (err) {
       console.log(err)
@@ -1218,7 +1219,7 @@ app.post('/insert-promotor', (req, res) => {
 });
 
 app.post('/promotores', (req, res) => {
-  db.query("SELECT rp.id,CONCAT(rp.nombres,' ',rp.apaterno,' ',rp.amaterno) AS nombre,rp.no_celular,sd.secc,srp.promotor_id FROM  registro_promotores rp INNER JOIN secciones_responsabilidad_promotores srp ON rp.id=srp.promotor_id INNER JOIN secc_distrito sd ON srp.seccion_id=sd.id  ", (err, result) => {
+  db.query("SELECT rp.id,CONCAT(rp.nombres,' ',rp.apaterno,' ',rp.amaterno) AS nombre,rp.no_celular,sd.secc,srp.promotor_id,srp.id AS idsr FROM  registro_promotores rp INNER JOIN secciones_responsabilidad_promotores srp ON rp.id=srp.promotor_id INNER JOIN secc_distrito sd ON srp.seccion_id=sd.id  ", (err, result) => {
     if (err) {
       console.log(err)
     }
@@ -1243,10 +1244,11 @@ app.post('/promotores', (req, res) => {
     }
   })
 })
-app.delete('/deletePromotor/:id', (req, res) => {
+app.delete('/deletePromotor/:id/:idsrp', (req, res) => {
   const id = req.params.id
+  const idsrp=req.params.idsrp
   console.log(req.params)
-  db.query("DELETE FROM registro_promotores WHERE id=?", id, (err, result) => {
+  db.query("DELETE FROM secciones_responsabilidad_promotores WHERE promotor_id=? AND id=?", [id,idsrp], (err, result) => {
     if (err) {
       res.send(err)
     }

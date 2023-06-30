@@ -41,24 +41,33 @@ function PromotoresList() {
             var empObj = JSON.parse(resultado);
 
             var id = "";
+            var sr = "";
             empObj.forEach((item) => {
                 Object.entries(item).forEach(([key, val]) => {
                     if (key == "id") {
-                        id = JSON.stringify(val);
+                        id = val;
                         //console.log(`key-${key}-val-${JSON.stringify(val)}`)
+
+                    }
+                    if (key == "idsr") {
+                        sr = val;
+                        Object.assign(item, { ver: <Link className='view' to={"/apoyos/view-apoyo/" + id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
+                    Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
+                    Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" onClick={() => { deleteApoyo(id, val) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
+
+
                     }
 
+
+                    
                 });
-                Object.assign(item, { ver: <Link className='view' to={'/promotores/view/'+id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
-                Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
-                Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { deleteApoyo(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
 
             });
             //console.log("objeto"+JSON.stringify(empObj))
             setList(empObj)
 
             //console.log("LIST:  "+list)
-            console.log(response.data)
+            //console.log(response.data)
 
         });
     }
@@ -67,9 +76,22 @@ function PromotoresList() {
     var distf = JSON.stringify(arr)
 
 
-    const deleteApoyo = (id) => {
-        alert(id);
-        Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/"+id*/"http://localhost:3001/deletePromotor/" + id).then(() => {
+    const deleteApoyo = (id,sr) => {
+        alert(id+","+sr);
+        
+
+
+        Swal.fire({
+            title: '¿Estás seguro de eliminar este registro?',
+            text: 'No se podrán revertir los cambios',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'De acuerdo',
+            cancelButtonText:'Cancelar',
+            
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/"+id*/"http://localhost:3001/deletePromotor/" + id+"/"+sr).then(() => {
             Swal.fire({
                 title: 'Registro promotor',
                 text: 'eliminado correctamente',
@@ -77,7 +99,7 @@ function PromotoresList() {
                 confirmButtonText: 'De acuerdo'
             }).then((result) => {
                 if (result.isConfirmed) {
-                 navigate('/promotores');
+                    navigate('/promotores');
                 }
             }).catch(error => {
                 Swal.fire({
@@ -88,6 +110,9 @@ function PromotoresList() {
                 })
             });
         })
+            }
+        });
+       
 
     }
     const atras = () => {
@@ -100,12 +125,12 @@ function PromotoresList() {
     }
     const columns = [
         { field: 'id', header: 'ID' },
-        
+
         { field: 'nombre', header: 'Nombre Completo' },
         { field: 'no_celular', header: 'Núm, de celular' },
         { field: 'secc', header: 'Sección (es) de Responsabilidad' },
-       
-      
+
+
 
     ];
     const exportCSV = () => {
@@ -162,14 +187,14 @@ function PromotoresList() {
     const header = (
         <div>
 
-            
+
             <div className='row'>
                 <div className='col-8'>
-                <div className="flex align-items-center justify-content-end gap-2">
-                <Button type="button" id='copy' icon="pi pi-file" rounded onClick={() => exportCSV(false)} data-pr-tooltip="CSV" />
-                <Button type="button" id='excel' icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" />
-                <Button type="button" id='pdf' icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf} data-pr-tooltip="PDF" />
-            </div>
+                    <div className="flex align-items-center justify-content-end gap-2">
+                        <Button type="button" id='copy' icon="pi pi-file" rounded onClick={() => exportCSV(false)} data-pr-tooltip="CSV" />
+                        <Button type="button" id='excel' icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" />
+                        <Button type="button" id='pdf' icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf} data-pr-tooltip="PDF" />
+                    </div>
                 </div>
                 <div className='col-4'>
                     <span className="p-input-icon-left">
@@ -214,7 +239,7 @@ function PromotoresList() {
         return (
             <div className="flex align-items-center gap-2">
                 <span className="font-bold">{rowData.nombre}</span>
-                
+
             </div>
         );
     };
@@ -222,23 +247,23 @@ function PromotoresList() {
         return (
             <div className="flex align-items-center gap-2">
                 <span className="font-bold">{rowData.no_celular}</span>
-                
+
             </div>
         );
     };;
-    
+
     const headerGroup = (<ColumnGroup>
         <Row>
             <Column header="" colSpan={3}></Column>
-            <Column header="Acciones" style={{ paddingLeft: '125px' }}  colSpan={2}></Column>
-            
+            <Column header="Acciones" style={{ paddingLeft: '125px' }} colSpan={2}></Column>
+
         </Row>
         <Row>
-           
+
             <Column header="Nombre Completo"></Column>
             <Column header="Núm de Celular"></Column>
             <Column header="Seccion (es) de Responsabilidad"></Column>
-           
+
             <Column header="ver"></Column>
             <Column header="editar"></Column>
         </Row>
@@ -249,73 +274,73 @@ function PromotoresList() {
 
             <Header></Header>
 
-            
 
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
-                <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css" integrity="sha512-giQeaPns4lQTBMRpOOHsYnGw1tGVzbAIHUyHRgn7+6FmiEgGGjaG0T2LZJmAPMzRCl+Cug0ItQ2xDZpTmEc+CQ==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous" />
-                {getList()}
-                <div className='row'>
+
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css" integrity="sha512-giQeaPns4lQTBMRpOOHsYnGw1tGVzbAIHUyHRgn7+6FmiEgGGjaG0T2LZJmAPMzRCl+Cug0ItQ2xDZpTmEc+CQ==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous" />
+            {getList()}
+            <div className='row'>
                 <div className='col-md-1'></div>
-                    <div className="col-md-10">
-                        
-                        <div className="table-responsive">
-                            <div className="table-wrapper">
+                <div className="col-md-10">
 
-                                <div className="card">
-                                    <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
-                                    <DataTable
-                                        ref={dt}
-                                        value={list}
-                                        paginator
-                                        rows={10}
-                                        headerColumnGroup={headerGroup}
-                                        resizableColumns showGridlines
-                                        rowsPerPageOptions={[5, 10, 25]}
-                                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                                        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
-                                        tableStyle={{ minWidth: '50rem' }}
-                                        globalFilterFields={['nombre','no_celular','secc']}
-                                        header={header}
-                                        rowGroupMode="rowspan" groupRowsBy={['nombre','no_celular']}>
-                                        
-                                        <Column field="nombre" header="Nombre completo" style={{ minWidth: '12rem' }} body={representativeBodyTemplate} />
-                                        <Column field="no_celular" header="Núm. de celular" style={{ minWidth: '12rem' }} body={representativeBodyTemplate2} />
-                                        <Column field="secc" header="Seccion (es) de Responsabilidad" style={{ minWidth: '7rem' }} />
-                                       
-                                        <Column field="ver" header="Ver" style={{ minWidth: '4rem' }} />
-                                        <Column field="eliminar" header="Eliminar" style={{ minWidth: '4rem' }} />
+                    <div className="table-responsive">
+                        <div className="table-wrapper">
 
-                                    </DataTable>
-                                </div>
+                            <div className="card">
+                                <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
+                                <DataTable
+                                    ref={dt}
+                                    value={list}
+                                    paginator
+                                    rows={10}
+                                    headerColumnGroup={headerGroup}
+                                    resizableColumns showGridlines
+                                    rowsPerPageOptions={[5, 10, 25]}
+                                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                                    currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
+                                    tableStyle={{ minWidth: '50rem' }}
+                                    globalFilterFields={['nombre', 'no_celular', 'secc']}
+                                    header={header}
+                                    rowGroupMode="rowspan" groupRowsBy={['nombre', 'no_celular']}>
+
+                                    <Column field="nombre" header="Nombre completo" style={{ minWidth: '12rem' }} body={representativeBodyTemplate} />
+                                    <Column field="no_celular" header="Núm. de celular" style={{ minWidth: '12rem' }} body={representativeBodyTemplate2} />
+                                    <Column field="secc" header="Seccion (es) de Responsabilidad" style={{ minWidth: '7rem' }} />
+
+                                    <Column field="ver" header="Ver" style={{ minWidth: '4rem' }} />
+                                    <Column field="eliminar" header="Eliminar" style={{ minWidth: '4rem' }} />
+
+                                </DataTable>
                             </div>
                         </div>
                     </div>
-                    <div className='col-md-1'></div>
-
                 </div>
-                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
+                <div className='col-md-1'></div>
 
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div className="modal-body">
-                                <p>¿Estás seguro de eliminar este registro?</p>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" onClick={atras} className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" className="btn btn-primary " data-bs-dismiss="modal" aria-label="Close" onClick={() => { deleteApoyo(id) }}>Aceptar</button>
-                            </div>
+            </div>
+            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <p>¿Estás seguro de eliminar este registro?</p>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" onClick={atras} className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-primary " data-bs-dismiss="modal" aria-label="Close" onClick={() => { deleteApoyo(id) }}>Aceptar</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     );
 }
 

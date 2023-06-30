@@ -45,13 +45,13 @@ function PromovidosList() {
                     if (key == "id") {
                         id = JSON.stringify(val);
                         //console.log(`key-${key}-val-${JSON.stringify(val)}`)
+                        Object.assign(item, { ver: <Link className='view' to={"/apoyos/view-apoyo/" + id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
+                Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
+                Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" onClick={() => { deleteApoyo(val) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
                     }
 
                 });
-                Object.assign(item, { ver: <Link className='view' to={'/promovidos/view/'+id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
-                Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
-                Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
-
+               
             });
             //console.log("objeto"+JSON.stringify(empObj))
             setList(empObj)
@@ -67,7 +67,21 @@ function PromovidosList() {
 
 
     const deleteApoyo = (id) => {
-        Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/"+id*/"http://localhost:3001/deletePromovido/" + id).then(() => {
+       
+
+    
+
+    Swal.fire({
+        title: '¿Estás seguro de eliminar este registro?',
+        text: 'No se podrán revertir los cambios',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'De acuerdo',
+        cancelButtonText:'Cancelar',
+        
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/"+id*/"http://localhost:3001/deletePromovido/" + id).then(() => {
             
         Swal.fire({
             title: 'Registro promotor',
@@ -89,6 +103,8 @@ function PromovidosList() {
 
 
     })
+        }
+    });
 
     }
     const atras = () => {

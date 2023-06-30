@@ -1,6 +1,9 @@
 
 label{
-    font-size: 16px;
+    font-size: 16px !important;
+}
+.media-body{
+    font-size: 15px;
 }
 /*
 .nav-link:focus, .nav-link:hover{
@@ -175,8 +178,13 @@ h6,
 .navbar .navbar-nav .nav-link:hover,
 .navbar .navbar-nav .nav-link.active {
     color: rgb(128, 130, 133) !important;
+    
 }
-
+.navbar .navbar-nav .nav-link
+ {
+    font-size: 16px;
+    
+}
 .navbar .dropdown-toggle::after {
     border: none;
     content: "\f107";

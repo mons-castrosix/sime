@@ -141,6 +141,7 @@ padding: 10px;
     margin-left: -10px;
     margin-top: 2rem;
 }
+
 @media only screen and (min-width: 749px) and (max-width:890px) {
     .preview img{
         width: 20rem;
@@ -160,7 +161,7 @@ padding: 10px;
         left: 0;
         
         width: 102%;
-        max-height: 45rem;
+        max-height:auto;
         overflow-y: auto;
     }
     

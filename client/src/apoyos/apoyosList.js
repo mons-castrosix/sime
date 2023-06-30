@@ -45,15 +45,15 @@ function ApoyosList() {
                 Object.entries(item).forEach(([key, val]) => {
                     if (key == "id") {
                         id = JSON.stringify(val);
+                        Object.assign(item, { ver: <Link className='view' to={"/apoyos/view-apoyo/" + id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
+                Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
+                Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" onClick={() => { deleteApoyo(val) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
 
                         //console.log(`key-${key}-val-${JSON.stringify(val)}`)
                     }
 
                 });
-                Object.assign(item, { ver: <Link className='view' to={"/apoyos/view-apoyo/" + id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
-                Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
-                Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" onClick={() => { deleteApoyo(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
-
+                
             });
             //console.log("objeto"+JSON.stringify(empObj))
             setList(empObj)
@@ -69,7 +69,7 @@ function ApoyosList() {
 
 
     const deleteApoyo = (id) => {
-        alert(id);
+        //alert(id);
         Swal.fire({
             title: '¿Estás seguro de eliminar este registro?',
             text: 'No se podrán revertir los cambios',
