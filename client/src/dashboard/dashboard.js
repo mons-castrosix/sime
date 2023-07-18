@@ -5,6 +5,9 @@ import 'bootstrap/dist/js/bootstrap.js'
 import React from 'react';
 import Chart from "react-apexcharts";
 import "./material-dashboard.css";
+import 'primeicons/primeicons.css';
+import { useState, useRef, useEffect } from 'react';
+
 
 const Dashboard = () => {
   const series = [ //data on the y-axis
@@ -168,19 +171,20 @@ const Dashboard = () => {
       }
     }]
   };
+  
+
 
   return (
     <div>
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous" />
 
       <Header></Header> <br></br>
 
-     
+
       <div className="container-fluid">
 
 
         <div className="d-sm-flex align-items-center justify-content-between mb-4">
-          <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
+          <h1 className="h3 mb-0 text-gray-800"></h1>
           <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
             className="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
         </div>
@@ -188,60 +192,62 @@ const Dashboard = () => {
         <div className="row">
 
 
-          <div className="col-xl-3 col-md-6 mb-4">
-            <div className="card border-left-primary shadow h-100 py-2">
-              <div className="card-body">
-                <div className="row no-gutters align-items-center">
-                  <div className="col mr-2">
-                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                      Clientes registrados</div>
-                    <div className="h5 mb-0 font-weight-bold text-gray-800">443</div>
-                  </div>
-                  <div className="col-auto">
-                    <i className="fas fa-calendar fa-2x text-gray-300"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <div className="col-xl-3 col-md-6 mb-4">
-            <div className="card border-left-success shadow h-100 py-2">
-              <div className="card-body">
-                <div className="row no-gutters align-items-center">
-                  <div className="col mr-2">
-                    <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                      Clientes que compraron</div>
-                    <div className="h5 mb-0 font-weight-bold text-gray-800">421</div>
-                  </div>
-                  <div className="col-auto">
-                    <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          <div className="col-xl-3 col-md-6 mb-4">
+         
+        <div className="col-xl-2 col-md-6 mb-4">
             <div className="card border-left-info shadow h-100 py-2">
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
                   <div className="col mr-2">
-                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Tasa de cierre de venta
+                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Apoyos
                     </div>
                     <div className="row no-gutters align-items-center">
                       <div className="col-auto">
                         <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">95.03%</div>
                       </div>
-                      <div className="col">
-                        <div className="progress progress-sm mr-2">
-                          <div className="progress-bar bg-info" role="progressbar"
-                           
-                            aria-valuemax="100"></div>
-                        </div>
+                      
+                    </div>
+                  </div>
+                  <div className="col-auto">
+                    <i className="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-2 col-md-6 mb-4">
+            <div className="card border-left-info shadow h-100 py-2">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Lideres
+                    </div>
+                    <div className="row no-gutters align-items-center">
+                      <div className="col-auto">
+                        <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">95.03%</div>
                       </div>
+                      
+                    </div>
+                  </div>
+                  <div className="col-auto">
+                    <i className="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-xl-2 col-md-6 mb-4">
+            <div className="card border-left-info shadow h-100 py-2">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Estructura
+                    </div>
+                    <div className="row no-gutters align-items-center">
+                      <div className="col-auto">
+                        <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">95.03%</div>
+                      </div>
+                      
                     </div>
                   </div>
                   <div className="col-auto">
@@ -253,13 +259,13 @@ const Dashboard = () => {
           </div>
 
 
-          <div className="col-xl-3 col-md-6 mb-4">
+          <div className="col-xl-2 col-md-6 mb-4">
             <div className="card border-left-warning shadow h-100 py-2">
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
                   <div className="col mr-2">
                     <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                      Satisfacciòn promedio</div>
+                      Promotores</div>
                     <div className="h5 mb-0 font-weight-bold text-gray-800">18</div>
                   </div>
                   <div className="col-auto">
@@ -269,12 +275,49 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+          <div className="col-xl-2 col-md-6 mb-4">
+            <div className="card border-left-primary shadow h-100 py-2">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                      Promovidos</div>
+                    <div className="h5 mb-0 font-weight-bold text-gray-800">443</div>
+                  </div>
+                  <div className="col-auto">
+                    <i className="fas fa-calendar fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div className="col-xl-2 col-md-6 mb-4">
+            <div className="card border-left-success shadow h-100 py-2">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
+                      Representantes</div>
+                    <div className="h5 mb-0 font-weight-bold text-gray-800">421</div>
+                  </div>
+                  <div className="col-auto">
+                    <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+         
         </div>
 
 
         <div className="row">
 
-          <div className="col-xl-8 col-lg-7">
+          <div className="col-xl-7 col-lg-7">
             <div className="card shadow mb-4">
 
               <div
@@ -297,26 +340,26 @@ const Dashboard = () => {
               </div>
 
               <div className="card-body">
-              <div className="row sparkboxes mt-4 mb-4">
-                <div className="col-md-12">
-                  <div className="box box1">
-                    <h3>Apoyos totales por sección</h3>
-                    <Chart
-                      options={options}
-                      series={series}
-                      type="bar"
-                      width="450"
-                    />
+                <div className="row sparkboxes mt-4 mb-4">
+                  <div className="col-md-12">
+                    <div className="box box1">
+                    
+                      <Chart
+                        options={options}
+                        series={series}
+                        type="bar"
+                        width="450"
+                      />
+                    </div>
                   </div>
+
                 </div>
-                
-              </div>
               </div>
             </div>
           </div>
 
 
-          <div className="col-xl-4 col-lg-5">
+          <div className="col-xl-5 col-lg-5">
             <div className="card shadow mb-4">
 
               <div
@@ -339,21 +382,21 @@ const Dashboard = () => {
               </div>
 
               <div className="card-body">
-              <div className="row sparkboxes mt-4 mb-4">
-                
-                <div className="col-md-4">
-                  <div className="box box2">
-                    
-                    <Chart
-                      options={options2}
-                      series={series2}
-                      type="bar"
-                      width="450"
-                    />
+                <div className="row sparkboxes mt-4 mb-4">
+
+                  <div className="col-md-4">
+                    <div className="box box2">
+
+                      <Chart
+                        options={options2}
+                        series={series2}
+                        type="bar"
+                        width="450"
+                      />
+                    </div>
                   </div>
+
                 </div>
-                
-              </div>
               </div>
             </div>
           </div>
@@ -373,13 +416,13 @@ const Dashboard = () => {
                 <h4 className="small font-weight-bold">Server Migration <span
                   className="float-right">20%</span></h4>
                 <div className="progress mb-4">
-                  <div className="progress-bar bg-danger" role="progressbar" 
+                  <div className="progress-bar bg-danger" role="progressbar"
                     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
                 <h4 className="small font-weight-bold">Sales Tracking <span
                   className="float-right">40%</span></h4>
                 <div className="progress mb-4">
-                  <div className="progress-bar bg-warning" role="progressbar" 
+                  <div className="progress-bar bg-warning" role="progressbar"
                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
                 <h4 className="small font-weight-bold">Customer Database <span
@@ -391,7 +434,7 @@ const Dashboard = () => {
                 <h4 className="small font-weight-bold">Payout Details <span
                   className="float-right">80%</span></h4>
                 <div className="progress mb-4">
-                  <div className="progress-bar bg-info" role="progressbar" 
+                  <div className="progress-bar bg-info" role="progressbar"
                     aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
                 <h4 className="small font-weight-bold">Account Setup <span
@@ -404,7 +447,7 @@ const Dashboard = () => {
             </div>
 
 
-           
+
 
           </div>
 
@@ -416,21 +459,21 @@ const Dashboard = () => {
                 <h6 className="m-0 font-weight-bold text-white">Porcentaje de votación</h6>
               </div>
               <div className="card-body">
-              <div className="row sparkboxes mt-4 mb-4">
-               
-               
-                <div className="col-md-4">
-                  <div className="box box3">
-                    
-                    <Chart
-                      options={options3}
-                      series={series3}
-                      type="pie"
-                      width="450"
-                    />
+                <div className="row sparkboxes mt-4 mb-4">
+
+
+                  <div className="col-md-4">
+                    <div className="box box3">
+
+                      <Chart
+                        options={options3}
+                        series={series3}
+                        type="pie"
+                        width="450"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
               </div>
             </div>
 

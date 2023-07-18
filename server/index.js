@@ -38,23 +38,23 @@ const getDriverLocationNearAddress = async (streetAddress) => {
     components: 'country:MX',
   };
 
-  console.log('retrieving lat, lng for ' + streetAddress);
+  //console.log('retrieving lat, lng for ' + streetAddress);
   geocodingClient.geocode({
     params: params
   })
     .then((response) => {
-      //console.log('status: ' + response.data.status);
+      ////console.log('status: ' + response.data.status);
 
-      //console.log(response.data.results[0].geometry.location.lat);
+      ////console.log(response.data.results[0].geometry.location.lat);
 
-      //console.log(response.data.results[0].geometry.location.lng);
+      ////console.log(response.data.results[0].geometry.location.lng);
       code['lat'] = response.data.results[0].geometry.location.lat;
       code['lng'] = response.data.results[0].geometry.location.lng;
-      console.log(code)
+      //console.log(code)
       return code
     })
     .catch((error) => {
-      console.log('error retrieving geocoded results', error);
+      //console.log('error retrieving geocoded results', error);
     });
 }
 
@@ -84,7 +84,7 @@ const detectTextD = async (file_path) => {
   let obj = {}
   let [result] = await client.documentTextDetection(file_path);
   const full = result.fullTextAnnotation;
-  //console.log(full)
+  ////console.log(full)
   var cleanText = full.text;
 
   var x = cleanText.split(" ")
@@ -92,59 +92,59 @@ const detectTextD = async (file_path) => {
 
 
   const msg = new String(y);
-  console.log(`Result: ${msg}`);
+  //console.log(`Result: ${msg}`);
 
   let arr = msg.split(",")
-  console.log(arr);
+  //console.log(arr);
 
 
 
   nombre = arr.indexOf('NOMBRE')
-  console.log(nombre)
-  console.log('DATOS NOMBRE:')
+  //console.log(nombre)
+  //console.log('DATOS NOMBRE:')
 
   for (i = nombre + 1; i < nombre + 4; i++) {
 
     if (i == nombre + 1) {
       obj['apaterno'] = arr[i]
-      console.log(arr[i])
+      //console.log(arr[i])
     }
     else if (i == nombre + 2) {
       obj['amaterno'] = arr[i]
-      console.log(arr[i])
+      //console.log(arr[i])
     }
     else if (i == nombre + 3) {
       obj['nombres'] = arr[i]
-      console.log(arr[i])
+      //console.log(arr[i])
     }
   }
 
-  console.log("\n")
+  //console.log("\n")
 
   domicilio = arr.indexOf('DOMICILIO')
-  console.log('DATOS DOMICILIO:')
-  //console.log(domicilio)
+  //console.log('DATOS DOMICILIO:')
+  ////console.log(domicilio)
 
   for (i = domicilio + 1; i < domicilio + 4; i++) {
     if (i == domicilio + 1) {
       let num = ""
       var x = arr[i].split(" ");
-      console.log(x)
+      //console.log(x)
       for (k = 1; k < x.length - 1; k++) {
         num += x[k] + " "
       }
 
       obj['calle'] = num
       obj['numero'] = x[x.length - 1]
-      console.log(arr[i])
+      //console.log(arr[i])
     }
     else if (i == domicilio + 2) {
       let b = ""
       var a = arr[i].split(" ")
-      console.log(a)
+      //console.log(a)
 
       for (j = 1; j < a.length - 1; j++) {
-        //console.log(a[j])
+        ////console.log(a[j])
         b += a[j] + " "
       }
       obj['colonia'] = b
@@ -153,80 +153,80 @@ const detectTextD = async (file_path) => {
     }
     else if (i == domicilio + 3) {
       obj['ciudad'] = arr[i]
-      console.log(arr[i])
+      //console.log(arr[i])
     }
 
 
   }
-  console.log("\n")
+  //console.log("\n")
 
 
 
-  console.log('CLAVE DE ELECTOR:')
+  //console.log('CLAVE DE ELECTOR:')
   for (i = 0; i < arr.length; i++) {
-    //console.log('Renglon'+i+" "+arr[i])
+    ////console.log('Renglon'+i+" "+arr[i])
     var a = arr[i].split(" ")
 
     if (a.includes('ELECTOR')) {
-      console.log(a)
-      console.log(a[3]);
+      //console.log(a)
+      //console.log(a[3]);
       obj['c_elector'] = a[3]
     }
   }
 
-  console.log("\n")
-  console.log('CURP:')
+  //console.log("\n")
+  //console.log('CURP:')
   for (i = 0; i < arr.length; i++) {
-    //console.log('Renglon'+i+" "+arr[i])
+    ////console.log('Renglon'+i+" "+arr[i])
     var a = arr[i].split(" ")
     if (a.includes('CURP')) {
-      console.log(a[1]);
+      //console.log(a[1]);
       obj['curp'] = a[1]
     }
   }
 
   if (obj['curp'] == undefined) {
     curp = arr.indexOf('CURP')
-    console.log(arr[curp + 1])
+    //console.log(arr[curp + 1])
     obj['curp'] = arr[curp + 1]
   }
-  console.log("\n")
+  //console.log("\n")
 
 
-  console.log('FECHA DE NACIMIENTO:')
+  //console.log('FECHA DE NACIMIENTO:')
   fecha = arr.indexOf('FECHA DE NACIMIENTO')
-  console.log(fecha)
+  //console.log(fecha)
   for (i = fecha + 1; i < fecha + 2; i++) {
 
-    console.log(arr[i])
+    //console.log(arr[i])
     obj['fecha_nacimiento'] = arr[i]
   }
-  console.log("\n")
+  //console.log("\n")
 
-  console.log('SECCION:')
+  //console.log('SECCION:')
   for (i = 0; i < arr.length; i++) {
-    //console.log('Renglon'+i+" "+arr[i])
+    ////console.log('Renglon'+i+" "+arr[i])
     var a = arr[i].split(" ")
     if (a.includes('SECCIÓN')) {
-      console.log(a[3]);
+      //console.log(a[3]);
       obj['seccion'] = a[3]
     }
   }
   if (obj['seccion'] == undefined) {
 
     secc = arr.indexOf('SECCIÓN')
-    console.log(arr[secc + 1])
+    //console.log(arr[secc + 1])
     obj['seccion'] = arr[secc + 1]
   }
-  console.log(obj)
+  //console.log(obj)
   return obj;
 
   /*
   for (i=0;i<arr.length;i++){
-      console.log('Renglon'+i+" "+arr[i])
+      //console.log('Renglon'+i+" "+arr[i])
       var a= arr[i].split(" ")
       if(a.includes('CURP')){
-          console.log(a);
+          //console.log(a);
       }
   }
   */
@@ -234,14 +234,14 @@ const detectTextD = async (file_path) => {
 };
 
 
-//console.log(client)
+////console.log(client)
 /*
 connection.connect(function(err) {
     if (err) {
-      return console.error('error: ' + err.message);
+      return //console.error('error: ' + err.message);
     }
   
-    console.log('Connected to the MySQL server.');
+    //console.log('Connected to the MySQL server.');
   });
 
 */
@@ -267,15 +267,15 @@ const upload = multer({
 //route for post data
 app.post("/uploadD", upload.single('file'), (req, res) => {
   if (!req.file) {
-    console.log("No file upload");
+    //console.log("No file upload");
   } else {
-    console.log(req.file.filename)
+    //console.log(req.file.filename)
     var imgsrc = req.file.filename
-    console.log(imgsrc)
+    //console.log(imgsrc)
     var insertData = "INSERT INTO img_ine(ruta)VALUES(?);"
     db.query(insertData, [imgsrc], (err, result) => {
       if (err) throw err
-      console.log("file uploaded")
+      //console.log("file uploaded")
     })
 
     //'http://127.0.0.1:3000/images/'
@@ -285,7 +285,7 @@ app.post("/uploadD", upload.single('file'), (req, res) => {
       const sqlInsert2 = "SELECT ruta from img_ine WHERE id=" + result[0].id
       db.query(sqlInsert2, (err, result) => {
         ruta = './images/' + result[0].ruta
-        //console.log(ruta)
+        ////console.log(ruta)
         const data = '';
         detectTextD(ruta).then((x) =>
           res.send(JSON.stringify(x))
@@ -300,13 +300,13 @@ app.post("/uploadD", upload.single('file'), (req, res) => {
 
 app.post('/api/distritos/', (req, res) => {
   const seccion = req.body.seccion
-  //console.log(seccion)
+  ////console.log(seccion)
   const sqlInsert = "SELECT id,df,dl FROM secc_distrito WHERE secc =" + seccion + " ;"
-  //console.log(sqlInsert)
+  ////console.log(sqlInsert)
   if(seccion)
   db.query(sqlInsert, (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
      
     }
     else {
@@ -321,40 +321,40 @@ app.post('/api/distritos/', (req, res) => {
 app.post('/api/distritosAll/', (req, res) => {
  
   const sqlInsert = "SELECT id as value,secc as name FROM secc_distrito;" ;
-  //console.log(sqlInsert)
+  ////console.log(sqlInsert)
   db.query(sqlInsert, (err, result) => {
     res.send(result)
-    console.log(result[0].dl)
-    console.log(err)
+    //console.log(result[0].dl)
+    //console.log(err)
   });
 })
 app.post('/api/promotoresAll/', (req, res) => {
  
   const sqlInsert = "SELECT id,CONCAT(apaterno,' ',amaterno,' ', nombres) AS nombre FROM registro_promotores;" ;
-  //console.log(sqlInsert)
+  ////console.log(sqlInsert)
   db.query(sqlInsert, (err, result) => {
     res.send(result)
    
-    console.log(err)
+    //console.log(err)
   });
 })
 app.post('/api/equipoAll/', (req, res) => {
  
   const sqlInsert = "SELECT *FROM equipo" ;
-  //console.log(sqlInsert)
+  ////console.log(sqlInsert)
   db.query(sqlInsert, (err, result) => {
     res.send(result)
-    console.log(result[0].dl)
-    console.log(err)
+    //console.log(result[0].dl)
+    //console.log(err)
   });
 })
 
 app.post('/mapa-apoyos/', (req, res) => {
   const sqlInsert = "SELECT id,CONCAT(apaterno,' ',amaterno,' ', nombres) AS nombre, lat,lng,calle,numero,colonia,cp,ciudad from apoyo;";
-  console.log(sqlInsert);
+  //console.log(sqlInsert);
   db.query(sqlInsert, (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
     }
     else {
       res.send(JSON.stringify(result))
@@ -364,10 +364,10 @@ app.post('/mapa-apoyos/', (req, res) => {
 
 app.post('/mapa-estructura/', (req, res) => {
   const sqlInsert = "SELECT id,CONCAT(apaterno,' ',amaterno,' ', nombres) AS nombre, lat,lng,calle,numero,colonia,cp,ciudad from registro_estructura;";
-  console.log(sqlInsert);
+  //console.log(sqlInsert);
   db.query(sqlInsert, (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
     }
     else {
       res.send(JSON.stringify(result))
@@ -379,7 +379,7 @@ app.post('/apoyos-view/:id', (req, res) => {
   const id = req.params.id
   db.query("SELECT *FROM apoyo a INNER JOIN apoyos ap ON a.id=ap.id_persona where a.id=?;",id, (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
     }
     else {
       acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
@@ -390,14 +390,14 @@ app.post('/apoyos-view/:id', (req, res) => {
           Object.entries(item).forEach(([key, val]) => {
               if(key=="id"){
                   id=JSON.stringify(val);
-                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
             
           });
           Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
         });
-        console.log(empObj)*/
+        //console.log(empObj)*/
       res.send(resultado)
-console.log(resultado)
+//console.log(resultado)
 
     }
   })
@@ -406,7 +406,7 @@ console.log(resultado)
 app.post('/apoyos', (req, res) => {
   db.query("SELECT a.id,CONCAT(a.nombres,' ',a.apaterno,' ',a.amaterno) AS nombre,ap.tipo,ap.alcance,a.seccion FROM apoyo a INNER JOIN apoyos ap ON a.id=ap.id_persona;", (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
     }
     else {
       acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
@@ -417,12 +417,12 @@ app.post('/apoyos', (req, res) => {
           Object.entries(item).forEach(([key, val]) => {
               if(key=="id"){
                   id=JSON.stringify(val);
-                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
             
           });
           Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
         });
-        console.log(empObj)*/
+        //console.log(empObj)*/
       res.send(resultado)
 
 
@@ -430,7 +430,7 @@ app.post('/apoyos', (req, res) => {
   })
 })
 app.post('/api/insert/', (req, res) => {
-  console.log(req.body)
+  //console.log(req.body)
 
   const apaterno = req.body.apaterno
   const amaterno = req.body.amaterno
@@ -479,7 +479,7 @@ app.post('/api/insert/', (req, res) => {
       id_image], (err, result) => {
 
         if (err) {
-          console.log(err);
+          //console.log(err);
         }
         else {
           response.push(true)
@@ -523,7 +523,7 @@ app.post('/apoyoId', (req, res) => {
     [id],
     (err, result) => {
       if (err) {
-        console.log(err)
+        //console.log(err)
       }
       else {
         res.send(result)
@@ -537,11 +537,11 @@ app.delete('/deleteApoyo/:id', (req, res) => {
   const id = req.params.id
   db.query("DELETE FROM apoyo WHERE id=?", id, (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
       res.send(err);
     }
     else {
-      console.log(result);
+      //console.log(result);
       res.send({status: 404, msg: "No user found"});
       //res.status().send(200); 
     }
@@ -550,7 +550,7 @@ app.delete('/deleteApoyo/:id', (req, res) => {
 
 app.post('/getLoc/', (req, res) => {
   const direccion = req.body.direccion
-  console.log(direccion)
+  //console.log(direccion)
   const geocodingClient = new Client({});
   let code = {}
   let params = {
@@ -559,23 +559,23 @@ app.post('/getLoc/', (req, res) => {
     components: 'country:MX',
   };
 
-  console.log('retrieving lat, lng for ' + direccion);
+  //console.log('retrieving lat, lng for ' + direccion);
   geocodingClient.geocode({
     params: params
   })
     .then((response) => {
-      //console.log('status: ' + response.data.status);
+      ////console.log('status: ' + response.data.status);
 
-      //console.log(response.data.results[0].geometry.location.lat);
+      ////console.log(response.data.results[0].geometry.location.lat);
 
-      //console.log(response.data.results[0].geometry.location.lng);
+      ////console.log(response.data.results[0].geometry.location.lng);
       code['lat'] = response.data.results[0].geometry.location.lat;
       code['lng'] = response.data.results[0].geometry.location.lng;
-      console.log(code)
+      //console.log(code)
       res.send(code)
     })
     .catch((error) => {
-      console.log('error retrieving geocoded results', error);
+      //console.log('error retrieving geocoded results', error);
     });
 
 
@@ -585,7 +585,7 @@ app.post('/getLoc/', (req, res) => {
 
 /*db.query("DELETE FROM apoyo WHERE id=?",id,(err,result)=>{
     if(err){
-        console.log(err)
+        //console.log(err)
     }
     else{
         res.send(result)
@@ -596,7 +596,7 @@ app.post('/getLoc/', (req, res) => {
 
 /*REVISAR*/
 app.put('/apoyo/update/:id', (req, res) => {
-  console.log(req.body)
+  //console.log(req.body)
 
   const id = req.body.id;
   const apaterno = req.body.apaterno
@@ -631,11 +631,11 @@ app.put('/apoyo/update/:id', (req, res) => {
     [apaterno, amaterno, nombres, calle, numero, colonia, cp, ciudad, clave_elector, curp, fecha_nacimiento, seccion, distrito_federal, distrito_local, nivel, no_celular, email, facebook, twitter, otra_red, contacto, no_celcontacto, descripcion_apoyo, apoyo_tipo, monto_apoyo, alcance_apoyo, id],
     (err, result) => {
       if (err) {
-        console.log(err);
+        //console.log(err);
       }
       else {
         res.send(result)
-        console.log(result)
+        //console.log(result)
       }
     }
   )
@@ -645,13 +645,13 @@ app.put('/apoyo/update/:id', (req, res) => {
 
 
 app.listen(3001, () => {
-  console.log('Your server is running')
+  //console.log('Your server is running')
 });
 
 
 //--------------------------------LIDERES TERRITORIALES-------------------------------------------------///
 app.post('/api/insert-lider/', (req, res) => {
-  console.log(req.body)
+  //console.log(req.body)
 
   const apaterno = req.body.apaterno
   const amaterno = req.body.amaterno
@@ -713,7 +713,7 @@ app.post('/api/insert-lider/', (req, res) => {
       contacto, no_celcontacto, observaciones, lat, lng, id_image, lider], (err, result) => {
 
         if (err) {
-          console.log(err);
+          //console.log(err);
         }
         else {
           response.push(true)
@@ -730,7 +730,7 @@ app.post('/api/insert-lider/', (req, res) => {
           (err, result) => {
 
             if (err) {
-              console.log(err);
+              //console.log(err);
             }
             else {
               response.push(true);
@@ -741,7 +741,7 @@ app.post('/api/insert-lider/', (req, res) => {
           for (let i = 0; i < injerencia.length; i++) {
             db.query(secc_resp, [id_p, injerencia[i]], (err, result) => {
               if (err) {
-                console.log(err);
+                //console.log(err);
               }
               else {
                 response.push(true);
@@ -758,7 +758,7 @@ app.post('/api/insert-lider/', (req, res) => {
           (err, result) => {
 
             if (err) {
-              console.log(err);
+              //console.log(err);
             }
             else {
               response.push(true);
@@ -769,7 +769,7 @@ app.post('/api/insert-lider/', (req, res) => {
           for (let i = 0; i < injerencia.length; i++) {
             db.query(secc_resp, [id_p, injerencia[i]], (err, result) => {
               if (err) {
-                console.log(err);
+                //console.log(err);
               }
               else {
                 response.push(true);
@@ -786,7 +786,7 @@ app.post('/api/insert-lider/', (req, res) => {
           (err, result) => {
 
             if (err) {
-              console.log(err);
+              //console.log(err);
             }
             else {
               response.push(true);
@@ -802,7 +802,7 @@ app.post('/api/insert-lider/', (req, res) => {
           (err, result) => {
 
             if (err) {
-              console.log(err);
+              //console.log(err);
             }
             else {
               response.push(true);
@@ -818,7 +818,7 @@ app.post('/api/insert-lider/', (req, res) => {
           (err, result) => {
 
             if (err) {
-              console.log(err);
+              //console.log(err);
             }
             else {
               response.push(true);
@@ -834,7 +834,7 @@ app.post('/api/insert-lider/', (req, res) => {
           (err, result) => {
 
             if (err) {
-              console.log(err);
+              //console.log(err);
             }
             else {
               response.push(true);
@@ -850,7 +850,7 @@ app.post('/api/insert-lider/', (req, res) => {
           (err, result) => {
 
             if (err) {
-              console.log(err);
+              //console.log(err);
             }
             else {
               response.push(true);
@@ -885,7 +885,7 @@ app.post('/lideres-view/:id', (req, res) => {
   const id = req.params.id
   db.query('SELECT l.nombres,l.apaterno,l.amaterno,l.calle,l.numero,l.colonia,.l.cp,l.ciudad, DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,l.curp,l.clave_electoral,l.seccion,l.id_Secc,l.no_celular,l.email,l.facebook,l.twitter,l.otra_red,l.circulo,l.contacto,l.no_celcontacto,l.observaciones,l.lat,l.lng,l.id_tipoLider ,t.nombre_tipo,sd.df,sd.dl FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id INNER JOIN secc_distrito sd ON l.id_Secc=sd.id where l.id=?',id, (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
     }
     else {
       acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
@@ -896,12 +896,12 @@ app.post('/lideres-view/:id', (req, res) => {
           Object.entries(item).forEach(([key, val]) => {
               if(key=="id"){
                   id=JSON.stringify(val);
-                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
             
           });
           Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
         });
-        console.log(empObj)*/
+        //console.log(empObj)*/
       res.send(resultado)
 
 
@@ -913,11 +913,11 @@ app.delete('/deleteLider/:id', (req, res) => {
 
   db.query("DELETE FROM lideres_t WHERE id=?", id, (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
     }
     else {
       res.send(result)
-      console.log(result)
+      //console.log(result)
     }
   })
 })
@@ -935,12 +935,12 @@ app.post('/lideres', (req, res) => {
           Object.entries(item).forEach(([key, val]) => {
               if(key=="id"){
                   id=JSON.stringify(val);
-                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
             
           });
           Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
         });
-        console.log(empObj)*/
+        //console.log(empObj)*/
       res.send(resultado)
 
 
@@ -953,7 +953,7 @@ app.post('/lideres', (req, res) => {
 
 //------------------------------------ ESTRUCTURA -----------------------------------------------------///
 app.post('/api/insert-estructura', (req, res) => {
-  console.log(req.body)
+  //console.log(req.body)
 
   const apaterno = req.body.apaterno
   const amaterno = req.body.amaterno
@@ -1000,7 +1000,7 @@ app.post('/api/insert-estructura', (req, res) => {
       observaciones, lat, lng, id_image, equipo], (err, result) => {
 
         if (err) {
-          console.log(err);
+          //console.log(err);
         }
         else {
           response.push(true)
@@ -1036,7 +1036,7 @@ app.post('/api/insert-estructura', (req, res) => {
 app.post('/estructura', (req, res) => {
   db.query("SELECT re.id,CONCAT(re.nombres,' ',re.apaterno,' ',re.amaterno) AS nombre, re.clave_electoral,e.nombre AS nombre_equipo,seccion FROM registro_estructura re INNER JOIN equipo e ON re.id_equipo=e.id; ", (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
     }
     else {
       acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
@@ -1047,12 +1047,12 @@ app.post('/estructura', (req, res) => {
           Object.entries(item).forEach(([key, val]) => {
               if(key=="id"){
                   id=JSON.stringify(val);
-                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
             
           });
           Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
         });
-        console.log(empObj)*/
+        ////console.log(empObj)*/
       res.send(resultado)
 
 
@@ -1063,7 +1063,7 @@ app.post('/estructura-view/:id', (req, res) => {
   const id = req.params.id
   db.query('SELECT  nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,curp,clave_electoral,seccion, no_celular, email,facebook, twitter, otra_red, circulo,observaciones,lat,lng,id_equipo,sd.df,sd.dl FROM registro_estructura INNER JOIN secc_distrito sd ON sd.id=registro_estructura.id_Secc where registro_estructura.id=?',id, (err, result) => {
     if (err) {
-      console.log(err)
+      ////console.log(err)
     }
     else {
       acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
@@ -1074,12 +1074,12 @@ app.post('/estructura-view/:id', (req, res) => {
           Object.entries(item).forEach(([key, val]) => {
               if(key=="id"){
                   id=JSON.stringify(val);
-                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
             
           });
           Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
         });
-        console.log(empObj)*/
+        //console.log(empObj)*/
       res.send(resultado)
 
 
@@ -1088,42 +1088,42 @@ app.post('/estructura-view/:id', (req, res) => {
 })
 app.delete('/deleteEstructura/:id', (req, res) => {
   const id = req.params.id
-  console.log(req.params)
+  //console.log(req.params)
   db.query("DELETE FROM registro_estructura WHERE id=?", id, (err, result) => {
     if (err) {
       res.send(err)
     }
     else {
       res.send(result)
-      console.log(result)
+      //console.log(result)
     }
   })
 })
 app.post('/injerenciaEstructura/:id', (req, res) => {
   const id = req.params.id
-  console.log(id)
+  //console.log(id)
   const sqlInsert = "SELECT sie.seccion_id FROM secciones_injerencia_estructura  sie INNER JOIN secc_distrito sd ON sie.seccion_id=sd.id WHERE sie.estructura_id=?;" ;
-  //console.log(sqlInsert)
+  ////console.log(sqlInsert)
   db.query(sqlInsert,id, (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
     }
     else {
       acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
       var resultado = JSON.stringify(result);
-      console.log(result)
+      //console.log(result)
       var empObj = JSON.parse(resultado);
       /*var id="";
       empObj.forEach((item) => {
           Object.entries(item).forEach(([key, val]) => {
               if(key=="id"){
                   id=JSON.stringify(val);
-                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
             
           });
           Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
         });
-        console.log(empObj)*/
+        //console.log(empObj)*/
       res.send(result)
 
 
@@ -1133,7 +1133,7 @@ app.post('/injerenciaEstructura/:id', (req, res) => {
 
 //--------------------------------- PROMOTORES -----------------------------------------------------------//
 app.post('/insert-promotor', (req, res) => {
-  console.log(req.body)
+  //console.log(req.body)
 
   const apaterno = req.body.apaterno
   const amaterno = req.body.amaterno
@@ -1192,7 +1192,7 @@ app.post('/insert-promotor', (req, res) => {
       for (let i = 0; i < injerencias.length; i++) {
         db.query(secc_resp, [id_p, injerencias[i]], (err, result) => {
           if (err) {
-            console.log(err);
+            //console.log(err);
           }
           else {
             response.push(true);
@@ -1221,7 +1221,7 @@ app.post('/insert-promotor', (req, res) => {
 app.post('/promotores', (req, res) => {
   db.query("SELECT rp.id,CONCAT(rp.nombres,' ',rp.apaterno,' ',rp.amaterno) AS nombre,rp.no_celular,sd.secc,srp.promotor_id,srp.id AS idsr FROM  registro_promotores rp INNER JOIN secciones_responsabilidad_promotores srp ON rp.id=srp.promotor_id INNER JOIN secc_distrito sd ON srp.seccion_id=sd.id  ", (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
     }
     else {
       acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
@@ -1232,12 +1232,12 @@ app.post('/promotores', (req, res) => {
           Object.entries(item).forEach(([key, val]) => {
               if(key=="id"){
                   id=JSON.stringify(val);
-                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
             
           });
           Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
         });
-        console.log(empObj)*/
+        //console.log(empObj)*/
       res.send(resultado)
 
 
@@ -1247,14 +1247,14 @@ app.post('/promotores', (req, res) => {
 app.delete('/deletePromotor/:id/:idsrp', (req, res) => {
   const id = req.params.id
   const idsrp=req.params.idsrp
-  console.log(req.params)
+  //console.log(req.params)
   db.query("DELETE FROM secciones_responsabilidad_promotores WHERE promotor_id=? AND id=?", [id,idsrp], (err, result) => {
     if (err) {
       res.send(err)
     }
     else {
       res.send(result)
-      console.log(result)
+      //console.log(result)
     }
   })
 })
@@ -1262,7 +1262,7 @@ app.post('/promotores-view/:id', (req, res) => {
   const id = req.params.id
   db.query('SELECT  nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,curp,clave_electoral,seccion, no_celular, email,facebook, twitter, otra_red,id_Secc, circulo,observaciones,lat,lng,sd.df,sd.dl FROM registro_promotores INNER JOIN secc_distrito sd ON sd.id=registro_promotores.id_Secc WHERE registro_promotores.id=?',id, (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
     }
     else {
       acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
@@ -1273,12 +1273,12 @@ app.post('/promotores-view/:id', (req, res) => {
           Object.entries(item).forEach(([key, val]) => {
               if(key=="id"){
                   id=JSON.stringify(val);
-                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
             
           });
           Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
         });
-        console.log(empObj)*/
+        //console.log(empObj)*/
       res.send(resultado)
 
 
@@ -1287,29 +1287,29 @@ app.post('/promotores-view/:id', (req, res) => {
 })
 app.post('/responsabilidadPromotor/:id', (req, res) => {
   const id = req.params.id
-  console.log(id)
+  //console.log(id)
   const sqlInsert = "SELECT srp.seccion_id FROM secciones_responsabilidad_promotores  srp INNER JOIN secc_distrito sd ON srp.seccion_id=sd.id WHERE srp.promotor_id=?;" ;
-  //console.log(sqlInsert)
+  ////console.log(sqlInsert)
   db.query(sqlInsert,id, (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
     }
     else {
       acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
       var resultado = JSON.stringify(result);
-      console.log(result)
+      //console.log(result)
       var empObj = JSON.parse(resultado);
       /*var id="";
       empObj.forEach((item) => {
           Object.entries(item).forEach(([key, val]) => {
               if(key=="id"){
                   id=JSON.stringify(val);
-                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
             
           });
           Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
         });
-        console.log(empObj)*/
+        //console.log(empObj)*/
       res.send(result)
 
 
@@ -1319,7 +1319,7 @@ app.post('/responsabilidadPromotor/:id', (req, res) => {
 
 ///------------------------ PROMOVIDOS ----------------------------
 app.post('/insert-promovido', (req, res) => {
-  console.log(req.body)
+  //console.log(req.body)
 
   const apaterno = req.body.apaterno
   const amaterno = req.body.amaterno
@@ -1356,7 +1356,7 @@ app.post('/insert-promovido', (req, res) => {
   const sql3 = "SELECT max(id) as id FROM registro_promotores"
   const sqlInsert = "INSERT INTO registro_promovidos (nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,fecha_nacimiento,curp,clave_electoral,seccion,id_Secc,no_celular, email,facebook,twitter,otra_red,circulo,observaciones,lat,lng,img,id_promotor) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
   const response = []
-  db.query(sql2, (err, result) => {
+  /*db.query(sql2, (err, result) => {
     const id_image = result[0].id
 
 
@@ -1364,7 +1364,7 @@ app.post('/insert-promovido', (req, res) => {
       nombres, apaterno, amaterno, calle, numero, colonia, cp, ciudad, fecha_nacimiento, curp, clave_elector, seccion, id_Secc, no_celular, email, facebook, twitter, otra_red, nivel,
       observaciones, lat, lng, id_image,promotor], (err, result) => {
         if (err) {
-          console.log(err);
+          //console.log(err);
         }
         else {
           response.push(true)
@@ -1384,13 +1384,13 @@ app.post('/insert-promovido', (req, res) => {
   else {
     res.send("No Agregado")
   }
-
+*/
 
 });
 app.post('/promovidos', (req, res) => {
   db.query("SELECT a.id,CONCAT(a.nombres,' ',a.apaterno,' ',a.amaterno) AS nombre,a.no_celular,a.seccion,CONCAT(b.nombres,' ',b.apaterno,' ',b.amaterno) AS nombre2 FROM registro_promovidos a INNER JOIN registro_promotores b ON a.id_promotor= b.id ;", (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
     }
     else {
       acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
@@ -1401,12 +1401,12 @@ app.post('/promovidos', (req, res) => {
           Object.entries(item).forEach(([key, val]) => {
               if(key=="id"){
                   id=JSON.stringify(val);
-                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
             
           });
           Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
         });
-        console.log(empObj)*/
+        //console.log(empObj)*/
       res.send(resultado)
 
 
@@ -1417,7 +1417,7 @@ app.post('/promovidos-view/:id', (req, res) => {
   const id = req.params.id
   db.query('SELECT  r.nombres,r.apaterno,r.amaterno,r.calle,r.numero,r.colonia,r.cp,r.ciudad,DATE_FORMAT(r.fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,r.curp,r.clave_electoral,r.seccion, r.no_celular, r.email,r.facebook, r.twitter, r.otra_red,r.id_Secc,r.circulo,r.observaciones,r.lat,r.lng,sd.df,sd.dl,rp.id AS promotor FROM registro_promovidos r INNER JOIN secc_distrito sd ON sd.id=r.id_Secc INNER JOIN registro_promotores rp ON rp.id=r.id_promotor WHERE r.id=?',id, (err, result) => {
     if (err) {
-      console.log(err)
+      //console.log(err)
     }
     else {
       acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
@@ -1428,13 +1428,13 @@ app.post('/promovidos-view/:id', (req, res) => {
           Object.entries(item).forEach(([key, val]) => {
               if(key=="id"){
                   id=JSON.stringify(val);
-                  console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
             
           });
           Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
         });
-        console.log(empObj)*/
-        console.log(resultado)
+        //console.log(empObj)*/
+        //console.log(resultado)
       res.send(resultado)
 
 

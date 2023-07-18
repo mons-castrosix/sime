@@ -113,7 +113,7 @@ body {
   line-height: var(--bs-body-line-height);
   color: var(--bs-body-color);
   text-align: var(--bs-body-text-align);
-  background-color: var(--bs-body-bg);
+  background-color: #dcdcdc; 
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -436,6 +436,7 @@ button,
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button;
+  appearance: button;
 }
 
 button:not(:disabled),
@@ -497,6 +498,7 @@ legend+* {
 [type="search"] {
   outline-offset: -2px;
   -webkit-appearance: textfield;
+  appearance: textfield;
 }
 
 /* rtl:raw:
@@ -518,6 +520,7 @@ legend+* {
 ::file-selector-button {
   font: inherit;
   -webkit-appearance: button;
+  appearance: button;
 }
 
 output {
@@ -5893,33 +5896,18 @@ fieldset:disabled .btn {
   }
 }
 
-.progress {
-  --bs-progress-height: 6px;
-  --bs-progress-font-size: 0.75rem;
-  --bs-progress-bg: #f0f2f5;
-  --bs-progress-border-radius: 0.125rem;
-  --bs-progress-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
-  --bs-progress-bar-color: #fff;
-  --bs-progress-bar-bg: #e91e63;
-  --bs-progress-bar-transition: width 0.6s ease;
-  display: flex;
-  height: var(--bs-progress-height);
-  overflow: hidden;
-  font-size: var(--bs-progress-font-size);
-  background-color: var(--bs-progress-bg);
-  border-radius: var(--bs-progress-border-radius);
-}
+
 
 .progress-bar {
   display: flex;
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  color: var(--bs-progress-bar-color);
+  color: white !important;
   text-align: center;
   white-space: nowrap;
-  background-color: var(--bs-progress-bar-bg);
-  transition: var(--bs-progress-bar-transition);
+  background-color: red !important;
+  
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -8084,7 +8072,7 @@ fieldset:disabled .btn {
 
 .text-bg-secondary {
   color: #000 !important;
-  background-color: RGBA(, 128, 154, var(--bs-bg-opacity, 1)) !important;
+  background-color: RGBA( 128, 154, var(--bs-bg-opacity, 1)) !important;
 }
 
 .text-bg-success {
@@ -8104,7 +8092,7 @@ fieldset:disabled .btn {
 
 .text-bg-danger {
   color: #000 !important;
-  background-color: RGBA(244, 67, 53, var(--bs-bg-opacity, 1)) !important;
+  background-color: red !important;
 }
 
 .text-bg-light {
@@ -8539,7 +8527,9 @@ fieldset:disabled .btn {
 }
 
 .shadow {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 14px 10px 5px 0px rgba(0,0,0,0.64);
+  -webkit-box-shadow: 14px 10px 5px 0px rgba(0,0,0,0.64);
+  -moz-box-shadow: 14px 10px 5px 0px rgba(0,0,0,0.64);
 }
 
 .shadow-sm {
@@ -20521,6 +20511,7 @@ fieldset:disabled .btn {
   position: relative;
   overflow: hidden;
   -webkit-appearance: none;
+  appearance: none;
 }
 
 .btn:not([class*="btn-outline-"]) {
@@ -20671,14 +20662,14 @@ fieldset:disabled .btn {
 
 .btn-secondary,
 .btn.bg-gradient-secondary {
-  box-shadow: 0 3px 3px 0 rgba(, 128, 154, 0.15), 0 3px 1px -2px rgba(, 128, 154, 0.2), 0 1px 5px 0 rgba(, 128, 154, 0.15);
+  box-shadow: 0 3px 3px 0 rgba(128, 154, 0.15), 0 3px 1px -2px rgba(128, 154, 0.2), 0 1px 5px 0 rgba( 128, 154, 0.15);
 }
 
 .btn-secondary:hover,
 .btn.bg-gradient-secondary:hover {
   background-color: #7b809a;
   border-color: #7b809a;
-  box-shadow: 0 14px 26px -12px rgba(, 128, 154, 0.4), 0 4px 23px 0 rgba(, 128, 154, 0.15), 0 8px 10px -5px rgba(, 128, 154, 0.2);
+  box-shadow: 0 14px 26px -12px rgba(128, 154, 0.4), 0 4px 23px 0 rgba(128, 154, 0.15), 0 8px 10px -5px rgba(128, 154, 0.2);
 }
 
 .btn-secondary .btn.bg-outline-secondary,
@@ -21769,7 +21760,7 @@ fieldset:disabled .btn {
 
 .dark-version .fc-theme-standard td,
 .dark-version .fc-theme-standard th {
-  border-color: rgba(, 128, 154, 0.3);
+  border-color: rgba(128, 154, 0.3);
 }
 
 .dark-version .dataTable-sorter::after {
@@ -22777,7 +22768,7 @@ label,
 }
 
 .bg-gradient-faded-secondary {
-  background-image: radial-gradient(370px circle at 80% 50%, rgba(, 128, 154, 0.6) 0, #626780 100%);
+  background-image: radial-gradient(370px circle at 80% 50%, rgba(128, 154, 0.6) 0, #626780 100%);
 }
 
 .bg-gradient-faded-success {
@@ -22817,7 +22808,7 @@ label,
 }
 
 .bg-gradient-faded-secondary-vertical {
-  background-image: radial-gradient(200px circle at 50% 70%, rgba(, 128, 154, 0.3) 0, #7b809a 100%);
+  background-image: radial-gradient(200px circle at 50% 70%, rgba( 128, 154, 0.3) 0, #7b809a 100%);
 }
 
 .bg-gradient-faded-success-vertical {
@@ -26371,6 +26362,7 @@ p {
   touch-action: manipulation;
   background: #fff;
   -webkit-box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   transform: scale(0.95) !important;
 }
 
@@ -27492,6 +27484,7 @@ span.flatpickr-weekday {
   cursor: default;
   box-shadow: inset 0 0 1px #fff, inset 0 1px 7px #EBEBEB, 0 3px 6px -3px #BBB;
   webkit-transition: .3s ease 0s;
+  
   -moz-transition: .3s ease 0s;
   -ms-transition: .3s ease 0s;
   -o-transform: .3s ease 0s;
