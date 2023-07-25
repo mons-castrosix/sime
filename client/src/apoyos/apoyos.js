@@ -320,7 +320,7 @@ function Apoyos() {
       <div className="row">
         <div className="col-5" >
           <div className="card " >
-            <div className="card-header text-center">
+            <div className="card-header text-center text-white font-weight-bold">
               REGISTRO DE APOYOS
             </div>
             <div className="card-body rounded-3  text-center bg-light">

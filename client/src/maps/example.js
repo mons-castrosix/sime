@@ -113,7 +113,7 @@ function Example() {
 			<div className="row">
 				<div className="col-4" >
 					<div className="card " >
-						<div className="card-header text-center">
+						<div className="card-header text-center text-center text-white font-weight-bold">
 							GEOREFERENCIAR REGISTROS EN MAPA
 						</div>
 						<div className="card-body rounded-3  text-center bg-light">

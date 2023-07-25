@@ -204,7 +204,7 @@ function Estructura() {
                 var resultado = JSON.stringify(response.data);
                 var empObj = JSON.parse(resultado);
                 setList(empObj)
-                //console.log(response)
+                
 
 
             });
@@ -379,7 +379,7 @@ function Estructura() {
             <div className="row">
                 <div className="col-5" >
                 <div className="card " >
-                <div className="card-header text-center">REGISTRO DE ESTRUCTURA</div>
+                <div className="card-header text-center text-center text-white font-weight-bold">REGISTRO DE ESTRUCTURA</div>
 
                 <div className="card-body rounded-3  text-center bg-light">
                    <form onSubmit={handleSubmit(handleRegistration)}>
