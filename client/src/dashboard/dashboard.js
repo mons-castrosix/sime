@@ -12,15 +12,16 @@ import { useState, useRef, useEffect } from 'react';
 const Dashboard = () => {
   const series = [ //data on the y-axis
     {
-      name: "Temperature in Celsius",
-      data: [100, 80, 30, 20, 15]
+      name: "Apoyos",
+      data: [100, 80, 30, 20, 15,10,22]
     }
   ];
   const options = { //data on the x-axis
     chart: { id: 'bar-chart' },
     xaxis: {
-      categories: ["1263", "2710", "2722", "2729", "2748",]
-    }
+      categories: ["1263", "2710", "2722", "2729", "2748","1258","2724"]
+    },
+    
   };
 
   const series2 = [
@@ -205,11 +206,11 @@ const Dashboard = () => {
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
                   <div className="col mr-2">
-                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Apoyos
+                    <div className="text-lg font-weight-bold text-info text-uppercase mb-1">Apoyos
                     </div>
                     <div className="row no-gutters align-items-center">
                       <div className="col-auto">
-                        <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">150</div>
+                        <div className="h4 mb-0 mr-3 font-weight-bold text-gray-800">150</div>
                       </div>
 
                     </div>
@@ -226,11 +227,11 @@ const Dashboard = () => {
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
                   <div className="col mr-2">
-                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Lideres
+                    <div className="text-lg font-weight-bold text-info text-uppercase mb-1">Lideres
                     </div>
                     <div className="row no-gutters align-items-center">
                       <div className="col-auto">
-                        <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">30</div>
+                        <div className="h4 mb-0 mr-3 font-weight-bold text-gray-800">30</div>
                       </div>
 
                     </div>
@@ -248,11 +249,11 @@ const Dashboard = () => {
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
                   <div className="col mr-2">
-                    <div className="text-xs font-weight-bold text-info text-uppercase mb-1">Estructura
+                    <div className="text-lg font-weight-bold text-info text-uppercase mb-1">Estructura
                     </div>
                     <div className="row no-gutters align-items-center">
                       <div className="col-auto">
-                        <div className="h5 mb-0 mr-3 font-weight-bold text-gray-800">36</div>
+                        <div className="h4 mb-0 mr-3 font-weight-bold text-gray-800">36</div>
                       </div>
 
                     </div>
@@ -271,9 +272,9 @@ const Dashboard = () => {
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
                   <div className="col mr-2">
-                    <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                    <div className="text-lg font-weight-bold text-warning text-uppercase mb-1">
                       Promotores</div>
-                    <div className="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                    <div className="h4 mb-0 font-weight-bold text-gray-800">18</div>
                   </div>
                   <div className="col-auto">
                     <i className="fas fa-user-tie fa-2x text-gray-300"></i>
@@ -287,9 +288,9 @@ const Dashboard = () => {
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
                   <div className="col mr-2">
-                    <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                    <div className="text-lg font-weight-bold text-primary text-uppercase mb-1">
                       Promovidos</div>
-                    <div className="h5 mb-0 font-weight-bold text-gray-800">43</div>
+                    <div className="h4 mb-0 font-weight-bold text-gray-800">43</div>
                   </div>
                   <div className="col-auto">
                     <i className="fas fa-user-check fa-2x text-gray-300"></i>
@@ -305,9 +306,25 @@ const Dashboard = () => {
               <div className="card-body">
                 <div className="row no-gutters align-items-center">
                   <div className="col mr-2">
-                    <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
-                      Representantes</div>
-                    <div className="h5 mb-0 font-weight-bold text-gray-800">21</div>
+                    <div className="text-lg font-weight-bold text-success text-uppercase mb-1">
+                      Representantes Generales</div>
+                    <div className="h4 mb-0 font-weight-bold text-gray-800">21</div>
+                  </div>
+                  <div className="col-auto">
+                    <i className="fas fa-id-card-alt fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-xl-3 col-md-6 mb-4">
+            <div className="card border-left-success shadow h-100 py-2">
+              <div className="card-body">
+                <div className="row no-gutters align-items-center">
+                  <div className="col mr-2">
+                    <div className="text-lg font-weight-bold text-success text-uppercase mb-1">
+                      Representantes de Casilla</div>
+                    <div className="h4 mb-0 font-weight-bold text-gray-800">21</div>
                   </div>
                   <div className="col-auto">
                     <i className="fas fa-id-card-alt fa-2x text-gray-300"></i>
@@ -329,7 +346,7 @@ const Dashboard = () => {
 
               <div
                 className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 className="m-0 font-weight-bold text-white">Apoyos totales por secciòn</h6>
+                <h5 className="m-0 font-weight-bold text-white">Apoyos totales por sección</h5>
                 <div className="dropdown no-arrow">
                   <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -349,13 +366,16 @@ const Dashboard = () => {
               <div className="card-body">
                 <div className="row sparkboxes mt-4 mb-4">
                   <div className="col-md-12">
-                    <div className="box box1">
+                    <div >
 
                       <Chart
                         options={options}
                         series={series}
                         type="bar"
-                        width="450"
+                        width="750"
+                        height="280"
+                        
+                       
                       />
                     </div>
                   </div>
@@ -371,7 +391,7 @@ const Dashboard = () => {
 
               <div
                 className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 className="m-0 font-weight-bold text-white">Metas de votación</h6>
+                <h5 className="m-0 font-weight-bold text-white">Metas de votación</h5>
                 <div className="dropdown no-arrow">
                   <a className="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -417,7 +437,7 @@ const Dashboard = () => {
 
             <div className="card shadow mb-4">
               <div className="card-header py-3">
-                <h6 className="m-0 font-weight-bold text-white">Avance</h6>
+                <h5 className="m-0 font-weight-bold text-white">Avance</h5>
               </div>
               <div className="card-body">
                 <h4 className="small font-weight-bold">Meta 1 <span
@@ -463,7 +483,7 @@ const Dashboard = () => {
 
             <div className="card shadow mb-4">
               <div className="card-header py-3">
-                <h6 className="m-0 font-weight-bold text-white">Porcentaje de votación</h6>
+                <h5 className="m-0 font-weight-bold text-white">Porcentaje de votación</h5>
               </div>
               <div className="card-body">
                 <div className="row sparkboxes mt-4 mb-4">
