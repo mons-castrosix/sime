@@ -189,7 +189,7 @@ const Dashboard = () => {
         <div className='col-9'></div>
         <div className='col-3'>
         <div className="d-sm-flex align-items-center justify-content-between mb-4">
-          <h4 className=" mb-0 text-gray-300">{dias[dateVariable.getDay()] +"  " +dateVariable.getDate()+ " de  "+meses[dateVariable.getMonth()]+"  de "+dateVariable.getFullYear()} <i className="fas fa-calendar-alt text-gray-300"></i></h4>
+          <h4 className=" mb-0 text-gray-300">{dias[dateVariable.getDay()] +"   " +dateVariable.getDate()+ " de  "+meses[dateVariable.getMonth()]+"  de "+dateVariable.getFullYear()} <i className="fas fa-calendar-alt text-gray-300"></i></h4>
           
         </div>
         </div>
