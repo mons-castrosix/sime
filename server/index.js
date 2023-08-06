@@ -348,7 +348,36 @@ app.post('/api/equipoAll/', (req, res) => {
     //console.log(err)
   });
 })
-
+app.post('/api/cont/', (req, res) => {
+ 
+  const sqlInsert = "SELECT id,numero FROM casillas_cont;" ;
+  ////console.log(sqlInsert)
+  db.query(sqlInsert, (err, result) => {
+    res.send(result)
+   
+    //console.log(err)
+  });
+})
+app.post('/api/esp/', (req, res) => {
+ 
+  const sqlInsert = "SELECT id,numero FROM casillas_esp;" ;
+  ////console.log(sqlInsert)
+  db.query(sqlInsert, (err, result) => {
+    res.send(result)
+   
+    //console.log(err)
+  });
+})
+app.post('/api/ext/', (req, res) => {
+ 
+  const sqlInsert = "SELECT id,numero FROM casillas_ext;" ;
+  ////console.log(sqlInsert)
+  db.query(sqlInsert, (err, result) => {
+    res.send(result)
+   
+    //console.log(err)
+  });
+})
 app.post('/mapa-apoyos/', (req, res) => {
   const sqlInsert = "SELECT id,CONCAT(apaterno,' ',amaterno,' ', nombres) AS nombre, lat,lng,calle,numero,colonia,cp,ciudad from apoyo;";
   //console.log(sqlInsert);

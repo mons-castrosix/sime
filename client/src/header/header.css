@@ -1,4 +1,7 @@
-
+#check{
+    margin-top: 40px;
+    transform: scale(2);
+}
 label{
     font-size: 16px !important;
 }

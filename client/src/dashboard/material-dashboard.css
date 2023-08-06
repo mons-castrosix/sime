@@ -27491,6 +27491,9 @@ span.flatpickr-weekday {
   -o-transform: .3s ease 0s;
   transition: .3s ease 0s;
 }
+.p-icon{
+  visibility: hidden;
+}
 
 .noUi-active {
   box-shadow: inset 0 0 1px #fff, inset 0 1px 7px #DDD, 0 3px 6px -3px #BBB;

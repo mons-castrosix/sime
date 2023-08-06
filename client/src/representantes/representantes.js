@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MultiSelect } from 'primereact/multiselect';
 import Axios from 'axios';
 import Swal from 'sweetalert2';
@@ -8,19 +8,13 @@ import 'bootstrap/dist/js/bootstrap.js'
 import 'primeicons/primeicons.css';
 import { useForm } from "react-hook-form";
 import Header from '../header/header';
-import { GoogleMap, KmlLayer, LoadScript, InfoWindow, Marker, Polyline, Rectangle } from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker, } from '@react-google-maps/api';
 import config from '../maps/config.json';
-import ScriptTag from 'react-script-tag';
+
 const mapContainerStyle = {
     width: '100%', height: '98vh', overflow: 'hidden'
 };
-const divStyle = {
-    background: `white`,
 
-    width: '50px',
-    height: '10px',
-    fontSize: '10px'
-}
 const option = {
 
     mapTypeControl: true,
@@ -31,27 +25,9 @@ const option = {
     streetViewPanorama: true,
 
 };
-const optionMap = {
-    clickable: true,
-    preserveViewport: true,
-    screenOverlays: true,
-    suppressInfoWindows: false
-}
 
 
-const onLoad = rectangle => {
-    console.log('rectangle: ', rectangle)
-}
 
-const onClick = click => {
-    console.log('click: ', click.featureData
-    )
-}
-
-const onPosition = click => {
-    console.log('click: ', click
-    )
-}
 
 
 function Representantes() {
@@ -77,29 +53,13 @@ function Representantes() {
     const [facebook, setFacebook] = useState("");
     const [twitter, setTwitter] = useState("");
     const [otra, setOtra] = useState("");
-    const [descrApoyo, setDescapoyo] = useState("");
-    const [tipoApoyo, setTipoapoyo] = useState("");
-    const [monto, setMonto] = useState("");
-    const [alcance, setAlcance] = useState("");
     const [contacto, setContacto] = useState("");
     const [celContacto, setCelcontacto] = useState("");
-    const [selectedImage, setSelectedImage] = useState("");
     const [coordenadas, setCoordenadas] = useState([19.36313799880912
         , -101.81796480831713]);
     const [newCoordenadas, setNewCoor] = useState([])
     const [changeCenter, setChangeCenter] = useState(false);
-    const [calleIglesia, setCalleIglesia] = useState("");
-    const [numeroIglesia, setnumeroIglesia] = useState("");
-    const [coloniaIglesia, setColoniaIglesia] = useState("");
-    const [celebracion, setCelebracion] = useState("");
     const [seccionInjerencia, setSeccionInjerencia] = useState("");
-    const [partido, setPartido] = useState("");
-    const [escuela, setEscuela] = useState("");
-    const [cargo, setCargo] = useState("");
-    const [tenencia, setTenencia] = useState("");
-    const [coloniaEncargado, setColoniaEncargado] = useState("");
-    const [nombreAC, setNombreAC] = useState("");
-    const [nombreInstitucion, setNombreInstitucion] = useState("");
     const [observaciones, setObservaciones] = useState("");
     const [lider, setLider] = useState("");
     const [idSecc, setidSecc] = useState("");
@@ -107,24 +67,33 @@ function Representantes() {
     const [consejo, setConsejo] = useState("");
     const [ruta, setRuta] = useState("");
     const [list, setList] = useState([])
+    const [Cascont, setCascont] = useState([])
+    const [Casext, setCasext] = useState([])
+    const [Casesp, setCasesp] = useState([])
     const navigate = useNavigate();
+    const [menu1, setMenu1] = useState("");
+    const [menu2, setMenu2] = useState("");
+    const [menu3, setMenu3] = useState("");
+    const [menu4, setMenu4] = useState("");
 
+    const [selectedCasilla, setSelectedCasilla] = useState(null);
+
+    const casillatipo = [
+        { name: 'Básica', code: 'B' },
+        { name: 'Contigua', code: 'C' },
+        { name: 'Especial', code: 'SMR' },
+        { name: 'Extraordinaria', code: 'E' },
+
+    ];
 
     /*const center = {
       lat: document.getElementById("lat").value,
       lng:document.getElementById("lng").value
     };*/
 
-    const [infoWindowOpen, setInfoWindowOpen] = useState(false);
-    const [peopleInfo, setPeopleInfo] = useState([]);
 
-    const persona = 'Persona 1';
-    const ref = useRef(null);
 
-    const atras = () => {
-        let path = '/apoyos';
-        navigate(path);
-    }
+
     const saveFile = (e) => {
         setFile(e.target.files[0]);
         setFileName(e.target.files[0].name);
@@ -275,8 +244,57 @@ function Representantes() {
 
 
             });
+    }
+    const contiguas = () => {
+
+
+        Axios.post("http://localhost:3001/api/cont/"
+            /*"http://54.219.124.66:3001/api/distritos"*/, {
+
+            }).then((response) => {
+                var resultado = JSON.stringify(response.data);
+                var empObj = JSON.parse(resultado);
+                setCascont(empObj)
+
+
+            });
 
     }
+
+    const especiales = () => {
+
+
+        Axios.post("http://localhost:3001/api/esp"
+            /*"http://54.219.124.66:3001/api/distritos"*/, {
+
+            }).then((response) => {
+                var resultado = JSON.stringify(response.data);
+                var empObj = JSON.parse(resultado);
+                setCasesp(empObj)
+
+
+            });
+
+    }
+
+    const extraordinaria = () => {
+
+
+        Axios.post("http://localhost:3001/api/ext"
+            /*"http://54.219.124.66:3001/api/distritos"*/, {
+
+            }).then((response) => {
+                var resultado = JSON.stringify(response.data);
+                var empObj = JSON.parse(resultado);
+                setCasext(empObj)
+
+
+            });
+
+    }
+
+
+
 
     const limpiar = e => {
         e.preventDefault()
@@ -323,6 +341,8 @@ function Representantes() {
 
 
     }
+    const cb = document.querySelector('#check');
+   
 
 
     // This function will be triggered when the "Remove This Image" button is clicked
@@ -1071,56 +1091,214 @@ function Representantes() {
                                                     </div>*/
                                                     <div>
                                                         <div className="row gx-3 mb-3">
-                                                            <div className="col-md-3">
-                                                                <label className="small mb-1" htmlFor="nivel">Tipo</label>
-                                                                {submitSecciones()}
-                                                                <MultiSelect
-                                                                    maxSelectedLabels={1}
-                                                                    value={seccionInjerencia}
-                                                                    onChange={(e) => setSeccion(e.value)}
-                                                                    options={list} optionLabel="name"
-                                                                    filter placeholder="Selecciona una sección" className="w-full md:w-20rem form-select" required />
+                                                            <div className="col-md-6">
+                                                                <label className="small mb-1" htmlFor="nivel">Menú 1</label>
+                                                                <select id='menu1'
+                                                                    {...register("tipocasilla", {
+                                                                        required: true,
 
-                                                                {errors?.seccInjerencia?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
+                                                                    })}
+                                                                    className="form-control form-select"
 
-                                                            </div>
-                                                            <div className="col-md-3">
-                                                            <label className="small mb-1" htmlFor="nivel">Sección</label>
-                                                            <MultiSelect
-                                                                    maxSelectedLabels={1}
-                                                                    value={seccionInjerencia}
-                                                                    onChange={(e) => setSeccion(e.value)}
-                                                                    options={list} optionLabel="name"
-                                                                    filter placeholder="Selecciona una sección" className="w-full md:w-20rem form-select" required />
+                                                                    onChange={e => { setMenu1(e.target.value) }}
+                                                                >
+                                                                    <option value=""></option>
+                                                                    <option value="1">Básica</option>
+                                                                    <option value="2">Contigua</option>
+                                                                    <option value="3">Especial</option>
+                                                                    <option value="4">Extraordinaria</option>
 
-                                                                {errors?.seccInjerencia?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
+                                                                </select>
+                                                                {errors?.tipocasilla?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
 
                                                             </div>
-                                                            <div className="col-md-3">
-                                                            <label className="small mb-1" htmlFor="nivel">Sección</label>
-                                                            <MultiSelect
-                                                                    maxSelectedLabels={1}
-                                                                    value={seccionInjerencia}
-                                                                    onChange={(e) => setSeccion(e.value)}
-                                                                    options={list} optionLabel="name"
-                                                                    filter placeholder="Selecciona una sección" className="w-full md:w-20rem form-select" required />
+                                                            <div className="col-md-6">
 
-                                                                {errors?.seccInjerencia?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
+                                                                {
+                                                                    (() => {
+                                                                        switch (menu1) {
+
+                                                                            case ("1"): {
+                                                                                return (
+                                                                                    <div>
+
+
+                                                                                    </div>
+                                                                                );
+                                                                            }
+                                                                                break;
+                                                                            case ("2"): {
+                                                                                return (
+                                                                                    <div>
+
+                                                                                        {contiguas()}
+                                                                                        <label className="small mb-1" htmlFor="nivel">Menú 2</label>
+
+                                                                                        <select id='menu2'
+                                                                                            {...register("menu2", {
+                                                                                                required: true,
+
+                                                                                            })}
+                                                                                            className="form-control form-select"
+
+                                                                                            onChange={e => { setMenu2(e.target.value); console.log(e.target.value) }}
+                                                                                        >
+                                                                                            <option value="Selecciona"></option>
+                                                                                            {
+                                                                                                Cascont.map(val => {
+
+                                                                                                    return (<option value={val.id}>{val.numero}</option>);
+                                                                                                })}
+
+
+                                                                                        </select>
+                                                                                        {errors?.tipocasilla?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+
+
+                                                                                    </div>
+                                                                                )
+                                                                            }
+                                                                            case ("3"): {
+                                                                                return (
+                                                                                    <div>
+
+                                                                                        {especiales()}
+                                                                                        <label className="small mb-1" htmlFor="nivel">Menú 2</label>
+
+                                                                                        <select id='menu2'
+                                                                                            {...register("menu2", {
+                                                                                                required: true,
+
+                                                                                            })}
+                                                                                            className="form-control form-select"
+
+                                                                                            onChange={e => { setMenu2(e.target.value); console.log(e.target.value) }}
+                                                                                        >
+                                                                                            <option value="Selecciona"></option>
+                                                                                            {
+                                                                                                Casesp.map(val => {
+
+                                                                                                    return (<option value={val.id}>{val.numero}</option>);
+                                                                                                })}
+
+
+                                                                                        </select>
+                                                                                        {errors?.tipocasilla?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+
+
+                                                                                    </div>
+                                                                                )
+                                                                            }
+                                                                            case ("4"): {
+                                                                                return (
+                                                                                    <div>
+
+                                                                                        {extraordinaria()}
+                                                                                        <label className="small mb-1" htmlFor="nivel">Menú 2</label>
+
+                                                                                        <select id='menu2'
+                                                                                            {...register("menu2", {
+                                                                                                required: true,
+
+                                                                                            })}
+                                                                                            className="form-control form-select"
+
+                                                                                            onChange={e => { setMenu2(e.target.value); console.log(e.target.value) }}
+                                                                                        >
+                                                                                            <option value="Selecciona"></option>
+                                                                                            {
+                                                                                                Casext.map(val => {
+
+                                                                                                    return (<option value={val.id}>{val.numero}</option>);
+                                                                                                })}
+
+
+                                                                                        </select>
+                                                                                        {errors?.tipocasilla?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+
+
+                                                                                    </div>
+                                                                                )
+                                                                            }
+
+
+
+
+                                                                            default: {
+                                                                                return (
+                                                                                    <span></span>
+                                                                                )
+                                                                            }
+
+                                                                        }
+                                                                    })()
+                                                                }
+                                                            </div>
+
+                                                            <div className="col-md-5">
+
+                                                                <label className="small mb-1" htmlFor="nivel">Menú 3</label>
+                                                                {contiguas()}
+                                                                <select id='menu3'
+                                                                    {...register("nocontigua", {
+                                                                        required: true,
+
+                                                                    })}
+                                                                    className="form-control form-select"
+
+                                                                    onChange={e => { setConsejo(e.target.value) }}
+                                                                >
+                                                                    <option value=""></option>
+                                                                    {
+                                                                        Cascont.map(val => {
+
+                                                                            return (<option value={val.id}>{val.numero}</option>);
+                                                                        })}
+
+
+                                                                </select>
+                                                                {errors?.tipocasilla?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
 
                                                             </div>
-                                                            <div className="col-md-3">
-                                                            <label className="small mb-1" htmlFor="nivel">Sección</label>
-                                                            <MultiSelect
-                                                                    maxSelectedLabels={1}
-                                                                    value={seccionInjerencia}
-                                                                    onChange={(e) => setSeccion(e.value)}
-                                                                    options={list} optionLabel="name"
-                                                                    filter placeholder="Selecciona una sección" className="w-full md:w-20rem form-select" required />
+                                                            <div className="col-md-5">
 
-                                                                {errors?.seccInjerencia?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
+                                                                <label className="small mb-1" htmlFor="nivel">Menú 4</label>
+                                                                {contiguas()}
+                                                                <select id='menu2'
+                                                                    {...register("nocontigua", {
+                                                                        required: true,
+
+                                                                    })}
+                                                                    className="form-control form-select"
+
+                                                                    onChange={e => { setConsejo(e.target.value) }}
+                                                                >
+                                                                    <option value=""></option>
+                                                                    {
+                                                                        Cascont.map(val => {
+
+                                                                            return (<option value={val.id}>{val.numero}</option>);
+                                                                        })}
+
+
+                                                                </select>
+                                                                {errors?.tipocasilla?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
 
                                                             </div>
-                                                            
+                                                            <div className='col-md-2'>
+
+                                                                <input id="check" type='checkbox' />
+                                                            </div>
+
+
+
+
 
                                                         </div>
 
@@ -1128,24 +1306,16 @@ function Representantes() {
 
                                                 )
                                             }
-                                                break;
+
                                             default: {
                                                 return (
                                                     <span></span>
                                                 )
                                             }
-                                                break;
+
                                         }
                                     })()
                                 }
-
-
-
-
-
-
-
-
 
 
                                 <div className="mb-3">
@@ -1169,7 +1339,7 @@ function Representantes() {
                                         <button className="btn btn-danger" onClick={limpiar} type="button">Limpiar datos</button>
                                     </div>
                                     <div className="col-md-4">
-                                        <button className="btn btn-success"  >Guardar Representante</button>
+                                        <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit"  >Guardar Representante</button>
                                         {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
                                     </div>
                                 </div>
@@ -1185,7 +1355,7 @@ function Representantes() {
 
                 <div className="col-7" >
 
-                    {changeCenter == false && (
+                    {changeCenter === false && (
                         <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
                             <GoogleMap
                                 id="rectangle-example"
@@ -1198,7 +1368,7 @@ function Representantes() {
                             </GoogleMap>
                         </LoadScript>
                     )}
-                    {changeCenter == true && (
+                    {changeCenter === true && (
                         <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
                             <GoogleMap
                                 id="rectangle-example"
