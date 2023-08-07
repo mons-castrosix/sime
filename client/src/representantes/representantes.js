@@ -125,21 +125,21 @@ function Representantes() {
             var fecha = res.data.fecha_nacimiento
             fecha = fecha.split("/").reverse().join("-");
             console.log(fecha)
-            setValue("nombre", res.data.nombres)
+            setValue("nombre", res.data.nombres,{ shouldValidate: true, shouldDirty: true })
 
-            setValue("apaterno", res.data.apaterno);
-            setValue("amaterno", res.data.amaterno);
-            setValue("calle", res.data.calle);
-            setValue("numero", res.data.numero);
-            setValue("colonia", res.data.colonia);
-            setValue("cpostal", res.data.cp);
-            setValue("ciudad", res.data.ciudad);
-            setValue("celectoral", res.data.c_elector);
-            setValue("curp", res.data.curp);
-            setValue("fnacimiento", fecha);
-            setValue("secc", res.data.seccion);
-            setValue("df", res.data.distrito_federal);
-            setValue("dl", res.data.distrito_local);
+            setValue("apaterno", res.data.apaterno,{ shouldValidate: true, shouldDirty: true });
+            setValue("amaterno", res.data.amaterno,{ shouldValidate: true, shouldDirty: true });
+            setValue("calle", res.data.calle,{ shouldValidate: true, shouldDirty: true });
+            setValue("numero", res.data.numero,{ shouldValidate: true, shouldDirty: true });
+            setValue("colonia", res.data.colonia,{ shouldValidate: true, shouldDirty: true });
+            setValue("cpostal", res.data.cp,{ shouldValidate: true, shouldDirty: true });
+            setValue("ciudad", res.data.ciudad,{ shouldValidate: true, shouldDirty: true });
+            setValue("celectoral", res.data.c_elector,{ shouldValidate: true, shouldDirty: true });
+            setValue("curp", res.data.curp,{ shouldValidate: true, shouldDirty: true });
+            setValue("fnacimiento", fecha,{ shouldValidate: true, shouldDirty: true });
+            setValue("secc", res.data.seccion,{ shouldValidate: true, shouldDirty: true });
+            setValue("df", res.data.distrito_federal,{ shouldValidate: true, shouldDirty: true });
+            setValue("dl", res.data.distrito_local,{ shouldValidate: true, shouldDirty: true });
 
             setNombres(res.data.nombres)
             setApaterno(res.data.apaterno);
@@ -155,7 +155,7 @@ function Representantes() {
             setSeccion(res.data.seccion);
             setDfederal(res.data.distrito_federal);
             setDlocal(res.data.distrito_local);
-
+                submitSeccion();
 
         } catch (ex) {
             //console.log(ex);
@@ -202,8 +202,8 @@ function Representantes() {
                 setDfederal(res.data.df)
                 setDlocal(res.data.dl)
                 setidSecc(res.data.id)
-                setValue("dl", res.data.dl)
-                setValue("df", res.data.df)
+                setValue("dl", res.data.dl,{ shouldValidate: true, shouldDirty: true })
+                setValue("df", res.data.df,{ shouldValidate: true, shouldDirty: true })
 
                 console.log(seccion)
 
@@ -224,7 +224,8 @@ function Representantes() {
             console.log(lng)
 
             setNewCoor([lat, lng])
-
+            setValue("lat", lat, { shouldValidate: true, shouldDirty: true })
+            setValue("lng", lng, { shouldValidate: true, shouldDirty: true })
 
             setChangeCenter(true);
 
@@ -294,7 +295,12 @@ function Representantes() {
     }
 
 
-
+    useEffect(() => {
+        contiguas()
+        especiales()
+        extraordinaria()
+      });
+    
 
     const limpiar = e => {
         e.preventDefault()
@@ -342,8 +348,8 @@ function Representantes() {
 
     }
     const cb = document.querySelector('#check');
-   
 
+    
 
     // This function will be triggered when the "Remove This Image" button is clicked
     const removeSelectedImage = () => {
@@ -355,7 +361,7 @@ function Representantes() {
     const onSubmit = (data) => {
 
         alert(JSON.stringify(data));
-        submitReview();
+        //submitReview();
     }; // your form submit function which will invoke after successful validation
 
 
@@ -1090,11 +1096,13 @@ function Representantes() {
                                                         </div>
                                                     </div>*/
                                                     <div>
+                                                    
                                                         <div className="row gx-3 mb-3">
+                                                    
                                                             <div className="col-md-6">
                                                                 <label className="small mb-1" htmlFor="nivel">Menú 1</label>
                                                                 <select id='menu1'
-                                                                    {...register("tipocasilla", {
+                                                                    {...register("menu1", {
                                                                         required: true,
 
                                                                     })}
@@ -1103,10 +1111,10 @@ function Representantes() {
                                                                     onChange={e => { setMenu1(e.target.value) }}
                                                                 >
                                                                     <option value=""></option>
-                                                                    <option value="1">Básica</option>
-                                                                    <option value="2">Contigua</option>
-                                                                    <option value="3">Especial</option>
-                                                                    <option value="4">Extraordinaria</option>
+                                                                    <option value="B">Básica</option>
+                                                                    <option value="C">Contigua</option>
+                                                                    <option value="SMR">Especial</option>
+                                                                    <option value="E">Extraordinaria</option>
 
                                                                 </select>
                                                                 {errors?.tipocasilla?.type === "required" && <span className='eform'>Campo Vacio</span>}
@@ -1119,7 +1127,7 @@ function Representantes() {
                                                                     (() => {
                                                                         switch (menu1) {
 
-                                                                            case ("1"): {
+                                                                            case ("B"): {
                                                                                 return (
                                                                                     <div>
 
@@ -1128,11 +1136,11 @@ function Representantes() {
                                                                                 );
                                                                             }
                                                                                 break;
-                                                                            case ("2"): {
+                                                                            case ("C"): {
                                                                                 return (
                                                                                     <div>
 
-                                                                                        {contiguas()}
+                                                                                     
                                                                                         <label className="small mb-1" htmlFor="nivel">Menú 2</label>
 
                                                                                         <select id='menu2'
@@ -1144,27 +1152,27 @@ function Representantes() {
 
                                                                                             onChange={e => { setMenu2(e.target.value); console.log(e.target.value) }}
                                                                                         >
-                                                                                            <option value="Selecciona"></option>
+                                                                                            <option value="">Selecciona una opción</option>
                                                                                             {
                                                                                                 Cascont.map(val => {
 
-                                                                                                    return (<option value={val.id}>{val.numero}</option>);
+                                                                                                    return (<option value={val.numero}>{val.numero}</option>);
                                                                                                 })}
 
 
                                                                                         </select>
-                                                                                        {errors?.tipocasilla?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                                                                        {errors?.menu2?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
 
 
                                                                                     </div>
                                                                                 )
                                                                             }
-                                                                            case ("3"): {
+                                                                            case ("SMR"): {
                                                                                 return (
                                                                                     <div>
 
-                                                                                        {especiales()}
+                                                                                      
                                                                                         <label className="small mb-1" htmlFor="nivel">Menú 2</label>
 
                                                                                         <select id='menu2'
@@ -1176,27 +1184,27 @@ function Representantes() {
 
                                                                                             onChange={e => { setMenu2(e.target.value); console.log(e.target.value) }}
                                                                                         >
-                                                                                            <option value="Selecciona"></option>
+                                                                                            <option value="">Selecciona una opción</option>
                                                                                             {
                                                                                                 Casesp.map(val => {
 
-                                                                                                    return (<option value={val.id}>{val.numero}</option>);
+                                                                                                    return (<option value={val.numero}>{val.numero}</option>);
                                                                                                 })}
 
 
                                                                                         </select>
-                                                                                        {errors?.tipocasilla?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                                                                        {errors?.menu2?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
 
 
                                                                                     </div>
                                                                                 )
                                                                             }
-                                                                            case ("4"): {
+                                                                            case ("E"): {
                                                                                 return (
                                                                                     <div>
 
-                                                                                        {extraordinaria()}
+                                                                                       
                                                                                         <label className="small mb-1" htmlFor="nivel">Menú 2</label>
 
                                                                                         <select id='menu2'
@@ -1208,16 +1216,16 @@ function Representantes() {
 
                                                                                             onChange={e => { setMenu2(e.target.value); console.log(e.target.value) }}
                                                                                         >
-                                                                                            <option value="Selecciona"></option>
+                                                                                            <option value="">Selecciona una opción</option>
                                                                                             {
                                                                                                 Casext.map(val => {
 
-                                                                                                    return (<option value={val.id}>{val.numero}</option>);
+                                                                                                    return (<option value={val.numero}>{val.numero}</option>);
                                                                                                 })}
 
 
                                                                                         </select>
-                                                                                        {errors?.tipocasilla?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                                                                        {errors?.menu2?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
 
 
@@ -1240,60 +1248,345 @@ function Representantes() {
                                                             </div>
 
                                                             <div className="col-md-5">
+                                                                {
+                                                                    (() => {
+                                                                        switch (menu1) {
 
-                                                                <label className="small mb-1" htmlFor="nivel">Menú 3</label>
-                                                                {contiguas()}
-                                                                <select id='menu3'
-                                                                    {...register("nocontigua", {
-                                                                        required: true,
-
-                                                                    })}
-                                                                    className="form-control form-select"
-
-                                                                    onChange={e => { setConsejo(e.target.value) }}
-                                                                >
-                                                                    <option value=""></option>
-                                                                    {
-                                                                        Cascont.map(val => {
-
-                                                                            return (<option value={val.id}>{val.numero}</option>);
-                                                                        })}
+                                                                            case ("B"): {
+                                                                                return (
+                                                                                    <div>
 
 
-                                                                </select>
-                                                                {errors?.tipocasilla?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                                                                    </div>
+                                                                                );
+                                                                            }
+                                                                                break;
+                                                                            case ("C"): {
+                                                                                return (
+                                                                                    <div>
 
+                                                                                        <label className="small mb-1" htmlFor="nivel">Menú 3</label>
+                                                                                    
+                                                                                        <select id='menu3'
+                                                                                           
+                                                                                            className="form-control form-select"
+
+                                                                                            onChange={e => { setConsejo(e.target.value) }}
+                                                                                            disabled
+                                                                                        >
+                                                                                            <option value=""></option>
+                                                                                            {
+                                                                                                Cascont.map(val => {
+
+                                                                                                    return (<option value={val.numero}>{val.numero}</option>);
+                                                                                                })}
+
+
+                                                                                        </select>
+                                                                                        {errors?.menu?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+
+
+                                                                                    </div>
+                                                                                )
+                                                                            }
+                                                                            case ("SMR"): {
+                                                                                return (
+                                                                                    <div>
+
+                                                                                        <label className="small mb-1" htmlFor="nivel">Menú 3</label>
+                                                                                     
+                                                                                        <select id='menu3'
+                                                                                            
+                                                                                            className="form-control form-select"
+
+                                                                                            onChange={e => { setConsejo(e.target.value) }}
+                                                                                            disabled
+                                                                                        >
+                                                                                            <option value=""></option>
+                                                                                            {
+                                                                                                Cascont.map(val => {
+
+                                                                                                    return (<option value={val.numero}>{val.numero}</option>);
+                                                                                                })}
+
+
+                                                                                        </select>
+                                                                                        {errors?.menu3?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+                                                                                    </div>
+                                                                                )
+                                                                            }
+                                                                            case ("E"): {
+                                                                                if(cb.checked){
+                                                                                    return (
+                                                                                    <div>
+                                                                                    <label className="small mb-1" htmlFor="nivel">Menú 3</label>
+                                                                                       
+                                                                                        <select id='menu3'
+                                                                                            {...register("menu3", {
+                                                                                                required: true,
+
+                                                                                            })}
+                                                                                            className="form-control form-select"
+
+                                                                                            onChange={e => { setMenu3(e.target.value) }}
+                                                                                            
+                                                                                        >
+                                                                                            <option value="C">Contigua</option>
+                                                                                            
+
+                                                                                        </select>
+                                                                                        {errors?.menu3?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+
+                                                                                    </div>
+                                                                                )
+                                                                                }else{
+                                                                                    return (
+                                                                                    <div>
+                                                                                    <label className="small mb-1" htmlFor="nivel">Menú 3</label>
+                                                                                     
+                                                                                        <select id='menu3'
+                                                                                      
+                                                                                            className="form-control form-select"
+
+                                                                                            onChange={e => { setMenu3(e.target.value) }}
+                                                                                            disabled
+                                                                                        >
+                                                                                            <option value=""></option>
+                                                                                            {
+                                                                                                Casext.map(val => {
+
+                                                                                                    return (<option value={val.numero}>{val.numero}</option>);
+                                                                                                })}
+
+
+                                                                                        </select>
+                                                                                        {errors?.menu3?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+
+                                                                                    </div>
+                                                                                )
+                                                                                }
+                                                                                
+                                                                            }
+
+
+
+
+                                                                            default: {
+                                                                                return (
+                                                                                    <span></span>
+                                                                                )
+                                                                            }
+
+                                                                        }
+                                                                    })()
+                                                                }
 
                                                             </div>
                                                             <div className="col-md-5">
 
-                                                                <label className="small mb-1" htmlFor="nivel">Menú 4</label>
-                                                                {contiguas()}
-                                                                <select id='menu2'
-                                                                    {...register("nocontigua", {
-                                                                        required: true,
+                                                                {
+                                                                    (() => {
+                                                                        switch (menu1) {
 
-                                                                    })}
-                                                                    className="form-control form-select"
-
-                                                                    onChange={e => { setConsejo(e.target.value) }}
-                                                                >
-                                                                    <option value=""></option>
-                                                                    {
-                                                                        Cascont.map(val => {
-
-                                                                            return (<option value={val.id}>{val.numero}</option>);
-                                                                        })}
+                                                                            case ("B"): {
+                                                                                return (
+                                                                                    <div>
 
 
-                                                                </select>
-                                                                {errors?.tipocasilla?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                                                                    </div>
+                                                                                );
+                                                                            }
+                                                                                break;
+                                                                            case ("C"): {
+                                                                                return (
+                                                                                    <div>
+
+                                                                                        <label className="small mb-1" htmlFor="nivel">Menú 4</label>
+                                                                                        
+                                                                                        <select id='menu3'
+                                                                                            
+                                                                                            className="form-control form-select"
+
+                                                                                            onChange={e => { setConsejo(e.target.value) }}
+                                                                                            disabled
+                                                                                        >
+                                                                                            <option value=""></option>
+                                                                                            {
+                                                                                                Cascont.map(val => {
+
+                                                                                                    return (<option value={val.numero}>{val.numero}</option>);
+                                                                                                })}
 
 
+                                                                                        </select>
+                                                                                        {errors?.menu?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+
+
+                                                                                    </div>
+                                                                                )
+                                                                            }
+                                                                            case ("SMR"): {
+                                                                                return (
+                                                                                    <div>
+
+                                                                                        <label className="small mb-1" htmlFor="nivel">Menú 4</label>
+                                                                                           <select id='menu3'
+                                                                                            
+                                                                                            className="form-control form-select"
+
+                                                                                            onChange={e => { setConsejo(e.target.value) }}
+                                                                                            disabled
+                                                                                        >
+                                                                                            <option value=""></option>
+                                                                                            {
+                                                                                                Cascont.map(val => {
+
+                                                                                                    return (<option value={val.id}>{val.numero}</option>);
+                                                                                                })}
+
+
+                                                                                        </select>
+                                                                                        {errors?.menu?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+                                                                                    </div>
+                                                                                )
+                                                                            }
+                                                                            case ("E"): {
+                                                                                if(cb.checked){
+                                                                                    return (
+                                                                                    <div>
+                                                                                        
+                                                                                    
+                                                                                        <label className="small mb-1" htmlFor="nivel">Menú 4</label>
+
+                                                                                        <select id='menu4'
+                                                                                            {...register("menu4", {
+                                                                                                required: true,
+
+                                                                                            })}
+                                                                                            className="form-control form-select"
+                                                                                            
+                                                                                            onChange={e => { setMenu4(e.target.value); console.log(e.target.value) }}
+                                                                                        >
+                                                                                            <option value="Selecciona"></option>
+                                                                                            {
+                                                                                                Cascont.map(val => {
+
+                                                                                                    return (<option value={val.numero}>{val.numero}</option>);
+                                                                                                })}
+
+
+                                                                                        </select>
+                                                                                        {errors?.menu4?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+
+
+                                                                                    </div>
+                                                                                )
+                                                                                }else{
+                                                                                    return (
+                                                                                    <div>
+                                                                                        
+                                                                                       
+                                                                                        <label className="small mb-1" htmlFor="nivel">Menú 4</label>
+
+                                                                                        <select id='menu4'
+                                                                                           
+                                                                                            className="form-control form-select"
+                                                                                            disabled
+                                                                                            onChange={e => { setMenu4(e.target.value); console.log(e.target.value) }}
+                                                                                        >
+                                                                                            <option value="Selecciona"></option>
+                                                                                            {
+                                                                                                Cascont.map(val => {
+
+                                                                                                    return (<option value={val.numero}>{val.numero}</option>);
+                                                                                                })}
+
+
+                                                                                        </select>
+                                                                                        {errors?.menu?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+
+
+                                                                                    </div>
+                                                                                )
+                                                                                }
+                                                                               
+                                                                            }
+
+
+
+
+                                                                            default: {
+                                                                                return (
+                                                                                    <span></span>
+                                                                                )
+                                                                            }
+
+                                                                        }
+                                                                    })()
+                                                                }
                                                             </div>
                                                             <div className='col-md-2'>
+                                                                {
+                                                                    (() => {
+                                                                        switch (menu1) {
 
-                                                                <input id="check" type='checkbox' />
+                                                                            case ("B"): {
+                                                                                return (
+                                                                                    <div>
+
+
+                                                                                    </div>
+                                                                                );
+                                                                            }
+                                                                                break;
+                                                                            case ("C"): {
+                                                                                return (
+                                                                                    <div>
+                                                                                        <input id="check" type='checkbox' disabled></input>
+                                                                                    </div>
+                                                                                )
+                                                                            }
+                                                                            case ("SMR"): {
+                                                                                return (
+                                                                                    <div>
+                                                                                        <input id="check" type='checkbox' disabled></input>
+
+                                                                                    </div>
+                                                                                )
+                                                                            }
+                                                                            case ("E"): {
+                                                                                return (
+                                                                                    <div>
+
+                                                                                        <input id="check" type='checkbox'></input>
+
+
+
+                                                                                    </div>
+                                                                                )
+                                                                            }
+
+
+
+
+                                                                            default: {
+                                                                                return (
+                                                                                    <span></span>
+                                                                                )
+                                                                            }
+
+                                                                        }
+                                                                    })()
+                                                                }
+
                                                             </div>
 
 
