@@ -24,7 +24,6 @@ function Header() {
 
 
 
-
             <nav className="navbar navbar-expand-lg sticky-top p-0 px-4 px-lg-5">
 
                 <NavLink to='/inicio' className="navbar-brand d-flex align-items-center">
@@ -46,14 +45,14 @@ function Header() {
                         <NavLink to='/promovidos' className="nav-item nav-link ">Promovidos</NavLink>
 
                         <div className="dropdown">
-  <a className="nav-item nav-link">Representantes <i className='fas fa-angle-down'></i></a>
-  <div className="dropdown-content">
-  <NavLink to='/representantes' className="nav-item nav-link ">Promovidos</NavLink>
+                            <a className="nav-item nav-link">Representantes <i className='fas fa-angle-down'></i></a>
+                            <div className="dropdown-content">
+                                <NavLink to='/representantes' >Generales</NavLink>
 
-    <a href="#">Casilla</a>
-   
-  </div>
-</div>
+                                <a href="#">Casilla</a>
+
+                            </div>
+                        </div>
 
 
                         <NavLink className="nav-item nav-link">Resultados Electorales</NavLink>

@@ -83,12 +83,10 @@ function RepresentantesList() {
     }
     const columns = [
         { field: 'id', header: 'ID' },
-        { field: 'apaterno', header: 'Apellido Materno' },
-        { field: 'amaterno', header: 'Apellido Materno' },
-        { field: 'nombres', header: 'Nombres' },
-        { field: 'clave_electoral', header: 'Clave de elector' },
-        { field: 'seccion', header: 'Seccion' },
-        { field: 'nombre_tipo', header: 'Tipo Lider' },
+        { field: 'nombre', header: 'Nombre Completo' },
+        { field: 'no_celular', header: 'Núm. de celular' },
+        { field: 'secc', header: 'Sección (es) de Responsabilidad' },
+        
       
 
     ];
@@ -203,19 +201,26 @@ function RepresentantesList() {
             </div>
         );
     };
+    const representativeBodyTemplate2 = (rowData) => {
+        return (
+            <div className="flex align-items-center gap-2">
+                <span className="font-bold">{rowData.no_celular}</span>
+
+            </div>
+        );
+    };;
     const headerGroup = (<ColumnGroup>
         <Row>
-            <Column header="" colSpan={6}></Column>
-            <Column header="Acciones" colSpan={2} style={{ paddingLeft: '35px' }}></Column>
+            <Column header="" colSpan={3}></Column>
+            <Column header="Acciones" colSpan={2} style={{ paddingLeft: '125px' }}></Column>
             
         </Row>
         <Row>
-            <Column header="Apellido Paterno"></Column>
-            <Column header="Apellido Materno"></Column>
-            <Column header="Nombres"></Column>
-            <Column header="Clave Electoral"></Column>
-            <Column header="Seccion"></Column>
-            <Column header="Tipo Lider"></Column>
+            <Column header="Nombre Completo"></Column>
+            <Column header="Núm de Celular"></Column>
+            <Column header="Seccion (es) de Responsabilidad"></Column>
+            
+            
             <Column header="ver"></Column>
             <Column header="editar"></Column>
         </Row>
@@ -258,15 +263,14 @@ function RepresentantesList() {
                                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
                                         tableStyle={{ minWidth: '50rem' }}
                                         globalFilterFields={['']}
+                                        rowGroupMode="rowspan" groupRowsBy={['nombre', 'no_celular']}
                                         header={header}>
-                                        <Column field="apaterno" header="Apellido Paterno" style={{ minWidth: '12rem' }} />
-                                        <Column field="amaterno" header="Apellido Materno" style={{ minWidth: '12rem' }} />
-                                        <Column field="nombres" header="Nombres" style={{ minWidth: '12rem' }} />
-                                        <Column field="clave_electoral" header="Clave Electoral" style={{ minWidth: '12rem' }} />
-                                        <Column field="seccion" header="Sección" style={{ minWidth: '12rem' }} />
-                                        <Column field="nombre_tipo" header="Tipo Lider" style={{ minWidth: '12rem' }} />
-                                        <Column field="ver" header="Ver" style={{ minWidth: '12rem' }} />
-                                        <Column field="eliminar" header="Eliminar" style={{ minWidth: '12rem' }} />
+                                        <Column field="nombre" header="Nombre completo" style={{ minWidth: '12rem' }} body={representativeBodyTemplate} />
+                                    <Column field="no_celular" header="Núm. de celular" style={{ minWidth: '12rem' }} body={representativeBodyTemplate2} />
+                                    <Column field="secc" header="Seccion (es) de Responsabilidad" style={{ minWidth: '7rem' }} />
+
+                                    <Column field="ver" header="Ver" style={{ minWidth: '4rem' }} />
+                                    <Column field="eliminar" header="Eliminar" style={{ minWidth: '4rem' }} />
 
                                     </DataTable>
                                 </div>

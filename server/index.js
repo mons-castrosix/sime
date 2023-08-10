@@ -1764,5 +1764,32 @@ app.post('/api/insert-representantesg', (req, res) => {
 
 );
 
+app.post('/representantes', (req, res) => {
+  db.query('SELECT rc.id,CONCAT(rc.nombres," ",rc.apaterno," ",rc.amaterno) AS nombre,rc.no_celular,sd.secc,srp.id AS idsr FROM registro_representantes_casilla rc INNER JOIN secciones_responsabilidad_representantes srp ON rc.id=srp.representante_id INNER JOIN secc_distrito sd ON srp.seccion_id=sd.id;', (err, result) => {
+    if (err) {
+      //console.log(err)
+    }
+    else {
+      acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
+      var resultado = JSON.stringify(result);
+      var empObj = JSON.parse(resultado);
+      /*var id="";
+      empObj.forEach((item) => {
+          Object.entries(item).forEach(([key, val]) => {
+              if(key=="id"){
+                  id=JSON.stringify(val);
+                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+            
+          });
+          Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
+        });
+        //console.log(empObj)*/
+      res.send(resultado)
+
+
+    }
+  })
+})
+
 
 
