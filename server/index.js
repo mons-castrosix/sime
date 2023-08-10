@@ -304,24 +304,24 @@ app.post('/api/distritos/', (req, res) => {
   ////console.log(seccion)
   const sqlInsert = "SELECT id,df,dl FROM secc_distrito WHERE secc =" + seccion + " ;"
   ////console.log(sqlInsert)
-  if(seccion)
-  db.query(sqlInsert, (err, result) => {
-    if (err) {
-      //console.log(err)
-     
-    }
-    else {
-      res.send(result[0])
-    
-    }
-   
-    
-  });
+  if (seccion)
+    db.query(sqlInsert, (err, result) => {
+      if (err) {
+        //console.log(err)
+
+      }
+      else {
+        res.send(result[0])
+
+      }
+
+
+    });
 })
 
 app.post('/api/distritosAll/', (req, res) => {
- 
-  const sqlInsert = "SELECT id as value,secc as name FROM secc_distrito;" ;
+
+  const sqlInsert = "SELECT id as value,secc as name FROM secc_distrito;";
   ////console.log(sqlInsert)
   db.query(sqlInsert, (err, result) => {
     res.send(result)
@@ -330,18 +330,18 @@ app.post('/api/distritosAll/', (req, res) => {
   });
 })
 app.post('/api/promotoresAll/', (req, res) => {
- 
-  const sqlInsert = "SELECT id,CONCAT(apaterno,' ',amaterno,' ', nombres) AS nombre FROM registro_promotores;" ;
+
+  const sqlInsert = "SELECT id,CONCAT(apaterno,' ',amaterno,' ', nombres) AS nombre FROM registro_promotores;";
   ////console.log(sqlInsert)
   db.query(sqlInsert, (err, result) => {
     res.send(result)
-   
+
     //console.log(err)
   });
 })
 app.post('/api/equipoAll/', (req, res) => {
- 
-  const sqlInsert = "SELECT *FROM equipo" ;
+
+  const sqlInsert = "SELECT *FROM equipo";
   ////console.log(sqlInsert)
   db.query(sqlInsert, (err, result) => {
     res.send(result)
@@ -350,32 +350,42 @@ app.post('/api/equipoAll/', (req, res) => {
   });
 })
 app.post('/api/cont/', (req, res) => {
- 
-  const sqlInsert = "SELECT id,numero FROM casillas_cont;" ;
+
+  const sqlInsert = "SELECT id,numero FROM casillas_cont;";
   ////console.log(sqlInsert)
   db.query(sqlInsert, (err, result) => {
     res.send(result)
-   
+
+    //console.log(err)
+  });
+})
+app.post('/api/cont10/', (req, res) => {
+
+  const sqlInsert = "SELECT * FROM casillas_cont WHERE nomenclatura BETWEEN 'C01' AND 'C10';";
+  ////console.log(sqlInsert)
+  db.query(sqlInsert, (err, result) => {
+    res.send(result)
+
     //console.log(err)
   });
 })
 app.post('/api/esp/', (req, res) => {
- 
-  const sqlInsert = "SELECT id,numero FROM casillas_esp;" ;
+
+  const sqlInsert = "SELECT id,numero FROM casillas_esp;";
   ////console.log(sqlInsert)
   db.query(sqlInsert, (err, result) => {
     res.send(result)
-   
+
     //console.log(err)
   });
 })
 app.post('/api/ext/', (req, res) => {
- 
-  const sqlInsert = "SELECT id,numero FROM casillas_ext;" ;
+
+  const sqlInsert = "SELECT id,numero FROM casillas_ext;";
   ////console.log(sqlInsert)
   db.query(sqlInsert, (err, result) => {
     res.send(result)
-   
+
     //console.log(err)
   });
 })
@@ -407,7 +417,7 @@ app.post('/mapa-estructura/', (req, res) => {
 
 app.post('/apoyos-view/:id', (req, res) => {
   const id = req.params.id
-  db.query("SELECT *FROM apoyo a INNER JOIN apoyos ap ON a.id=ap.id_persona where a.id=?;",id, (err, result) => {
+  db.query("SELECT *FROM apoyo a INNER JOIN apoyos ap ON a.id=ap.id_persona where a.id=?;", id, (err, result) => {
     if (err) {
       //console.log(err)
     }
@@ -427,7 +437,7 @@ app.post('/apoyos-view/:id', (req, res) => {
         });
         //console.log(empObj)*/
       res.send(resultado)
-//console.log(resultado)
+      //console.log(resultado)
 
     }
   })
@@ -572,7 +582,7 @@ app.delete('/deleteApoyo/:id', (req, res) => {
     }
     else {
       //console.log(result);
-      res.send({status: 404, msg: "No user found"});
+      res.send({ status: 404, msg: "No user found" });
       //res.status().send(200); 
     }
   })
@@ -768,18 +778,18 @@ app.post('/api/insert-lider/', (req, res) => {
 
             }
           });
-          for (let i = 0; i < injerencia.length; i++) {
-            db.query(secc_resp, [id_p, injerencia[i]], (err, result) => {
-              if (err) {
-                //console.log(err);
-              }
-              else {
-                response.push(true);
-      
-      
-              }
-            })
-          }
+        for (let i = 0; i < injerencia.length; i++) {
+          db.query(secc_resp, [id_p, injerencia[i]], (err, result) => {
+            if (err) {
+              //console.log(err);
+            }
+            else {
+              response.push(true);
+
+
+            }
+          })
+        }
       }
       if (lider == 2) {
         sql3 = "INSERT INTO lider_partidista (partido_id,id_lider) VALUES (?,?)"
@@ -796,18 +806,18 @@ app.post('/api/insert-lider/', (req, res) => {
 
             }
           });
-          for (let i = 0; i < injerencia.length; i++) {
-            db.query(secc_resp, [id_p, injerencia[i]], (err, result) => {
-              if (err) {
-                //console.log(err);
-              }
-              else {
-                response.push(true);
-      
-      
-              }
-            })
-          }
+        for (let i = 0; i < injerencia.length; i++) {
+          db.query(secc_resp, [id_p, injerencia[i]], (err, result) => {
+            if (err) {
+              //console.log(err);
+            }
+            else {
+              response.push(true);
+
+
+            }
+          })
+        }
       }
       if (lider == 3) {
         sql3 = "INSERT INTO cargo_escuela (nombre_escuela,cargo,id_lider) VALUES (?,?,?)"
@@ -913,7 +923,7 @@ app.post('/api/insert-lider/', (req, res) => {
 });
 app.post('/lideres-view/:id', (req, res) => {
   const id = req.params.id
-  db.query('SELECT l.nombres,l.apaterno,l.amaterno,l.calle,l.numero,l.colonia,.l.cp,l.ciudad, DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,l.curp,l.clave_electoral,l.seccion,l.id_Secc,l.no_celular,l.email,l.facebook,l.twitter,l.otra_red,l.circulo,l.contacto,l.no_celcontacto,l.observaciones,l.lat,l.lng,l.id_tipoLider ,t.nombre_tipo,sd.df,sd.dl FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id INNER JOIN secc_distrito sd ON l.id_Secc=sd.id where l.id=?',id, (err, result) => {
+  db.query('SELECT l.nombres,l.apaterno,l.amaterno,l.calle,l.numero,l.colonia,.l.cp,l.ciudad, DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,l.curp,l.clave_electoral,l.seccion,l.id_Secc,l.no_celular,l.email,l.facebook,l.twitter,l.otra_red,l.circulo,l.contacto,l.no_celcontacto,l.observaciones,l.lat,l.lng,l.id_tipoLider ,t.nombre_tipo,sd.df,sd.dl FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id INNER JOIN secc_distrito sd ON l.id_Secc=sd.id where l.id=?', id, (err, result) => {
     if (err) {
       //console.log(err)
     }
@@ -1037,22 +1047,22 @@ app.post('/api/insert-estructura', (req, res) => {
 
         }
       });
-      db.query(lider_id, (err, result) => {
-        const id_p = result[0].id
-        for (let i = 0; i < injerencia.length; i++) {
-          db.query(secc_resp, [id_p, injerencia[i]], (err, result) => {
-            if (err) {
-              response.send(err);
-            }
-            else {
-              response.push(true);
-    
-    
-            }
-          })
-        }
-        
-      });
+    db.query(lider_id, (err, result) => {
+      const id_p = result[0].id
+      for (let i = 0; i < injerencia.length; i++) {
+        db.query(secc_resp, [id_p, injerencia[i]], (err, result) => {
+          if (err) {
+            response.send(err);
+          }
+          else {
+            response.push(true);
+
+
+          }
+        })
+      }
+
+    });
   });
   if (response[0] == true) {
     res.send("Agregado")
@@ -1091,7 +1101,7 @@ app.post('/estructura', (req, res) => {
 })
 app.post('/estructura-view/:id', (req, res) => {
   const id = req.params.id
-  db.query('SELECT  nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,curp,clave_electoral,seccion, no_celular, email,facebook, twitter, otra_red, circulo,observaciones,lat,lng,id_equipo,sd.df,sd.dl FROM registro_estructura INNER JOIN secc_distrito sd ON sd.id=registro_estructura.id_Secc where registro_estructura.id=?',id, (err, result) => {
+  db.query('SELECT  nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,curp,clave_electoral,seccion, no_celular, email,facebook, twitter, otra_red, circulo,observaciones,lat,lng,id_equipo,sd.df,sd.dl FROM registro_estructura INNER JOIN secc_distrito sd ON sd.id=registro_estructura.id_Secc where registro_estructura.id=?', id, (err, result) => {
     if (err) {
       ////console.log(err)
     }
@@ -1132,9 +1142,9 @@ app.delete('/deleteEstructura/:id', (req, res) => {
 app.post('/injerenciaEstructura/:id', (req, res) => {
   const id = req.params.id
   //console.log(id)
-  const sqlInsert = "SELECT sie.seccion_id FROM secciones_injerencia_estructura  sie INNER JOIN secc_distrito sd ON sie.seccion_id=sd.id WHERE sie.estructura_id=?;" ;
+  const sqlInsert = "SELECT sie.seccion_id FROM secciones_injerencia_estructura  sie INNER JOIN secc_distrito sd ON sie.seccion_id=sd.id WHERE sie.estructura_id=?;";
   ////console.log(sqlInsert)
-  db.query(sqlInsert,id, (err, result) => {
+  db.query(sqlInsert, id, (err, result) => {
     if (err) {
       //console.log(err)
     }
@@ -1226,12 +1236,12 @@ app.post('/insert-promotor', (req, res) => {
           }
           else {
             response.push(true);
-  
-  
+
+
           }
         })
       }
-      
+
     });
 
   });
@@ -1276,9 +1286,9 @@ app.post('/promotores', (req, res) => {
 })
 app.delete('/deletePromotor/:id/:idsrp', (req, res) => {
   const id = req.params.id
-  const idsrp=req.params.idsrp
+  const idsrp = req.params.idsrp
   //console.log(req.params)
-  db.query("DELETE FROM secciones_responsabilidad_promotores WHERE promotor_id=? AND id=?", [id,idsrp], (err, result) => {
+  db.query("DELETE FROM secciones_responsabilidad_promotores WHERE promotor_id=? AND id=?", [id, idsrp], (err, result) => {
     if (err) {
       res.send(err)
     }
@@ -1290,7 +1300,7 @@ app.delete('/deletePromotor/:id/:idsrp', (req, res) => {
 })
 app.post('/promotores-view/:id', (req, res) => {
   const id = req.params.id
-  db.query('SELECT  nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,curp,clave_electoral,seccion, no_celular, email,facebook, twitter, otra_red,id_Secc, circulo,observaciones,lat,lng,sd.df,sd.dl FROM registro_promotores INNER JOIN secc_distrito sd ON sd.id=registro_promotores.id_Secc WHERE registro_promotores.id=?',id, (err, result) => {
+  db.query('SELECT  nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,curp,clave_electoral,seccion, no_celular, email,facebook, twitter, otra_red,id_Secc, circulo,observaciones,lat,lng,sd.df,sd.dl FROM registro_promotores INNER JOIN secc_distrito sd ON sd.id=registro_promotores.id_Secc WHERE registro_promotores.id=?', id, (err, result) => {
     if (err) {
       //console.log(err)
     }
@@ -1318,9 +1328,9 @@ app.post('/promotores-view/:id', (req, res) => {
 app.post('/responsabilidadPromotor/:id', (req, res) => {
   const id = req.params.id
   //console.log(id)
-  const sqlInsert = "SELECT srp.seccion_id FROM secciones_responsabilidad_promotores  srp INNER JOIN secc_distrito sd ON srp.seccion_id=sd.id WHERE srp.promotor_id=?;" ;
+  const sqlInsert = "SELECT srp.seccion_id FROM secciones_responsabilidad_promotores  srp INNER JOIN secc_distrito sd ON srp.seccion_id=sd.id WHERE srp.promotor_id=?;";
   ////console.log(sqlInsert)
-  db.query(sqlInsert,id, (err, result) => {
+  db.query(sqlInsert, id, (err, result) => {
     if (err) {
       //console.log(err)
     }
@@ -1386,13 +1396,13 @@ app.post('/insert-promovido', (req, res) => {
   const sql3 = "SELECT max(id) as id FROM registro_promotores"
   const sqlInsert = "INSERT INTO registro_promovidos (nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,fecha_nacimiento,curp,clave_electoral,seccion,id_Secc,no_celular, email,facebook,twitter,otra_red,circulo,observaciones,lat,lng,img,id_promotor) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
   const response = []
-  /*db.query(sql2, (err, result) => {
+  db.query(sql2, (err, result) => {
     const id_image = result[0].id
 
 
     db.query(sqlInsert, [
       nombres, apaterno, amaterno, calle, numero, colonia, cp, ciudad, fecha_nacimiento, curp, clave_elector, seccion, id_Secc, no_celular, email, facebook, twitter, otra_red, nivel,
-      observaciones, lat, lng, id_image,promotor], (err, result) => {
+      observaciones, lat, lng, id_image, promotor], (err, result) => {
         if (err) {
           //console.log(err);
         }
@@ -1402,19 +1412,19 @@ app.post('/insert-promovido', (req, res) => {
         }
       });
 
-   
+
 
   });
 
 
 
-  if (response[0] == true ) {
+  if (response[0] == true) {
     res.send("Agregado")
   }
   else {
     res.send("No Agregado")
   }
-*/
+
 
 });
 app.post('/promovidos', (req, res) => {
@@ -1445,7 +1455,7 @@ app.post('/promovidos', (req, res) => {
 })
 app.post('/promovidos-view/:id', (req, res) => {
   const id = req.params.id
-  db.query('SELECT  r.nombres,r.apaterno,r.amaterno,r.calle,r.numero,r.colonia,r.cp,r.ciudad,DATE_FORMAT(r.fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,r.curp,r.clave_electoral,r.seccion, r.no_celular, r.email,r.facebook, r.twitter, r.otra_red,r.id_Secc,r.circulo,r.observaciones,r.lat,r.lng,sd.df,sd.dl,rp.id AS promotor FROM registro_promovidos r INNER JOIN secc_distrito sd ON sd.id=r.id_Secc INNER JOIN registro_promotores rp ON rp.id=r.id_promotor WHERE r.id=?',id, (err, result) => {
+  db.query('SELECT  r.nombres,r.apaterno,r.amaterno,r.calle,r.numero,r.colonia,r.cp,r.ciudad,DATE_FORMAT(r.fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,r.curp,r.clave_electoral,r.seccion, r.no_celular, r.email,r.facebook, r.twitter, r.otra_red,r.id_Secc,r.circulo,r.observaciones,r.lat,r.lng,sd.df,sd.dl,rp.id AS promotor FROM registro_promovidos r INNER JOIN secc_distrito sd ON sd.id=r.id_Secc INNER JOIN registro_promotores rp ON rp.id=r.id_promotor WHERE r.id=?', id, (err, result) => {
     if (err) {
       //console.log(err)
     }
@@ -1464,10 +1474,295 @@ app.post('/promovidos-view/:id', (req, res) => {
           Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
         });
         //console.log(empObj)*/
-        //console.log(resultado)
+      //console.log(resultado)
       res.send(resultado)
 
 
     }
   })
 })
+
+
+app.post('/api/insert-representantes', (req, res) => {
+  console.log(req.body)
+
+  const apaterno = req.body.apaterno
+  const amaterno = req.body.amaterno
+  const nombres = req.body.nombres
+  const calle = req.body.calle
+  const numero = req.body.numero
+  const colonia = req.body.colonia
+  const cp = req.body.cp
+  const ciudad = req.body.ciudad
+  const clave_elector = req.body.clave_elector
+  const curp = req.body.curp
+  const fecha_nacimiento = req.body.fecha_nacimiento
+  const seccion = req.body.seccion
+  const distrito_federal = req.body.distrito_federal
+  const distrito_local = req.body.distrito_local
+  const nivel = req.body.nivel
+  const no_celular = req.body.no_celular
+  const email = req.body.email
+  const facebook = req.body.facebook
+  const twitter = req.body.twitter
+  const otra_red = req.body.otra_red
+  const contacto = req.body.contacto
+  const no_celcontacto = req.body.no_celcontacto
+  const lat = req.body.lat
+  const lng = req.body.lng
+  const repr = req.body.tiporep
+  const id_Secc = req.body.id_Secc
+  const observaciones = req.body.observaciones
+  const menu1 = req.body.menu1
+  const menu2C = req.body.menu2C
+  const menu2SMR = req.body.menu2SMR
+  const menu2E = req.body.menu2E
+  const menu3 = req.body.menu3
+  const menu4 = req.body.menu4
+  const sqlInsert = "INSERT INTO registro_representantes_casilla (nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,fecha_nacimiento,curp,clave_electoral,seccion,id_Secc,no_celular, email,facebook,twitter,otra_red,circulo,contacto,no_celcontacto,observaciones,lat,lng,img,tipo_casilla,id_casilla) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
+  const sql2 = "SELECT max(id) as id FROM img_ine"
+  if (menu1 == "B") {
+    db.query(sql2, (err, result) => {
+      const id_image = result[0].id
+
+
+      db.query(sqlInsert, [
+        nombres, apaterno, amaterno, calle, numero, colonia, cp, ciudad, fecha_nacimiento, curp, clave_elector, seccion, id_Secc, no_celular, email, facebook, twitter, otra_red, nivel, contacto, no_celcontacto,
+        observaciones, lat, lng, id_image, menu1, "N/A"], (err, result) => {
+          if (err) {
+            console.log(err);
+
+          }
+          else {
+
+            res.send("Agregado")
+
+          }
+        });
+    })
+  }
+
+  if (menu1 == "C") {
+    db.query(sql2, (err, result) => {
+      const id_image = result[0].id
+      const search = menu1 + menu2C;
+      const sqlcas = "SELECT * FROM casillas_cont WHERE nomenclatura='" + search + "';"
+      console.log("consulta"+sqlcas);
+
+      db.query(sqlcas, (err, result) => {
+        const id_cas = result[0].id
+        db.query(sqlInsert, [
+          nombres, apaterno, amaterno, calle, numero, colonia, cp, ciudad, fecha_nacimiento, curp, clave_elector, seccion, id_Secc, no_celular, email, facebook, twitter, otra_red, nivel, contacto, no_celcontacto,
+          observaciones, lat, lng, id_image, menu1, id_cas], (err, result) => {
+            if (err) {
+              console.log(err);
+
+            }
+            else {
+              console.log(result);
+              res.send("Agregado");
+
+            }
+          });
+      })
+   } )
+   
+}
+if (menu1 == "SMR") {
+  db.query(sql2, (err, result) => {
+    const id_image = result[0].id
+    const search = menu1 + menu2SMR;
+    const sqlcas = "SELECT * FROM casillas_esp WHERE nomenclatura='" + search + "';"
+    console.log("consulta"+sqlcas);
+
+    db.query(sqlcas, (err, result) => {
+      const id_cas = result[0].id
+      db.query(sqlInsert, [
+        nombres, apaterno, amaterno, calle, numero, colonia, cp, ciudad, fecha_nacimiento, curp, clave_elector, seccion, id_Secc, no_celular, email, facebook, twitter, otra_red, nivel, contacto, no_celcontacto,
+        observaciones, lat, lng, id_image, menu1, id_cas], (err, result) => {
+          if (err) {
+            console.log(err);
+
+          }
+          else {
+            console.log(result);
+            res.send("Agregado");
+
+          }
+        });
+    })
+ } )
+ 
+}
+if (menu1 == "E") {
+  db.query(sql2, (err, result) => {
+    const id_image = result[0].id
+    const search = menu1 + menu2E;
+    const sqlcas = "SELECT * FROM casillas_ext WHERE nomenclatura='" + search + "';"
+    console.log("consulta"+sqlcas);
+
+    db.query(sqlcas, (err, result) => {
+      const id_cas = result[0].id
+      db.query(sqlInsert, [
+        nombres, apaterno, amaterno, calle, numero, colonia, cp, ciudad, fecha_nacimiento, curp, clave_elector, seccion, id_Secc, no_celular, email, facebook, twitter, otra_red, nivel, contacto, no_celcontacto,
+        observaciones, lat, lng, id_image, menu1, id_cas], (err, result) => {
+          if (err) {
+            console.log(err);
+
+          }
+          else {
+            console.log(result);
+            res.send("Agregado");
+
+          }
+        });
+    })
+ } )
+ 
+}
+if (menu1=="EC") {
+  db.query(sql2, (err, result) => {
+    const id_image = result[0].id
+    const search = "E"+ menu2E+menu3+menu4;
+    const sqlcas = "SELECT * FROM casillas_extcont WHERE nomenclatura='" + search + "';"
+    console.log("consulta"+sqlcas);
+
+    db.query(sqlcas, (err, result) => {
+      const id_cas = result[0].id
+      db.query(sqlInsert, [
+        nombres, apaterno, amaterno, calle, numero, colonia, cp, ciudad, fecha_nacimiento, curp, clave_elector, seccion, id_Secc, no_celular, email, facebook, twitter, otra_red, nivel, contacto, no_celcontacto,
+        observaciones, lat, lng, id_image, "EC", id_cas], (err, result) => {
+          if (err) {
+            console.log(err);
+
+          }
+          else {
+            console.log(result);
+            res.send("Agregado");
+
+          }
+        });
+    })
+ } )
+ 
+    
+  }
+}
+
+
+  /*
+    const sql2 = "SELECT max(id) as id FROM img_ine"
+    const sql3 = "SELECT max(id) as id FROM registro_promotores"
+    const sqlInsert = "INSERT INTO registro_promovidos (nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,fecha_nacimiento,curp,clave_electoral,seccion,id_Secc,no_celular, email,facebook,twitter,otra_red,circulo,observaciones,lat,lng,img,id_promotor) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
+    const response = []
+    db.query(sql2, (err, result) => {
+      const id_image = result[0].id
+  
+  
+      db.query(sqlInsert, [
+        nombres, apaterno, amaterno, calle, numero, colonia, cp, ciudad, fecha_nacimiento, curp, clave_elector, seccion, id_Secc, no_celular, email, facebook, twitter, otra_red, nivel,
+        observaciones, lat, lng, id_image,promotor], (err, result) => {
+          if (err) {
+            //console.log(err);
+          }
+          else {
+            response.push(true)
+  
+          }
+        });
+    })
+    */
+);
+app.post('/api/insert-representantesg', (req, res) => {
+  console.log(req.body)
+
+  const apaterno = req.body.apaterno
+  const amaterno = req.body.amaterno
+  const nombres = req.body.nombres
+  const calle = req.body.calle
+  const numero = req.body.numero
+  const colonia = req.body.colonia
+  const cp = req.body.cp
+  const ciudad = req.body.ciudad
+  const clave_elector = req.body.clave_elector
+  const curp = req.body.curp
+  const fecha_nacimiento = req.body.fecha_nacimiento
+  const seccion = req.body.seccion
+  const distrito_federal = req.body.distrito_federal
+  const distrito_local = req.body.distrito_local
+  const nivel = req.body.nivel
+  const no_celular = req.body.no_celular
+  const email = req.body.email
+  const facebook = req.body.facebook
+  const twitter = req.body.twitter
+  const otra_red = req.body.otra_red
+  const contacto = req.body.contacto
+  const no_celcontacto = req.body.no_celcontacto
+  const lat = req.body.lat
+  const lng = req.body.lng
+  const repr = req.body.tiporep
+  const consejo=req.body.consejo
+  const ruta=req.body.ruta
+  const injerencias=req.body.injerencias
+  const id_Secc = req.body.id_Secc
+  const observaciones = req.body.observaciones
+
+  const sqlInsert = "INSERT INTO registro_representantes_casilla_gral (nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,fecha_nacimiento,curp,clave_electoral,seccion,id_Secc,no_celular, email,facebook,twitter,otra_red,circulo,contacto,no_celcontacto,observaciones,lat,lng,img,ruta,consejo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
+  const sql2 = "SELECT max(id) as id FROM img_ine"
+  const sql3 = "SELECT max(id) as id FROM registro_representantes_casilla_gral;"
+  const secc_resp = "INSERT INTO secciones_responsabilidad_representantes (representante_id,seccion_id) VALUES (?,?) ";
+  const response = []
+  db.query(sql2, (err, result) => {
+    const id_image = result[0].id
+
+
+    db.query(sqlInsert, [
+      nombres, apaterno, amaterno, calle, numero, colonia, cp, ciudad, fecha_nacimiento, curp, clave_elector, seccion, id_Secc, no_celular, email, facebook, twitter, otra_red, nivel, contacto, no_celcontacto,
+      observaciones, lat, lng, id_image, ruta, consejo], (err, result) => {
+        if (err) {
+          console.log(err);
+
+        }
+        else {
+
+          response.push("Agregado")
+
+        }
+      });
+    db.query(sql3, (err, result) => {
+      const id_p = result[0].id
+      for (let i = 0; i < injerencias.length; i++) {
+        db.query(secc_resp, [id_p, injerencias[i]], (err, result) => {
+          if (err) {
+            //console.log(err);
+          }
+          else {
+            response.push(true);
+
+
+          }
+        })
+      }
+
+    });
+
+  });
+
+
+
+  if (response[0] == true && response[1] == true) {
+    res.send("Agregado")
+  }
+  else {
+    res.send("No Agregado")
+  }
+
+
+
+}
+
+
+);
+
+
+

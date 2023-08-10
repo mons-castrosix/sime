@@ -236,8 +236,11 @@ function RepresentantesList() {
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous" />
                 <div className='apoyos'>
+                
                     <div className="container">
                         {getList()}
+                       
+
                         <div className="table-responsive">
                             <div className="table-wrapper">
 

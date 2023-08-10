@@ -10,57 +10,69 @@ import menu from './menu.png'
 import Apoyos from '../apoyos/apoyos';
 import $ from 'jquery'
 
-        function Header(){
-            return(
-                  
-                <div className='header'>
-                    <link rel="preconnect" href="https://fonts.googleapis.com"/>
-                    <link rel="preconnect" href="https://fonts.gstatic.com" />
-                    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700&display=swap" rel="stylesheet"/>
-        
-                    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet"/>
-                    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet"/>
-                
-                
-                    
-                     
-                
-                <nav className="navbar navbar-expand-lg sticky-top p-0 px-4 px-lg-5">
-                   
-                    <NavLink to='/inicio'  className="navbar-brand d-flex align-items-center">
+function Header() {
+    return (
+
+        <div className='header'>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" />
+            <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700&display=swap" rel="stylesheet" />
+
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+
+
+
+
+
+            <nav className="navbar navbar-expand-lg sticky-top p-0 px-4 px-lg-5">
+
+                <NavLink to='/inicio' className="navbar-brand d-flex align-items-center">
                     <img src={logo} alt="..." width="65" className="mr-3 rounded-circle img-thumbnail shadow-sm" />
                     <div className="media-body">
-                        <h4 className="m-0" style={{color:'white'}}>MAPE</h4>
-                        <p style={{color:'white'}} className=" mb-0">Nombre del candidato</p>
+                        <h4 className="m-0" style={{ color: 'white' }}>MAPE</h4>
+                        <p style={{ color: 'white' }} className=" mb-0">Nombre del candidato</p>
                     </div>
-                    </NavLink>
-                    <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span className="navbar-toggler-icon"><img className='text-white' style={{width:'32px'}} src={menu}></img></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarCollapse">
-                        <div className="navbar-nav ms-auto py-4 py-lg-0">
-                            <NavLink to='/apoyos'  className="nav-item nav-link ">Apoyos</NavLink>
-                            <NavLink to='/lideres'  className="nav-item nav-link ">Lideres Territoriales</NavLink>
-                            <NavLink to='/estructura'  className="nav-item nav-link ">Estructura</NavLink>
-                            <NavLink to='/promotores'  className="nav-item nav-link ">Promotores</NavLink>
-                            <NavLink to='/promovidos'  className="nav-item nav-link ">Promovidos</NavLink>
-                            <NavLink to='/representantes' className="nav-item nav-link ">Representantes</NavLink>
-                            <NavLink  className="nav-item nav-link">Resultados Electorales</NavLink>
-                            <NavLink  className="nav-item nav-link ">Metas</NavLink>
-                            <NavLink to='/mapa' className="nav-item nav-link ">Mapa</NavLink>
-                        </div>
-                        
+                </NavLink>
+                <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span className="navbar-toggler-icon"><img className='text-white' style={{ width: '32px' }} src={menu}></img></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarCollapse">
+                    <div className="navbar-nav ms-auto py-4 py-lg-0">
+                        <NavLink to='/apoyos' className="nav-item nav-link ">Apoyos</NavLink>
+                        <NavLink to='/lideres' className="nav-item nav-link ">Lideres Territoriales</NavLink>
+                        <NavLink to='/estructura' className="nav-item nav-link ">Estructura</NavLink>
+                        <NavLink to='/promotores' className="nav-item nav-link ">Promotores</NavLink>
+                        <NavLink to='/promovidos' className="nav-item nav-link ">Promovidos</NavLink>
+
+                        <div className="dropdown">
+  <a className="nav-item nav-link">Representantes <i className='fas fa-angle-down'></i></a>
+  <div className="dropdown-content">
+  <NavLink to='/representantes' className="nav-item nav-link ">Promovidos</NavLink>
+
+    <a href="#">Casilla</a>
+   
+  </div>
+</div>
+
+
+                        <NavLink className="nav-item nav-link">Resultados Electorales</NavLink>
+                        <NavLink className="nav-item nav-link ">Metas</NavLink>
+                        <NavLink to='/mapa' className="nav-item nav-link ">Mapa</NavLink>
+
                     </div>
-                </nav>
-               
-                
-                
-                
+
                 </div>
-               
-                
-            );
-        }
+            </nav>
+
+
+
+
+        </div>
+
+
+    );
+}
 
 
 

@@ -68,16 +68,20 @@ function Representantes() {
     const [ruta, setRuta] = useState("");
     const [list, setList] = useState([])
     const [Cascont, setCascont] = useState([])
+    const [Cascont10, setCascont10] = useState([])
     const [Casext, setCasext] = useState([])
     const [Casesp, setCasesp] = useState([])
     const navigate = useNavigate();
     const [menu1, setMenu1] = useState("");
-    const [menu2, setMenu2] = useState("");
+    const [menu2C, setMenu2C] = useState("");
+    const [menu2SMR, setMenu2SMR] = useState("");
+    const [menu2E, setMenu2E] = useState("");
+
     const [menu3, setMenu3] = useState("");
     const [menu4, setMenu4] = useState("");
+    const [check, setCheck] = useState("");
 
-    const [selectedCasilla, setSelectedCasilla] = useState(null);
-
+    const [selectedSeccion, setSelectedSeccion] = useState(null);
     const casillatipo = [
         { name: 'Básica', code: 'B' },
         { name: 'Contigua', code: 'C' },
@@ -106,6 +110,7 @@ function Representantes() {
         setNewCoor([rectangle.latLng.lat(), rectangle.latLng.lng()])
     }
 
+
     const uploadFile1 = async (e) => {
         const formData = new FormData();
         console.log(fileName)
@@ -125,21 +130,21 @@ function Representantes() {
             var fecha = res.data.fecha_nacimiento
             fecha = fecha.split("/").reverse().join("-");
             console.log(fecha)
-            setValue("nombre", res.data.nombres,{ shouldValidate: true, shouldDirty: true })
+            setValue("nombre", res.data.nombres, { shouldValidate: true, shouldDirty: true })
 
-            setValue("apaterno", res.data.apaterno,{ shouldValidate: true, shouldDirty: true });
-            setValue("amaterno", res.data.amaterno,{ shouldValidate: true, shouldDirty: true });
-            setValue("calle", res.data.calle,{ shouldValidate: true, shouldDirty: true });
-            setValue("numero", res.data.numero,{ shouldValidate: true, shouldDirty: true });
-            setValue("colonia", res.data.colonia,{ shouldValidate: true, shouldDirty: true });
-            setValue("cpostal", res.data.cp,{ shouldValidate: true, shouldDirty: true });
-            setValue("ciudad", res.data.ciudad,{ shouldValidate: true, shouldDirty: true });
-            setValue("celectoral", res.data.c_elector,{ shouldValidate: true, shouldDirty: true });
-            setValue("curp", res.data.curp,{ shouldValidate: true, shouldDirty: true });
-            setValue("fnacimiento", fecha,{ shouldValidate: true, shouldDirty: true });
-            setValue("secc", res.data.seccion,{ shouldValidate: true, shouldDirty: true });
-            setValue("df", res.data.distrito_federal,{ shouldValidate: true, shouldDirty: true });
-            setValue("dl", res.data.distrito_local,{ shouldValidate: true, shouldDirty: true });
+            setValue("apaterno", res.data.apaterno, { shouldValidate: true, shouldDirty: true });
+            setValue("amaterno", res.data.amaterno, { shouldValidate: true, shouldDirty: true });
+            setValue("calle", res.data.calle, { shouldValidate: true, shouldDirty: true });
+            setValue("numero", res.data.numero, { shouldValidate: true, shouldDirty: true });
+            setValue("colonia", res.data.colonia, { shouldValidate: true, shouldDirty: true });
+            setValue("cpostal", res.data.cp, { shouldValidate: true, shouldDirty: true });
+            setValue("ciudad", res.data.ciudad, { shouldValidate: true, shouldDirty: true });
+            setValue("celectoral", res.data.c_elector, { shouldValidate: true, shouldDirty: true });
+            setValue("curp", res.data.curp, { shouldValidate: true, shouldDirty: true });
+            setValue("fnacimiento", fecha, { shouldValidate: true, shouldDirty: true });
+            setValue("secc", res.data.seccion, { shouldValidate: true, shouldDirty: true });
+            setValue("df", res.data.distrito_federal, { shouldValidate: true, shouldDirty: true });
+            setValue("dl", res.data.distrito_local, { shouldValidate: true, shouldDirty: true });
 
             setNombres(res.data.nombres)
             setApaterno(res.data.apaterno);
@@ -155,33 +160,147 @@ function Representantes() {
             setSeccion(res.data.seccion);
             setDfederal(res.data.distrito_federal);
             setDlocal(res.data.distrito_local);
-                submitSeccion();
+            submitSeccion();
 
         } catch (ex) {
             //console.log(ex);
         }
     };
-    useEffect(() => {
+    /*useEffect(() => {
         console.log(nombres);
         console.log(aPaterno);
-    }, [nombres, aPaterno, aMaterno, calle, numero, colonia, cp, ciudad, fechaNacimiento, seccion, dFederal, dLocal]);
+    }, [nombres, aPaterno, aMaterno, calle, numero, colonia, cp, ciudad, fechaNacimiento, seccion, dFederal, dLocal]);*/
 
     const submitReview = () => {
 
-        Axios.post(//"http://54.219.124.66:3001/api/insert",
-            "http://localhost:3001/api/insert-estructura",
-            {
+        if (lider == 2) {
+            if (menu1 == "B") {
+                Axios.post(//"http://54.219.124.66:3001/api/insert",
+                    "http://localhost:3001/api/insert-representantes",
 
-                apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
-                ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
-                distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
-                otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, observaciones: observaciones, idEquipo: equipo, injerencia: seccionInjerencia
-            }).then(() => {
-                console.log("succes")
-                //alert("AGREGADO")
-                navigate('/estructura')
+                    {
 
-            });
+                        apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
+                        ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
+                        distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
+                        otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, tiporep: lider, menu1: menu1, observaciones: observaciones
+                    }
+
+                ).then(() => {
+                    console.log("succes")
+                    //alert("AGREGADO")
+                    navigate('/representantes')
+
+                });
+            }
+            if (menu1 == "C") {
+
+                Axios.post(//"http://54.219.124.66:3001/api/insert",
+                    "http://localhost:3001/api/insert-representantes",
+
+                    {
+
+                        apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
+                        ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
+                        distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
+                        otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, tiporep: lider, menu1: menu1, menu2C: menu2C, observaciones: observaciones
+                    }
+
+                ).then(() => {
+                    console.log("succes")
+                    //alert("AGREGADO")
+                    navigate('/representantes')
+
+                });
+
+            }
+            if (menu1 == "SMR") {
+
+                Axios.post(//"http://54.219.124.66:3001/api/insert",
+                    "http://localhost:3001/api/insert-representantes",
+
+                    {
+
+                        apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
+                        ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
+                        distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
+                        otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, tiporep: lider, menu1: menu1, menu2SMR: menu2SMR, observaciones: observaciones
+                    }
+
+                ).then(() => {
+                    console.log("succes")
+                    //alert("AGREGADO")
+                    navigate('/representantes')
+
+                });
+
+            }
+            if (menu1 == "E" & menu3==" ") {
+
+                Axios.post(//"http://54.219.124.66:3001/api/insert",
+                    "http://localhost:3001/api/insert-representantes",
+
+                    {
+
+                        apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
+                        ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
+                        distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
+                        otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, tiporep: lider, menu1: menu1, menu2E: menu2E, observaciones: observaciones
+                    }
+
+                ).then(() => {
+                    console.log("succes")
+                    //alert("AGREGADO")
+                    navigate('/representantes')
+
+                });
+
+            }
+            if (menu1=="E" && menu3== "C") {
+
+                Axios.post(//"http://54.219.124.66:3001/api/insert",
+                    "http://localhost:3001/api/insert-representantes",
+
+                    {
+
+                        apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
+                        ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
+                        distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
+                        otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, tiporep: lider, menu1: "EC", menu2E: menu2E,menu3:menu3,menu4:menu4, observaciones: observaciones
+                    }
+
+                ).then(() => {
+                    console.log("succes")
+                    //alert("AGREGADO")
+                    navigate('/representantes')
+
+                });
+
+            }
+
+        }
+
+        if(lider ==1){
+            Axios.post(//"http://54.219.124.66:3001/api/insert",
+                    "http://localhost:3001/api/insert-representantesg",
+
+                    {
+
+                        apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
+                        ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
+                        distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
+                        otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, tiporep: lider, injerencias:selectedSeccion,consejo:consejo,ruta:ruta, observaciones: observaciones
+                    }
+
+                ).then(() => {
+                    console.log("succes")
+                    //alert("AGREGADO")
+                    navigate('/representantes')
+
+                });
+
+        }
+
 
 
         /*console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
@@ -202,8 +321,8 @@ function Representantes() {
                 setDfederal(res.data.df)
                 setDlocal(res.data.dl)
                 setidSecc(res.data.id)
-                setValue("dl", res.data.dl,{ shouldValidate: true, shouldDirty: true })
-                setValue("df", res.data.df,{ shouldValidate: true, shouldDirty: true })
+                setValue("dl", res.data.dl, { shouldValidate: true, shouldDirty: true })
+                setValue("df", res.data.df, { shouldValidate: true, shouldDirty: true })
 
                 console.log(seccion)
 
@@ -248,60 +367,114 @@ function Representantes() {
     }
     const contiguas = () => {
 
-
-        Axios.post("http://localhost:3001/api/cont/"
+        try {
+            Axios.post("http://localhost:3001/api/cont/"
             /*"http://54.219.124.66:3001/api/distritos"*/, {
 
-            }).then((response) => {
-                var resultado = JSON.stringify(response.data);
-                var empObj = JSON.parse(resultado);
-                setCascont(empObj)
+                }).then((response) => {
+                    var resultado = JSON.stringify(response.data);
+                    var empObj = JSON.parse(resultado);
+                    setCascont(empObj)
 
 
-            });
-
+                });
+        } catch (e) {
+            console.error(e);
+        }
     }
+    const contiguas10 = () => {
+
+        try {
+            Axios.post("http://localhost:3001/api/cont10/"
+            /*"http://54.219.124.66:3001/api/distritos"*/, {
+
+                }).then((response) => {
+                    var resultado = JSON.stringify(response.data);
+                    var empObj = JSON.parse(resultado);
+                    setCascont10(empObj)
+
+
+                });
+        } catch (e) {
+            console.error(e);
+        }
+    }
+    const checkHandler = () => {
+        setCheck(!check)
+        console.log(check)
+        setValue("menu3", "");
+      }
+
+    const handleReset = (e) => {
+        e.preventDefault();
+        console.log("Tipo" + e.target.value);
+        setMenu1(e.target.value)
+        if (e.target.value == "C") {
+            setValue("menu2C", "");
+        }
+        setValue("menu2E", "");
+        setValue("menu2SMR", "");
+        setValue("menu3");
+        setValue("menu4");
+        setCheck(false);
+
+
+        
+        
+       
+    };
+
+
 
     const especiales = () => {
+        try {
+            Axios.post("http://localhost:3001/api/esp"
+        /*"http://54.219.124.66:3001/api/distritos"*/, {
+
+                }).then((response) => {
+                    var resultado = JSON.stringify(response.data);
+                    var empObj = JSON.parse(resultado);
+                    setCasesp(empObj)
 
 
-        Axios.post("http://localhost:3001/api/esp"
-            /*"http://54.219.124.66:3001/api/distritos"*/, {
-
-            }).then((response) => {
-                var resultado = JSON.stringify(response.data);
-                var empObj = JSON.parse(resultado);
-                setCasesp(empObj)
+                });
+        } catch (e) {
+            console.error(e);
+        }
 
 
-            });
 
     }
 
     const extraordinaria = () => {
 
+        try {
+            Axios.post("http://localhost:3001/api/ext"
+        /*"http://54.219.124.66:3001/api/distritos"*/, {
 
-        Axios.post("http://localhost:3001/api/ext"
-            /*"http://54.219.124.66:3001/api/distritos"*/, {
-
-            }).then((response) => {
-                var resultado = JSON.stringify(response.data);
-                var empObj = JSON.parse(resultado);
-                setCasext(empObj)
+                }).then((response) => {
+                    var resultado = JSON.stringify(response.data);
+                    var empObj = JSON.parse(resultado);
+                    setCasext(empObj)
 
 
-            });
+                });
+        } catch (e) {
+            console.error(e);
+        }
+
+
 
     }
-
-
-    useEffect(() => {
-        contiguas()
-        especiales()
-        extraordinaria()
-      });
+    /*
     
-
+        useEffect(() => {
+            contiguas()
+            especiales()
+            extraordinaria()
+        }, [Cascont, Casesp, Casext]);
+    
+    */
     const limpiar = e => {
         e.preventDefault()
 
@@ -347,9 +520,9 @@ function Representantes() {
 
 
     }
-    const cb = document.querySelector('#check');
+    //const cb = document.querySelector('#check');
 
-    
+
 
     // This function will be triggered when the "Remove This Image" button is clicked
     const removeSelectedImage = () => {
@@ -361,7 +534,7 @@ function Representantes() {
     const onSubmit = (data) => {
 
         alert(JSON.stringify(data));
-        //submitReview();
+        submitReview();
     }; // your form submit function which will invoke after successful validation
 
 
@@ -822,10 +995,10 @@ function Representantes() {
                                         <div className="mb-3">
                                             <label htmlFor="otrared">Otra red social</label>
                                             <input
-                                                // {...register("otrared", {
-                                                //    required: true,
-                                                //   pattern: /^[A-Za-z.\s_-]+$/
-                                                //})}
+                                                 {...register("otrared", {
+                                                    
+                                                   pattern: /^[A-Za-z.\s_-]+$/
+                                                })}
 
                                                 className="form-control"
                                                 id="otrared"
@@ -837,10 +1010,10 @@ function Representantes() {
                                     <div className='col-6'>
                                         <label className="small mb-1" htmlFor="nivel">Circulo</label>
                                         <select
-                                            //{...register("nivel", {
+                                            {...register("nivel", {
                                             //    required: true,
 
-                                            //})}
+                                            })}
                                             className="form-select"
                                             id="nivel"
 
@@ -860,10 +1033,10 @@ function Representantes() {
                                     <div className="col-md-6">
                                         <label htmlFor="otrared">Contacto a través de:</label>
                                         <input
-                                            //{...register("contacto", {
+                                            {...register("contacto", {
                                             //    required: true,
                                             //    pattern: /^[A-Za-z.\s_-]+$/
-                                            //})}
+                                            })}
 
                                             className="form-control"
                                             id="contacto"
@@ -876,10 +1049,10 @@ function Representantes() {
                                     <div className="col-md-6">
                                         <label htmlFor="otrared">No. Celular del contacto</label>
                                         <input
-                                            //{...register("nocontacto", {
+                                            {...register("nocontacto", {
                                             //    required: true,
                                             //    pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                                            //})}
+                                            })}
 
                                             className="form-control"
                                             id="nocontacto"
@@ -994,8 +1167,8 @@ function Representantes() {
                                                                 {submitSecciones()}
                                                                 <MultiSelect
 
-                                                                    value={seccionInjerencia}
-                                                                    onChange={(e) => setSeccionInjerencia(e.value)}
+                                                                    value={selectedSeccion}
+                                                                    onChange={(e) => setSelectedSeccion(e.value)}
                                                                     options={list} optionLabel="name"
                                                                     filter placeholder="Selecciona una o más secciones" className="w-full md:w-20rem form-select" required />
 
@@ -1096,9 +1269,9 @@ function Representantes() {
                                                         </div>
                                                     </div>*/
                                                     <div>
-                                                    
+
                                                         <div className="row gx-3 mb-3">
-                                                    
+
                                                             <div className="col-md-6">
                                                                 <label className="small mb-1" htmlFor="nivel">Menú 1</label>
                                                                 <select id='menu1'
@@ -1108,7 +1281,7 @@ function Representantes() {
                                                                     })}
                                                                     className="form-control form-select"
 
-                                                                    onChange={e => { setMenu1(e.target.value) }}
+                                                                    onChange={handleReset}
                                                                 >
                                                                     <option value=""></option>
                                                                     <option value="B">Básica</option>
@@ -1124,35 +1297,41 @@ function Representantes() {
                                                             <div className="col-md-6">
 
                                                                 {
+
                                                                     (() => {
                                                                         switch (menu1) {
 
                                                                             case ("B"): {
                                                                                 return (
                                                                                     <div>
-
+                                                                                        <span></span>
 
                                                                                     </div>
                                                                                 );
                                                                             }
                                                                                 break;
                                                                             case ("C"): {
+
+
+
                                                                                 return (
                                                                                     <div>
 
-                                                                                     
+
                                                                                         <label className="small mb-1" htmlFor="nivel">Menú 2</label>
 
                                                                                         <select id='menu2'
-                                                                                            {...register("menu2", {
+                                                                                            {...register("menu2C", {
                                                                                                 required: true,
 
                                                                                             })}
                                                                                             className="form-control form-select"
 
-                                                                                            onChange={e => { setMenu2(e.target.value); console.log(e.target.value) }}
+
+                                                                                            onChange={e => { setMenu2C(e.target.value); console.log(e.target.value) }}
                                                                                         >
-                                                                                            <option value="">Selecciona una opción</option>
+                                                                                            {contiguas()}
+                                                                                            <option value=" " defaultValue>Selecciona una opción</option>
                                                                                             {
                                                                                                 Cascont.map(val => {
 
@@ -1167,24 +1346,29 @@ function Representantes() {
 
                                                                                     </div>
                                                                                 )
+
+
                                                                             }
                                                                             case ("SMR"): {
                                                                                 return (
+
                                                                                     <div>
 
-                                                                                      
+
                                                                                         <label className="small mb-1" htmlFor="nivel">Menú 2</label>
 
-                                                                                        <select id='menu2'
-                                                                                            {...register("menu2", {
+                                                                                        <select
+                                                                                            {...register("menu2SMR", {
                                                                                                 required: true,
+
 
                                                                                             })}
                                                                                             className="form-control form-select"
 
-                                                                                            onChange={e => { setMenu2(e.target.value); console.log(e.target.value) }}
+                                                                                            onChange={e => { setMenu2SMR(e.target.value); console.log(e.target.value) }}
                                                                                         >
-                                                                                            <option value="">Selecciona una opción</option>
+                                                                                            {especiales()}
+                                                                                            <option value=" " defaultValue>Selecciona una opción</option>
                                                                                             {
                                                                                                 Casesp.map(val => {
 
@@ -1204,19 +1388,20 @@ function Representantes() {
                                                                                 return (
                                                                                     <div>
 
-                                                                                       
+
                                                                                         <label className="small mb-1" htmlFor="nivel">Menú 2</label>
 
                                                                                         <select id='menu2'
-                                                                                            {...register("menu2", {
+                                                                                            {...register("menu2E", {
                                                                                                 required: true,
 
                                                                                             })}
                                                                                             className="form-control form-select"
 
-                                                                                            onChange={e => { setMenu2(e.target.value); console.log(e.target.value) }}
+                                                                                            onChange={e => { setMenu2E(e.target.value); console.log(e.target.value) }}
                                                                                         >
-                                                                                            <option value="">Selecciona una opción</option>
+                                                                                            {extraordinaria()}
+                                                                                            <option value=" ">Selecciona una opción</option>
                                                                                             {
                                                                                                 Casext.map(val => {
 
@@ -1256,7 +1441,7 @@ function Representantes() {
                                                                                 return (
                                                                                     <div>
 
-
+                                                                                        <span></span>
                                                                                     </div>
                                                                                 );
                                                                             }
@@ -1266,20 +1451,14 @@ function Representantes() {
                                                                                     <div>
 
                                                                                         <label className="small mb-1" htmlFor="nivel">Menú 3</label>
-                                                                                    
+
                                                                                         <select id='menu3'
-                                                                                           
+
                                                                                             className="form-control form-select"
 
                                                                                             onChange={e => { setConsejo(e.target.value) }}
                                                                                             disabled
                                                                                         >
-                                                                                            <option value=""></option>
-                                                                                            {
-                                                                                                Cascont.map(val => {
-
-                                                                                                    return (<option value={val.numero}>{val.numero}</option>);
-                                                                                                })}
 
 
                                                                                         </select>
@@ -1295,9 +1474,9 @@ function Representantes() {
                                                                                     <div>
 
                                                                                         <label className="small mb-1" htmlFor="nivel">Menú 3</label>
-                                                                                     
+
                                                                                         <select id='menu3'
-                                                                                            
+
                                                                                             className="form-control form-select"
 
                                                                                             onChange={e => { setConsejo(e.target.value) }}
@@ -1318,58 +1497,59 @@ function Representantes() {
                                                                                 )
                                                                             }
                                                                             case ("E"): {
-                                                                                if(cb.checked){
+                                                                                if (check) {
                                                                                     return (
-                                                                                    <div>
-                                                                                    <label className="small mb-1" htmlFor="nivel">Menú 3</label>
-                                                                                       
-                                                                                        <select id='menu3'
-                                                                                            {...register("menu3", {
-                                                                                                required: true,
+                                                                                        <div>
+                                                                                            {extraordinaria()}
+                                                                                            <label className="small mb-1" htmlFor="nivel">Menú 3</label>
 
-                                                                                            })}
-                                                                                            className="form-control form-select"
+                                                                                            <select id='menu3'
+                                                                                                {...register("menu3", {
+                                                                                                    required: true,
 
-                                                                                            onChange={e => { setMenu3(e.target.value) }}
-                                                                                            
-                                                                                        >
-                                                                                            <option value="C">Contigua</option>
-                                                                                            
-
-                                                                                        </select>
-                                                                                        {errors?.menu3?.type === "required" && <span className='eform'>Campo Vacio</span>}
-
-
-                                                                                    </div>
-                                                                                )
-                                                                                }else{
-                                                                                    return (
-                                                                                    <div>
-                                                                                    <label className="small mb-1" htmlFor="nivel">Menú 3</label>
-                                                                                     
-                                                                                        <select id='menu3'
-                                                                                      
-                                                                                            className="form-control form-select"
-
-                                                                                            onChange={e => { setMenu3(e.target.value) }}
-                                                                                            disabled
-                                                                                        >
-                                                                                            <option value=""></option>
-                                                                                            {
-                                                                                                Casext.map(val => {
-
-                                                                                                    return (<option value={val.numero}>{val.numero}</option>);
                                                                                                 })}
+                                                                                                className="form-control form-select"
+
+                                                                                                onChange={e => { setMenu3(e.target.value) }}
+
+                                                                                            >
+                                                                                                <option value="C">Contigua</option>
 
 
-                                                                                        </select>
-                                                                                        {errors?.menu3?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                                                                            </select>
+                                                                                            {errors?.menu3?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
 
-                                                                                    </div>
-                                                                                )
+                                                                                        </div>
+                                                                                    )
+                                                                                } else {
+                                                                                    return (
+                                                                                        <div>
+                                                                                            <label className="small mb-1" htmlFor="nivel">Menú 3</label>
+
+                                                                                            <select id='menu3'
+
+                                                                                                className="form-control form-select"
+
+                                                                                                onChange={e => { setMenu3(e.target.value) }}
+                                                                                                disabled
+                                                                                            >
+                                                                                                <option value=""></option>
+                                                                                                {
+                                                                                                    Casext.map(val => {
+
+                                                                                                        return (<option value={val.numero}>{val.numero}</option>);
+                                                                                                    })}
+
+
+                                                                                            </select>
+                                                                                            {errors?.menu3?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+
+                                                                                        </div>
+                                                                                    )
                                                                                 }
-                                                                                
+
                                                                             }
 
 
@@ -1406,20 +1586,14 @@ function Representantes() {
                                                                                     <div>
 
                                                                                         <label className="small mb-1" htmlFor="nivel">Menú 4</label>
-                                                                                        
+
                                                                                         <select id='menu3'
-                                                                                            
+
                                                                                             className="form-control form-select"
 
                                                                                             onChange={e => { setConsejo(e.target.value) }}
                                                                                             disabled
                                                                                         >
-                                                                                            <option value=""></option>
-                                                                                            {
-                                                                                                Cascont.map(val => {
-
-                                                                                                    return (<option value={val.numero}>{val.numero}</option>);
-                                                                                                })}
 
 
                                                                                         </select>
@@ -1435,19 +1609,14 @@ function Representantes() {
                                                                                     <div>
 
                                                                                         <label className="small mb-1" htmlFor="nivel">Menú 4</label>
-                                                                                           <select id='menu3'
-                                                                                            
+                                                                                        <select id='menu3'
+
                                                                                             className="form-control form-select"
 
                                                                                             onChange={e => { setConsejo(e.target.value) }}
                                                                                             disabled
                                                                                         >
-                                                                                            <option value=""></option>
-                                                                                            {
-                                                                                                Cascont.map(val => {
 
-                                                                                                    return (<option value={val.id}>{val.numero}</option>);
-                                                                                                })}
 
 
                                                                                         </select>
@@ -1457,67 +1626,61 @@ function Representantes() {
                                                                                 )
                                                                             }
                                                                             case ("E"): {
-                                                                                if(cb.checked){
+                                                                                if (check) {
                                                                                     return (
-                                                                                    <div>
-                                                                                        
-                                                                                    
-                                                                                        <label className="small mb-1" htmlFor="nivel">Menú 4</label>
+                                                                                        <div>
 
-                                                                                        <select id='menu4'
-                                                                                            {...register("menu4", {
-                                                                                                required: true,
 
-                                                                                            })}
-                                                                                            className="form-control form-select"
-                                                                                            
-                                                                                            onChange={e => { setMenu4(e.target.value); console.log(e.target.value) }}
-                                                                                        >
-                                                                                            <option value="Selecciona"></option>
-                                                                                            {
-                                                                                                Cascont.map(val => {
+                                                                                            <label className="small mb-1" htmlFor="nivel">Menú 4</label>
+                                                                                        {contiguas10()}
+                                                                                            <select id='menu4'
+                                                                                                {...register("menu4", {
+                                                                                                    required: true,
 
-                                                                                                    return (<option value={val.numero}>{val.numero}</option>);
                                                                                                 })}
+                                                                                                className="form-control form-select"
+
+                                                                                                onChange={e => { setMenu4(e.target.value); console.log(e.target.value) }}
+                                                                                            >
+                                                                                                <option value="Selecciona"></option>
+                                                                                                {
+                                                                                                    Cascont10.map(val => {
+
+                                                                                                        return (<option value={val.numero}>{val.numero}</option>);
+                                                                                                    })}
 
 
-                                                                                        </select>
-                                                                                        {errors?.menu4?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                                                                            </select>
+                                                                                            {errors?.menu4?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
 
 
-                                                                                    </div>
-                                                                                )
-                                                                                }else{
+                                                                                        </div>
+                                                                                    )
+                                                                                } else {
                                                                                     return (
-                                                                                    <div>
-                                                                                        
-                                                                                       
-                                                                                        <label className="small mb-1" htmlFor="nivel">Menú 4</label>
-
-                                                                                        <select id='menu4'
-                                                                                           
-                                                                                            className="form-control form-select"
-                                                                                            disabled
-                                                                                            onChange={e => { setMenu4(e.target.value); console.log(e.target.value) }}
-                                                                                        >
-                                                                                            <option value="Selecciona"></option>
-                                                                                            {
-                                                                                                Cascont.map(val => {
-
-                                                                                                    return (<option value={val.numero}>{val.numero}</option>);
-                                                                                                })}
+                                                                                        <div>
 
 
-                                                                                        </select>
-                                                                                        {errors?.menu?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                                                                            <label className="small mb-1" htmlFor="nivel">Menú 4</label>
+
+                                                                                            <select id='menu4'
+
+                                                                                                className="form-control form-select"
+                                                                                                disabled
+                                                                                                onChange={e => { setMenu4(e.target.value); console.log(e.target.value) }}
+                                                                                            >
+
+
+                                                                                            </select>
+                                                                                            {errors?.menu?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
 
 
-                                                                                    </div>
-                                                                                )
+                                                                                        </div>
+                                                                                    )
                                                                                 }
-                                                                               
+
                                                                             }
 
 
@@ -1550,7 +1713,9 @@ function Representantes() {
                                                                             case ("C"): {
                                                                                 return (
                                                                                     <div>
-                                                                                        <input id="check" type='checkbox' disabled></input>
+                                                                                        <input id="check"  
+                                                                                        type='checkbox' 
+                                                                                        disabled></input>
                                                                                     </div>
                                                                                 )
                                                                             }
@@ -1566,7 +1731,7 @@ function Representantes() {
                                                                                 return (
                                                                                     <div>
 
-                                                                                        <input id="check" type='checkbox'></input>
+                                                                                        <input id="check" checked={check} onChange={ checkHandler} type='checkbox'></input>
 
 
 
