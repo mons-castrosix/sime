@@ -50,12 +50,12 @@ CREATE TABLE `apoyo` (
   PRIMARY KEY (`id`),
   KEY `img` (`img`),
   CONSTRAINT `img` FOREIGN KEY (`img`) REFERENCES `img_ine` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `apoyo` */
 
 insert  into `apoyo`(`id`,`apaterno`,`amaterno`,`nombres`,`calle`,`numero`,`colonia`,`cp`,`ciudad`,`clave_elector`,`curp`,`fecha_nacimiento`,`seccion`,`distrito_federal`,`distrito_local`,`nivel`,`no_celular`,`email`,`facebook`,`twitter`,`otra_red`,`contacto`,`no_celcontacto`,`lat`,`lng`,`img`) values 
-(33,'CASTRO','SIXTOS','MONSERRAT ALEJANDRA','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','CSSXMN98121116M100','CASM981211MMNSXN09','1998-12-11','1263',8,10,2,'4435896365','monse.castrosixtos@gmail.com','','','','','',19.70359280,-101.27055271,384);
+(47,'CASTRO','SIXTOS','MONSERRAT ALEJANDRA','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','CSSXMN98121116M100','CASM981211MMNSXN09','1998-12-11','1263',8,16,1,'45548456','monsesin1211@gmail.com','ssaads','asdadad','aadad','asasdas','454564546',19.70354734,-101.27057282,453);
 
 /*Table structure for table `apoyos` */
 
@@ -71,9 +71,12 @@ CREATE TABLE `apoyos` (
   PRIMARY KEY (`id`),
   KEY `id_persona` (`id_persona`) USING BTREE,
   CONSTRAINT `apoyos_ibfk_1` FOREIGN KEY (`id_persona`) REFERENCES `apoyo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `apoyos` */
+
+insert  into `apoyos`(`id`,`descripcion`,`tipo`,`monto`,`alcance`,`id_persona`) values 
+(14,'asdasdsad','Económico',500,'Personal',47);
 
 /*Table structure for table `asociacion_civil` */
 
@@ -111,9 +114,16 @@ CREATE TABLE `cargo_escuela` (
   `cargo` varchar(500) NOT NULL,
   `id_lider` int(11) NOT NULL,
   KEY `id` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `cargo_escuela` */
+
+insert  into `cargo_escuela`(`id`,`nombre_escuela`,`cargo`,`id_lider`) values 
+(1,'fds','',28),
+(2,'gtfr','',29),
+(3,'sdcf','',30),
+(4,'FF','',33),
+(5,'GERGR','',35);
 
 /*Table structure for table `cargo_maestro` */
 
@@ -126,6 +136,135 @@ CREATE TABLE `cargo_maestro` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `cargo_maestro` */
+
+/*Table structure for table `casillas_cont` */
+
+DROP TABLE IF EXISTS `casillas_cont`;
+
+CREATE TABLE `casillas_cont` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `numero` varchar(250) DEFAULT NULL,
+  `nomenclatura` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `casillas_cont` */
+
+insert  into `casillas_cont`(`id`,`numero`,`nomenclatura`) values 
+(1,'01','C01'),
+(2,'02','C02'),
+(3,'03','C03'),
+(4,'04','C04'),
+(5,'05','C05'),
+(6,'06','C06'),
+(7,'07','C07'),
+(8,'08','C08'),
+(9,'09','C09'),
+(10,'10','C10'),
+(11,'11','C11'),
+(12,'12','C12'),
+(13,'13','C13'),
+(14,'14','C14'),
+(15,'15','C15'),
+(16,'16','C16'),
+(17,'17','C17'),
+(18,'18','C18'),
+(19,'19','C19'),
+(20,'20','C20');
+
+/*Table structure for table `casillas_esp` */
+
+DROP TABLE IF EXISTS `casillas_esp`;
+
+CREATE TABLE `casillas_esp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `numero` varchar(250) DEFAULT NULL,
+  `nomenclatura` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `casillas_esp` */
+
+insert  into `casillas_esp`(`id`,`numero`,`nomenclatura`) values 
+(1,'01','SMR01'),
+(2,'02','SMR02'),
+(3,'03','SMR03'),
+(4,'04','SMR04'),
+(5,'05','SM405');
+
+/*Table structure for table `casillas_ext` */
+
+DROP TABLE IF EXISTS `casillas_ext`;
+
+CREATE TABLE `casillas_ext` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `numero` varchar(250) DEFAULT NULL,
+  `nomenclatura` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `casillas_ext` */
+
+insert  into `casillas_ext`(`id`,`numero`,`nomenclatura`) values 
+(1,'01','E01'),
+(2,'02','E02'),
+(3,'03','E03'),
+(4,'04','E04');
+
+/*Table structure for table `casillas_extcont` */
+
+DROP TABLE IF EXISTS `casillas_extcont`;
+
+CREATE TABLE `casillas_extcont` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `numero` varchar(250) DEFAULT NULL,
+  `nomenclatura` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `casillas_extcont` */
+
+insert  into `casillas_extcont`(`id`,`numero`,`nomenclatura`) values 
+(1,'Extraordinaria 01 Contigua 01','E01C01'),
+(2,'Extraordinaria 01 Contigua 02','E01C02'),
+(3,'Extraordinaria 01 Contigua 03','E01C03'),
+(4,'Extraordinaria 01 Contigua 04','E01C04'),
+(5,'Extraordinaria 01 Contigua 05','E01C05'),
+(6,'Extraordinaria 01 Contigua 06','E01C06'),
+(7,'Extraordinaria 01 Contigua 07','E01C07'),
+(8,'Extraordinaria 01 Contigua 08','E01C08'),
+(9,'Extraordinaria 01 Contigua 09','E01C09'),
+(10,'Extraordinaria 01 Contigua 10','E01C10'),
+(11,'Extraordinaria 02 Contigua 01','E02C01'),
+(12,'Extraordinaria 02 Contigua 02','E02C02'),
+(13,'Extraordinaria 02 Contigua 03','E02C03'),
+(14,'Extraordinaria 02 Contigua 04','E02C04'),
+(15,'Extraordinaria 02 Contigua 05','E02C05'),
+(16,'Extraordinaria 02 Contigua 06','E02C06'),
+(17,'Extraordinaria 02 Contigua 07','E02C07'),
+(18,'Extraordinaria 02 Contigua 08','E02C08'),
+(19,'Extraordinaria 02 Contigua 09','E02C09'),
+(20,'Extraordinaria 02 Contigua 10','E02C10'),
+(21,'Extraordinaria 03 Contigua 01','E03C01'),
+(22,'Extraordinaria 03 Contigua 02','E03C02'),
+(23,'Extraordinaria 03 Contigua 03','E03C03'),
+(24,'Extraordinaria 03 Contigua 04','E03C04'),
+(25,'Extraordinaria 03 Contigua 05','E03C05'),
+(26,'Extraordinaria 03 Contigua 06','E03C06'),
+(27,'Extraordinaria 03 Contigua 07','E03C07'),
+(28,'Extraordinaria 03 Contigua 08','E03C08'),
+(29,'Extraordinaria 03 Contigua 09','E03C09'),
+(30,'Extraordinaria 03 Contigua 10','E03C10'),
+(31,'Extraordinaria 04 Contigua 01','E04C01'),
+(32,'Extraordinaria 04 Contigua 02','E04C02'),
+(33,'Extraordinaria 04 Contigua 03','E04C03'),
+(34,'Extraordinaria 04 Contigua 04','E04C04'),
+(35,'Extraordinaria 04 Contigua 05','E04C05'),
+(36,'Extraordinaria 04 Contigua 06','E04C06'),
+(37,'Extraordinaria 04 Contigua 07','E04C07'),
+(38,'Extraordinaria 04 Contigua 08','E04C08'),
+(39,'Extraordinaria 04 Contigua 09','E04C09'),
+(40,'Extraordinaria 04 Contigua 10','E04C10');
 
 /*Table structure for table `cat_tenencia` */
 
@@ -200,7 +339,7 @@ CREATE TABLE `img_ine` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ruta` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=390 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=522 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `img_ine` */
 
@@ -593,7 +732,139 @@ insert  into `img_ine`(`id`,`ruta`) values
 (386,'1685644799591--ine1.jpeg'),
 (387,'1685672454835--ine1.jpeg'),
 (388,'1685674972990--ine1.jpeg'),
-(389,'1685680383402--ine1.jpeg');
+(389,'1685680383402--ine1.jpeg'),
+(390,'1687916313381--ine1.jpeg'),
+(391,'1687917638271--ine1.jpeg'),
+(392,'1687917710154--ine-GH.jpeg'),
+(393,'1687917870180--ine1.jpeg'),
+(394,'1687918223757--ine1.jpeg'),
+(395,'1687918236575--ine1.jpeg'),
+(396,'1687918491441--ine1.jpeg'),
+(397,'1687918549338--ine1.jpeg'),
+(398,'1687918823553--ine1.jpeg'),
+(399,'1687919195108--ine1.jpeg'),
+(400,'1687919214217--ine1.jpeg'),
+(401,'1687919346438--ine1.jpeg'),
+(402,'1687919632384--ine1.jpeg'),
+(403,'1687919645364--ine-GH.jpeg'),
+(404,'1687919692864--ine1.jpeg'),
+(405,'1687919938938--ine1.jpeg'),
+(406,'1687920126675--ine1.jpeg'),
+(407,'1687920291915--ine1.jpeg'),
+(408,'1687920418292--ine1.jpeg'),
+(409,'1687920474857--ine1.jpeg'),
+(410,'1687920796317--ine1.jpeg'),
+(411,'1687920992218--ine1.jpeg'),
+(412,'1687921228965--ine1.jpeg'),
+(413,'1687921336715--ine1.jpeg'),
+(414,'1687921420915--ine1.jpeg'),
+(415,'1687921480425--ine1.jpeg'),
+(416,'1687921561049--ine1.jpeg'),
+(417,'1687921622917--ine-GH.jpeg'),
+(418,'1687921873737--ine1.jpeg'),
+(419,'1687922682450--ine1.jpeg'),
+(420,'1687922826180--ine1.jpeg'),
+(421,'1687990112921--ine1.jpeg'),
+(422,'1687991348051--ine1.jpeg'),
+(423,'1687991479920--luis.PNG'),
+(424,'1687991674565--ine1.jpeg'),
+(425,'1687992857957--ine1.jpeg'),
+(426,'1688001206506--mujer-embarazada-sentada-tocan'),
+(427,'1688001265221--captura_de_pantalla_2016-04-12'),
+(428,'1688001304808--ine-C.jpg'),
+(429,'1688002001621--ine-C.jpg'),
+(430,'1688002899811--ine-C.jpg'),
+(431,'1688003152380--ine-C.jpg'),
+(432,'1688003512346--ine-C.jpg'),
+(433,'1688004373823--ine-C.jpg'),
+(434,'1688004401891--ine-C.jpg'),
+(435,'1688008929715--ine1.jpeg'),
+(436,'1688009228470--ine1.jpeg'),
+(437,'1688009273928--ine-GH.jpeg'),
+(438,'1688009479488--joseline.jpeg'),
+(439,'1688010559694--joseline.jpeg'),
+(440,'1688010580941--joseline.jpeg'),
+(441,'1688010643404--ine1.jpeg'),
+(442,'1688011340281--ine1.jpeg'),
+(443,'1688011373078--ine-GH.jpeg'),
+(444,'1688088483125--ine-GH.jpeg'),
+(445,'1688088705226--ine1.jpeg'),
+(446,'1688088750551--ine.jpeg'),
+(447,'1688088823563--ine-GH.jpeg'),
+(448,'1688088863323--ine.jpeg'),
+(449,'1688093458497--ine.jpeg'),
+(450,'1688093646264--ine1.jpeg'),
+(451,'1688095293768--ine1.jpeg'),
+(452,'1688096366334--ine1.jpeg'),
+(453,'1690472723643--ine1.jpeg'),
+(454,'1691207001697--ine1.jpeg'),
+(455,'1691207214593--ine1.jpeg'),
+(456,'1691207297373--ine1.jpeg'),
+(457,'1691207557955--ine1.jpeg'),
+(458,'1691207752071--ine1.jpeg'),
+(459,'1691207779291--ine1.jpeg'),
+(460,'1691207779289--ine1.jpeg'),
+(461,'1691376481851--ine1.jpeg'),
+(462,'1691376693049--ine1.jpeg'),
+(463,'1691376977793--ine1.jpeg'),
+(464,'1691377090998--ine1.jpeg'),
+(465,'1691377091449--ine1.jpeg'),
+(466,'1691377700543--ine1.jpeg'),
+(467,'1691377703280--ine1.jpeg'),
+(468,'1691377958185--ine1.jpeg'),
+(469,'1691378261069--ine1.jpeg'),
+(470,'1691378615428--ine1.jpeg'),
+(471,'1691378615993--ine1.jpeg'),
+(472,'1691378617493--ine1.jpeg'),
+(473,'1691378620611--ine1.jpeg'),
+(474,'1691379185249--ine1.jpeg'),
+(475,'1691460817277--ine1.jpeg'),
+(476,'1691465801831--ine1.jpeg'),
+(477,'1691466091380--ine1.jpeg'),
+(478,'1691466216588--ine1.jpeg'),
+(479,'1691466249602--ine1.jpeg'),
+(480,'1691544164208--ine1.jpeg'),
+(481,'1691544390043--ine1.jpeg'),
+(482,'1691552715595--ine1.jpeg'),
+(483,'1691553165530--ine1.jpeg'),
+(484,'1691553422210--ine1.jpeg'),
+(485,'1691553520471--ine1.jpeg'),
+(486,'1691553698570--ine1.jpeg'),
+(487,'1691553725766--ine1.jpeg'),
+(488,'1691630895224--ine1.jpeg'),
+(489,'1691631019289--ine1.jpeg'),
+(490,'1691633228363--ine1.jpeg'),
+(491,'1691633872467--ine1.jpeg'),
+(492,'1691634227120--ine1.jpeg'),
+(493,'1691634329600--ine1.jpeg'),
+(494,'1691635276263--ine1.jpeg'),
+(495,'1691635385878--ine-GH.jpeg'),
+(496,'1691636863014--ine-GH.jpeg'),
+(497,'1691636944578--ine1.jpeg'),
+(498,'1691637682990--ine1.jpeg'),
+(499,'1691637901778--ine1.jpeg'),
+(500,'1691638038201--ine-C.jpg'),
+(501,'1691638045276--ine-GH.jpeg'),
+(502,'1691638148085--ine1.jpeg'),
+(503,'1691638213423--ine1.jpeg'),
+(504,'1691638384596--ine1.jpeg'),
+(505,'1691638449250--ine1.jpeg'),
+(506,'1691638556598--ine1.jpeg'),
+(507,'1691638769187--ine1.jpeg'),
+(508,'1691639008298--ine1.jpeg'),
+(509,'1691639120248--ine1.jpeg'),
+(510,'1691639885025--ine1.jpeg'),
+(511,'1691639887999--ine1.jpeg'),
+(512,'1691641862170--ine1.jpeg'),
+(513,'1691641862413--ine1.jpeg'),
+(514,'1691641998512--ine1.jpeg'),
+(515,'1691642003137--ine1.jpeg'),
+(516,'1691642003304--ine1.jpeg'),
+(517,'1691642075034--ine1.jpeg'),
+(518,'1691642213077--ine1.jpeg'),
+(519,'1691642217627--ine1.jpeg'),
+(520,'1691642283329--ine1.jpeg'),
+(521,'1691642387672--ine1.jpeg');
 
 /*Table structure for table `lider_ac` */
 
@@ -605,9 +876,12 @@ CREATE TABLE `lider_ac` (
   `cargo` varchar(500) DEFAULT NULL,
   `id_lider` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `lider_ac` */
+
+insert  into `lider_ac`(`id`,`nombre`,`cargo`,`id_lider`) values 
+(1,'FFF','JBHVBJNK',34);
 
 /*Table structure for table `lider_colonia` */
 
@@ -645,9 +919,12 @@ CREATE TABLE `lider_partidista` (
   `partido_id` int(11) DEFAULT NULL,
   `id_lider` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `lider_partidista` */
+
+insert  into `lider_partidista`(`id`,`partido_id`,`id_lider`) values 
+(1,5,32);
 
 /*Table structure for table `lider_tenencia` */
 
@@ -658,9 +935,12 @@ CREATE TABLE `lider_tenencia` (
   `tenencia` varchar(500) DEFAULT NULL,
   `id_lider` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `lider_tenencia` */
+
+insert  into `lider_tenencia`(`id`,`tenencia`,`id_lider`) values 
+(1,'6',31);
 
 /*Table structure for table `lideres_t` */
 
@@ -695,12 +975,12 @@ CREATE TABLE `lideres_t` (
   `img` varchar(500) DEFAULT NULL,
   `id_tipoLider` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `lideres_t` */
 
 insert  into `lideres_t`(`id`,`nombres`,`apaterno`,`amaterno`,`calle`,`numero`,`colonia`,`cp`,`ciudad`,`fecha_nacimiento`,`curp`,`clave_electoral`,`seccion`,`id_Secc`,`no_celular`,`email`,`facebook`,`twitter`,`otra_red`,`circulo`,`contacto`,`no_celcontacto`,`observaciones`,`lat`,`lng`,`img`,`id_tipoLider`) values 
-(27,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'5525356','m@gmail.com','dd','dd','ddddd',1,'ddd','5164564','sddsd','19.70353325927758','-101.2705156279566','386',3);
+(34,'NORMA ALICIA','SIXTOS','AGUILAR','TARECUATO','572','SAN ISIDRO ITZICUARO ','58330','MORELIA','1975-12-18','SIAN751218MMNXGR02','SXAGNR75121816M800','1263',1,'4435896365','','','','',0,'','','','19.7036534','-101.2705688','447',6);
 
 /*Table structure for table `partido_politico` */
 
@@ -771,15 +1051,16 @@ CREATE TABLE `registro_estructura` (
   `img` varchar(500) DEFAULT NULL,
   `id_equipo` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `registro_estructura` */
 
 insert  into `registro_estructura`(`id`,`nombres`,`apaterno`,`amaterno`,`calle`,`numero`,`colonia`,`cp`,`ciudad`,`fecha_nacimiento`,`curp`,`clave_electoral`,`seccion`,`id_Secc`,`no_celular`,`email`,`facebook`,`twitter`,`otra_red`,`circulo`,`observaciones`,`lat`,`lng`,`img`,`id_equipo`) values 
-(1,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'56465','m@gmail.com','x','x','x',2,'dd','19.71762612229305','-101.2362607297102','361',1),
-(2,'NORMA ALICIA','SIXTOS','AGUILAR','TARECUATO','572','SAN ISIDRO ITZICUARO ','58330','MORELIA','1975-12-18','SIAN751218MMNXGR02','SXAGNR75121816M800','1263',1,'446545','j@gmail.com','x','x','x',3,'gttrhh','19.67719783215962','-101.25548717319907','362',1),
-(3,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'3256','h@gmail.com','x','x','x',2,'dssdds','19.703633376552546','-101.27055816546036','381',4),
-(4,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'3256','a@gmail.com','x','x','x',1,'dssdds','19.73660701110806','-101.2242040097705','381',4);
+(1,'JOSELINE','RODRIGUEZ','BARRERA','JUCUTACATO ','600','SAN ISIDRO ITZICUARO ','58337','MORELIA','1997-10-06','ROBJ971006MDFDRS06','RDBRJS97100609M900','1263',1,'333','','','','',0,'ff','19.7030951','-101.2712664','440',2),
+(2,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'4435896365','','','','',0,'222','19.7036534','-101.2705688','441',6),
+(3,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',0,'565564','','','','',0,'','19.703572594759603','-101.27053661349183','454',0),
+(4,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',0,'4435896365','','','','',2,'','19.70358269541688','-101.27052588465577','460',0),
+(5,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'4435896365','','','','',0,'','19.7036534','-101.2705688','461',0);
 
 /*Table structure for table `registro_promotores` */
 
@@ -811,12 +1092,13 @@ CREATE TABLE `registro_promotores` (
   `lng` varchar(200) DEFAULT NULL,
   `img` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `registro_promotores` */
 
 insert  into `registro_promotores`(`id`,`nombres`,`apaterno`,`amaterno`,`calle`,`numero`,`colonia`,`cp`,`ciudad`,`fecha_nacimiento`,`curp`,`clave_electoral`,`seccion`,`id_Secc`,`no_celular`,`email`,`facebook`,`twitter`,`otra_red`,`circulo`,`observaciones`,`lat`,`lng`,`img`) values 
-(1,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'5456465','m@gmail.com','hddsghuy','ygyigy','ggyigyh',2,'bgihgui','19.703582003092798','-101.27051463064109','387');
+(2,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'4435896365','','','','',0,'','19.7036534','-101.2705688','413'),
+(9,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'4435896365','','','','',0,'','19.7036534','-101.2705688','452');
 
 /*Table structure for table `registro_promovidos` */
 
@@ -849,12 +1131,96 @@ CREATE TABLE `registro_promovidos` (
   `img` varchar(500) DEFAULT NULL,
   `id_promotor` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `registro_promovidos` */
 
 insert  into `registro_promovidos`(`id`,`nombres`,`apaterno`,`amaterno`,`calle`,`numero`,`colonia`,`cp`,`ciudad`,`fecha_nacimiento`,`curp`,`clave_electoral`,`seccion`,`id_Secc`,`no_celular`,`email`,`facebook`,`twitter`,`otra_red`,`circulo`,`observaciones`,`lat`,`lng`,`img`,`id_promotor`) values 
-(1,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'5454','m@gmail.com','face1','teiter2','otra 4',2,'tubinuomk','19.703622860689055','-101.27055798734492','388',1);
+(4,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',NULL,'655656','','','','',0,'','19.7036534','-101.2705688','424',6),
+(5,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'4435896365','','','','',0,'','19.7036534','-101.2705688','425',6),
+(6,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'4445656','monse@gmail.com','fyugihjo','vugbhinjok','vbhnjmk',1,'rhrg','19.7036534','-101.2705688','478',2);
+
+/*Table structure for table `registro_representantes_casilla` */
+
+DROP TABLE IF EXISTS `registro_representantes_casilla`;
+
+CREATE TABLE `registro_representantes_casilla` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombres` varchar(500) DEFAULT NULL,
+  `apaterno` varchar(200) DEFAULT NULL,
+  `amaterno` varchar(300) DEFAULT NULL,
+  `calle` varchar(500) DEFAULT NULL,
+  `numero` varchar(20) DEFAULT NULL,
+  `colonia` varchar(500) DEFAULT NULL,
+  `cp` varchar(100) DEFAULT NULL,
+  `ciudad` varchar(100) DEFAULT NULL,
+  `fecha_nacimiento` date DEFAULT NULL,
+  `curp` varchar(200) DEFAULT NULL,
+  `clave_electoral` varchar(200) DEFAULT NULL,
+  `seccion` varchar(50) DEFAULT NULL,
+  `id_Secc` int(11) DEFAULT NULL,
+  `no_celular` varchar(150) DEFAULT NULL,
+  `email` varchar(500) DEFAULT NULL,
+  `facebook` varchar(500) DEFAULT NULL,
+  `twitter` varchar(500) DEFAULT NULL,
+  `otra_red` varchar(500) DEFAULT NULL,
+  `circulo` int(11) DEFAULT NULL,
+  `contacto` varchar(200) DEFAULT NULL,
+  `no_celcontacto` varchar(45) DEFAULT NULL,
+  `observaciones` varchar(500) DEFAULT NULL,
+  `lat` varchar(200) DEFAULT NULL,
+  `lng` varchar(200) DEFAULT NULL,
+  `img` varchar(500) DEFAULT NULL,
+  `tipo_casilla` varchar(500) DEFAULT NULL,
+  `id_casilla` varchar(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `registro_representantes_casilla` */
+
+insert  into `registro_representantes_casilla`(`id`,`nombres`,`apaterno`,`amaterno`,`calle`,`numero`,`colonia`,`cp`,`ciudad`,`fecha_nacimiento`,`curp`,`clave_electoral`,`seccion`,`id_Secc`,`no_celular`,`email`,`facebook`,`twitter`,`otra_red`,`circulo`,`contacto`,`no_celcontacto`,`observaciones`,`lat`,`lng`,`img`,`tipo_casilla`,`id_casilla`) values 
+(1,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'5432','','','','',0,'','','','19.7036534','-101.2705688','511','EC','9');
+
+/*Table structure for table `registro_representantes_casilla_gral` */
+
+DROP TABLE IF EXISTS `registro_representantes_casilla_gral`;
+
+CREATE TABLE `registro_representantes_casilla_gral` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombres` varchar(500) DEFAULT NULL,
+  `apaterno` varchar(200) DEFAULT NULL,
+  `amaterno` varchar(300) DEFAULT NULL,
+  `calle` varchar(500) DEFAULT NULL,
+  `numero` varchar(20) DEFAULT NULL,
+  `colonia` varchar(500) DEFAULT NULL,
+  `cp` varchar(100) DEFAULT NULL,
+  `ciudad` varchar(100) DEFAULT NULL,
+  `fecha_nacimiento` date DEFAULT NULL,
+  `curp` varchar(200) DEFAULT NULL,
+  `clave_electoral` varchar(200) DEFAULT NULL,
+  `seccion` varchar(50) DEFAULT NULL,
+  `id_Secc` int(11) DEFAULT NULL,
+  `no_celular` varchar(150) DEFAULT NULL,
+  `email` varchar(500) DEFAULT NULL,
+  `facebook` varchar(500) DEFAULT NULL,
+  `twitter` varchar(500) DEFAULT NULL,
+  `otra_red` varchar(500) DEFAULT NULL,
+  `circulo` int(11) DEFAULT NULL,
+  `contacto` varchar(200) DEFAULT NULL,
+  `no_celcontacto` varchar(45) DEFAULT NULL,
+  `observaciones` varchar(500) DEFAULT NULL,
+  `lat` varchar(200) DEFAULT NULL,
+  `lng` varchar(200) DEFAULT NULL,
+  `img` varchar(500) DEFAULT NULL,
+  `ruta` varchar(100) DEFAULT NULL,
+  `consejo` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `registro_representantes_casilla_gral` */
+
+insert  into `registro_representantes_casilla_gral`(`id`,`nombres`,`apaterno`,`amaterno`,`calle`,`numero`,`colonia`,`cp`,`ciudad`,`fecha_nacimiento`,`curp`,`clave_electoral`,`seccion`,`id_Secc`,`no_celular`,`email`,`facebook`,`twitter`,`otra_red`,`circulo`,`contacto`,`no_celcontacto`,`observaciones`,`lat`,`lng`,`img`,`ruta`,`consejo`) values 
+(1,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'556456','','','','',0,'','','','19.7036534','-101.2705688','521','3','1');
 
 /*Table structure for table `secc_distrito` */
 
@@ -1050,7 +1416,7 @@ CREATE TABLE `secciones_injerencia_estructura` (
   `estructura_id` int(11) DEFAULT NULL,
   `seccion_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `secciones_injerencia_estructura` */
 
@@ -1072,7 +1438,13 @@ insert  into `secciones_injerencia_estructura`(`id`,`estructura_id`,`seccion_id`
 (15,5,1),
 (16,6,1),
 (17,7,1),
-(18,8,1);
+(18,8,1),
+(19,9,1),
+(20,9,2),
+(21,1,3),
+(22,1,2),
+(23,1,1),
+(24,2,1);
 
 /*Table structure for table `secciones_injerencia_lider` */
 
@@ -1083,7 +1455,7 @@ CREATE TABLE `secciones_injerencia_lider` (
   `lider_id` int(11) DEFAULT NULL,
   `seccion_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `secciones_injerencia_lider` */
 
@@ -1092,7 +1464,8 @@ insert  into `secciones_injerencia_lider`(`id`,`lider_id`,`seccion_id`) values
 (2,24,2),
 (3,25,1),
 (4,25,2),
-(5,26,1);
+(5,26,1),
+(6,32,1);
 
 /*Table structure for table `secciones_responsabilidad_promotores` */
 
@@ -1103,7 +1476,7 @@ CREATE TABLE `secciones_responsabilidad_promotores` (
   `promotor_id` int(11) DEFAULT NULL,
   `seccion_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `secciones_responsabilidad_promotores` */
 
@@ -1116,7 +1489,41 @@ insert  into `secciones_responsabilidad_promotores`(`id`,`promotor_id`,`seccion_
 (6,4,2),
 (7,5,1),
 (8,5,2),
-(9,1,1);
+(9,1,1),
+(10,4,1),
+(11,4,2),
+(12,5,1),
+(13,5,2),
+(14,5,3),
+(15,5,6),
+(16,6,1),
+(17,6,3),
+(18,6,4),
+(19,7,1),
+(20,7,2),
+(21,7,3),
+(22,7,4),
+(23,8,4),
+(24,8,5),
+(25,8,6),
+(27,9,2),
+(28,9,3);
+
+/*Table structure for table `secciones_responsabilidad_representantes` */
+
+DROP TABLE IF EXISTS `secciones_responsabilidad_representantes`;
+
+CREATE TABLE `secciones_responsabilidad_representantes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `representante_id` int(11) DEFAULT NULL,
+  `seccion_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `secciones_responsabilidad_representantes` */
+
+insert  into `secciones_responsabilidad_representantes`(`id`,`representante_id`,`seccion_id`) values 
+(1,1,1);
 
 /*Table structure for table `tipo_casilla` */
 
