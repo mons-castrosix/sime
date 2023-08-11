@@ -1,7 +1,9 @@
 .cargar{
     margin-top: 2px; 
 }
-
+body{
+    background-color: #ffffff !important;
+}
 
 .eform {
     color: #bf1650 !important;
@@ -34,7 +36,7 @@
     left: 0;
     
     width: 102%;
-    max-height: 45rem;
+    max-height: 34rem;
     overflow-y: auto;
 }
 

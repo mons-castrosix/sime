@@ -3,15 +3,15 @@ import { MultiSelect } from 'primereact/multiselect';
 import Axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap/dist/js/bootstrap.js'
-import 'primeicons/primeicons.css';
+
+
+
 import { useForm } from "react-hook-form";
 import Header from '../header/header';
 import '../apoyos/apoyos.css'
 import { GoogleMap, KmlLayer, LoadScript, InfoWindow, Marker, Polyline, Rectangle } from '@react-google-maps/api';
 import config from '../maps/config.json';
-import ScriptTag from 'react-script-tag';
+
 const mapContainerStyle = {
     width: '100%', height: '98vh', overflow: 'hidden'
 };
@@ -370,10 +370,13 @@ function Estructura() {
 
     return (
         <div>
+            <Header></Header>
+
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous" />
 
+		
 
-            <Header></Header>
+            
 
 
             <div className="row">

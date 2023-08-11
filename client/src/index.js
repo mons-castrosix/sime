@@ -16,6 +16,7 @@ import Resultados from './maps/resultadosElectorales';
 import reportWebVitals from './reportWebVitals';
 import Estructura from './estructura/estructura';
 import EstructuraList from './estructura/estructuraList';
+import RepresentantesList2 from './representantes/representantesList2';
 import { BrowserRouter, NavLink, Routes, Route, Switch } from 'react-router-dom';
 import Representantes from './representantes/representantes';
 import RepresentantesList from './representantes/representantesList';
@@ -62,7 +63,8 @@ root.render(
                  <Route path='/promovidos/view/:id' element={<ViewPromovidos/>} />
 
 
-                 <Route path='/representantes' element={<RepresentantesList/>} />
+                 <Route path='/representantes-generales' element={<RepresentantesList/>} />
+                 <Route path='/representantes-casilla' element={<RepresentantesList2/>} />
                  <Route path='/representantes/add' element={<Representantes/>} />
 
            </Routes>

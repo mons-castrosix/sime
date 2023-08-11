@@ -52,14 +52,14 @@ function PromotoresList() {
                     if (key == "idsr") {
                         sr = val;
                         Object.assign(item, { ver: <Link className='view' to={"/apoyos/view-apoyo/" + id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
-                    Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
-                    Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" onClick={() => { deleteApoyo(id, val) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
+                        Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
+                        Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" onClick={() => { deleteApoyo(id, val) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
 
 
                     }
 
 
-                    
+
                 });
 
             });
@@ -76,9 +76,9 @@ function PromotoresList() {
     var distf = JSON.stringify(arr)
 
 
-    const deleteApoyo = (id,sr) => {
-        alert(id+","+sr);
-        
+    const deleteApoyo = (id, sr) => {
+        alert(id + "," + sr);
+
 
 
         Swal.fire({
@@ -87,32 +87,32 @@ function PromotoresList() {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'De acuerdo',
-            cancelButtonText:'Cancelar',
-            
+            cancelButtonText: 'Cancelar',
+
         }).then((result) => {
             if (result.isConfirmed) {
-                Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/"+id*/"http://localhost:3001/deletePromotor/" + id+"/"+sr).then(() => {
-            Swal.fire({
-                title: 'Registro promotor',
-                text: 'eliminado correctamente',
-                icon: 'success',
-                confirmButtonText: 'De acuerdo'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    navigate('/promotores');
-                }
-            }).catch(error => {
-                Swal.fire({
-                    title: 'Error!',
-                    text: error.message,
-                    icon: 'error',
-                    confirmButtonText: 'De acuerdo'
+                Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/"+id*/"http://localhost:3001/deletePromotor/" + id + "/" + sr).then(() => {
+                    Swal.fire({
+                        title: 'Registro promotor',
+                        text: 'eliminado correctamente',
+                        icon: 'success',
+                        confirmButtonText: 'De acuerdo'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            navigate('/promotores');
+                        }
+                    }).catch(error => {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: error.message,
+                            icon: 'error',
+                            confirmButtonText: 'De acuerdo'
+                        })
+                    });
                 })
-            });
-        })
             }
         });
-       
+
 
     }
     const atras = () => {
@@ -274,15 +274,11 @@ function PromotoresList() {
 
             <Header></Header>
 
-
-
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css" integrity="sha512-giQeaPns4lQTBMRpOOHsYnGw1tGVzbAIHUyHRgn7+6FmiEgGGjaG0T2LZJmAPMzRCl+Cug0ItQ2xDZpTmEc+CQ==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous" />
+
+
+           
             {getList()}
             <div className='row'>
                 <div className='col-md-1'></div>

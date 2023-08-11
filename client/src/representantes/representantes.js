@@ -191,7 +191,7 @@ function Representantes() {
                 ).then(() => {
                     console.log("succes")
                     //alert("AGREGADO")
-                    navigate('/representantes')
+                    navigate('/representantes-casilla')
 
                 });
             }
@@ -211,7 +211,7 @@ function Representantes() {
                 ).then(() => {
                     console.log("succes")
                     //alert("AGREGADO")
-                    navigate('/representantes')
+                    navigate('/representantes-casilla')
 
                 });
 
@@ -232,7 +232,7 @@ function Representantes() {
                 ).then(() => {
                     console.log("succes")
                     //alert("AGREGADO")
-                    navigate('/representantes')
+                    navigate('/representantes-casilla')
 
                 });
 
@@ -253,7 +253,7 @@ function Representantes() {
                 ).then(() => {
                     console.log("succes")
                     //alert("AGREGADO")
-                    navigate('/representantes')
+                    navigate('/representantes-casilla')
 
                 });
 
@@ -274,7 +274,7 @@ function Representantes() {
                 ).then(() => {
                     console.log("succes")
                     //alert("AGREGADO")
-                    navigate('/representantes')
+                    navigate('/representantes-casilla')
 
                 });
 
@@ -297,7 +297,7 @@ function Representantes() {
                 ).then(() => {
                     console.log("succes")
                     //alert("AGREGADO")
-                    navigate('/representantes')
+                    navigate('/representantes-generales')
 
                 });
 

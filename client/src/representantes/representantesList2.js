@@ -24,7 +24,7 @@ import { Row } from 'primereact/row';
 import "primereact/resources/primereact.min.css";
 import 'primeicons/primeicons.css';
 
-function RepresentantesList() {
+function RepresentantesList2() {
     const [id, setId] = useState(0);
     const [list, setList] = useState([])
     const [listDF, setListDF] = useState([])
@@ -33,7 +33,7 @@ function RepresentantesList() {
     const [globalFilter, setGlobalFilter] = useState(null);
     const dt = useRef(null);
     const getList = () => {
-        Axios.post("http://localhost:3001/representantes"
+        Axios.post("http://localhost:3001/representantes2"
             //"http://54.219.124.66:3001/apoyos"
         ).then((response) => {
             //FILTRAR CAMPOS PARA TABLA
@@ -41,24 +41,18 @@ function RepresentantesList() {
             setList2(JSON.parse(resultado));
             var empObj = JSON.parse(resultado);
             var id = "";
-            var sr = "";
             empObj.forEach((item) => {
                 Object.entries(item).forEach(([key, val]) => {
                     if (key == "id") {
                         id = JSON.stringify(val);
                         //console.log(`key-${key}-val-${JSON.stringify(val)}`)
                     }
-                    if (key == "idsr") {
-                        sr = val;
-                        Object.assign(item, { ver: <Link className='view' to={"/apoyos/view-apoyo/" + id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
-                        Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
-                        Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" onClick={() => { deleteR(id, val) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
-
-
-                    }
 
                 });
-               
+                Object.assign(item, { ver: <Link className='view' to={""} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
+                Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
+                Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { deleteR(id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
+
             });
             //console.log("objeto"+JSON.stringify(empObj))
             setList(empObj)
@@ -73,7 +67,7 @@ function RepresentantesList() {
     var distf = JSON.stringify(arr)
 
 
-    const deleteR = (id, sr) => {
+    const deleteR = (id) => {
      
 
 
@@ -88,15 +82,15 @@ function RepresentantesList() {
 
         }).then((result) => {
             if (result.isConfirmed) {
-                Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/"+id*/"http://localhost:3001/deleteRep1/" + id + "/" + sr).then(() => {
+                Axios.delete(/*"http://54.219.124.66:3001/deleteApoyo/"+id*/"http://localhost:3001/deleteR2/" + id ).then(() => {
                     Swal.fire({
-                        title: 'Registro representante general',
+                        title: 'Registro representante de casilla',
                         text: 'eliminado correctamente',
                         icon: 'success',
                         confirmButtonText: 'De acuerdo'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            navigate('/representantes-generales');
+                            navigate('/representantes-casilla');
                         }
                     }).catch(error => {
                         Swal.fire({
@@ -124,7 +118,7 @@ function RepresentantesList() {
 
         { field: 'nombre', header: 'Nombre Completo' },
         { field: 'no_celular', header: 'Núm. de celular' },
-        { field: 'secc', header: 'Sección (es) de Responsabilidad' },
+        { field: 'tipocasilla', header: 'Tipo Casilla' },
 
 
 
@@ -135,7 +129,7 @@ function RepresentantesList() {
     const leftToolbarTemplate = () => {
         return (
             <div className="flex flex-wrap gap-2">
-                <h3 style={{ color: 'black' }}>Lista de Representantes Generales</h3>
+                <h3 style={{ color: 'black' }}>Lista de Representantes de Casilla</h3>
             </div>
         );
     };
@@ -179,7 +173,6 @@ function RepresentantesList() {
             saveAsExcelFile(excelBuffer, 'list');
         });
     };
-    const [selectedCities, setSelectedCities] = useState(null);
     const header = (
         <div>
 
@@ -231,33 +224,18 @@ function RepresentantesList() {
             />
         );
     };
-    const representativeBodyTemplate = (rowData) => {
-        const representative = rowData.distrito_federal;
 
-        return (
-            <div className="flex align-items-center gap-2">
-                <span className="font-bold">{rowData.nombre}</span>
-            </div>
-        );
-    };
-    const representativeBodyTemplate2 = (rowData) => {
-        return (
-            <div className="flex align-items-center gap-2">
-                <span className="font-bold">{rowData.no_celular}</span>
-
-            </div>
-        );
-    };;
     const headerGroup = (<ColumnGroup>
         <Row>
             <Column header="" colSpan={3}></Column>
-            <Column header="Acciones" colSpan={2} style={{ paddingLeft: '125px' }}></Column>
+
+            <Column header="Acciones" colSpan={2} style={{ paddingLeft: '35px' }}></Column>
 
         </Row>
         <Row>
             <Column header="Nombre Completo"></Column>
             <Column header="Núm de Celular"></Column>
-            <Column header="Sección (es) de Responsabilidad"></Column>
+            <Column header="Tipo Casilla"></Column>
 
 
             <Column header="ver"></Column>
@@ -272,7 +250,7 @@ function RepresentantesList() {
 
             <div className="container">
 
-               
+             
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
                 <div className='apoyos'>
@@ -298,11 +276,10 @@ function RepresentantesList() {
                                         currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
                                         tableStyle={{ minWidth: '50rem' }}
                                         globalFilterFields={['']}
-                                        rowGroupMode="rowspan" groupRowsBy={['nombre', 'no_celular']}
                                         header={header}>
-                                        <Column field="nombre" header="Nombre Completo" style={{ minWidth: '12rem' }} body={representativeBodyTemplate} />
-                                        <Column field="no_celular" header="Núm. de celular" style={{ minWidth: '12rem' }} body={representativeBodyTemplate2} />
-                                        <Column field="secc" header="Seccion (es) de Responsabilidad" style={{ minWidth: '7rem' }} />
+                                        <Column field="nombre" header="Nombre Completo" style={{ minWidth: '12rem' }} />
+                                        <Column field="no_celular" header="Núm. de celular" style={{ minWidth: '12rem' }} />
+                                        <Column field="tipocasilla" header="Tipo Casilla" style={{ minWidth: '7rem' }} />
 
                                         <Column field="ver" header="Ver" style={{ minWidth: '4rem' }} />
                                         <Column field="eliminar" header="Eliminar" style={{ minWidth: '4rem' }} />
@@ -315,11 +292,11 @@ function RepresentantesList() {
 
 
                 </div>
-              
+               
             </div></div>
     );
 }
 
 
 
-export default RepresentantesList;
+export default RepresentantesList2;

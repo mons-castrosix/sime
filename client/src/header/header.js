@@ -47,9 +47,10 @@ function Header() {
                         <div className="dropdown">
                             <a className="nav-item nav-link">Representantes <i className='fas fa-angle-down'></i></a>
                             <div className="dropdown-content">
-                                <NavLink to='/representantes' >Generales</NavLink>
+                                <NavLink to='/representantes-generales' >Generales</NavLink>
+                                <NavLink to='/representantes-casilla' >Casilla</NavLink>
 
-                                <a href="#">Casilla</a>
+        
 
                             </div>
                         </div>

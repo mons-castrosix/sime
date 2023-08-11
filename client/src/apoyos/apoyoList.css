@@ -7,6 +7,9 @@
 .delet{
     color: red;
 }
+body{
+    background-color: #ffffff !important;
+}
 #copy{
     background-color: #BB3D42;
     border-color: #BB3D42;

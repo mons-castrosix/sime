@@ -1765,7 +1765,7 @@ app.post('/api/insert-representantesg', (req, res) => {
 );
 
 app.post('/representantes', (req, res) => {
-  db.query('SELECT rc.id,CONCAT(rc.nombres," ",rc.apaterno," ",rc.amaterno) AS nombre,rc.no_celular,sd.secc,srp.id AS idsr FROM registro_representantes_casilla rc INNER JOIN secciones_responsabilidad_representantes srp ON rc.id=srp.representante_id INNER JOIN secc_distrito sd ON srp.seccion_id=sd.id;', (err, result) => {
+  db.query('SELECT rc.id,CONCAT(rc.nombres," ",rc.apaterno," ",rc.amaterno) AS nombre,rc.no_celular,sd.secc,srp.id AS idsr FROM registro_representantes_casilla_gral rc INNER JOIN secciones_responsabilidad_representantes srp ON rc.id=srp.representante_id INNER JOIN secc_distrito sd ON srp.seccion_id=sd.id;', (err, result) => {
     if (err) {
       //console.log(err)
     }
@@ -1787,6 +1787,63 @@ app.post('/representantes', (req, res) => {
       res.send(resultado)
 
 
+    }
+  })
+})
+
+app.post('/representantes2', (req, res) => {
+  db.query('SELECT rc.id,CONCAT(rc.nombres," ",rc.apaterno," ",rc.amaterno) AS nombre,rc.no_celular,ca.nombre AS tipocasilla FROM registro_representantes_casilla rc INNER JOIN cat_casilla ca ON rc.tipo_casilla=ca.sigla;', (err, result) => {
+    if (err) {
+      //console.log(err)
+    }
+    else {
+      acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
+      var resultado = JSON.stringify(result);
+      var empObj = JSON.parse(resultado);
+      /*var id="";
+      empObj.forEach((item) => {
+          Object.entries(item).forEach(([key, val]) => {
+              if(key=="id"){
+                  id=JSON.stringify(val);
+                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
+            
+          });
+          Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
+        });
+        //console.log(empObj)*/
+      res.send(resultado)
+
+
+    }
+  })
+})
+
+app.delete('/deleteRep1/:id/:idsrp', (req, res) => {
+  const id = req.params.id
+  const idsrp = req.params.idsrp
+  //console.log(req.params)
+  db.query("DELETE FROM secciones_responsabilidad_representantes WHERE representante_id=? AND id=?", [id, idsrp], (err, result) => {
+    if (err) {
+      res.send(err)
+    }
+    else {
+      res.send(result)
+      //console.log(result)
+    }
+  })
+})
+
+app.delete('/deleteR2/:id', (req, res) => {
+  const id = req.params.id
+  db.query("DELETE FROM registro_representantes_casilla WHERE id=?", id, (err, result) => {
+    if (err) {
+      //console.log(err)
+      res.send(err);
+    }
+    else {
+      //console.log(result);
+      res.send({ status: 404, msg: "No user found" });
+      //res.status().send(200); 
     }
   })
 })
