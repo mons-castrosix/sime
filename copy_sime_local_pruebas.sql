@@ -266,6 +266,26 @@ insert  into `casillas_extcont`(`id`,`numero`,`nomenclatura`) values
 (39,'Extraordinaria 04 Contigua 09','E04C09'),
 (40,'Extraordinaria 04 Contigua 10','E04C10');
 
+/*Table structure for table `cat_casilla` */
+
+DROP TABLE IF EXISTS `cat_casilla`;
+
+CREATE TABLE `cat_casilla` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sigla` varchar(100) DEFAULT NULL,
+  `nombre` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+/*Data for the table `cat_casilla` */
+
+insert  into `cat_casilla`(`id`,`sigla`,`nombre`) values 
+(1,'B','Básica'),
+(2,'C','Contigua'),
+(3,'SMR','Especial'),
+(4,'E','Extraordinaria'),
+(5,'EC','Extraordinaria Continua');
+
 /*Table structure for table `cat_tenencia` */
 
 DROP TABLE IF EXISTS `cat_tenencia`;
@@ -1178,9 +1198,6 @@ CREATE TABLE `registro_representantes_casilla` (
 
 /*Data for the table `registro_representantes_casilla` */
 
-insert  into `registro_representantes_casilla`(`id`,`nombres`,`apaterno`,`amaterno`,`calle`,`numero`,`colonia`,`cp`,`ciudad`,`fecha_nacimiento`,`curp`,`clave_electoral`,`seccion`,`id_Secc`,`no_celular`,`email`,`facebook`,`twitter`,`otra_red`,`circulo`,`contacto`,`no_celcontacto`,`observaciones`,`lat`,`lng`,`img`,`tipo_casilla`,`id_casilla`) values 
-(1,'MONSERRAT ALEJANDRA','CASTRO','SIXTOS','TARECUATO ','572','SAN ISIDRO ITZICUARO ','58337','MORELIA','1998-12-11','CASM981211MMNSXN09','CSSXMN98121116M100','1263',1,'5432','','','','',0,'','','','19.7036534','-101.2705688','511','EC','9');
-
 /*Table structure for table `registro_representantes_casilla_gral` */
 
 DROP TABLE IF EXISTS `registro_representantes_casilla_gral`;
@@ -1521,9 +1538,6 @@ CREATE TABLE `secciones_responsabilidad_representantes` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 
 /*Data for the table `secciones_responsabilidad_representantes` */
-
-insert  into `secciones_responsabilidad_representantes`(`id`,`representante_id`,`seccion_id`) values 
-(1,1,1);
 
 /*Table structure for table `tipo_casilla` */
 
