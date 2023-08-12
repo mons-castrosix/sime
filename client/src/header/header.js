@@ -56,7 +56,7 @@ function Header() {
                         </div>
 
 
-                        <NavLink className="nav-item nav-link">Resultados Electorales</NavLink>
+                        <NavLink to='/resultados' className="nav-item nav-link">Resultados Electorales</NavLink>
                         <NavLink className="nav-item nav-link ">Metas</NavLink>
                         <NavLink to='/mapa' className="nav-item nav-link ">Mapa</NavLink>
 

@@ -12,7 +12,7 @@ import Dashboard from './dashboard/dashboard';
 import Lideres from './lideresTerritoriales/lideres';
 import ViewLideres from './lideresTerritoriales/lideresView';
 import LideresList from './lideresTerritoriales/lideresTerritorialesList';
-import Resultados from './maps/resultadosElectorales';
+
 import reportWebVitals from './reportWebVitals';
 import Estructura from './estructura/estructura';
 import EstructuraList from './estructura/estructuraList';
@@ -22,11 +22,13 @@ import Representantes from './representantes/representantes';
 import RepresentantesList from './representantes/representantesList';
 import Promotores from './promotores/promotores';
 import PromotoresList from './promotores/promotoresList';
+import Resultados from './res_electorales/resultados';
 import Promovidos from './promovidos/promovidos';
 import PromovidosList from './promovidos/promovidosList';
 import ViewEstructura from './estructura/viewEstructura';
 import ViewPromotores from './promotores/viewPromotores';
 import ViewPromovidos from './promovidos/viewPromovidos';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -66,6 +68,11 @@ root.render(
                  <Route path='/representantes-generales' element={<RepresentantesList/>} />
                  <Route path='/representantes-casilla' element={<RepresentantesList2/>} />
                  <Route path='/representantes/add' element={<Representantes/>} />
+
+
+                 <Route path='/resultados' element={<Resultados/>} />
+
+
 
            </Routes>
          </BrowserRouter>
