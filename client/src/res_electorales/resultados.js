@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MultiSelect } from 'primereact/multiselect';
 import Axios from 'axios';
-
+import './relect.css'
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -55,6 +55,20 @@ function Resultados() {
     const [seccionInp, setSeccioninp] = useState("");
 
     const [list, setList] = useState([])
+    const [list2, setList2] = useState([])
+
+
+    const [pan, setPan] = useState("");
+    const [pri, setPri] = useState("");
+    const [prd, setPrd] = useState("");
+    const [pt, setPt] = useState("");
+    const [ln, setLn] = useState("");
+    const [part, setPart] = useState("");
+    const [pvem, setPvem] = useState("");
+    const [morena, setMorena] = useState("");
+    const [mc, setMc] = useState("");
+    const [pes, setPes] = useState("");
+    const [casilla, setCasilla] = useState("");
     /*const center = {
       lat: document.getElementById("lat").value,
       lng:document.getElementById("lng").value
@@ -63,10 +77,10 @@ function Resultados() {
 
 
 
-    const submitSecciones = () => {
+    const distF = () => {
 
 
-        Axios.post("http://localhost:3001/api/distritosAll"
+        Axios.post("http://localhost:3001/ayuntamiento-df/"
             /*"http://54.219.124.66:3001/api/distritos"*/, {
 
             }).then((response) => {
@@ -76,6 +90,38 @@ function Resultados() {
 
 
             });
+    }
+
+    const seccList = () => {
+
+
+        Axios.post("http://localhost:3001/ayuntamiento-secc/"
+            /*"http://54.219.124.66:3001/api/distritos"*/, {
+
+            }).then((response) => {
+                var resultado = JSON.stringify(response.data);
+                var empObj = JSON.parse(resultado);
+                setList2(empObj)
+
+
+            });
+    }
+
+    const resultados = () => {
+
+       
+            Axios.post("http://localhost:3001/ress-view/"
+            /*"http://54.219.124.66:3001/api/distritos"*/,{anio:año,eleccion:eleccion,estado:estadoInp,df:dfInp,dl:dlInp,municipio:municipioInp,seccion:seccionInp}, {
+
+            }).then((response) => {
+                var resultado = JSON.stringify(response.data);
+                var empObj = JSON.parse(resultado);
+                console.log(empObj)
+
+
+            });
+        
+        
     }
 
 
@@ -124,28 +170,27 @@ function Resultados() {
                                     <input
 
                                         type="radio"
-                                        className="form-radio"
-                                        id="tipolider"
-                                        name="tipolider"
-                                        value="2"
+                                        className="form-radio anio"
+                                        name="anio"
+                                        value="2021"
                                         onChange={e => { setAño(e.target.value); console.log(e.target.value) }}
                                     /> 2021 <br></br>
                                     <input
 
                                         type="radio"
-                                        className="form-radio"
-                                        id="tipolider"
-                                        name="tipolider"
-                                        value="2"
+                                        className="form-radio anio"
+                                        
+                                        name="anio"
+                                        value="2018"
                                         onChange={e => { setAño(e.target.value); console.log(e.target.value) }}
                                     /> 2018<br></br>
                                     <input
 
                                         type="radio"
-                                        className="form-radio"
-                                        id="tipolider"
-                                        name="tipolider"
-                                        value="2"
+                                        className="form-radio anio"
+                                      
+                                        name="anio"
+                                        value="2015"
                                         onChange={e => { setAño(e.target.value); console.log(e.target.value) }}
                                     /> 2015 <br></br>
 
@@ -155,18 +200,17 @@ function Resultados() {
                                     <input
 
                                         type="radio"
-                                        className="form-radio"
-                                        id="tipolider"
-                                        name="tipolider"
-                                        value="2"
+                                        className="form-radio elecc"
+                                        name="elecc"
+                                        value="1"
                                         onChange={e => { setEleccion(e.target.value); console.log(e.target.value) }}
                                     /> Gobernador <br></br>
                                     <input
 
                                         type="radio"
-                                        className="form-radio"
+                                        className="form-radio elecc"
                                         id="tipolider"
-                                        name="tipolider"
+                                        name="elecc"
                                         value="2"
                                         onChange={e => { setEleccion(e.target.value); console.log(e.target.value) }}
                                     /> Diputado Federal<br></br>
@@ -174,18 +218,16 @@ function Resultados() {
 
                                         type="radio"
                                         className="form-radio"
-                                        id="tipolider"
-                                        name="tipolider"
-                                        value="2"
+                                        name="elecc"
+                                        value="3"
                                         onChange={e => { setEleccion(e.target.value); console.log(e.target.value) }}
                                     /> Diputado Local<br></br>
                                     <input
 
                                         type="radio"
-                                        className="form-radio"
-                                        id="tipolider"
-                                        name="tipolider"
-                                        value="2"
+                                        className="form-radio elecc"
+                                        name="elecc"
+                                        value="4"
                                         onChange={e => { setEleccion(e.target.value); console.log(e.target.value) }}
                                     /> Ayuntamiento<br></br>
                                 </div>
@@ -196,7 +238,7 @@ function Resultados() {
                                 <div className='col-md-12'>
                                     <div class="form-group row">
                                         <div className='col-md-6'>
-                                        
+
                                             <input
 
                                                 type="radio"
@@ -205,7 +247,7 @@ function Resultados() {
                                                 name="tipolider"
                                                 value="2"
                                                 onChange={e => { setEstado(e.target.value); console.log(e.target.value) }}
-                                            /> Estado <br/><br/>
+                                            /> Estado <br /><br />
                                             <input
 
                                                 type="radio"
@@ -214,7 +256,7 @@ function Resultados() {
                                                 name="tipolider"
                                                 value="2"
                                                 onChange={e => { setDF(e.target.value); console.log(e.target.value) }}
-                                            /> Distrito Fed.<br/><br/>
+                                            /> Distrito Fed.<br /><br />
                                             <input
 
                                                 type="radio"
@@ -223,7 +265,7 @@ function Resultados() {
                                                 name="tipolider"
                                                 value="2"
                                                 onChange={e => { setDL(e.target.value); console.log(e.target.value) }}
-                                            />Distrito Loc. <br/><br/>
+                                            />Distrito Loc. <br /><br />
                                             <input
 
                                                 type="radio"
@@ -232,7 +274,7 @@ function Resultados() {
                                                 name="tipolider"
                                                 value="2"
                                                 onChange={e => { setMunicipio(e.target.value); console.log(e.target.value) }}
-                                            />Municipio <br/><br/>
+                                            />Municipio <br /><br />
                                             <input
 
                                                 type="radio"
@@ -246,51 +288,82 @@ function Resultados() {
                                         </div>
 
                                         <div className='col-md-6'>
-                                            <input
 
-                                                type="text"
-                                                className="form-radio form-control"
-                                                id="tipolider"
-                                                name="tipolider"
-                                                value="2"
-                                                onChange={e => { setEstado(e.target.value); console.log(e.target.value) }}
-                                            /> 
-                                            <input
+                                            <select
 
-                                                type="select"
-                                                className="form-radio form-select"
-                                                id="tipolider"
-                                                name="tipolider"
-                                                value="2"
-                                                onChange={e => { setDF(e.target.value); console.log(e.target.value) }}
-                                            /> 
-                                            <input
 
-                                                type="select"
-                                                className="form-radio form-select"
-                                                id="tipolider"
-                                                name="tipolider"
-                                                value="2"
-                                                onChange={e => { setDL(e.target.value); console.log(e.target.value) }}
-                                            />
-                                            <input
+                                                className="form-select form-control"
+                                                id="estadoinput"
+                                                name="estadoinput"
 
-                                                type="select"
-                                                className="form-radio form-select"
-                                                id="tipolider"
-                                                name="tipolider"
-                                                value="2"
-                                                onChange={e => { setMunicipio(e.target.value); console.log(e.target.value) }}
-                                            /> 
-                                            <input
+                                                onChange={e => { setEstadoinp(e.target.value); console.log(e.target.value) }}
+                                            >
+                                                <option value="">Selecciona</option>
+                                                <option value="1">Michoacán</option>
+                                            </select>
+                                            <select
 
-                                                type="select"
-                                                className="form-radio form-select"
-                                                id="tipolider"
-                                                name="tipolider"
-                                                value="2"
-                                                onChange={e => { setSeccion(e.target.value); console.log(e.target.value) }}
-                                            />
+
+                                                className="form-select form-control"
+                                                id="dfinput"
+                                                name="dfinput"
+
+                                                onChange={e => { setDFinp(e.target.value); console.log(e.target.value) }}
+                                            >
+                                                <option value="">Selecciona</option>
+                                                <option value="1">21</option>
+
+                                            </select>
+                                            <select
+
+
+                                                className="form-select form-control"
+                                                id="dlinput"
+                                                name="dlinput"
+
+                                                onChange={e => { setDLinp(e.target.value); console.log(e.target.value) }}
+                                            >
+                                                <option value="">Selecciona</option>
+                                                {distF()}
+                                                {
+                                                    list.map(val => {
+
+                                                        return (<option value={val.dl}>{val.dl}</option>);
+                                                    })}
+
+                                            </select>
+                                            <select
+
+
+                                                className="form-select form-control"
+                                                id="muninput"
+                                                name="muninput"
+
+                                                onChange={e => { setMunicipioInt(e.target.value); console.log(e.target.value) }}
+                                            >
+                                                <option value="">Selecciona</option>
+                                                <option value="morelia">Morelia</option>
+
+                                            </select>
+                                            <select
+
+
+                                                className="form-select form-control"
+                                                id="seccinp"
+                                                name="seccinp"
+
+                                                onChange={e => { setSeccioninp(e.target.value); console.log(e.target.value) }}
+                                            >
+                                                <option value="">Selecciona</option>
+                                                {seccList()}
+                                                {
+                                                    list2.map(val => {
+
+                                                        return (<option value={val.secc}>{val.secc}</option>);
+                                                    })}
+
+
+                                            </select>
 
                                         </div>
 
@@ -301,6 +374,79 @@ function Resultados() {
                                 </div>
 
                             </div>
+                            <div className='row'>
+                                <div className='col-md-4'></div>
+                                <div className='col-md-4'>
+                                    <button className='btn btn-primary' onClick={resultados}>Resultados</button>
+                                </div>
+                                <div className='col-md-4'></div>
+                            </div> <br></br>
+                                                    
+
+                            <div className='row'>
+                                
+                                <div className='col-md-6'>
+                                    <form class="form-inline" >
+                                        <div class="form-group">
+                                            <label for="pan">PAN: </label>
+                                            <input type="text" readOnly class="form-control col-md-5" id="pan" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pan"> PRI  : </label>
+                                            <input type="text" readOnly class="form-control col-md-5" id="pri" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="prd">PRD:</label>
+                                            <input type="text" readOnly class="form-control col-md-5" id="prd" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="prd">PRD:</label>
+                                            <input type="text" readOnly class="form-control col-md-5" id="prd" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pt">PT  :</label>
+                                            <input type="text" readOnly class="form-control col-md-5" id="pt" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ln">LN :</label>
+                                            <input type="text" readOnly class="form-control col-md-5" id="ln" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="part">PART:</label>
+                                            <input type="text" readOnly class="form-control col-md-5" id="part" />
+                                        </div>
+
+                                    </form>
+                                </div>
+                                
+                                <div className='col-md-6'>
+                                    <form class="form-inline" >
+                                        <div class="form-group">
+                                            <label className='' for="pvem">PVEM:</label>
+                                            <input type="text" readOnly class="form-control col-md-5" id="pvem" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="morena">MORENA:</label>
+                                            <input type="text" readOnly class="form-control col-md-5" id="morena" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pan">MC:</label>
+                                            <input type="text" readOnly class="form-control col-md-5" id="mc" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pan">PES:</label>
+                                            <input type="text" readOnly class="form-control col-md-5" id="pes" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ncas">No. Casilla:</label>
+                                            <input type="text" readOnly class="form-control col-md-5" id="ncas" />
+                                        </div>
+
+                                    </form>
+                                </div>
+                                
+                            </div>
+
 
                         </div>
 

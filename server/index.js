@@ -1848,5 +1848,49 @@ app.delete('/deleteR2/:id', (req, res) => {
   })
 })
 
+app.post('/ayuntamiento-df/', (req, res) => {
+  const sqlInsert = 'SELECT dl, COUNT(*) FROM ayuntamiento WHERE dl != ""  GROUP BY dl;';
+  //console.log(sqlInsert);
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      //console.log(err)
+    }
+    else {
+      res.send(JSON.stringify(result))
+    }
+  });
+})
+
+app.post('/ayuntamiento-secc/', (req, res) => {
+  const sqlInsert = 'SELECT secc, COUNT(*) FROM ayuntamiento WHERE secc != ""  GROUP BY secc;';
+  //console.log(sqlInsert);
+  db.query(sqlInsert, (err, result) => {
+    if (err) {
+      //console.log(err)
+    }
+    else {
+      res.send(JSON.stringify(result))
+    }
+  });
+})
+
+app.post('/ress-view/', (req, res) => {
+  console.log(req.body)
+
+  if( req.body.anio=="2015"){
+    const sqlInsert = 'SELECT cas,pan15,pri15,prd15,pt15,pvem15,morena15,pes15,ln15,part15 FROM ayuntamiento WHERE secc=?;';
+    //console.log(sqlInsert);
+    db.query(sqlInsert,[req.body.seccion,req.body.dl], (err, result) => {
+      if (err) {
+        //console.log(err)
+      }
+      else {
+        console.log(result)
+        res.send(JSON.stringify(result))
+      }
+    });
+  }
+ 
+})
 
 

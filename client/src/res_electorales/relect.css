@@ -1,0 +1,41 @@
+.form-group label{
+    margin-right: 16px;
+    margin-bottom: 10px;
+}
+.card-body{
+    overflow-x: hidden ;
+}
+.form-control{
+    margin-bottom: 14px;
+}
+
+.form-group input{
+    margin-bottom: 15px;
+}
+#pt{
+    margin-left: 7px;
+}
+#pan{
+    margin-left: -2px;
+}
+#pri{
+    margin-left: 2px;
+}
+#ln{
+    margin-left: 6px;
+}
+#part{
+    margin-left: -8px;
+}
+#pvem{
+    margin-left: 18px;
+}
+#morena{
+    margin-left: -4px;
+}
+#mc{
+    margin-left: 36px;
+}
+#pes{
+    margin-left: 33px;
+}
