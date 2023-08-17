@@ -1885,7 +1885,7 @@ app.post('/ress-view/', (req, res) => {
         //console.log(err)
       }
       else {
-        console.log(result)
+        //console.log(result)
         res.send(result[0])
       }
     });
@@ -1899,7 +1899,7 @@ app.post('/ress-view/', (req, res) => {
         //console.log(err)
       }
       else {
-        console.log(result)
+        //console.log(result)
         res.send(result[0])
       }
     });
