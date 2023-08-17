@@ -1878,7 +1878,7 @@ app.post('/ress-view/', (req, res) => {
   console.log(req.body)
 
   if( req.body.anio=="2015"){
-    const sqlInsert = 'SELECT cas,pan15,pri15,prd15,pt15,pvem15,morena15,pes15,ln15,part15 FROM ayuntamiento WHERE secc=?;';
+    const sqlInsert = 'SELECT cas,pan15,pri15,prd15,pt15,pvem15,morena15,pes15,ln15,part15,mc15 FROM ayuntamiento WHERE secc=?;';
     //console.log(sqlInsert);
     db.query(sqlInsert,[req.body.seccion,req.body.dl], (err, result) => {
       if (err) {
@@ -1886,7 +1886,34 @@ app.post('/ress-view/', (req, res) => {
       }
       else {
         console.log(result)
-        res.send(JSON.stringify(result))
+        res.send(result[0])
+      }
+    });
+  }
+
+  if( req.body.anio=="2018"){
+    const sqlInsert = 'SELECT cas,pan18,pri18,prd18,pt18,pvem18,morena18,pes18,ln18,part18,mc18 FROM ayuntamiento WHERE secc=?;';
+    //console.log(sqlInsert);
+    db.query(sqlInsert,[req.body.seccion,req.body.dl], (err, result) => {
+      if (err) {
+        //console.log(err)
+      }
+      else {
+        console.log(result)
+        res.send(result[0])
+      }
+    });
+  }
+  if( req.body.anio=="2021"){
+    const sqlInsert = 'SELECT cas,pan21,pri21,prd21,pt21,pvem21,morena21,pes21,ln21,part21,mc21 FROM ayuntamiento WHERE secc=?;';
+    //console.log(sqlInsert);
+    db.query(sqlInsert,[req.body.seccion,req.body.dl], (err, result) => {
+      if (err) {
+        //console.log(err)
+      }
+      else {
+        console.log(result)
+        res.send(result[0])
       }
     });
   }

@@ -56,6 +56,7 @@ function Resultados() {
 
     const [list, setList] = useState([])
     const [list2, setList2] = useState([])
+  
 
 
     const [pan, setPan] = useState("");
@@ -108,18 +109,72 @@ function Resultados() {
     }
 
     const resultados = () => {
-
-       
+        if(año== "2015"){
             Axios.post("http://localhost:3001/ress-view/"
             /*"http://54.219.124.66:3001/api/distritos"*/,{anio:año,eleccion:eleccion,estado:estadoInp,df:dfInp,dl:dlInp,municipio:municipioInp,seccion:seccionInp}, {
 
-            }).then((response) => {
-                var resultado = JSON.stringify(response.data);
-                var empObj = JSON.parse(resultado);
-                console.log(empObj)
+            }).then((res) => {
+                console.log(res.data)
+                setCasilla(res.data.cas);
+                setPan(res.data.pan15);
+                setPri(res.data.pri15);
+                setPrd(res.data.prd15);
+                setPt(res.data.pt15);
+                setPvem(res.data.pvem15);
+                setMorena(res.data.morena15);
+                setPes(res.data.pes15);
+                setLn(res.data.ln15);
+                setPart(res.data.part15);
+                setMc(res.data.mc15);
 
 
             });
+        }
+        if(año== "2018"){
+            Axios.post("http://localhost:3001/ress-view/"
+            /*"http://54.219.124.66:3001/api/distritos"*/,{anio:año,eleccion:eleccion,estado:estadoInp,df:dfInp,dl:dlInp,municipio:municipioInp,seccion:seccionInp}, {
+
+            }).then((res) => {
+                console.log(res.data)
+                setCasilla(res.data.cas);
+                setPan(res.data.pan18);
+                setPri(res.data.pri18);
+                setPrd(res.data.prd18);
+                setPt(res.data.pt18);
+                setPvem(res.data.pvem18);
+                setMorena(res.data.morena18);
+                setPes(res.data.pes18);
+                setLn(res.data.ln18);
+                setPart(res.data.part18);
+                setMc(res.data.mc18);
+
+
+            });
+        }
+        if(año== "2021"){
+            Axios.post("http://localhost:3001/ress-view/"
+            /*"http://54.219.124.66:3001/api/distritos"*/,{anio:año,eleccion:eleccion,estado:estadoInp,df:dfInp,dl:dlInp,municipio:municipioInp,seccion:seccionInp}, {
+
+            }).then((res) => {
+                console.log(res.data)
+                setCasilla(res.data.cas);
+                setPan(res.data.pan21);
+                setPri(res.data.pri21);
+                setPrd(res.data.prd21);
+                setPt(res.data.pt21);
+                setPvem(res.data.pvem21);
+                setMorena(res.data.morena21);
+                setPes(res.data.pes21);
+                setLn(res.data.ln21);
+                setPart(res.data.part21);
+                setMc(res.data.mc21);
+
+
+            });
+        }
+        
+       
+            
         
         
     }
@@ -236,7 +291,7 @@ function Resultados() {
                             <div className='row'>
                                 <h5 className='text-center'>Territorio</h5>
                                 <div className='col-md-12'>
-                                    <div class="form-group row">
+                                    <div className="form-group row">
                                         <div className='col-md-6'>
 
                                             <input
@@ -386,60 +441,57 @@ function Resultados() {
                             <div className='row'>
                                 
                                 <div className='col-md-6'>
-                                    <form class="form-inline" >
-                                        <div class="form-group">
-                                            <label for="pan">PAN: </label>
-                                            <input type="text" readOnly class="form-control col-md-5" id="pan" />
+                                    <form className="form-inline" >
+                                        <div className="form-group">
+                                            <label >PAN: </label>
+                                            <input type="text" readOnly className="form-control col-md-5" id="pan" value={pan} />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="pan"> PRI  : </label>
-                                            <input type="text" readOnly class="form-control col-md-5" id="pri" />
+                                        <div className="form-group">
+                                            <label > PRI  : </label>
+                                            <input type="text" readOnly className="form-control col-md-5" id="pri" value={pri} />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="prd">PRD:</label>
-                                            <input type="text" readOnly class="form-control col-md-5" id="prd" />
+                                        <div className="form-group">
+                                            <label>PRD:</label>
+                                            <input type="text" readOnly className="form-control col-md-5" id="prd" value={prd || ""} />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="prd">PRD:</label>
-                                            <input type="text" readOnly class="form-control col-md-5" id="prd" />
+                                       
+                                        <div className="form-group">
+                                            <label>PT  :</label>
+                                            <input type="text" readOnly className="form-control col-md-5" id="pt" value={pt || ""} />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="pt">PT  :</label>
-                                            <input type="text" readOnly class="form-control col-md-5" id="pt" />
+                                        <div className="form-group">
+                                            <label >LN :</label>
+                                            <input type="text" readOnly className="form-control col-md-5" id="ln" value={ln || ""} />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="ln">LN :</label>
-                                            <input type="text" readOnly class="form-control col-md-5" id="ln" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="part">PART:</label>
-                                            <input type="text" readOnly class="form-control col-md-5" id="part" />
+                                        <div className="form-group">
+                                            <label >PART:</label>
+                                            <input type="text" readOnly className="form-control col-md-5" id="part" value={part || ""} />
                                         </div>
 
                                     </form>
                                 </div>
                                 
                                 <div className='col-md-6'>
-                                    <form class="form-inline" >
-                                        <div class="form-group">
-                                            <label className='' for="pvem">PVEM:</label>
-                                            <input type="text" readOnly class="form-control col-md-5" id="pvem" />
+                                    <form className="form-inline" >
+                                        <div className="form-group">
+                                            <label className='' >PVEM:</label>
+                                            <input type="text" readOnly className="form-control col-md-5" id="pvem" value={pvem || ""} />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="morena">MORENA:</label>
-                                            <input type="text" readOnly class="form-control col-md-5" id="morena" />
+                                        <div className="form-group">
+                                            <label >MORENA:</label>
+                                            <input type="text" readOnly className="form-control col-md-5" id="morena" value={morena || ""} />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="pan">MC:</label>
-                                            <input type="text" readOnly class="form-control col-md-5" id="mc" />
+                                        <div className="form-group">
+                                            <label >MC:</label>
+                                            <input type="text" readOnly className="form-control col-md-5" id="mc" value={mc || ""} />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="pan">PES:</label>
-                                            <input type="text" readOnly class="form-control col-md-5" id="pes" />
+                                        <div className="form-group">
+                                            <label >PES:</label>
+                                            <input type="text" readOnly className="form-control col-md-5" id="pes" value={pes || ""} />
                                         </div>
-                                        <div class="form-group">
-                                            <label for="ncas">No. Casilla:</label>
-                                            <input type="text" readOnly class="form-control col-md-5" id="ncas" />
+                                        <div className="form-group">
+                                            <label >No. Casilla:</label>
+                                            <input type="text" readOnly className="form-control col-md-5" id="ncas" value={casilla || ""} />
                                         </div>
 
                                     </form>
