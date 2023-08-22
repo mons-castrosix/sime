@@ -205,19 +205,30 @@ function Promovidos() {
                 apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
                 ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
                 distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
-                otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_promotor: promotor, observaciones: observaciones,id_Secc: idSecc
-            }).then(() => {
-                Swal.fire({
-                    title: 'Registro de promovidos',
-                    text: "Agregado existosamente",
-                    icon: 'success',
-                    confirmButtonColor: '#716add',
-                    confirmButtonText: 'De acuerdo'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        navigate('/promovidos')
-                    }
-                })
+                otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_promotor: promotor, observaciones: observaciones, id_Secc: idSecc
+            }).then((response) => {
+                console.log(response.data)
+                if (response.data == "No Agregado") {
+                    Swal.fire({
+                        title: 'Ya existe un registro asociado',
+                        text: "Verificar Clave de elector",
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar'
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Registro de promovidos',
+                        text: "Agregado existosamente",
+                        icon: 'success',
+                        confirmButtonColor: '#716add',
+                        confirmButtonText: 'De acuerdo'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            //navigate('/promovidos')
+                        }
+                    })
+                }
+
 
             }).catch(error => {
                 Swal.fire({
@@ -245,7 +256,7 @@ function Promovidos() {
                 var resultado = JSON.stringify(response.data);
                 var empObj = JSON.parse(resultado);
                 setList(empObj)
-                console.log(response)
+                // console.log(response)
 
 
             });
@@ -374,548 +385,548 @@ function Promovidos() {
                         <div className="card-header text-center text-center text-white font-weight-bold">REGISTRO DE PROMOVIDOS</div>
                         <div className="card-body rounded-3  text-center bg-light">
 
-                        <form onSubmit={handleSubmit(handleRegistration)}>
+                            <form onSubmit={handleSubmit(handleRegistration)}>
 
 
-                            <br></br>
-                            <input type="file"
-                                className="form-control"
-                                id="ine"
-                                capture='enviroment'
-                                name="ine"
-                                accept='image/*'
-                                encType="multipart/form-data"
-                                onChange={saveFile} /> <br></br>
-                            <button onClick={uploadFile1} id='ineButton' className="btn btn-dark btn-md cargar" type="submit">Cargar INE</button>
-                            <br /> <br></br>
+                                <br></br>
+                                <input type="file"
+                                    className="form-control"
+                                    id="ine"
+                                    capture='enviroment'
+                                    name="ine"
+                                    accept='image/*'
+                                    encType="multipart/form-data"
+                                    onChange={saveFile} /> <br></br>
+                                <button onClick={uploadFile1} id='ineButton' className="btn btn-dark btn-md cargar" type="submit">Cargar INE</button>
+                                <br /> <br></br>
 
 
-                            <input
-                                {...register("lat", {
-                                    required: true,
-                                })}
-                                placeholder='latitud'
-                                type='hidden'
-                                name="lat" id='lat'
+                                <input
+                                    {...register("lat", {
+                                        required: true,
+                                    })}
+                                    placeholder='latitud'
+                                    type='hidden'
+                                    name="lat" id='lat'
 
-                                value={newCoordenadas[0] || ''} />
-                            <input
-                                {...register("lng", {
-                                    required: true,
-                                })}
-                                placeholder='longitud'
-                                type='hidden'
-                                name='lng'
-                                id='lng'
-                                value={newCoordenadas[1] || ''} />
-                            {file && (
-                                <div className='row'>
-                                    <div className='col-2'></div>
-                                    <div className='col-1'><button className='delete' onClick={removeSelectedImage} >
-                                        X
-                                    </button></div>
-                                    <div className='col-9'>
-                                        <div className='preview' >
-                                            <img
-                                                src={URL.createObjectURL(file)}
-                                                alt="Thumb"
-                                            />
+                                    value={newCoordenadas[0] || ''} />
+                                <input
+                                    {...register("lng", {
+                                        required: true,
+                                    })}
+                                    placeholder='longitud'
+                                    type='hidden'
+                                    name='lng'
+                                    id='lng'
+                                    value={newCoordenadas[1] || ''} />
+                                {file && (
+                                    <div className='row'>
+                                        <div className='col-2'></div>
+                                        <div className='col-1'><button className='delete' onClick={removeSelectedImage} >
+                                            X
+                                        </button></div>
+                                        <div className='col-9'>
+                                            <div className='preview' >
+                                                <img
+                                                    src={URL.createObjectURL(file)}
+                                                    alt="Thumb"
+                                                />
 
 
+                                            </div>
                                         </div>
+
+
+                                    </div>
+                                )}
+                                <div className="row gx-3 mb-3">
+                                    <div className=" col-12">
+                                        <label htmlFor="nombre">Nombre(s)</label>
+                                        <input
+                                            {...register("nombre", {
+                                                required: true,
+                                                pattern: /^[A-Za-z.\s_-]+$/
+
+                                            })}
+
+                                            className="form-control"
+                                            id="nombre"
+                                            name="nombre"
+
+
+                                            placeholder="Nombre (s)"
+                                            onChange={e => setNombres(e.target.value)}
+
+
+                                        />
+                                        {errors?.nombre?.type === "required" && <span className='eform'>Campo Vacio </span>}
+                                        {errors?.nombre?.type === "pattern" && (
+                                            <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                                        )}
+
+                                    </div>
+                                </div>
+
+                                <div className="row gx-3 mb-3">
+                                    <div className="col-md-6">
+                                        <label htmlFor="apaterno">Apellido Paterno</label>
+                                        <input
+                                            {...register("apaterno", {
+                                                required: true,
+                                                pattern: /^[A-Za-z.\s_-]+$/
+
+                                            })}
+
+                                            className="form-control"
+                                            id="apaterno"
+                                            name="apaterno"
+                                            placeholder="Apellido Paterno"
+                                            onChange={e => { setApaterno(e.target.value) }}
+                                        />
+
+                                        {errors?.apaterno?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                        {errors?.apaterno?.type === "pattern" && (
+                                            <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                                        )}
+
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="amaterno">Apellido Materno</label>
+                                        <input
+                                            {...register("amaterno", {
+                                                required: true,
+                                                pattern: /^[A-Za-z.\s_-]+$/
+                                            })}
+
+                                            className="form-control"
+                                            id="amaterno"
+                                            name="amaterno"
+
+                                            placeholder="Apellido Materno"
+                                            onChange={e => { setAmaterno(e.target.value) }} />
+                                        {errors?.amaterno?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                        {errors?.amaterno?.type === "pattern" && (
+                                            <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                                        )}
+                                    </div>
+                                </div>
+
+                                <div className="row gx-3 mb-3">
+
+                                    <div className="col-md-8">
+                                        <label htmlFor="calle">Calle</label>
+                                        <input
+                                            {...register("calle", {
+                                                required: true,
+                                                pattern: /^[A-Za-z.\s_-]+$/
+                                            })}
+
+                                            className="form-control"
+                                            id="calle"
+                                            name="calle"
+
+                                            placeholder="Calle"
+                                            onChange={e => { setCalle(e.target.value) }} />
+                                        {errors?.calle?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                        {errors?.calle?.type === "pattern" && (
+                                            <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
+                                        )}
+                                    </div>
+
+                                    <div className="col-md-4">
+                                        <label htmlFor="numero">No.</label>
+                                        <input
+                                            {...register("numero", {
+                                                required: true,
+
+                                            })}
+
+                                            className="form-control"
+                                            id="numero"
+                                            name="numero"
+
+                                            placeholder="Número"
+                                            onChange={e => { setNumero(e.target.value) }} />
+                                        {errors?.numero?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+                                    </div>
+                                </div>
+                                <div className="row gx-3 mb-3">
+
+                                    <div className="col-md-8">
+                                        <label htmlFor="colonia">Colonia</label>
+                                        <input
+                                            {...register("colonia", {
+                                                required: true,
+                                                pattern: /^[A-Za-z.\s_-]+$/
+                                            })}
+
+                                            className="form-control"
+                                            id="colonia"
+                                            name="colonia"
+
+                                            placeholder="Colonia"
+                                            onChange={e => { setColonia(e.target.value) }} />
+                                        {errors?.colonia?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+                                    </div>
+
+                                    <div className="col-md-4">
+                                        <label htmlFor="cpostal">CP</label>
+                                        <input
+                                            {...register("cpostal", {
+                                                required: true,
+                                                pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                            })}
+
+                                            className="form-control"
+                                            id="cpostal"
+                                            name="cpostal"
+
+                                            placeholder="Código Postal"
+                                            onChange={e => { setCp(e.target.value) }} />
+                                        {errors?.cpostal?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                        {errors?.cpostal?.type === "pattern" && (
+                                            <span className='eform'>Ingresa solamente caracteres numericos</span>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="row gx-3 mb-3">
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="colonia">Ciudad</label>
+                                        <input
+                                            {...register("ciudad", {
+                                                required: true,
+                                                pattern: /^[A-Za-z.\s_-]+$/
+                                            })}
+
+                                            className="form-control"
+                                            id="ciudad"
+                                            name="ciudad"
+
+                                            placeholder="Ciudad"
+                                            onChange={e => { setCiudad(e.target.value) }} />
+                                        {errors?.ciudad?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                     </div>
 
 
-                                </div>
-                            )}
-                            <div className="row gx-3 mb-3">
-                                <div className=" col-12">
-                                    <label htmlFor="nombre">Nombre(s)</label>
-                                    <input
-                                        {...register("nombre", {
-                                            required: true,
-                                            pattern: /^[A-Za-z.\s_-]+$/
-
-                                        })}
-
-                                        className="form-control"
-                                        id="nombre"
-                                        name="nombre"
-
-
-                                        placeholder="Nombre (s)"
-                                        onChange={e => setNombres(e.target.value)}
-
-
-                                    />
-                                    {errors?.nombre?.type === "required" && <span className='eform'>Campo Vacio </span>}
-                                    {errors?.nombre?.type === "pattern" && (
-                                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
-                                    )}
-
-                                </div>
-                            </div>
-
-                            <div className="row gx-3 mb-3">
-                                <div className="col-md-6">
-                                    <label htmlFor="apaterno">Apellido Paterno</label>
-                                    <input
-                                        {...register("apaterno", {
-                                            required: true,
-                                            pattern: /^[A-Za-z.\s_-]+$/
-
-                                        })}
-
-                                        className="form-control"
-                                        id="apaterno"
-                                        name="apaterno"
-                                        placeholder="Apellido Paterno"
-                                        onChange={e => { setApaterno(e.target.value) }}
-                                    />
-
-                                    {errors?.apaterno?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                    {errors?.apaterno?.type === "pattern" && (
-                                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
-                                    )}
-
-                                </div>
-
-                                <div className="col-md-6">
-                                    <label htmlFor="amaterno">Apellido Materno</label>
-                                    <input
-                                        {...register("amaterno", {
-                                            required: true,
-                                            pattern: /^[A-Za-z.\s_-]+$/
-                                        })}
-
-                                        className="form-control"
-                                        id="amaterno"
-                                        name="amaterno"
-
-                                        placeholder="Apellido Materno"
-                                        onChange={e => { setAmaterno(e.target.value) }} />
-                                    {errors?.amaterno?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                    {errors?.amaterno?.type === "pattern" && (
-                                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
-                                    )}
-                                </div>
-                            </div>
-
-                            <div className="row gx-3 mb-3">
-
-                                <div className="col-md-8">
-                                    <label htmlFor="calle">Calle</label>
-                                    <input
-                                        {...register("calle", {
-                                            required: true,
-                                            pattern: /^[A-Za-z.\s_-]+$/
-                                        })}
-
-                                        className="form-control"
-                                        id="calle"
-                                        name="calle"
-
-                                        placeholder="Calle"
-                                        onChange={e => { setCalle(e.target.value) }} />
-                                    {errors?.calle?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                    {errors?.calle?.type === "pattern" && (
-                                        <span className='eform'>Ingresa solamente caracteres alfabeticos</span>
-                                    )}
-                                </div>
-
-                                <div className="col-md-4">
-                                    <label htmlFor="numero">No.</label>
-                                    <input
-                                        {...register("numero", {
-                                            required: true,
-                                            
-                                        })}
-
-                                        className="form-control"
-                                        id="numero"
-                                        name="numero"
-
-                                        placeholder="Número"
-                                        onChange={e => { setNumero(e.target.value) }} />
-                                    {errors?.numero?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                   
-                                </div>
-                            </div>
-                            <div className="row gx-3 mb-3">
-
-                                <div className="col-md-8">
-                                    <label htmlFor="colonia">Colonia</label>
-                                    <input
-                                        {...register("colonia", {
-                                            required: true,
-                                            pattern: /^[A-Za-z.\s_-]+$/
-                                        })}
-
-                                        className="form-control"
-                                        id="colonia"
-                                        name="colonia"
-
-                                        placeholder="Colonia"
-                                        onChange={e => { setColonia(e.target.value) }} />
-                                    {errors?.colonia?.type === "required" && <span className='eform'>Campo Vacio</span>}
-
-                                </div>
-
-                                <div className="col-md-4">
-                                    <label htmlFor="cpostal">CP</label>
-                                    <input
-                                        {...register("cpostal", {
-                                            required: true,
-                                            pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                                        })}
-
-                                        className="form-control"
-                                        id="cpostal"
-                                        name="cpostal"
-
-                                        placeholder="Código Postal"
-                                        onChange={e => { setCp(e.target.value) }} />
-                                    {errors?.cpostal?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                    {errors?.cpostal?.type === "pattern" && (
-                                        <span className='eform'>Ingresa solamente caracteres numericos</span>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="row gx-3 mb-3">
-
-                                <div className="col-md-6">
-                                    <label htmlFor="colonia">Ciudad</label>
-                                    <input
-                                        {...register("ciudad", {
-                                            required: true,
-                                            pattern: /^[A-Za-z.\s_-]+$/
-                                        })}
-
-                                        className="form-control"
-                                        id="ciudad"
-                                        name="ciudad"
-
-                                        placeholder="Ciudad"
-                                        onChange={e => { setCiudad(e.target.value) }} />
-                                    {errors?.ciudad?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                </div>
-
-
-                                <div className="col-md-6">
-                                    <label htmlFor="celectoral">Clave de elector</label>
-                                    <input
-                                        {...register("celectoral", {
-                                            required: true,
-                                            pattern: /^[a-zA-Z0-9]+$/
-                                        })}
-
-                                        className="form-control"
-                                        id="celectoral"
-                                        name="celectoral"
-
-                                        placeholder="Clave electoral"
-                                        onChange={e => { setClave(e.target.value) }} />
-                                    {errors?.celectoral?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                    {errors?.celectoral?.type === "pattern" && (
-                                        <span className='eform'>Ingresa solamente caracteres alfanumericos</span>
-                                    )}
-                                </div>
-                            </div>
-                            <input type="hidden" readOnly id="direc" />
-
-                            <div className="row gx-3 mb-3">
-
-                                <div className="col-md-6">
-                                    <label htmlFor="curp">CURP</label>
-                                    <input
-                                        {...register("curp", {
-                                            required: true,
-                                            pattern: /^[a-zA-Z0-9]+$/
-                                        })}
-
-                                        className="form-control"
-                                        id="curp"
-
-                                        name="curp"
-                                        placeholder="CURP"
-                                        onChange={e => { setCurp(e.target.value) }} />
-                                    {errors?.curp?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                    {errors?.curp?.type === "pattern" && (
-                                        <span className='eform'>Ingresa solamente caracteres alfanumericos</span>
-                                    )}
-                                </div>
-
-                                <div className="col-md-6">
-                                    <label htmlFor="fnacimiento">Fecha de Nacimiento</label>
-                                    <input
-                                        {...register("fnacimiento", {
-                                            required: true,
-
-                                        })}
-                                        type="date"
-                                        className="form-control"
-
-                                        id="fnacimiento"
-                                        name="fnacimiento"
-                                        placeholder="Fecha de Nacimiento"
-                                        onChange={e => { setFecha(e.target.value) }} />
-                                    {errors?.fechanacimiento?.type === "required" && <span className='eform'>Campo Vacio</span>}
-
-                                </div>
-                            </div>
-
-
-                            <div className="row gx-3 mb-3">
-                                <div className="col-md-4 mb-3">
-                                    <label htmlFor="secc">Sección</label>
-                                    <input
-                                        {...register("secc", {
-                                            required: true,
-                                            pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                                        })}
-
-                                        className="form-control"
-                                        id="secc"
-                                        name="secc"
-                                        placeholder="Sección"
-                                        onChange={e => { setSeccion(e.target.value); submitSeccion();}} />
-                                    {errors?.secc?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                    {errors?.secc?.type === "pattern" && (
-                                        <span className='eform'>Ingresa solamente caracteres numericos</span>
-                                    )}
-                                </div>
-
-
-                                <div className="col-md-4">
-                                    <label htmlFor="df">Distrito Federal</label>
-                                    <input
-                                        {...register("df", {
-                                            required: true,
-                                            pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                                        })}
-
-                                        className="form-control"
-                                        id="df"
-
-                                        name="df"
-                                        onChange={e => { setDfederal(e.target.value) }} />
-                                    {errors?.df?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                    {errors?.df?.type === "pattern" && (
-                                        <span className='eform'>Ingresa solamente caracteres numericos</span>
-                                    )}
-                                </div>
-
-                                <div className="col-md-4">
-                                    <label htmlFor="dl">Distrito Local</label>
-                                    <input
-                                        {...register("dl", {
-                                            required: true,
-                                            pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                                        })}
-
-                                        className="form-control"
-                                        id="dl"
-
-                                        name="dl"
-                                        onChange={e => { setDlocal(e.target.value) }} />
-                                    {errors?.dl?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                    {errors?.dl?.type === "pattern" && (
-                                        <span className='eform'>Ingresa solamente caracteres numericos</span>
-                                    )}
-                                </div>
-
-
-
-                            </div>
-                            <div className='row'>
-                                <div className='col-2'></div>
-                                <div className='col-8'>
-                                    <button className="btn btn-dark btn-md cargar" id="georeferenciar" onClick={getLocation} type="button">Georeferenciar</button>
-                                </div>
-                                <div className='col-2'></div>
-                            </div>
-                            <hr id="division"></hr>
-                            <div className="row gx-3 mb-3">
-
-                                <div className="col-md-6">
-                                    <label htmlFor="cel">No. Celular</label>
-                                    <input
-                                        {...register("cel", {
-                                            required: true,
-                                            pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                                        })}
-
-                                        className="form-control"
-                                        id="cel"
-                                        name="cel"
-                                        onChange={e => { setCelular(e.target.value) }} />
-                                    {errors?.cel?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                                    {errors?.cel?.type === "pattern" && (
-                                        <span className='eform'>Ingresa solamente caracteres numericos</span>
-                                    )}
-                                </div>
-
-                                <div className="col-md-6">
-                                    <label htmlFor="email">Email</label>
-                                    <input
-                                        {...register("email", {
-                                            // required: true,
-                                            pattern: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/
-                                        })}
-                                        type="email"
-                                        className="form-control"
-                                        id="email"
-                                        name="email"
-                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                                        onChange={e => { setEmail(e.target.value) }} />
-                                    {errors?.email?.type === "pattern" && (
-                                        <span className='eform'>Ingresa formato de correo electrónico</span>
-                                    )}
-                                </div>
-                            </div>
-
-
-                            <div className="row gx-3 mb-3">
-
-                                <div className="col-md-6">
-                                    <label htmlFor="fb">Facebook</label>
-                                    <input
-                                        //{...register("fb", {
-                                        //0  required: true,
-                                        //pattern: /^[A-Za-z.\s_-]+$/
-                                        //})}
-
-                                        className="form-control"
-                                        id="fb"
-                                        name="fb"
-                                        placeholder=""
-                                        onChange={e => { setFacebook(e.target.value) }} />
-
-                                </div>
-
-                                <div className="col-md-6">
-                                    <label htmlFor="tw">Twitter</label>
-                                    <input
-                                        //{...register("tw", {
-                                        //  required: true,
-                                        //pattern: /^[A-Za-z.\s_-]+$/
-                                        //})}
-
-                                        className="form-control"
-                                        id="tw"
-                                        name="tw"
-                                        placeholder=""
-                                        onChange={e => { setTwitter(e.target.value) }} />
-
-                                </div>
-                            </div>
-                            <div className='row'>
-                                <div className='col-md-6'>
-                                    <div className="mb-3">
-                                        <label htmlFor="otrared">Otra red social</label>
+                                    <div className="col-md-6">
+                                        <label htmlFor="celectoral">Clave de elector</label>
                                         <input
-                                            //{...register("otrared", {
-                                            //    required: true,
-                                            //    pattern: /^[A-Za-z.\s_-]+$/
+                                            {...register("celectoral", {
+                                                required: true,
+                                                pattern: /^[a-zA-Z0-9]+$/
+                                            })}
+
+                                            className="form-control"
+                                            id="celectoral"
+                                            name="celectoral"
+
+                                            placeholder="Clave electoral"
+                                            onChange={e => { setClave(e.target.value) }} />
+                                        {errors?.celectoral?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                        {errors?.celectoral?.type === "pattern" && (
+                                            <span className='eform'>Ingresa solamente caracteres alfanumericos</span>
+                                        )}
+                                    </div>
+                                </div>
+                                <input type="hidden" readOnly id="direc" />
+
+                                <div className="row gx-3 mb-3">
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="curp">CURP</label>
+                                        <input
+                                            {...register("curp", {
+                                                required: true,
+                                                pattern: /^[a-zA-Z0-9]+$/
+                                            })}
+
+                                            className="form-control"
+                                            id="curp"
+
+                                            name="curp"
+                                            placeholder="CURP"
+                                            onChange={e => { setCurp(e.target.value) }} />
+                                        {errors?.curp?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                        {errors?.curp?.type === "pattern" && (
+                                            <span className='eform'>Ingresa solamente caracteres alfanumericos</span>
+                                        )}
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="fnacimiento">Fecha de Nacimiento</label>
+                                        <input
+                                            {...register("fnacimiento", {
+                                                required: true,
+
+                                            })}
+                                            type="date"
+                                            className="form-control"
+
+                                            id="fnacimiento"
+                                            name="fnacimiento"
+                                            placeholder="Fecha de Nacimiento"
+                                            onChange={e => { setFecha(e.target.value) }} />
+                                        {errors?.fechanacimiento?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
+                                    </div>
+                                </div>
+
+
+                                <div className="row gx-3 mb-3">
+                                    <div className="col-md-4 mb-3">
+                                        <label htmlFor="secc">Sección</label>
+                                        <input
+                                            {...register("secc", {
+                                                required: true,
+                                                pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                            })}
+
+                                            className="form-control"
+                                            id="secc"
+                                            name="secc"
+                                            placeholder="Sección"
+                                            onChange={e => { setSeccion(e.target.value); submitSeccion(); }} />
+                                        {errors?.secc?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                        {errors?.secc?.type === "pattern" && (
+                                            <span className='eform'>Ingresa solamente caracteres numericos</span>
+                                        )}
+                                    </div>
+
+
+                                    <div className="col-md-4">
+                                        <label htmlFor="df">Distrito Federal</label>
+                                        <input
+                                            {...register("df", {
+                                                required: true,
+                                                pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                            })}
+
+                                            className="form-control"
+                                            id="df"
+
+                                            name="df"
+                                            onChange={e => { setDfederal(e.target.value) }} />
+                                        {errors?.df?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                        {errors?.df?.type === "pattern" && (
+                                            <span className='eform'>Ingresa solamente caracteres numericos</span>
+                                        )}
+                                    </div>
+
+                                    <div className="col-md-4">
+                                        <label htmlFor="dl">Distrito Local</label>
+                                        <input
+                                            {...register("dl", {
+                                                required: true,
+                                                pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                            })}
+
+                                            className="form-control"
+                                            id="dl"
+
+                                            name="dl"
+                                            onChange={e => { setDlocal(e.target.value) }} />
+                                        {errors?.dl?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                        {errors?.dl?.type === "pattern" && (
+                                            <span className='eform'>Ingresa solamente caracteres numericos</span>
+                                        )}
+                                    </div>
+
+
+
+                                </div>
+                                <div className='row'>
+                                    <div className='col-2'></div>
+                                    <div className='col-8'>
+                                        <button className="btn btn-dark btn-md cargar" id="georeferenciar" onClick={getLocation} type="button">Georeferenciar</button>
+                                    </div>
+                                    <div className='col-2'></div>
+                                </div>
+                                <hr id="division"></hr>
+                                <div className="row gx-3 mb-3">
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="cel">No. Celular</label>
+                                        <input
+                                            {...register("cel", {
+                                                required: true,
+                                                pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                                            })}
+
+                                            className="form-control"
+                                            id="cel"
+                                            name="cel"
+                                            onChange={e => { setCelular(e.target.value) }} />
+                                        {errors?.cel?.type === "required" && <span className='eform'>Campo Vacio</span>}
+                                        {errors?.cel?.type === "pattern" && (
+                                            <span className='eform'>Ingresa solamente caracteres numericos</span>
+                                        )}
+                                    </div>
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="email">Email</label>
+                                        <input
+                                            {...register("email", {
+                                                // required: true,
+                                                pattern: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/
+                                            })}
+                                            type="email"
+                                            className="form-control"
+                                            id="email"
+                                            name="email"
+                                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                                            onChange={e => { setEmail(e.target.value) }} />
+                                        {errors?.email?.type === "pattern" && (
+                                            <span className='eform'>Ingresa formato de correo electrónico</span>
+                                        )}
+                                    </div>
+                                </div>
+
+
+                                <div className="row gx-3 mb-3">
+
+                                    <div className="col-md-6">
+                                        <label htmlFor="fb">Facebook</label>
+                                        <input
+                                            //{...register("fb", {
+                                            //0  required: true,
+                                            //pattern: /^[A-Za-z.\s_-]+$/
                                             //})}
 
                                             className="form-control"
-                                            id="otrared"
-                                            name="otrared"
+                                            id="fb"
+                                            name="fb"
                                             placeholder=""
-                                            onChange={e => { setOtra(e.target.value) }} />
+                                            onChange={e => { setFacebook(e.target.value) }} />
 
-                                    </div></div>
-                                <div className='col-md-6'>
-                                    <label className="small mb-1" htmlFor="nivel">Círculo</label>
-                                    <select
-                                        //{...register("nivel", {
-                                        //    required: true,
+                                    </div>
 
-                                        //})}
-                                        className="form-select"
-                                        id="nivel"
+                                    <div className="col-md-6">
+                                        <label htmlFor="tw">Twitter</label>
+                                        <input
+                                            //{...register("tw", {
+                                            //  required: true,
+                                            //pattern: /^[A-Za-z.\s_-]+$/
+                                            //})}
 
-                                        name="nivel"
-                                        onChange={e => { setNivel(e.target.value) }}
-                                    >
-                                        <option value="">Que tan cercano es al@ candidat@</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                            className="form-control"
+                                            id="tw"
+                                            name="tw"
+                                            placeholder=""
+                                            onChange={e => { setTwitter(e.target.value) }} />
 
-                                    </select>
+                                    </div>
                                 </div>
-                            </div>
+                                <div className='row'>
+                                    <div className='col-md-6'>
+                                        <div className="mb-3">
+                                            <label htmlFor="otrared">Otra red social</label>
+                                            <input
+                                                //{...register("otrared", {
+                                                //    required: true,
+                                                //    pattern: /^[A-Za-z.\s_-]+$/
+                                                //})}
 
-                            <hr id="division"></hr>
+                                                className="form-control"
+                                                id="otrared"
+                                                name="otrared"
+                                                placeholder=""
+                                                onChange={e => { setOtra(e.target.value) }} />
 
+                                        </div></div>
+                                    <div className='col-md-6'>
+                                        <label className="small mb-1" htmlFor="nivel">Círculo</label>
+                                        <select
+                                            //{...register("nivel", {
+                                            //    required: true,
 
-                            <div className="row gx-3 mb-3">
-                                <div className='col-12'>
-                                    {promotoresList()}
-                                    <label className="small mb-1" htmlFor="nivel">Promovido por:</label>
-                                    <select
-                                        {...register("promovidopor", {
-                                            required: true,
+                                            //})}
+                                            className="form-select"
+                                            id="nivel"
 
-                                        })}
-                                        className="form-select"
-                                        id="promovidopor"
+                                            name="nivel"
+                                            onChange={e => { setNivel(e.target.value) }}
+                                        >
+                                            <option value="">Que tan cercano es al@ candidat@</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
 
-                                        name="promovidopor"
-                                        onChange={e => { setPromotor(e.target.value) }}
-                                    >
-                                        <option value="">Elige un promotor </option>
-                                        {list.map(val => {
-
-                                            return (<option value={val.id}>{val.nombre}</option>);
-                                        })}
-
-
-                                    </select>
-                                    {errors?.promovidopor?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
+                                        </select>
+                                    </div>
                                 </div>
 
-                            </div>
+                                <hr id="division"></hr>
 
 
+                                <div className="row gx-3 mb-3">
+                                    <div className='col-12'>
+                                        {promotoresList()}
+                                        <label className="small mb-1" htmlFor="nivel">Promovido por:</label>
+                                        <select
+                                            {...register("promovidopor", {
+                                                required: true,
+
+                                            })}
+                                            className="form-select"
+                                            id="promovidopor"
+
+                                            name="promovidopor"
+                                            onChange={e => { setPromotor(e.target.value) }}
+                                        >
+                                            <option value="">Elige un promotor </option>
+                                            {list.map(val => {
+
+                                                return (<option value={val.id}>{val.nombre}</option>);
+                                            })}
 
 
+                                        </select>
+                                        {errors?.promovidopor?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
+                                    </div>
 
-
-
-
-
-
-
-                            <div className="mb-3">
-                                <label htmlFor="tw">Observaciones</label>
-                                <textarea
-
-
-                                    className="form-control"
-                                    id="observaciones"
-                                    name="observaciones"
-                                    placeholder=""
-                                    onChange={e => { setObservaciones(e.target.value) }} />
-
-                            </div>
-
-                            <div className="row gx-3 mb-3">
-
-                                <div className="col-md-2"></div>
-
-                                <div className="col-md-4">
-                                    <button className="btn btn-danger" id='limpiar' onClick={limpiar} type="button">Limpiar datos</button>
                                 </div>
-                                <div className="col-md-4">
-                                    <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar Promovido</button>
-                                    {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
+
+
+
+
+
+
+
+
+
+
+
+                                <div className="mb-3">
+                                    <label htmlFor="tw">Observaciones</label>
+                                    <textarea
+
+
+                                        className="form-control"
+                                        id="observaciones"
+                                        name="observaciones"
+                                        placeholder=""
+                                        onChange={e => { setObservaciones(e.target.value) }} />
+
                                 </div>
-                            </div>
-                            <br></br>
-                        </form>
+
+                                <div className="row gx-3 mb-3">
+
+                                    <div className="col-md-2"></div>
+
+                                    <div className="col-md-4">
+                                        <button className="btn btn-danger" id='limpiar' onClick={limpiar} type="button">Limpiar datos</button>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar Promovido</button>
+                                        {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
+                                    </div>
+                                </div>
+                                <br></br>
+                            </form>
                         </div>
                     </div>
                 </div>

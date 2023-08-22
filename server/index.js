@@ -1396,7 +1396,42 @@ app.post('/insert-promovido', (req, res) => {
   const sql3 = "SELECT max(id) as id FROM registro_promotores"
   const sqlInsert = "INSERT INTO registro_promovidos (nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,fecha_nacimiento,curp,clave_electoral,seccion,id_Secc,no_celular, email,facebook,twitter,otra_red,circulo,observaciones,lat,lng,img,id_promotor) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
   const response = []
-  db.query(sql2, (err, result) => {
+  const exist="SELECT * FROM registro_promovidos WHERE clave_electoral='"+clave_elector+"';";
+  console.log(exist);
+  db.query(exist, (err, result) => {
+    if(err){
+      console.log(err);
+    }else{
+      if(result.length>0){
+        console.log("existe");
+        response.push(false);
+      }
+      else{
+        console.log("no existe");
+        db.query(sql2, (err, res) => {
+          const id_image = res[0].id
+      
+      
+          db.query(sqlInsert, [
+            nombres, apaterno, amaterno, calle, numero, colonia, cp, ciudad, fecha_nacimiento, curp, clave_elector, seccion, id_Secc, no_celular, email, facebook, twitter, otra_red, nivel,
+            observaciones, lat, lng, id_image, promotor], (err, re) => {
+              if (err) {
+                //console.log(err);
+              }
+              else {
+                response.push(true)
+      
+              }
+            });
+      
+      
+      
+        });
+      
+      }
+    }
+  });
+  /*db.query(sql2, (err, result) => {
     const id_image = result[0].id
 
 
@@ -1416,7 +1451,7 @@ app.post('/insert-promovido', (req, res) => {
 
   });
 
-
+*/
 
   if (response[0] == true) {
     res.send("Agregado")

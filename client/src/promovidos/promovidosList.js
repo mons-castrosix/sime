@@ -57,7 +57,7 @@ function PromovidosList() {
             setList(empObj)
 
             //console.log("LIST:  "+list)
-            console.log(response.data)
+            //console.log(response.data)
 
         });
     }
