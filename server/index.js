@@ -1397,7 +1397,7 @@ app.post('/insert-promovido', (req, res) => {
   const sqlInsert = "INSERT INTO registro_promovidos (nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,fecha_nacimiento,curp,clave_electoral,seccion,id_Secc,no_celular, email,facebook,twitter,otra_red,circulo,observaciones,lat,lng,img,id_promotor) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
   const response = []
   const exist="SELECT * FROM registro_promovidos WHERE clave_electoral='"+clave_elector+"';";
-  console.log(exist);
+  //console.log(exist);
   db.query(exist, (err, result) => {
     if(err){
       console.log(err);

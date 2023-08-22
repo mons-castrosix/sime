@@ -175,7 +175,7 @@ setObs(list[0].observaciones)
                 <div className="col-6">
                     <br></br><br></br>
                     <div className="card">
-                        <div className="card-header text-cente">Detalles</div>
+                        <div className="card-header text-center text-white font-weight-bold">DETALLES</div>
                         <div className="card-body rounded-3 text-center bg-light">
                             <form onLoad={getList()}>
 

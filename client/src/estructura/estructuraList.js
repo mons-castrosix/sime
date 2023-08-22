@@ -47,7 +47,7 @@ function EstructuraList() {
                     if (key == "id") {
                         id = JSON.stringify(val);
                         //console.log(`key-${key}-val-${JSON.stringify(val)}`)
-                        Object.assign(item, { ver: <Link className='view' to={"/apoyos/view-apoyo/" + id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
+                        Object.assign(item, { ver: <Link className='view' to={"/estructura/view/" + id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
                 Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
                 Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" onClick={() => { deleteApoyo(val) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
                     }
@@ -275,6 +275,9 @@ function EstructuraList() {
             <Header></Header>
 
             
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
 
                
                 {getList()}
