@@ -635,10 +635,11 @@ app.post('/getLoc/', (req, res) => {
 
 
 /*REVISAR*/
-app.put('/apoyo/update/:id', (req, res) => {
+app.post('/apoyo/detalles/:id', (req, res) => {
   //console.log(req.body)
 
-  const id = req.body.id;
+  const id = req.params.id;
+  /*
   const apaterno = req.body.apaterno
   const amaterno = req.body.amaterno
   const nombres = req.body.nombres
@@ -675,6 +676,21 @@ app.put('/apoyo/update/:id', (req, res) => {
       }
       else {
         res.send(result)
+        console.log(result)
+      }
+    }
+  )
+  */
+ const q="SELECT * FROM apoyo a INNER JOIN apoyos ap ON a.id=ap.id_persona WHERE a.id=?;";
+  db.query(
+    q,id,
+    
+    (err, result) => {
+      if (err) {
+        //console.log(err);
+      }
+      else {
+        res.send(result[0])
         //console.log(result)
       }
     }
