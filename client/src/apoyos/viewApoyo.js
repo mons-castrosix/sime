@@ -4,47 +4,53 @@ import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import Header from '../header/header';
 import { LoadScript } from '@react-google-maps/api';
-import { GoogleMap, KmlLayer,InfoWindow, Marker, Polyline, Rectangle } from '@react-google-maps/api';
+import { GoogleMap, KmlLayer, InfoWindow, Marker, Polyline, Rectangle } from '@react-google-maps/api';
 import config from '../maps/config.json';
+import { useHistory } from "react-router-dom";
+
+
+
 const mapContainerStyle = {
     width: '80%', height: '60vh', overflow: 'hidden'
-  };
-  const divStyle = {
+};
+const divStyle = {
     background: `white`,
-  
+
     width: '50px',
     height: '10px',
     fontSize: '10px'
-  }
-  const option = {
-  
+}
+const option = {
+
     mapTypeControl: true,
     scaleControl: true,
     streetViewControl: true,
     fullscreenControl: true,
     clickableIcons: true,
     streetViewPanorama: true,
-  
-  };
-  const optionMap = {
+
+};
+const optionMap = {
     clickable: true,
     preserveViewport: true,
     screenOverlays: true,
     suppressInfoWindows: false
-  }
-  const onLoad = rectangle => {
+}
+const onLoad = rectangle => {
     //console.log('rectangle: ', rectangle)
-  }
+}
 function ViewAp() {
     const navigate = useNavigate();
     const { id } = useParams();
+
+   
     const [list, setList] = useState([])
     const [nivel, setNivel] = useState(0);
     const [alcance, setAlcance] = useState('');
     const [newCoordenadas, setNewCoor] = useState([])
     const [tipoApoyo, setTipoapoyo] = useState('');
-    
-    
+
+
     const getList = () => {
         Axios.post(//"http://54.219.124.66:3001/apoyos-view/"+id,
             "http://localhost:3001/apoyos-view/" + id,
@@ -83,13 +89,14 @@ function ViewAp() {
                 else {
                     if (t == 'Con terceros') {
                         document.getElementById("tipoapoyo").selectedIndex = 3
-                    }else{if (t == 'Otros') {
-                        document.getElementById("tipoapoyo").selectedIndex = 4
-                    }
+                    } else {
+                        if (t == 'Otros') {
+                            document.getElementById("tipoapoyo").selectedIndex = 4
+                        }
 
                     }
                 }
-               
+
             }
             document.getElementById("monto").setAttribute('value', list[0].monto)
 
@@ -110,7 +117,7 @@ function ViewAp() {
             }
             document.getElementById("contacto").setAttribute('value', list[0].contacto)
             document.getElementById("celcontacto").setAttribute('value', list[0].no_celcontacto)
-            setNewCoor([list[0].lat,list[0].lng])
+            setNewCoor([list[0].lat, list[0].lng])
 
         });
     }
@@ -312,32 +319,32 @@ function ViewAp() {
                 </div>
                 <div className="col-5" >
 
-                    
+
                     <br></br><br></br>
-                        <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
-                            <GoogleMap
-                                id="rectangle-example"
-                                mapContainerStyle={mapContainerStyle}
-                                zoom={18}
-                                center={{ lat: newCoordenadas[0], lng: newCoordenadas[1] }}
-                                options={option}
+                    <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
+                        <GoogleMap
+                            id="rectangle-example"
+                            mapContainerStyle={mapContainerStyle}
+                            zoom={18}
+                            center={{ lat: newCoordenadas[0], lng: newCoordenadas[1] }}
+                            options={option}
 
 
 
-                            >
-                                <Marker
-                                    draggable={true}
-                                    onDragEnd={onLoad}
-                                    position={{ lat: newCoordenadas[0], lng: newCoordenadas[1] }}>
+                        >
+                            <Marker
+                                draggable={true}
+                                onDragEnd={onLoad}
+                                position={{ lat: newCoordenadas[0], lng: newCoordenadas[1] }}>
 
-                                </Marker>
-
-
+                            </Marker>
 
 
-                            </GoogleMap>
-                        </LoadScript>
-                    
+
+
+                        </GoogleMap>
+                    </LoadScript>
+
 
 
 
