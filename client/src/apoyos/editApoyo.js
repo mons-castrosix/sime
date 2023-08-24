@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import apoyo from './apoyos.png'
 import Axios from 'axios';
 import './apoyos.css';
+
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.js'
@@ -13,328 +14,310 @@ import config from '../maps/config.json';
 import ScriptTag from 'react-script-tag';
 import { useParams } from 'react-router-dom';
 const mapContainerStyle = {
-    width: '100%', height: '98vh', overflow: 'hidden'
+  width: '100%', height: '98vh', overflow: 'hidden'
 };
 const divStyle = {
-    background: `white`,
+  background: `white`,
 
-    width: '50px',
-    height: '10px',
-    fontSize: '10px'
+  width: '50px',
+  height: '10px',
+  fontSize: '10px'
 }
 const option = {
 
-    mapTypeControl: true,
-    scaleControl: true,
-    streetViewControl: true,
-    fullscreenControl: true,
-    clickableIcons: true,
-    streetViewPanorama: true,
+  mapTypeControl: true,
+  scaleControl: true,
+  streetViewControl: true,
+  fullscreenControl: true,
+  clickableIcons: true,
+  streetViewPanorama: true,
 
 };
 const optionMap = {
-    clickable: true,
-    preserveViewport: true,
-    screenOverlays: true,
-    suppressInfoWindows: false
+  clickable: true,
+  preserveViewport: true,
+  screenOverlays: true,
+  suppressInfoWindows: false
 }
 
 
 const onLoad = rectangle => {
-    console.log('rectangle: ', rectangle)
+  console.log('rectangle: ', rectangle)
 }
 
 const onClick = click => {
-    console.log('click: ', click.featureData
-    )
+  console.log('click: ', click.featureData
+  )
 }
 
 const onPosition = click => {
-    console.log('click: ', click
-    )
+  console.log('click: ', click
+  )
 }
 
 
 function ViewAp() {
 
-    const { id } = useParams();
+  const { id } = useParams();
 
-    //alert(id)
+  //alert(id)
 
 
 
-    const [file, setFile] = useState("");
-    const [fileName, setFileName] = useState("");
-    const [aPaterno, setApaterno] = useState("");
-    const [aMaterno, setAmaterno] = useState("");
-    const [nombres, setNombres] = useState("");
-    const [calle, setCalle] = useState("");
-    const [numero, setNumero] = useState("");
-    const [colonia, setColonia] = useState("");
-    const [cp, setCp] = useState("");
-    const [ciudad, setCiudad] = useState("");
-    const [claveElectoral, setClave] = useState("");
-    const [curp, setCurp] = useState("");
-    const [fechaNacimiento, setFecha] = useState("");
-    const [seccion, setSeccion] = useState("");
-    const [dFederal, setDfederal] = useState("");
-    const [dLocal, setDlocal] = useState("");
-    const [nivel, setNivel] = useState("");
-    const [celular, setCelular] = useState("");
-    const [email, setEmail] = useState("");
-    const [facebook, setFacebook] = useState("");
-    const [twitter, setTwitter] = useState("");
-    const [otra, setOtra] = useState("");
-    const [descrApoyo, setDescapoyo] = useState("");
-    const [tipoApoyo, setTipoapoyo] = useState("");
-    const [monto, setMonto] = useState("");
-    const [alcance, setAlcance] = useState("");
-    const [contacto, setContacto] = useState("");
-    const [celContacto, setCelcontacto] = useState("");
-    const [selectedImage, setSelectedImage] = useState("");
-    const [coordenadas, setCoordenadas] = useState([19.36313799880912
-        , -101.81796480831713]);
-    const [newCoordenadas, setNewCoor] = useState([])
-    const [changeCenter, setChangeCenter] = useState(false);
-    const [list, setList] = useState([])
-    const navigate = useNavigate();
-    const getList = () => {
-        Axios.post(//"http://localhost:3001/apoyoId",{id:id}
-            "http://localhost:3001/apoyo/detalles/" + id
-        ).then((res) => {
-            /*setList(res.data)*/
-            setValue("nombre", res.data.nombres);
-            setValue("apaterno", res.data.apaterno);
-            setValue("amaterno", res.data.amaterno);
-            setValue("calle", res.data.calle);
-            setValue("numero", res.data.numero);
-            setValue("colonia", res.data.colonia);
-            setValue("cpostal", res.data.cp);
-            setValue("ciudad", res.data.ciudad);
-            setValue("celectoral", res.data.clave_elector);
-            setValue("curp", res.data.curp);
-            setValue("fnacimiento", res.data.fecha_nacimiento);
-            setValue("secc", res.data.seccion);
-            setValue("df", res.data.distrito_federal);
-            setValue("dl", res.data.distrito_local);
-            setApaterno(res.data.apaterno)
-            console.log(res.data)
-        });
+  const [file, setFile] = useState("");
+  const [fileName, setFileName] = useState("");
+  const [aPaterno, setApaterno] = useState("");
+  const [aMaterno, setAmaterno] = useState("");
+  const [nombres, setNombres] = useState("");
+  const [calle, setCalle] = useState("");
+  const [numero, setNumero] = useState("");
+  const [colonia, setColonia] = useState("");
+  const [cp, setCp] = useState("");
+  const [ciudad, setCiudad] = useState("");
+  const [claveElectoral, setClave] = useState("");
+  const [curp, setCurp] = useState("");
+  const [fechaNacimiento, setFecha] = useState("");
+  const [seccion, setSeccion] = useState("");
+  const [dFederal, setDfederal] = useState("");
+  const [dLocal, setDlocal] = useState("");
+  const [nivel, setNivel] = useState("");
+  const [celular, setCelular] = useState("");
+  const [email, setEmail] = useState("");
+  const [facebook, setFacebook] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [otra, setOtra] = useState("");
+  const [descrApoyo, setDescapoyo] = useState("");
+  const [tipoApoyo, setTipoapoyo] = useState("");
+  const [monto, setMonto] = useState("");
+  const [alcance, setAlcance] = useState("");
+  const [contacto, setContacto] = useState("");
+  const [celContacto, setCelcontacto] = useState("");
+  const [selectedImage, setSelectedImage] = useState("");
+  const [coordenadas, setCoordenadas] = useState([19.36313799880912
+    , -101.81796480831713]);
+  const [newCoordenadas, setNewCoor] = useState([])
+  const [changeCenter, setChangeCenter] = useState(false);
+  const [list, setList] = useState([])
+  const navigate = useNavigate();
+  const getList = async (e) => {
+
+    try {
+      const res = await Axios.post(//"http://localhost:3001/apoyoId",{id:id}
+        "http://localhost:3001/apoyo/detalles/" + id
+      );
+      var fecha = new Date(res.data.fecha_nacimiento)
+      fecha = fecha.toISOString().slice(0, 10);
+      //console.log(fecha)
+      setValue("nombre", res.data.nombres, { shouldValidate: true, shouldDirty: true });
+      setValue("apaterno", res.data.apaterno, { shouldValidate: true, shouldDirty: true });
+      setValue("amaterno", res.data.amaterno, { shouldValidate: true, shouldDirty: true });
+      setValue("calle", res.data.calle, { shouldValidate: true, shouldDirty: true });
+      setValue("numero", res.data.numero, { shouldValidate: true, shouldDirty: true });
+      setValue("colonia", res.data.colonia, { shouldValidate: true, shouldDirty: true });
+      setValue("cpostal", res.data.cp, { shouldValidate: true, shouldDirty: true });
+      setValue("ciudad", res.data.ciudad, { shouldValidate: true, shouldDirty: true });
+      setValue("celectoral", res.data.clave_elector, { shouldValidate: true, shouldDirty: true });
+      setValue("curp", res.data.curp, { shouldValidate: true, shouldDirty: true });
+      setValue("fnacimiento", fecha, { shouldValidate: true, shouldDirty: true });
+      setValue("secc", res.data.seccion, { shouldValidate: true, shouldDirty: true });
+      setValue("df", res.data.distrito_federal, { shouldValidate: true, shouldDirty: true });
+      setValue("dl", res.data.distrito_local, { shouldValidate: true, shouldDirty: true });
+      setValue("cel", res.data.no_celcontacto, { shouldValidate: true, shouldDirty: true });
+      setValue("email", res.data.email, { shouldValidate: true, shouldDirty: true });
+      setValue("fb", res.data.facebook, { shouldValidate: true, shouldDirty: true });
+      setValue("tw", res.data.twitter, { shouldValidate: true, shouldDirty: true });
+      setValue("otrared", res.data.otra_red, { shouldValidate: true, shouldDirty: true });
+      setValue("nivel", res.data.nivel, { shouldValidate: true, shouldDirty: true });
+      setValue("lat", res.data.lat, { shouldValidate: true, shouldDirty: true });
+      setValue("lng", res.data.lng, { shouldValidate: true, shouldDirty: true });
+      setValue("contacto", res.data.contacto, { shouldValidate: true, shouldDirty: true });
+      setValue("nocontacto", res.data.no_celcontacto, { shouldValidate: true, shouldDirty: true });
+      setValue("descapoyo", res.data.descripcion, { shouldValidate: true, shouldDirty: true });
+      setValue("tipoapoyo", res.data.tipo, { shouldValidate: true, shouldDirty: true });
+      setValue("montoapoyo", res.data.monto, { shouldValidate: true, shouldDirty: true });
+      setValue("alcanceapoyo", res.data.alcance, { shouldValidate: true, shouldDirty: true });
+
+      setNombres(res.data.nombres)
+      setApaterno(res.data.apaterno);
+      setAmaterno(res.data.amaterno);
+      setCalle(res.data.calle);
+      setNumero(res.data.numero);
+      setColonia(res.data.colonia);
+      setCp(res.data.cp);
+      setCiudad(res.data.ciudad);
+      setClave(res.data.c_elector);
+      setCurp(res.data.curp);
+      setFecha(fecha);
+      setSeccion(res.data.seccion);
+      setDfederal(res.data.distrito_federal);
+      setDlocal(res.data.distrito_local);
+      console.log(res.data)
+    } catch (ex) {
+      console.log(ex)
     }
+  }
 
-    /*const center = {
-      lat: document.getElementById("lat").value,
-      lng:document.getElementById("lng").value
-    };*/
+  /*const center = {
+    lat: document.getElementById("lat").value,
+    lng:document.getElementById("lng").value
+  };*/
 
-    const [infoWindowOpen, setInfoWindowOpen] = useState(false);
-    const [peopleInfo, setPeopleInfo] = useState([]);
+  const [infoWindowOpen, setInfoWindowOpen] = useState(false);
+  const [peopleInfo, setPeopleInfo] = useState([]);
 
-    const persona = 'Persona 1';
-    const ref = useRef(null);
+  const persona = 'Persona 1';
+  const ref = useRef(null);
 
-    const atras = () => {
-        let path = '/apoyos';
-        navigate(path);
-    }
-    const saveFile = (e) => {
-        setFile(e.target.files[0]);
-        setFileName(e.target.files[0].name);
-    };
-    const onLoad = rectangle => {
-        console.log('rectangle: ', rectangle.latLng.lat());
-        console.log('rectangle: ', rectangle.latLng.lng());
-        setValue("lat", rectangle.latLng.lat())
-        setValue("lng", rectangle.latLng.lng())
-        setNewCoor([rectangle.latLng.lat(), rectangle.latLng.lng()])
-    }
-
-    const uploadFile1 = async (e) => {
-        const formData = new FormData();
-        console.log(fileName)
-        console.log(file)
-        formData.append("file", file);
-        formData.append("fileName", fileName);
-        //console.log(formData)
-
-        try {
-            const res = await Axios.post(
-                //"http://54.219.124.66:3001/uploadD",
-                "http://localhost:3001/uploadD",
-                formData
-            );
+  const atras = () => {
+    let path = '/apoyos';
+    navigate(path);
+  }
+  const saveFile = (e) => {
+    setFile(e.target.files[0]);
+    setFileName(e.target.files[0].name);
+  };
+  const onLoad = rectangle => {
+    console.log('rectangle: ', rectangle.latLng.lat());
+    console.log('rectangle: ', rectangle.latLng.lng());
+    setValue("lat", rectangle.latLng.lat())
+    setValue("lng", rectangle.latLng.lng())
+    setNewCoor([rectangle.latLng.lat(), rectangle.latLng.lng()])
+  }
 
 
-            var fecha = res.data.fecha_nacimiento
-            fecha = fecha.split("/").reverse().join("-");
-            console.log(fecha)
-            setValue("nombre", res.data.nombres)
+  useEffect(() => {
+    getList();
+  },[]);
 
-            setValue("apaterno", res.data.apaterno);
-            setValue("amaterno", res.data.amaterno);
-            setValue("calle", res.data.calle);
-            setValue("numero", res.data.numero);
-            setValue("colonia", res.data.colonia);
-            setValue("cpostal", res.data.cp);
-            setValue("ciudad", res.data.ciudad);
-            setValue("celectoral", res.data.c_elector);
-            setValue("curp", res.data.curp);
-            setValue("fnacimiento", fecha);
-            setValue("secc", res.data.seccion);
-            setValue("df", res.data.distrito_federal);
-            setValue("dl", res.data.distrito_local);
-
-            setNombres(res.data.nombres)
-            setApaterno(res.data.apaterno);
-            setAmaterno(res.data.amaterno);
-            setCalle(res.data.calle);
-            setNumero(res.data.numero);
-            setColonia(res.data.colonia);
-            setCp(res.data.cp);
-            setCiudad(res.data.ciudad);
-            setClave(res.data.c_elector);
-            setCurp(res.data.curp);
-            setFecha(fecha);
-            setSeccion(res.data.seccion);
-            setDfederal(res.data.distrito_federal);
-            setDlocal(res.data.distrito_local);
+  const submitReview = () => {
 
 
-        } catch (ex) {
-            //console.log(ex);
-        }
-    };
-    useEffect(() => {
-        getList();
-      },);
+    Axios.post(//"http://54.219.124.66:3001/api/insert",
+      "http://localhost:3001/api/insert",
+      {
 
-    const submitReview = () => {
+        apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
+        ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
+        distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
+        otra_red: otra, descripcion_apoyo: descrApoyo, apoyo_tipo: tipoApoyo, monto_apoyo: monto, alcance_apoyo: alcance, contacto: contacto,
+        no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value
+      }).then(() => {
+        console.log("succes")
+        //alert("AGREGADO")
+        navigate('/apoyos')
 
-
-        Axios.post(//"http://54.219.124.66:3001/api/insert",
-            "http://localhost:3001/api/insert",
-            {
-
-                apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
-                ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
-                distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
-                otra_red: otra, descripcion_apoyo: descrApoyo, apoyo_tipo: tipoApoyo, monto_apoyo: monto, alcance_apoyo: alcance, contacto: contacto,
-                no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value
-            }).then(() => {
-                console.log("succes")
-                //alert("AGREGADO")
-                navigate('/apoyos')
-
-            });
-        /*console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
-          + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel
-          + celular + email + facebook + twitter + otra + descrApoyo + tipoApoyo
-          + monto + alcance + contacto + celContacto+camera_ine)*/
-    }
-    const submitSeccion = () => {
+      });
+    /*console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
+      + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel
+      + celular + email + facebook + twitter + otra + descrApoyo + tipoApoyo
+      + monto + alcance + contacto + celContacto+camera_ine)*/
+  }
+  const submitSeccion = () => {
 
 
-        Axios.post("http://localhost:3001/api/distritos"
+    Axios.post("http://localhost:3001/api/distritos"
     /*"http://54.219.124.66:3001/api/distritos"*/, {
-                seccion: document.getElementById("secc").value
-            }).then((res) => {
+        seccion: document.getElementById("secc").value
+      }).then((res) => {
 
-                console.log(res.data.df)
+        console.log(res.data.df)
 
-                setDfederal(res.data.df)
-                setDlocal(res.data.dl)
-                setValue("dl", res.data.dl)
-                setValue("df", res.data.df)
+        setDfederal(res.data.df)
+        setDlocal(res.data.dl)
+        setValue("dl", res.data.dl)
+        setValue("df", res.data.df)
 
-                console.log(seccion)
-
-
-            });
-
-    }
-
-    const getLocation = () => {
-        var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
-        document.getElementById("direc").setAttribute('value', direccion)
-        Axios.post("http://localhost:3001/getLoc/", { direccion: document.getElementById("direc").value }).then((res) => {
-            console.log(res)
-
-            var lat = res.data.lat
-            console.log(lat)
-            var lng = res.data.lng
-            console.log(lng)
-
-            setNewCoor([lat, lng])
+        console.log(seccion)
 
 
-            setChangeCenter(true);
+      });
+
+  }
+
+  const getLocation = () => {
+    var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
+    alert(direccion);
+    document.getElementById("direc").setAttribute('value', direccion)
+    Axios.post("http://localhost:3001/getLoc/", { direccion: document.getElementById("direc").value }).then((res) => {
+      console.log(res)
+      setValue("nombre", "prueba");
+      var lat = res.data.lat
+      console.log(lat)
+      var lng = res.data.lng
+      console.log(lng)
+
+      setNewCoor([lat, lng])
 
 
-        })
-    }
-
-
-    const limpiar = e => {
-        e.preventDefault()
-
-        // do something
-        setValue("nombre", "");
-        setValue("apaterno", "");
-        setValue("amaterno", "");
-        setValue("calle", "");
-        setValue("numero", "");
-        setValue("colonia", "");
-        setValue("cpostal", "");
-        setValue("ciudad", "");
-        setValue("celectoral", "");
-        setValue("curp", "");
-        setValue("fnacimiento", "");
-        setValue("secc", "");
-        setValue("df", "");
-        setValue("dl", "");
-        setValue("cel", "");
-        setValue("email", "");
-        setValue("fb", "");
-        setValue("tw", "");
-        setValue("otrared", "");
-        setValue("nivel", "");
-        setValue("contacto", "");
-        setValue("nocontacto", "");
-        setValue("descapoyo", "");
-        setValue("tipoapoyo", "");
-        setValue("montoapoyo", "");
-        setValue("alcanceapoyo", "");
-
-    }
-
-
-    // This function will be triggered when the "Remove This Image" button is clicked
-    const removeSelectedImage = () => {
-        setFile();
-    };
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-
-    const handleRegistration = (data) => console.log(data);
-    const onSubmit = (data) => {
-
-        alert(JSON.stringify(data));
-        submitReview();
-    }; // your form submit function which will invoke after successful validation
+      setChangeCenter(true);
 
 
 
-    return (
-        <div>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous" />
+    })
+  }
 
 
-            <Header></Header>
+  const limpiar = e => {
+    e.preventDefault()
 
-         
-            <div className="row">
-                <div className="col-5" >
+    // do something
+    setValue("nombre", "");
+    setValue("apaterno", "");
+    setValue("amaterno", "");
+    setValue("calle", "");
+    setValue("numero", "");
+    setValue("colonia", "");
+    setValue("cpostal", "");
+    setValue("ciudad", "");
+    setValue("celectoral", "");
+    setValue("curp", "");
+    setValue("fnacimiento", "");
+    setValue("secc", "");
+    setValue("df", "");
+    setValue("dl", "");
+    setValue("cel", "");
+    setValue("email", "");
+    setValue("fb", "");
+    setValue("tw", "");
+    setValue("otrared", "");
+    setValue("nivel", "");
+    setValue("contacto", "");
+    setValue("nocontacto", "");
+    setValue("descapoyo", "");
+    setValue("tipoapoyo", "");
+    setValue("montoapoyo", "");
+    setValue("alcanceapoyo", "");
 
-                <div className="card " >
+  }
+
+
+  // This function will be triggered when the "Remove This Image" button is clicked
+  const removeSelectedImage = () => {
+    setFile();
+  };
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+
+  const handleRegistration = (data) => console.log(data);
+  const onSubmit = (data) => {
+
+    alert(JSON.stringify(data));
+    submitReview();
+  }; // your form submit function which will invoke after successful validation
+
+
+
+  return (
+    <div>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossOrigin="anonymous" />
+
+
+      <Header></Header>
+
+
+      <div className="row">
+        <div className="col-5" >
+
+          <div className="card " >
             <div className="card-header text-center text-white font-weight-bold">
               MODIFICAR REGISTRO DE APOYO
             </div>
@@ -343,8 +326,8 @@ function ViewAp() {
 
 
                 <br></br>
-               
-               
+
+
 
 
                 <input
@@ -352,7 +335,7 @@ function ViewAp() {
                     required: true,
                   })}
                   placeholder='latitud'
-                  type='hidden'
+
                   name="lat" id='lat'
 
                 />
@@ -361,7 +344,7 @@ function ViewAp() {
                     required: true,
                   })}
                   placeholder='longitud'
-                  type='hidden'
+
                   name='lng'
                   id='lng'
                 />
@@ -401,7 +384,7 @@ function ViewAp() {
 
 
                       placeholder="Nombre (s)"
-                      onChange={e => setNombres(e.target.value)}
+                      onChange={e => { setNombres(e.target.value); setValue("nombre", e.target.value); }}
 
 
                     />
@@ -485,7 +468,7 @@ function ViewAp() {
                     <input
                       {...register("numero", {
                         required: true,
-                        
+
                       })}
 
                       className="form-control"
@@ -495,7 +478,7 @@ function ViewAp() {
                       placeholder="Número"
                       onChange={e => { setNumero(e.target.value) }} />
                     {errors?.numero?.type === "required" && <span className='eform'>Campo Vacio</span>}
-                   
+
                   </div>
                 </div>
                 <div className="row gx-3 mb-3">
@@ -737,10 +720,10 @@ function ViewAp() {
                   <div className="col-md-6">
                     <label htmlFor="fb">Facebook</label>
                     <input
-                      //{...register("fb", {
-                      //required: true,
-                      //pattern: /^[A-Za-z.\s_-]+$/
-                      //})}
+                      {...register("fb", {
+                        required: true,
+                        pattern: /^[A-Za-z.\s_-]+$/
+                      })}
 
                       className="form-control"
                       id="fb"
@@ -753,10 +736,10 @@ function ViewAp() {
                   <div className="col-md-6">
                     <label htmlFor="tw">Twitter</label>
                     <input
-                      //{...register("tw", {
-                      //required: true,
-                      //pattern: /^[A-Za-z.\s_-]+$/
-                      //})}
+                      {...register("tw", {
+                        required: true,
+                        pattern: /^[A-Za-z.\s_-]+$/
+                      })}
 
                       className="form-control"
                       id="tw"
@@ -771,10 +754,10 @@ function ViewAp() {
                     <div className="mb-3">
                       <label htmlFor="otrared">Otra red social</label>
                       <input
-                        //{...register("otrared", {
-                        // required: true,
-                        //pattern: /^[A-Za-z.\s_-]+$/
-                        //})}
+                        {...register("otrared", {
+                          required: true,
+                          pattern: /^[A-Za-z.\s_-]+$/
+                        })}
 
                         className="form-control"
                         id="otrared"
@@ -789,10 +772,10 @@ function ViewAp() {
                   <div className='col-md-6'>
                     <label className="small mb-1" htmlFor="nivel">Círculo</label>
                     <select
-                      //{...register("nivel", {
-                      // required: true,
+                      {...register("nivel", {
+                        required: true,
 
-                      //})}
+                      })}
                       className="form-select"
                       id="nivel"
 
@@ -812,10 +795,10 @@ function ViewAp() {
                   <div className="col-md-6">
                     <label htmlFor="otrared">Contacto a través de:</label>
                     <input
-                      //{...register("contacto", {
-                      //required: true,
-                      //pattern:/^[A-Za-z.\s_-]+$/
-                      //})}
+                      {...register("contacto", {
+                        required: true,
+                        pattern: /^[A-Za-z.\s_-]+$/
+                      })}
 
                       className="form-control"
                       id="contacto"
@@ -828,12 +811,12 @@ function ViewAp() {
                   <div className="col-md-6">
                     <label htmlFor="otrared">No. Celular del contacto</label>
                     <input
-                      ///{...register("nocontacto", {
-                      //required: true,
-                      //pattern: /^(0|[1-9]\d*)(\.\d+)?$/
-                      //})}
+                      {...register("nocontacto", {
+                        required: true,
+                        pattern: /^(0|[1-9]\d*)(\.\d+)?$/
+                      })}
 
-                      className="form-select"
+                      className="form-control"
                       id="nocontacto"
                       name="nocontacto"
                       placeholder=""
@@ -930,11 +913,11 @@ function ViewAp() {
 
                   <div className="col-md-2"></div>
                   <div className="col-md-4">
-                    <button id="limpiar" className="btn btn-danger"  type="button"> Limpiar datos </button>
+                    <button id="limpiar" className="btn btn-danger" type="button"> Limpiar datos </button>
 
                   </div>
                   <div className="col-md-4">
-                    <button className="btn btn-success"  type="submit">Guardar apoyo</button>
+                    <button className="btn btn-success" type="submit">Guardar apoyo</button>
                     {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
                   </div>
                   <div className="col-md-2"></div>
@@ -945,58 +928,58 @@ function ViewAp() {
               </form>
             </div>
           </div>
-                </div>
-                <div className="col-7" >
+        </div>
+        <div className="col-7" >
 
-                    {changeCenter == false && (
-                        <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
-                            <GoogleMap
-                                id="rectangle-example"
-                                mapContainerStyle={mapContainerStyle}
-                                zoom={9}
-                                center={{ lat: coordenadas[0], lng: coordenadas[1] }}
-                                options={option}
+          {changeCenter == false && (
+            <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
+              <GoogleMap
+                id="rectangle-example"
+                mapContainerStyle={mapContainerStyle}
+                zoom={9}
+                center={{ lat: coordenadas[0], lng: coordenadas[1] }}
+                options={option}
 
-                            >
-                            </GoogleMap>
-                        </LoadScript>
-                    )}
-                    {changeCenter == true && (
-                        <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
-                            <GoogleMap
-                                id="rectangle-example"
-                                mapContainerStyle={mapContainerStyle}
-                                zoom={18}
-                                center={{ lat: newCoordenadas[0], lng: newCoordenadas[1] }}
-                                options={option}
-
-
-
-                            >
-                                <Marker
-                                    draggable={true}
-                                    onDragEnd={onLoad}
-                                    position={{ lat: newCoordenadas[0], lng: newCoordenadas[1] }}>
-
-                                </Marker>
+              >
+              </GoogleMap>
+            </LoadScript>
+          )}
+          {changeCenter == true && (
+            <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
+              <GoogleMap
+                id="rectangle-example"
+                mapContainerStyle={mapContainerStyle}
+                zoom={18}
+                center={{ lat: newCoordenadas[0], lng: newCoordenadas[1] }}
+                options={option}
 
 
 
+              >
+                <Marker
+                  draggable={true}
+                  onDragEnd={onLoad}
+                  position={{ lat: newCoordenadas[0], lng: newCoordenadas[1] }}>
 
-                            </GoogleMap>
-                        </LoadScript>
-                    )}
+                </Marker>
 
 
 
-                </div>
-            </div>
+
+              </GoogleMap>
+            </LoadScript>
+          )}
+
+
 
         </div>
+      </div>
+
+    </div>
 
 
 
-    );
+  );
 }
 
 export default ViewAp;

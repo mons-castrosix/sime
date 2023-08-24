@@ -137,7 +137,7 @@ function Apoyos() {
       var fecha = res.data.fecha_nacimiento
       fecha = fecha.split("/").reverse().join("-");
       //console.log(fecha)
-      setValue("nombre", res.data.nombres, { shouldValidate: true, shouldDirty: true })
+      setValue("nombre", res.data.nombres, { shouldValidate: true, shouldDirty: true });
 
       setValue("apaterno", res.data.apaterno, { shouldValidate: true, shouldDirty: true });
       setValue("amaterno", res.data.amaterno, { shouldValidate: true, shouldDirty: true });
