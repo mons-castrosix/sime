@@ -698,7 +698,61 @@ app.post('/apoyo/detalles/:id', (req, res) => {
 
 
 })
+app.post('/apoyo/edit/:id', (req, res) => {
+  console.log(req.body)
 
+  const id = req.params.id;
+  
+  const apaterno = req.body.apaterno
+  const amaterno = req.body.amaterno
+  const nombres = req.body.nombres
+  const calle = req.body.calle
+  const numero = req.body.numero
+  const colonia = req.body.colonia
+  const cp = req.body.cp
+  const ciudad = req.body.ciudad
+  const clave_elector = req.body.clave_elector
+  const curp = req.body.curp
+  const fecha_nacimiento = req.body.fecha_nacimiento
+  const seccion = req.body.seccion
+  const distrito_federal = req.body.distrito_federal
+  const distrito_local = req.body.distrito_local
+  const nivel = req.body.nivel
+  const no_celular = req.body.no_celular
+  const email = req.body.email
+  const facebook = req.body.facebook
+  const twitter = req.body.twitter
+  const otra_red = req.body.otra_red
+  const descripcion_apoyo = req.body.descripcion_apoyo
+  const apoyo_tipo = req.body.apoyo_tipo
+  const monto_apoyo = req.body.monto_apoyo
+  const alcance_apoyo = req.body.alcance_apoyo
+  const contacto = req.body.contacto
+  const no_celcontacto = req.body.no_celcontacto
+  const response = []
+  db.query(
+    "UPDATE apoyo a1 INNER JOIN apoyos a2 ON a1.id=a2.id_persona SET a1.apaterno=?,a1.amaterno=?,a1.nombres=?,a1.calle=?,a1.numero=?,a1.colonia=?,a1.cp=?,a1.ciudad=?,a1.clave_elector=?,a1.curp=?,a1.fecha_nacimiento=?,a1.seccion=?,a1.distrito_federal=?,a1.distrito_local=?,a1.nivel=?,a1.no_celular=?,a1.email=?,a1.facebook=?,a1.twitter=?,a1.otra_red=?,a1.contacto=?,a1.no_celcontacto=?,a2.descripcion=?,a2.tipo=?,a2.monto=?,a2.alcance=? WHERE a1.id=?;",
+    [apaterno, amaterno, nombres, calle, numero, colonia, cp, ciudad, clave_elector, curp, fecha_nacimiento, seccion, distrito_federal, distrito_local, nivel, no_celular, email, facebook, twitter, otra_red, contacto, no_celcontacto, descripcion_apoyo, apoyo_tipo, monto_apoyo, alcance_apoyo, id],
+    (err, result) => {
+      if (err) {
+        //console.log(err);
+      }
+      else {
+        //res.send(result)
+        response.push(true);
+        console.log(result)
+      }
+    }
+  )
+  if(response[0]==true){
+    res.send("Editado");
+  }else{
+    res.send("No_editado");
+  }
+
+
+
+})
 
 app.listen(3001, () => {
   //console.log('Your server is running')

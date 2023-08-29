@@ -145,12 +145,28 @@ function ViewAp() {
       setColonia(res.data.colonia);
       setCp(res.data.cp);
       setCiudad(res.data.ciudad);
-      setClave(res.data.c_elector);
+      setClave(res.data.clave_elector);
       setCurp(res.data.curp);
       setFecha(fecha);
       setSeccion(res.data.seccion);
       setDfederal(res.data.distrito_federal);
       setDlocal(res.data.distrito_local);
+      setNewCoor([res.data.lat, res.data.lng])
+      setEmail(res.data.email);
+      setFacebook(res.data.facebook);
+      setTwitter(res.data.twitter);
+      setNivel(res.data.nivel);
+      setOtra(res.data.otra_red);
+      setDescapoyo(res.data.descripcion);
+      setTipoapoyo(res.data.tipo);
+      setMonto(res.data.monto);
+      setAlcance(res.data.alcance);
+      setContacto(res.data.contacto);
+      setCelcontacto(res.data.no_celcontacto);
+
+
+
+      setChangeCenter(true);
       console.log(res.data)
     } catch (ex) {
       console.log(ex)
@@ -193,12 +209,12 @@ function ViewAp() {
 
 
     Axios.post(//"http://54.219.124.66:3001/api/insert",
-      "http://localhost:3001/api/insert",
+      "http://localhost:3001/apoyo/edit/"+id,
       {
 
         apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
         ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
-        distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
+        distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: numero, email: email, facebook: facebook, twitter: twitter,
         otra_red: otra, descripcion_apoyo: descrApoyo, apoyo_tipo: tipoApoyo, monto_apoyo: monto, alcance_apoyo: alcance, contacto: contacto,
         no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value
       }).then(() => {
@@ -236,7 +252,7 @@ function ViewAp() {
 
   const getLocation = () => {
     var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
-    alert(direccion);
+    //alert(direccion);
     document.getElementById("direc").setAttribute('value', direccion)
     Axios.post("http://localhost:3001/getLoc/", { direccion: document.getElementById("direc").value }).then((res) => {
       console.log(res)
@@ -917,7 +933,7 @@ function ViewAp() {
 
                   </div>
                   <div className="col-md-4">
-                    <button className="btn btn-success" type="submit">Guardar apoyo</button>
+                    <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar apoyo</button>
                     {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
                   </div>
                   <div className="col-md-2"></div>
