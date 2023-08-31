@@ -729,10 +729,12 @@ app.post('/apoyo/edit/:id', (req, res) => {
   const alcance_apoyo = req.body.alcance_apoyo
   const contacto = req.body.contacto
   const no_celcontacto = req.body.no_celcontacto
+  const lat = req.body.lat
+  const lng= req.body.lng
   const response = []
   db.query(
-    "UPDATE apoyo a1 INNER JOIN apoyos a2 ON a1.id=a2.id_persona SET a1.apaterno=?,a1.amaterno=?,a1.nombres=?,a1.calle=?,a1.numero=?,a1.colonia=?,a1.cp=?,a1.ciudad=?,a1.clave_elector=?,a1.curp=?,a1.fecha_nacimiento=?,a1.seccion=?,a1.distrito_federal=?,a1.distrito_local=?,a1.nivel=?,a1.no_celular=?,a1.email=?,a1.facebook=?,a1.twitter=?,a1.otra_red=?,a1.contacto=?,a1.no_celcontacto=?,a2.descripcion=?,a2.tipo=?,a2.monto=?,a2.alcance=? WHERE a1.id=?;",
-    [apaterno, amaterno, nombres, calle, numero, colonia, cp, ciudad, clave_elector, curp, fecha_nacimiento, seccion, distrito_federal, distrito_local, nivel, no_celular, email, facebook, twitter, otra_red, contacto, no_celcontacto, descripcion_apoyo, apoyo_tipo, monto_apoyo, alcance_apoyo, id],
+    "UPDATE apoyo a1 INNER JOIN apoyos a2 ON a1.id=a2.id_persona SET a1.apaterno=?,a1.amaterno=?,a1.nombres=?,a1.calle=?,a1.numero=?,a1.colonia=?,a1.cp=?,a1.ciudad=?,a1.clave_elector=?,a1.curp=?,a1.fecha_nacimiento=?,a1.seccion=?,a1.distrito_federal=?,a1.distrito_local=?,a1.nivel=?,a1.no_celular=?,a1.email=?,a1.facebook=?,a1.twitter=?,a1.otra_red=?,a1.contacto=?,a1.no_celcontacto=?,a1.lat=?,a1.lng=?,a2.descripcion=?,a2.tipo=?,a2.monto=?,a2.alcance=? WHERE a1.id=?;",
+    [apaterno, amaterno, nombres, calle, numero, colonia, cp, ciudad, clave_elector, curp, fecha_nacimiento, seccion, distrito_federal, distrito_local, nivel, no_celular, email, facebook, twitter, otra_red, contacto, no_celcontacto, lat,lng,descripcion_apoyo, apoyo_tipo, monto_apoyo, alcance_apoyo, id],
     (err, result) => {
       if (err) {
         //console.log(err);
@@ -761,7 +763,7 @@ app.listen(3001, () => {
 
 //--------------------------------LIDERES TERRITORIALES-------------------------------------------------///
 app.post('/api/insert-lider/', (req, res) => {
-  //console.log(req.body)
+  console.log(req.body)
 
   const apaterno = req.body.apaterno
   const amaterno = req.body.amaterno
@@ -993,26 +995,38 @@ app.post('/api/insert-lider/', (req, res) => {
 });
 app.post('/lideres-view/:id', (req, res) => {
   const id = req.params.id
-  db.query('SELECT l.nombres,l.apaterno,l.amaterno,l.calle,l.numero,l.colonia,.l.cp,l.ciudad, DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,l.curp,l.clave_electoral,l.seccion,l.id_Secc,l.no_celular,l.email,l.facebook,l.twitter,l.otra_red,l.circulo,l.contacto,l.no_celcontacto,l.observaciones,l.lat,l.lng,l.id_tipoLider ,t.nombre_tipo,sd.df,sd.dl FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id INNER JOIN secc_distrito sd ON l.id_Secc=sd.id where l.id=?', id, (err, result) => {
+  const sql1="SELECT id_tipoLider from lideres_t where id=?";
+  const sql2='SELECT l.nombres,l.apaterno,l.amaterno,l.calle,l.numero,l.colonia,.l.cp,l.ciudad, DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,l.curp,l.clave_electoral,l.seccion,l.id_Secc,l.no_celular,l.email,l.facebook,l.twitter,l.otra_red,l.circulo,l.contacto,l.no_celcontacto,l.observaciones,l.lat,l.lng,l.id_tipoLider ,t.nombre_tipo,sd.df,sd.dl,ac.nombre AS nomas,ac.cargo AS acargo FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id INNER JOIN secc_distrito sd ON l.id_Secc=sd.id INNER JOIN asociacion_civil ac ON ac.id_lider=l.id WHERE l.id=?';
+  
+  db.query(sql1, id, (err, result) => {
     if (err) {
-      //console.log(err)
+      console.log(err)
     }
     else {
-      acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
-      var resultado = JSON.stringify(result);
-      var empObj = JSON.parse(resultado);
-      /*var id="";
-      empObj.forEach((item) => {
-          Object.entries(item).forEach(([key, val]) => {
-              if(key=="id"){
-                  id=JSON.stringify(val);
-                  //console.log(`key-${key}-val-${JSON.stringify(val)}`)}
-            
-          });
-          Object.assign(item,{acciones:'<Link className="view" to="/apoyos/view-apoyo/'+id+'" title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/"'+ id+'} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId('+id+') }} title="Delete"><i className="material-icons">&#xE872;</i></Link>'})
-        });
-        //console.log(empObj)*/
-      res.send(resultado)
+      
+      if(result[0].id_tipoLider == 1){
+        const sql2='SELECT l.nombres,l.apaterno,l.amaterno,l.calle,l.numero,l.colonia,.l.cp,l.ciudad, DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,l.curp,l.clave_electoral,l.seccion,l.id_Secc,l.no_celular,l.email,l.facebook,l.twitter,l.otra_red,l.circulo,l.contacto,l.no_celcontacto,l.observaciones,l.lat,l.lng,l.id_tipoLider ,t.nombre_tipo,sd.df,sd.dl,di.calle AS calle_iglesia,di.no_ext AS no_iglesia,DATE_FORMAT(di.fiesta_patronal, "%d/%m/%Y") AS fiesta,di.colonia AS colonia_ig FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id INNER JOIN secc_distrito sd ON l.id_Secc=sd.id INNER JOIN domicilio_iglesia di ON di.id_lider=l.id WHERE l.id=?'
+        db.query(sql2, id, (err, resu) => {
+          if (err) {
+            console.log(err)
+          }else{
+            res.send(resu[0]);
+            console.log(resu[0])
+          }
+        })
+      }
+      if(result[0].id_tipoLider == 6){
+        const sql2='SELECT l.nombres,l.apaterno,l.amaterno,l.calle,l.numero,l.colonia,.l.cp,l.ciudad, DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,l.curp,l.clave_electoral,l.seccion,l.id_Secc,l.no_celular,l.email,l.facebook,l.twitter,l.otra_red,l.circulo,l.contacto,l.no_celcontacto,l.observaciones,l.lat,l.lng,l.id_tipoLider ,t.nombre_tipo,sd.df,sd.dl,ac.nombre AS nomas,ac.cargo AS acargo FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id INNER JOIN secc_distrito sd ON l.id_Secc=sd.id INNER JOIN asociacion_civil ac ON ac.id_lider=l.id WHERE l.id=?';
+
+        db.query(sql2, id, (err, resu) => {
+          if (err) {
+            console.log(err)
+          }else{
+            res.send(resu[0]);
+            console.log(resu[0])
+          }
+        })
+      }
 
 
     }

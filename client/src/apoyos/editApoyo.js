@@ -197,6 +197,7 @@ function ViewAp() {
     console.log('rectangle: ', rectangle.latLng.lng());
     setValue("lat", rectangle.latLng.lat())
     setValue("lng", rectangle.latLng.lng())
+    
     setNewCoor([rectangle.latLng.lat(), rectangle.latLng.lng()])
   }
 
@@ -216,7 +217,7 @@ function ViewAp() {
         ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
         distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: numero, email: email, facebook: facebook, twitter: twitter,
         otra_red: otra, descripcion_apoyo: descrApoyo, apoyo_tipo: tipoApoyo, monto_apoyo: monto, alcance_apoyo: alcance, contacto: contacto,
-        no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value
+        no_celcontacto: celContacto, lat: newCoordenadas[0], lng:newCoordenadas[1]
       }).then(() => {
         console.log("succes")
         //alert("AGREGADO")
@@ -252,11 +253,13 @@ function ViewAp() {
 
   const getLocation = () => {
     var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
-    //alert(direccion);
+    alert(direccion);
     document.getElementById("direc").setAttribute('value', direccion)
     Axios.post("http://localhost:3001/getLoc/", { direccion: document.getElementById("direc").value }).then((res) => {
       console.log(res)
-      setValue("nombre", "prueba");
+      setValue("lat",res.data.lat);
+      setValue("lng",res.data.lng);
+
       var lat = res.data.lat
       console.log(lat)
       var lng = res.data.lng
@@ -351,7 +354,7 @@ function ViewAp() {
                     required: true,
                   })}
                   placeholder='latitud'
-
+                  type='hidden'
                   name="lat" id='lat'
 
                 />
@@ -360,7 +363,7 @@ function ViewAp() {
                     required: true,
                   })}
                   placeholder='longitud'
-
+                  type='hidden'
                   name='lng'
                   id='lng'
                 />
