@@ -40,11 +40,14 @@ function ViewLideres() {
     const navigate = useNavigate();
     const { id } = useParams();
     const [list, setList] = useState([])
+    const [list3, setList3] = useState([])
     const [nivel, setNivel] = useState(0);
     const [alcance, setAlcance] = useState('');
     const [newCoordenadas, setNewCoor] = useState([])
     const [lid, setLid] = useState('');
     const [lider, setLider] = useState("");
+    const [selectedSeccion, setSelectedSeccion] = useState(null);
+
     const [seccionInjerencia, setSeccionInjerencia] = useState("");
     const [obs, setObs] = useState("");
     const getList = async (e) => {
@@ -87,20 +90,20 @@ function ViewLideres() {
             //alert(lider)
             if (response.data.id_tipoLider == 1) {
                 var fecha2 = response.data.fiesta;
-            fecha2 = fecha2.split("/").reverse().join("-");
-            console.log(fecha2)
+                fecha2 = fecha2.split("/").reverse().join("-");
+                console.log(fecha2)
                 document.getElementById("calleIglesia").setAttribute('value', response.data.calle_iglesia)
                 document.getElementById("noIglesia").setAttribute('value', response.data.no_iglesia)
                 document.getElementById("celebracion").setAttribute('value', fecha2)
 
                 document.getElementById("coloniaIglesia").setAttribute('value', response.data.colonia_ig)
 
-            }   
+            }
             if (response.data.id_tipoLider == 6) {
                 document.getElementById("asoCivil").setAttribute('value', response.data.nomas)
                 document.getElementById("cargo").setAttribute('value', response.data.acargo)
             }
-            
+
 
 
 
@@ -117,16 +120,24 @@ function ViewLideres() {
 
 
     }
-    useEffect(() => {
-        getList();
+    const submitSecciones = async (e) => {
 
-        console.log(lider)
-    }, [lider]);
-    const atras = () => {
-        let path = '/lideres';
-        navigate(path);
+        try {
+           const response=await Axios.post("http://localhost:3001/injerenciaLider/" + id
+            /*"http://54.219.124.66:3001/api/distritos"*/, {
+
+            });
+            
+           
+            setList(response.data)
+            
+
+        } catch (ex) {
+
+        }
+        
     }
-    const submitSecciones = () => {
+    const submitSecciones2 = () => {
 
 
         Axios.post("http://localhost:3001/api/distritosAll"
@@ -135,12 +146,31 @@ function ViewLideres() {
             }).then((response) => {
                 var resultado = JSON.stringify(response.data);
                 var empObj = JSON.parse(resultado);
-                setList(empObj)
+                setList3(empObj)
 
 
             });
 
     }
+    const secs=[];
+    console.log(list)
+    list.map(val =>{
+        
+        secs.push(val.seccion_id)
+    })
+    console.log(secs)
+    useEffect(() => {
+        getList();
+        submitSecciones();
+        submitSecciones2();
+
+        console.log(lider)
+    }, [lider]);
+    const atras = () => {
+        let path = '/lideres';
+        navigate(path);
+    }
+    
 
     return (
         <div >
@@ -599,12 +629,13 @@ function ViewLideres() {
 
                                                             <div className='col-6'>
                                                                 <label className="small mb-1" htmlFor="nivel">Seccion(es) de injerencia</label>
-                                                                {submitSecciones()}
+                                                               
                                                                 <MultiSelect
-
-                                                                    value={seccionInjerencia}
+                                                                    options={list3}
+                                                                    value={secs}
+                                                                    onChange={(e) => setSelectedSeccion(e.value)}
                                                                     disabled
-                                                                    options={list} optionLabel="name"
+                                                                     optionLabel="name"
                                                                     filter placeholder="Selecciona una o más secciones" className="w-full md:w-20rem form-select" required />
 
                                                             </div>
@@ -625,7 +656,7 @@ function ViewLideres() {
 
                                                                     className="form-control"
                                                                     id="partido"
-
+                                                                    se
                                                                     name="partido"
 
                                                                 >
@@ -635,7 +666,7 @@ function ViewLideres() {
                                                             </div>
                                                             <div className='col-6'>
                                                                 <label className="small mb-1" htmlFor="nivel">Seccion(es) de injerencia</label>
-                                                                {submitSecciones()}
+                                                               
                                                                 <MultiSelect
 
                                                                     value={seccionInjerencia}

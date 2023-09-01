@@ -1201,6 +1201,7 @@ function Lideres() {
 
                                                                     className="form-control"
                                                                     id="partido"
+                                                                    onChange={(e) => setPartido(e.value)}
 
                                                                     name="partido"
 
@@ -1214,7 +1215,8 @@ function Lideres() {
                                                                 {submitSecciones()}
                                                                 <MultiSelect
 
-                                                                    value={seccionInjerencia}
+                                                                    value={list}
+                                                                    onChange={(e) => setSelectedSeccion(e.value)}
 
                                                                     options={list} optionLabel="name"
                                                                     filter placeholder="Selecciona una o más secciones" className="w-full md:w-20rem form-select" required />

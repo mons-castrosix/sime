@@ -48,12 +48,12 @@ function EstructuraList() {
                         id = JSON.stringify(val);
                         //console.log(`key-${key}-val-${JSON.stringify(val)}`)
                         Object.assign(item, { ver: <Link className='view' to={"/estructura/view/" + id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
-                Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
-                Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" onClick={() => { deleteApoyo(val) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
+                        Object.assign(item, { editar: <Link className='edit' to={"/estructura/edit/" + id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
+                        Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" onClick={() => { deleteApoyo(val) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
                     }
 
                 });
-                
+
             });
             //console.log("objeto"+JSON.stringify(empObj))
             setList(empObj)
@@ -63,7 +63,7 @@ function EstructuraList() {
 
         });
     }
-    
+
 
     var arr = [];
     const reformattedArray = list.map((val, key) => { { arr.push("df", val.distrito_federal) } });
@@ -78,36 +78,36 @@ function EstructuraList() {
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'De acuerdo',
-            cancelButtonText:'Cancelar',
-            
+            cancelButtonText: 'Cancelar',
+
         }).then((result) => {
             if (result.isConfirmed) {
-                Axios.delete("http://localhost:3001/deleteEstructura/"+id/*"http://54.219.124.66:3001/deleteEstructura" + id*/).then(() => {
-            Swal.fire({
-                title: 'Registro estructura',
-                text: 'eliminado correctamente',
-                icon: 'success',
-                confirmButtonText: 'De acuerdo'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                 navigate('/estructura');
-                }
-            });
-        }).catch(error => {
-            Swal.fire({
-                title: 'Error!',
-                text: error.message,
-                icon: 'error',
-                confirmButtonText: 'De acuerdo'
-            })
-        });
+                Axios.delete("http://localhost:3001/deleteEstructura/" + id/*"http://54.219.124.66:3001/deleteEstructura" + id*/).then(() => {
+                    Swal.fire({
+                        title: 'Registro estructura',
+                        text: 'eliminado correctamente',
+                        icon: 'success',
+                        confirmButtonText: 'De acuerdo'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            navigate('/estructura');
+                        }
+                    });
+                }).catch(error => {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: error.message,
+                        icon: 'error',
+                        confirmButtonText: 'De acuerdo'
+                    })
+                });
             }
         });
-       
-       
-       
-       
-        
+
+
+
+
+
 
     }
     const atras = () => {
@@ -124,7 +124,7 @@ function EstructuraList() {
         { field: 'nombre_equipo', header: 'Equipo' },
         { field: 'seccion', header: 'Sección' },
 
-      
+
 
     ];
     const exportCSV = () => {
@@ -138,7 +138,7 @@ function EstructuraList() {
         );
     };
     const rightToolbarTemplate = () => {
-        return <Button label="Agregar" id='agregaApoyo' icon="pi pi-plus"  rounded severity='info' onClick={nuevo} className="mr-2" />
+        return <Button label="Agregar" id='agregaApoyo' icon="pi pi-plus" rounded severity='info' onClick={nuevo} className="mr-2" />
             ;
     };
     const exportColumns = columns.map((col) => ({ title: col.header, dataKey: col.field }));
@@ -179,39 +179,39 @@ function EstructuraList() {
     };
     const [filters, setFilters] = useState({
         global: { value: null, matchMode: FilterMatchMode.CONTAINS }
-        
+
     });
     const [globalFilterValue, setGlobalFilterValue] = useState("");
     const onGlobalFilterChange = (e) => {
         const value = e.target.value;
         let _filters = { ...filters };
-    
+
         _filters["global"].value = value;
-    
+
         setFilters(_filters);
         setGlobalFilterValue(value);
-        
-      };
+
+    };
     const header = (
         <div>
 
-        
+
             <div className='row'>
                 <div className='col-8'>
-                <div className="flex align-items-center justify-content-end gap-4">
-                <Button type="button" id='copy' icon="pi pi-file" rounded onClick={() => exportCSV(false)} data-pr-tooltip="CSV" />
-                <Button type="button" id='excel' icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" />
-                <Button type="button" id='pdf' icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf} data-pr-tooltip="PDF" />
-            </div>
+                    <div className="flex align-items-center justify-content-end gap-4">
+                        <Button type="button" id='copy' icon="pi pi-file" rounded onClick={() => exportCSV(false)} data-pr-tooltip="CSV" />
+                        <Button type="button" id='excel' icon="pi pi-file-excel" severity="success" rounded onClick={exportExcel} data-pr-tooltip="XLS" />
+                        <Button type="button" id='pdf' icon="pi pi-file-pdf" severity="warning" rounded onClick={exportPdf} data-pr-tooltip="PDF" />
+                    </div>
                 </div>
                 <div className='col-4'>
                     <span className="p-input-icon-left">
                         <i className="pi pi-search" />
                         <InputText
-            value={globalFilterValue}
-            onChange={onGlobalFilterChange}
-            placeholder="Buscar"
-          />
+                            value={globalFilterValue}
+                            onChange={onGlobalFilterChange}
+                            placeholder="Buscar"
+                        />
                     </span>
                 </div>
 
@@ -255,16 +255,17 @@ function EstructuraList() {
     const headerGroup = (<ColumnGroup>
         <Row>
             <Column header="" colSpan={3}></Column>
-            <Column header="Acciones" style={{ paddingLeft: '125px' }} colSpan={2}></Column>
-            
+            <Column header="Acciones" style={{ paddingLeft: '125px' }} colSpan={3}></Column>
+
         </Row>
         <Row>
             <Column header="Nombre Completo"></Column>
             <Column header="Equipo"></Column>
-        
+
             <Column header="Sección"></Column>
-            
+
             <Column header="ver"></Column>
+            <Column header="editar"></Column>
             <Column header="eliminar"></Column>
         </Row>
     </ColumnGroup>);
@@ -274,70 +275,72 @@ function EstructuraList() {
 
             <Header></Header>
 
-            
+
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 
 
-               
-                {getList()}
-                <div className='row'>
+
+            {getList()}
+            <div className='row'>
                 <div className='col-md-1'></div>
-                    <div className="col-md-10">
-                        
-                        <div className="table-responsive">
-                            <div className="table-wrapper">
+                <div className="col-md-10">
 
-                                <div className="card">
-                                    <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
-                                    <DataTable
-                                        ref={dt}
-                                        value={list}
-                                        paginator
-                                        rows={10}
-                                        headerColumnGroup={headerGroup}
-                                        resizableColumns showGridlines
-                                        rowsPerPageOptions={[5, 10, 25]}
-                                        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                                        currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
-                                        tableStyle={{ minWidth: '50rem' }}
-                                        globalFilterFields={['nombre','seccion','nombre_equipo']}
-                                        filters={filters}
-                                        header={header}>
-                                        
-                                        <Column field="nombre" header="Nombre Completo" style={{ minWidth: '12rem' }} />                                    
-                                        <Column field="nombre_equipo" header="Equipo" style={{ minWidth: '12rem' }} />
-                                        <Column field="seccion" header="Seccion" style={{ minWidth: '12rem' }} />
-                                        <Column field="ver" header="Ver" style={{ minWidth: '8rem' }} />
-                                        <Column field="eliminar" header="Eliminar" style={{ minWidth: '8rem' }} />
+                    <div className="table-responsive">
+                        <div className="table-wrapper">
 
-                                    </DataTable>
-                                </div>
+                            <div className="card">
+                                <Toolbar className="mb-4" left={leftToolbarTemplate} right={rightToolbarTemplate}></Toolbar>
+                                <DataTable
+                                    ref={dt}
+                                    value={list}
+                                    paginator
+                                    rows={10}
+                                    headerColumnGroup={headerGroup}
+                                    resizableColumns showGridlines
+                                    rowsPerPageOptions={[5, 10, 25]}
+                                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+                                    currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} registros"
+                                    tableStyle={{ minWidth: '50rem' }}
+                                    globalFilterFields={['nombre', 'seccion', 'nombre_equipo']}
+                                    filters={filters}
+                                    header={header}>
+
+                                    <Column field="nombre" header="Nombre Completo" style={{ minWidth: '12rem' }} />
+                                    <Column field="nombre_equipo" header="Equipo" style={{ minWidth: '12rem' }} />
+                                    <Column field="seccion" header="Seccion" style={{ minWidth: '12rem' }} />
+                                    <Column field="ver" header="Ver" style={{ minWidth: '8rem' }} />
+                                    <Column field="editar" header="Eliminar" style={{ minWidth: '8rem' }} />
+
+                                    <Column field="eliminar" header="Eliminar" style={{ minWidth: '8rem' }} />
+
+                                </DataTable>
                             </div>
                         </div>
                     </div>
-                    <div className='col-md-1'></div>
-
-
                 </div>
-                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content">
-                            <div className="modal-header">
+                <div className='col-md-1'></div>
 
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div className="modal-body">
-                                <p>¿Estás seguro de eliminar este registro?</p>
-                            </div>
-                            <div className="modal-footer">
-                                <button type="button" onClick={atras} className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                <button type="button" className="btn btn-primary " data-bs-dismiss="modal" aria-label="Close" onClick={() => { deleteApoyo(id) }}>Aceptar</button>
-                            </div>
+
+            </div>
+            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <p>¿Estás seguro de eliminar este registro?</p>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" onClick={atras} className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-primary " data-bs-dismiss="modal" aria-label="Close" onClick={() => { deleteApoyo(id) }}>Aceptar</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     );
 }
 

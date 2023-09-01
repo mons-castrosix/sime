@@ -122,7 +122,7 @@ function ViewAp() {
       setValue("secc", res.data.seccion, { shouldValidate: true, shouldDirty: true });
       setValue("df", res.data.distrito_federal, { shouldValidate: true, shouldDirty: true });
       setValue("dl", res.data.distrito_local, { shouldValidate: true, shouldDirty: true });
-      setValue("cel", res.data.no_celcontacto, { shouldValidate: true, shouldDirty: true });
+      setValue("cel", res.data.no_celular, { shouldValidate: true, shouldDirty: true });
       setValue("email", res.data.email, { shouldValidate: true, shouldDirty: true });
       setValue("fb", res.data.facebook, { shouldValidate: true, shouldDirty: true });
       setValue("tw", res.data.twitter, { shouldValidate: true, shouldDirty: true });
@@ -241,8 +241,8 @@ function ViewAp() {
 
         setDfederal(res.data.df)
         setDlocal(res.data.dl)
-        setValue("dl", res.data.dl)
-        setValue("df", res.data.df)
+        setValue("dl", res.data.dl, {shouldValidate: true, shouldDirty: true })
+        setValue("df", res.data.df, {shouldValidate: true, shouldDirty: true })
 
         console.log(seccion)
 

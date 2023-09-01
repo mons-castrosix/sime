@@ -1071,7 +1071,27 @@ app.post('/lideres', (req, res) => {
     }
   })
 })
+app.post('/injerenciaLider/:id', (req, res) => {
+  const id = req.params.id
+  //console.log(id)
+  const sqlInsert = "SELECT sie.seccion_id FROM secciones_injerencia_lider  sie INNER JOIN secc_distrito sd ON sie.seccion_id=sd.id WHERE sie.lider_id=24;";
+  ////console.log(sqlInsert)
+  db.query(sqlInsert, id, (err, result) => {
+    if (err) {
+      //console.log(err)
+    }
+    else {
+      acciones = '<Link className="view" to={"/apoyos/view-apoyo/" + val.id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link><Link className="edit" to={"/apoyos/edit-apoyo/" + val.id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link><Link className="delet" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => { setId(val.id) }} title="Delete"><i className="material-icons">&#xE872;</i></Link>';
+      var resultado = JSON.stringify(result);
+      console.log(result)
+      var empObj = JSON.parse(resultado);
+     
+      res.send(result)
 
+
+    }
+  });
+})
 
 
 
@@ -1254,7 +1274,69 @@ app.post('/injerenciaEstructura/:id', (req, res) => {
     }
   });
 })
+app.post('/estructura/detalles/:id', (req, res) => {
+  //console.log(req.body)
 
+  const id = req.params.id;
+  /*
+  const apaterno = req.body.apaterno
+  const amaterno = req.body.amaterno
+  const nombres = req.body.nombres
+  const calle = req.body.calle
+  const numero = req.body.numero
+  const colonia = req.body.colonia
+  const cp = req.body.cp
+  const ciudad = req.body.ciudad
+  const clave_elector = req.body.clave_elector
+  const curp = req.body.curp
+  const fecha_nacimiento = req.body.fecha_nacimiento
+  const seccion = req.body.seccion
+  const distrito_federal = req.body.distrito_federal
+  const distrito_local = req.body.distrito_local
+  const nivel = req.body.nivel
+  const no_celular = req.body.no_celular
+  const email = req.body.email
+  const facebook = req.body.facebook
+  const twitter = req.body.twitter
+  const otra_red = req.body.otra_red
+  const descripcion_apoyo = req.body.descripcion_apoyo
+  const apoyo_tipo = req.body.apoyo_tipo
+  const monto_apoyo = req.body.monto_apoyo
+  const alcance_apoyo = req.body.alcance_apoyo
+  const contacto = req.body.contacto
+  const no_celcontacto = req.body.no_celcontacto
+
+  db.query(
+    "UPDATE apoyo a1 INNER JOIN apoyos a2 ON a1.id=a2.id_persona SET a1.apaterno=?,a1.amaterno=?,a1.nombres=?,a1.calle=?,a1.numero=?,a1.colonia=?,a1.cp=?,a1.ciudad=?,a1.clave_elector=?,a1.curp=?,a1.fecha_nacimiento=?,a1.seccion=?,a1.distrito_federal=?,a1.distrito_local=?,a1.nivel=?,a1.no_celular=?,a1.email=?,a1.facebook=?,a1.twitter=?,a1.otra_red=?,a1.contacto=?,a1.no_celcontacto=?,a2.descripcion=?,a2.tipo=?,a2.monto=?,a2.alcance=? WHERE a1.id=?;",
+    [apaterno, amaterno, nombres, calle, numero, colonia, cp, ciudad, clave_elector, curp, fecha_nacimiento, seccion, distrito_federal, distrito_local, nivel, no_celular, email, facebook, twitter, otra_red, contacto, no_celcontacto, descripcion_apoyo, apoyo_tipo, monto_apoyo, alcance_apoyo, id],
+    (err, result) => {
+      if (err) {
+        //console.log(err);
+      }
+      else {
+        res.send(result)
+        console.log(result)
+      }
+    }
+  )
+  */
+ const q="SELECT * FROM registro_estructura WHERE id=?;";
+  db.query(
+    q,id,
+    
+    (err, result) => {
+      if (err) {
+        //console.log(err);
+      }
+      else {
+        res.send(result[0])
+        console.log(result)
+      }
+    }
+  )
+
+
+})
 //--------------------------------- PROMOTORES -----------------------------------------------------------//
 app.post('/insert-promotor', (req, res) => {
   //console.log(req.body)

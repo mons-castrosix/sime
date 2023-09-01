@@ -12,7 +12,7 @@ import Dashboard from './dashboard/dashboard';
 import Lideres from './lideresTerritoriales/lideres';
 import ViewLideres from './lideresTerritoriales/lideresView';
 import LideresList from './lideresTerritoriales/lideresTerritorialesList';
-
+import EditEstructura from './estructura/estructuraEdit';
 import reportWebVitals from './reportWebVitals';
 import Estructura from './estructura/estructura';
 import EstructuraList from './estructura/estructuraList';
@@ -55,6 +55,7 @@ root.render(
                  <Route path='/estructura' element={<EstructuraList/>} />
                  <Route path='/estructura/add' element={<Estructura/>} />
                  <Route path='/estructura/view/:id' element={<ViewEstructura/>} />
+                 <Route path='/estructura/edit/:id' element={<EditEstructura/>} />
 
                  <Route path='/promotores' element={<PromotoresList/>} />
                  <Route path='/promotores/add' element={<Promotores/>} />
