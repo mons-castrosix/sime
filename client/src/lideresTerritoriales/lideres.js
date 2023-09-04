@@ -104,6 +104,7 @@ function Lideres() {
     const [idSecc, setidSecc] = useState("");
     const navigate = useNavigate();
     const [list, setList] = useState([])
+    const [list2, setList2] = useState([])
     const [selectedSeccion, setSelectedSeccion] = useState(null);
 
     /*const center = {
@@ -188,10 +189,6 @@ function Lideres() {
             //console.log(ex);
         }
     };
-    useEffect(() => {
-        //console.log(nombres);
-        //console.log(aPaterno);
-    }, [nombres, aPaterno, aMaterno, calle, numero, colonia, cp, ciudad, fechaNacimiento, seccion, dFederal, dLocal]);
 
     const submitReview = () => {
 
@@ -483,6 +480,21 @@ function Lideres() {
         })
     }
 
+    const getPartido = async (e) => {
+        try {
+            const response = await Axios.post(//"http://localhost:3001/apoyoId",{id:id}
+                "http://localhost:3001/api/partidos/",
+            );
+            var resultado = JSON.stringify(response.data);
+           // console.log(resultado);
+            var empObj = JSON.parse(resultado);
+            setList2(empObj)
+
+        } catch (ex) {
+
+        }
+    }
+
 
     const limpiar = e => {
         e.preventDefault()
@@ -529,6 +541,10 @@ function Lideres() {
 
 
     }
+    useEffect(() => {
+        getPartido();
+        
+    }, [nombres, aPaterno, aMaterno, calle, numero, colonia, cp, ciudad, fechaNacimiento, seccion, dFederal, dLocal]);
 
 
     // This function will be triggered when the "Remove This Image" button is clicked
@@ -1103,7 +1119,7 @@ function Lideres() {
                                 </div>
                                 {
                                     (() => {
-                                        
+
                                         switch (lider) {
 
                                             case ("1"): {
@@ -1119,7 +1135,7 @@ function Lideres() {
                                                             <div className="col-md-5">
                                                                 <label htmlFor="cel">Calle</label>
                                                                 <input
-                                                                    
+
                                                                     className="form-control"
                                                                     id="calleIglesia"
                                                                     name="calleIglesia"
@@ -1131,7 +1147,7 @@ function Lideres() {
                                                             <div className="col-md-3">
                                                                 <label htmlFor="email">No. Ext.</label>
                                                                 <input
-                                                                    
+
                                                                     type="noIglesia"
                                                                     className="form-control"
                                                                     id="noIglesia"
@@ -1144,7 +1160,7 @@ function Lideres() {
                                                             <div className="col-md-4">
                                                                 <label htmlFor="email">Colonia</label>
                                                                 <input
-                                                                    
+
                                                                     type="coloniaIglesia"
                                                                     className="form-control"
                                                                     id="coloniaIglesia"
@@ -1160,7 +1176,7 @@ function Lideres() {
                                                             <div className="col-md-6">
                                                                 <label htmlFor="cel">Celebración de fiesta patronal</label>
                                                                 <input
-                                                                    
+
                                                                     type="date"
 
                                                                     className="form-control"
@@ -1176,7 +1192,7 @@ function Lideres() {
                                                                 <label className="small mb-1" htmlFor="nivel">Seccion(es) de injerencia</label>
                                                                 {submitSecciones()}
                                                                 <MultiSelect
-                                                                    
+
                                                                     value={seccionInjerencia}
                                                                     onChange={(e) => setSeccionInjerencia(e.value)}
 
@@ -1194,18 +1210,22 @@ function Lideres() {
                                                 return (
                                                     <div>
                                                         <div className="row gx-3 mb-3">
-
+                                                    
                                                             <div className='col-6'>
                                                                 <label htmlFor="nivel">Partido Politico</label>
                                                                 <select
 
-                                                                    className="form-control"
+                                                                    className="form-control form-select"
                                                                     id="partido"
                                                                     onChange={(e) => setPartido(e.value)}
 
                                                                     name="partido"
 
                                                                 >
+                                                                    {list2.map(val => {
+
+                                                                        return (<option value={val.id}>{val.nombre}</option>);
+                                                                    })}
 
 
                                                                 </select>
@@ -1215,8 +1235,8 @@ function Lideres() {
                                                                 {submitSecciones()}
                                                                 <MultiSelect
 
-                                                                    value={list}
-                                                                    onChange={(e) => setSelectedSeccion(e.value)}
+                                                                    value={seccionInjerencia}
+                                                                    onChange={(e) => setSeccionInjerencia(e.value)}
 
                                                                     options={list} optionLabel="name"
                                                                     filter placeholder="Selecciona una o más secciones" className="w-full md:w-20rem form-select" required />

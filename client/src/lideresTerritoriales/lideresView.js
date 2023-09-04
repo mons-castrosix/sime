@@ -45,6 +45,8 @@ function ViewLideres() {
     const [alcance, setAlcance] = useState('');
     const [newCoordenadas, setNewCoor] = useState([])
     const [lid, setLid] = useState('');
+    const [list2, setList2] = useState([])
+
     const [lider, setLider] = useState("");
     const [selectedSeccion, setSelectedSeccion] = useState(null);
 
@@ -99,10 +101,16 @@ function ViewLideres() {
                 document.getElementById("coloniaIglesia").setAttribute('value', response.data.colonia_ig)
 
             }
+            if (response.data.id_tipoLider == 2) {
+
+                document.getElementById("partido").setAttribute('value', response.data.id_tipoLider)
+                
+            }
             if (response.data.id_tipoLider == 6) {
                 document.getElementById("asoCivil").setAttribute('value', response.data.nomas)
                 document.getElementById("cargo").setAttribute('value', response.data.acargo)
             }
+
 
 
 
@@ -123,19 +131,19 @@ function ViewLideres() {
     const submitSecciones = async (e) => {
 
         try {
-           const response=await Axios.post("http://localhost:3001/injerenciaLider/" + id
+            const response = await Axios.post("http://localhost:3001/injerenciaLider/" + id
             /*"http://54.219.124.66:3001/api/distritos"*/, {
 
-            });
-            
-           
+                });
+
+
             setList(response.data)
-            
+
 
         } catch (ex) {
 
         }
-        
+
     }
     const submitSecciones2 = () => {
 
@@ -152,17 +160,33 @@ function ViewLideres() {
             });
 
     }
-    const secs=[];
+    const secs = [];
     console.log(list)
-    list.map(val =>{
-        
+    list.map(val => {
+
         secs.push(val.seccion_id)
     })
+    const getPartido = async (e) => {
+        try {
+            const response = await Axios.post(//"http://localhost:3001/apoyoId",{id:id}
+                "http://localhost:3001/api/partidos/",
+            );
+            var resultado = JSON.stringify(response.data);
+            // console.log(resultado);
+            var empObj = JSON.parse(resultado);
+            setList2(empObj)
+
+        } catch (ex) {
+
+        }
+    }
+
     console.log(secs)
     useEffect(() => {
         getList();
         submitSecciones();
         submitSecciones2();
+        getPartido();
 
         console.log(lider)
     }, [lider]);
@@ -170,7 +194,7 @@ function ViewLideres() {
         let path = '/lideres';
         navigate(path);
     }
-    
+
 
     return (
         <div >
@@ -629,13 +653,13 @@ function ViewLideres() {
 
                                                             <div className='col-6'>
                                                                 <label className="small mb-1" htmlFor="nivel">Seccion(es) de injerencia</label>
-                                                               
+
                                                                 <MultiSelect
                                                                     options={list3}
                                                                     value={secs}
                                                                     onChange={(e) => setSelectedSeccion(e.value)}
                                                                     disabled
-                                                                     optionLabel="name"
+                                                                    optionLabel="name"
                                                                     filter placeholder="Selecciona una o más secciones" className="w-full md:w-20rem form-select" required />
 
                                                             </div>
@@ -653,27 +677,32 @@ function ViewLideres() {
                                                             <div className='col-6'>
                                                                 <label htmlFor="nivel">Partido Politico</label>
                                                                 <select
-
+                                                                    readOnly
                                                                     className="form-control"
                                                                     id="partido"
                                                                     se
                                                                     name="partido"
 
                                                                 >
+                                                                    {list2.map(val => {
+
+                                                                        return (<option value={val.id}>{val.nombre}</option>);
+                                                                    })}
 
 
                                                                 </select>
                                                             </div>
                                                             <div className='col-6'>
                                                                 <label className="small mb-1" htmlFor="nivel">Seccion(es) de injerencia</label>
-                                                               
+
                                                                 <MultiSelect
 
-                                                                    value={seccionInjerencia}
-
-                                                                    options={list} optionLabel="name"
+                                                                    options={list3}
+                                                                    value={secs}
+                                                                    onChange={(e) => setSelectedSeccion(e.value)}
+                                                                    disabled
+                                                                    optionLabel="name"
                                                                     filter placeholder="Selecciona una o más secciones" className="w-full md:w-20rem form-select" required />
-
 
                                                             </div>
                                                         </div>

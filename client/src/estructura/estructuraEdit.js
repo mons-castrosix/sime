@@ -81,8 +81,8 @@ function EditEstructura() {
     const [descrApoyo, setDescapoyo] = useState("");
     const [tipoApoyo, setTipoapoyo] = useState("");
     const [monto, setMonto] = useState("");
-    const [alcance, setAlcance] = useState("");
-    const [contacto, setContacto] = useState("");
+    const [latitud, setLatitud] = useState("");
+    const [longitud, setLongitud] = useState("");
     const [celContacto, setCelcontacto] = useState("");
     const [selectedImage, setSelectedImage] = useState("");
     const [coordenadas, setCoordenadas] = useState([19.36313799880912
@@ -109,32 +109,17 @@ function EditEstructura() {
     const [list, setList] = useState([])
     const [list2, setList2] = useState([])
     const [selectedSeccion, setSelectedSeccion] = useState(null);
-
-    /*const center = {
-      lat: document.getElementById("lat").value,
-      lng:document.getElementById("lng").value
-    };*/
-
-    const [infoWindowOpen, setInfoWindowOpen] = useState(false);
-    const [peopleInfo, setPeopleInfo] = useState([]);
-
-    const persona = 'Persona 1';
-    const ref = useRef(null);
     const getList = async (e) => {
 
 
         try {
-            const res = await Axios.post(
-                // "http://54.219.124.66:3001/uploadD",
+            const res = await Axios.post(//"http://localhost:3001/apoyoId",{id:id}
                 "http://localhost:3001/estructura/detalles/" + id
             );
-
-
             var fecha = new Date(res.data.fecha_nacimiento)
             fecha = fecha.toISOString().slice(0, 10);
             //console.log(fecha)
-            setValue("nombre", res.data.nombres)
-
+            setValue("nombre", res.data.nombres, { shouldValidate: true, shouldDirty: true });
             setValue("apaterno", res.data.apaterno, { shouldValidate: true, shouldDirty: true });
             setValue("amaterno", res.data.amaterno, { shouldValidate: true, shouldDirty: true });
             setValue("calle", res.data.calle, { shouldValidate: true, shouldDirty: true });
@@ -145,9 +130,9 @@ function EditEstructura() {
             setValue("celectoral", res.data.clave_electoral, { shouldValidate: true, shouldDirty: true });
             setValue("curp", res.data.curp, { shouldValidate: true, shouldDirty: true });
             setValue("fnacimiento", fecha, { shouldValidate: true, shouldDirty: true });
-            setValue("seccion", res.data.seccion, { shouldValidate: true, shouldDirty: true });
-            setValue("df", res.data.distrito_federal, { shouldValidate: true, shouldDirty: true });
-            setValue("dl", res.data.distrito_local, { shouldValidate: true, shouldDirty: true });
+            setValue("secc", res.data.seccion, { shouldValidate: true, shouldDirty: true });
+            setValue("df", res.data.df, { shouldValidate: true, shouldDirty: true });
+            setValue("dl", res.data.dl, { shouldValidate: true, shouldDirty: true });
             setValue("cel", res.data.no_celular, { shouldValidate: true, shouldDirty: true });
             setValue("email", res.data.email, { shouldValidate: true, shouldDirty: true });
             setValue("fb", res.data.facebook, { shouldValidate: true, shouldDirty: true });
@@ -156,10 +141,9 @@ function EditEstructura() {
             setValue("nivel", res.data.circulo, { shouldValidate: true, shouldDirty: true });
             setValue("lat", res.data.lat, { shouldValidate: true, shouldDirty: true });
             setValue("lng", res.data.lng, { shouldValidate: true, shouldDirty: true });
-            setValue("equipo", res.data.id_equipo, { shouldValidate: true, shouldDirty: true });
-            document.getElementById("secc").setAttribute('value', res.data.seccion)
+            setValue("contacto", res.data.contacto, { shouldValidate: true, shouldDirty: true });
+            setValue("nocontacto", res.data.no_celcontacto, { shouldValidate: true, shouldDirty: true });
 
-            setNewCoor([res.data.lat, res.data.lng]);
             setNombres(res.data.nombres)
             setApaterno(res.data.apaterno);
             setAmaterno(res.data.amaterno);
@@ -167,20 +151,40 @@ function EditEstructura() {
             setNumero(res.data.numero);
             setColonia(res.data.colonia);
             setCp(res.data.cp);
-            setFecha(fecha);
             setCiudad(res.data.ciudad);
-            setClave(res.data.c_elector);
+            setLatitud(res.data.lat);
+            setLongitud(res.data.longitud);
+            setClave(res.data.clave_elector);
             setCurp(res.data.curp);
-            
+            setFecha(fecha);
             setSeccion(res.data.seccion);
+            setDfederal(res.data.distrito_federal);
+            setDlocal(res.data.distrito_local);
+           
+            setEmail(res.data.email);
+            setFacebook(res.data.facebook);
+            setTwitter(res.data.twitter);
+            setNivel(res.data.nivel);
+            setOtra(res.data.otra_red);
+         
+        
             
-            
-            //setChangeCenter(true);
-
+           
         } catch (ex) {
-            //console.log(ex);
+            console.log(ex)
         }
     };
+    /*const center = {
+      lat: document.getElementById("lat").value,
+      lng:document.getElementById("lng").value
+    };*/
+
+    const [infoWindowOpen, setInfoWindowOpen] = useState(false);
+    const [peopleInfo, setPeopleInfo] = useState([]);
+
+    const persona = 'Persona 1';
+    const ref = useRef(null);
+
 
     const atras = () => {
         let path = '/estructura';
@@ -196,7 +200,11 @@ function EditEstructura() {
     }
 
 
-   
+    useEffect(() => {
+        getList();
+        
+
+    }, []);
     const equiposList = () => {
 
 
@@ -255,15 +263,14 @@ function EditEstructura() {
 
 
         Axios.post("http://localhost:3001/api/distritos"
-            /*"http://54.219.124.66:3001/api/distritos"*/, {
-                seccion: seccion
+    /*"http://54.219.124.66:3001/api/distritos"*/, {
+                seccion: document.getElementById("secc").value
             }).then((res) => {
 
-                //console.log(res.data.df)
+                console.log(res.data.df)
 
                 setDfederal(res.data.df)
                 setDlocal(res.data.dl)
-                setidSecc(res.data.id)
                 setValue("dl", res.data.dl, { shouldValidate: true, shouldDirty: true })
                 setValue("df", res.data.df, { shouldValidate: true, shouldDirty: true })
 
@@ -290,18 +297,20 @@ function EditEstructura() {
     }
     const getLocation = () => {
         var direccion = calle + " " + numero + ", " + colonia + ", " + cp + " " + ciudad
+        alert(direccion);
         document.getElementById("direc").setAttribute('value', direccion)
-        Axios.post("http://localhost:3001/getLoc/"/*"http://54.219.124.66:3001/getLoc"*/, { direccion: document.getElementById("direc").value }).then((res) => {
-            //console.log(res)
+        Axios.post("http://localhost:3001/getLoc/", { direccion: document.getElementById("direc").value }).then((res) => {
+            console.log(res)
+            setValue("lat", res.data.lat);
+            setValue("lng", res.data.lng);
 
             var lat = res.data.lat
-            //console.log(lat)
+            console.log(lat)
             var lng = res.data.lng
-            //console.log(lng)
+            console.log(lng)
 
             setNewCoor([lat, lng])
-            setValue("lat", lat)
-            setValue("lng", lng)
+
 
             setChangeCenter(true);
 
@@ -354,10 +363,7 @@ function EditEstructura() {
 
 
     }
-    useEffect(() => {
-        getList();
 
-    }, []);
 
 
     // This function will be triggered when the "Remove This Image" button is clicked
@@ -678,7 +684,7 @@ function EditEstructura() {
                                     <div className="col-md-4 mb-3">
                                         <label htmlFor="secc">Sección</label>
                                         <input
-                                            {...register("seccion", {
+                                            {...register("secc", {
                                                 required: true,
                                                 pattern: /^(0|[1-9]\d*)(\.\d+)?$/
                                             })}
@@ -687,7 +693,7 @@ function EditEstructura() {
                                             id="secc"
                                             name="secc"
                                             placeholder="Sección"
-                                            onChange={e => { setSeccion(e.target.value); console.log(seccion);submitSeccion(); }} />
+                                            onChange={e => { setSeccion(e.target.value); console.log(e.target.value); submitSeccion(); }} />
                                         {errors?.secc?.type === "required" && <span className='eform'>Campo Vacio</span>}
                                         {errors?.secc?.type === "pattern" && (
                                             <span className='eform'>Ingresa solamente caracteres numericos</span>
@@ -832,7 +838,8 @@ function EditEstructura() {
                                                 placeholder=""
                                                 onChange={e => { setOtra(e.target.value) }} />
 
-                                        </div></div>
+                                        </div>
+                                    </div>
                                     <div className='col-md-6'>
                                         <label className="small mb-1" htmlFor="nivel">Círculo</label>
                                         <select
@@ -840,7 +847,7 @@ function EditEstructura() {
                                                 required: true,
 
                                             })}
-                                            className="form-select"
+                                            className="form-select form-control"
                                             id="nivel"
 
                                             name="nivel"
@@ -864,7 +871,7 @@ function EditEstructura() {
 
                                     <div className="col-md-12">
                                         <label htmlFor="tipoapoyo">Pertenece al equipo</label>
-                                        {equiposList()}
+
                                         <select
                                             {...register("equipo", {
                                                 required: true,
@@ -890,7 +897,7 @@ function EditEstructura() {
 
                                 <div className='mb-3'>
 
-                                    {submitSecciones()}
+
                                     <label className="small mb-1" htmlFor="nivel">Seccion(es) de injerencia</label>
                                     <MultiSelect
 
@@ -954,6 +961,31 @@ function EditEstructura() {
                                 options={option}
 
                             >
+                            </GoogleMap>
+                        </LoadScript>
+                    )}
+                    {changeCenter == true && (
+                        <LoadScript googleMapsApiKey={config.GOOGLE_MAP_API_KEY}>
+                            <GoogleMap
+                                id="rectangle-example"
+                                mapContainerStyle={mapContainerStyle}
+                                zoom={18}
+                                center={{ lat: newCoordenadas[0], lng: newCoordenadas[1] }}
+                                options={option}
+
+
+
+                            >
+                                <Marker
+                                    draggable={true}
+                                    onDragEnd={onLoad}
+                                    position={{ lat: newCoordenadas[0], lng: newCoordenadas[1] }}>
+
+                                </Marker>
+
+
+
+
                             </GoogleMap>
                         </LoadScript>
                     )}

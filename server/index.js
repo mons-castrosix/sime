@@ -319,6 +319,26 @@ app.post('/api/distritos/', (req, res) => {
     });
 })
 
+app.post('/api/partidos/', (req, res) => {
+  const seccion = req.body.seccion
+  ////console.log(seccion)
+  const sqlInsert = "SELECT * FROM partido_politico "+ " ;"
+  ////console.log(sqlInsert)
+
+    db.query(sqlInsert, (err, result) => {
+      if (err) {
+        console.log(err)
+
+      }
+      else {
+        console.log(result)
+        res.send(result)
+
+      }
+
+
+    });
+})
 app.post('/api/distritosAll/', (req, res) => {
 
   const sqlInsert = "SELECT id as value,secc as name FROM secc_distrito;";
@@ -1015,6 +1035,17 @@ app.post('/lideres-view/:id', (req, res) => {
           }
         })
       }
+      if(result[0].id_tipoLider == 2){
+        const sql2='SELECT * FROM lideres_t re INNER JOIN secc_distrito sd ON re.id_Secc=sd.id  WHERE re.id=?'
+        db.query(sql2, id, (err, resu) => {
+          if (err) {
+            console.log(err)
+          }else{
+            res.send(resu[0]);
+            console.log(resu[0])
+          }
+        })
+      }
       if(result[0].id_tipoLider == 6){
         const sql2='SELECT l.nombres,l.apaterno,l.amaterno,l.calle,l.numero,l.colonia,.l.cp,l.ciudad, DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,l.curp,l.clave_electoral,l.seccion,l.id_Secc,l.no_celular,l.email,l.facebook,l.twitter,l.otra_red,l.circulo,l.contacto,l.no_celcontacto,l.observaciones,l.lat,l.lng,l.id_tipoLider ,t.nombre_tipo,sd.df,sd.dl,ac.nombre AS nomas,ac.cargo AS acargo FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id INNER JOIN secc_distrito sd ON l.id_Secc=sd.id INNER JOIN asociacion_civil ac ON ac.id_lider=l.id WHERE l.id=?';
 
@@ -1320,7 +1351,7 @@ app.post('/estructura/detalles/:id', (req, res) => {
     }
   )
   */
- const q="SELECT * FROM registro_estructura WHERE id=?;";
+ const q="SELECT * FROM registro_estructura re INNER JOIN secc_distrito sd ON re.id_Secc=sd.id  WHERE re.id=?;";
   db.query(
     q,id,
     
