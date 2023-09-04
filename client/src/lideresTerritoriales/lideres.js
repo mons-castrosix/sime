@@ -486,7 +486,7 @@ function Lideres() {
                 "http://localhost:3001/api/partidos/",
             );
             var resultado = JSON.stringify(response.data);
-           // console.log(resultado);
+            // console.log(resultado);
             var empObj = JSON.parse(resultado);
             setList2(empObj)
 
@@ -543,7 +543,7 @@ function Lideres() {
     }
     useEffect(() => {
         getPartido();
-        
+
     }, [nombres, aPaterno, aMaterno, calle, numero, colonia, cp, ciudad, fechaNacimiento, seccion, dFederal, dLocal]);
 
 
@@ -1210,7 +1210,7 @@ function Lideres() {
                                                 return (
                                                     <div>
                                                         <div className="row gx-3 mb-3">
-                                                    
+
                                                             <div className='col-6'>
                                                                 <label htmlFor="nivel">Partido Politico</label>
                                                                 <select
@@ -1256,22 +1256,31 @@ function Lideres() {
                                                             <div className="col-md-6">
                                                                 <label htmlFor="cel">Nombre de la escuela</label>
                                                                 <input
-
-
+                                                                    {...register("escuela", {
+                                                                        required: true,
+                                                                        pattern: /^[A-Za-z.\s_-]+$/
+                                                                    })}
+                                                                    onChange={e => { setEscuela(e.target.value) }}
                                                                     className="form-control"
                                                                     id="escuela"
                                                                     name="escuela"
                                                                 />
+                                                                {errors?.escuela?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
 
                                                             </div>
 
                                                             <div className="col-md-6">
                                                                 <label htmlFor="cel">Cargo</label>
                                                                 <select
+                                                                    //{...register("cargo", {
+                                                                        //required: true,
+                                                                        //pattern: /^[A-Za-z.\s_-]+$/
+                                                                    //</div></div>})}
 
                                                                     className="form-control"
                                                                     id="cargo"
-
+                                                                    onChange={e => { setCargo(e.target.value) }}
                                                                     name="cargo"
 
                                                                 >
@@ -1284,6 +1293,7 @@ function Lideres() {
 
 
                                                                 </select>
+                                                                {errors?.cargo?.type === "required" && <span className='eform'>Campo Vacio</span>}
 
                                                             </div>
 

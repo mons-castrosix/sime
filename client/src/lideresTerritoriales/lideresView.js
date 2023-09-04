@@ -106,6 +106,13 @@ function ViewLideres() {
                 document.getElementById("partido").setAttribute('value', response.data.id_tipoLider)
                 
             }
+            if (response.data.id_tipoLider == 3) {
+
+                document.getElementById("escuela").setAttribute('value', response.data.nombre_escuela)
+                document.getElementById("cargo").selectedIndex = response.data.cargo
+
+                
+            }
             if (response.data.id_tipoLider == 6) {
                 document.getElementById("asoCivil").setAttribute('value', response.data.nomas)
                 document.getElementById("cargo").setAttribute('value', response.data.acargo)
@@ -718,7 +725,7 @@ function ViewLideres() {
                                                             <div className="col-md-6">
                                                                 <label htmlFor="cel">Nombre de la escuela</label>
                                                                 <input
-
+                                                                    readOnly
 
                                                                     className="form-control"
                                                                     id="escuela"
@@ -730,7 +737,7 @@ function ViewLideres() {
                                                             <div className="col-md-6">
                                                                 <label htmlFor="cel">Cargo</label>
                                                                 <select
-
+                                                                        readOnly
                                                                     className="form-control"
                                                                     id="cargo"
 

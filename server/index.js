@@ -1046,6 +1046,17 @@ app.post('/lideres-view/:id', (req, res) => {
           }
         })
       }
+      if(result[0].id_tipoLider == 3){
+        const sql2='SELECT * FROM lideres_t re INNER JOIN secc_distrito sd ON re.id_Secc=sd.id INNER JOIN cargo_escuela ce ON re.id=ce.id_lider WHERE re.id=?'
+        db.query(sql2, id, (err, resu) => {
+          if (err) {
+            console.log(err)
+          }else{
+            res.send(resu[0]);
+            console.log(resu[0])
+          }
+        })
+      }
       if(result[0].id_tipoLider == 6){
         const sql2='SELECT l.nombres,l.apaterno,l.amaterno,l.calle,l.numero,l.colonia,.l.cp,l.ciudad, DATE_FORMAT(fecha_nacimiento, "%d/%m/%Y") AS fecha_nacimiento,l.curp,l.clave_electoral,l.seccion,l.id_Secc,l.no_celular,l.email,l.facebook,l.twitter,l.otra_red,l.circulo,l.contacto,l.no_celcontacto,l.observaciones,l.lat,l.lng,l.id_tipoLider ,t.nombre_tipo,sd.df,sd.dl,ac.nombre AS nomas,ac.cargo AS acargo FROM lideres_t l INNER JOIN tipo_lider t ON l.id_tipoLider=t.id INNER JOIN secc_distrito sd ON l.id_Secc=sd.id INNER JOIN asociacion_civil ac ON ac.id_lider=l.id WHERE l.id=?';
 
