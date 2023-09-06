@@ -1273,10 +1273,10 @@ function Lideres() {
                                                             <div className="col-md-6">
                                                                 <label htmlFor="cel">Cargo</label>
                                                                 <select
-                                                                    //{...register("cargo", {
-                                                                        //required: true,
-                                                                        //pattern: /^[A-Za-z.\s_-]+$/
-                                                                    //</div></div>})}
+                                                                    {...register("cargo", {
+                                                                        required: true,
+                                                                        pattern: /^[A-Za-z.\s_-]+$/
+                                                                    })}
 
                                                                     className="form-control"
                                                                     id="cargo"
@@ -1312,11 +1312,16 @@ function Lideres() {
                                                         <div className="col-md-7">
 
                                                             <select
+                                                                {...register("tenencia", {
+                                                                    required: true,
+                                                                    pattern: /^[A-Za-z.\s_-]+$/
+                                                                })}
 
-                                                                className="form-control"
+                                                                className="form-control form-select"
                                                                 id="tenencia"
-
                                                                 name="tenencia"
+                                                                onChange={e => { setTenencia(e.target.value) }}
+
 
                                                             >
                                                                 <option value="">Elige una tenencia</option>
@@ -1331,6 +1336,8 @@ function Lideres() {
                                                                 <option value="10">Atapaneo</option>
                                                                 <option value="11">Tiripetío</option>
                                                             </select>
+                                                            {errors?.tenencia?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
 
                                                         </div>
 
@@ -1348,12 +1355,19 @@ function Lideres() {
 
                                                         <div className="col-md-7">
                                                             <input
+                                                                {...register("colEncargado", {
+                                                                    required: true,
+                                                                    pattern: /^[A-Za-z.\s_-]+$/
+                                                                })}
+                                                                onChange={e => { setColoniaEncargado(e.target.value) }}
 
 
                                                                 className="form-control"
                                                                 id="coloniaOrden"
                                                                 name="coloniaOrden"
                                                             />
+                                                            {errors?.colEncargado?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
 
                                                         </div>
 
@@ -1368,22 +1382,38 @@ function Lideres() {
                                                             <label htmlFor="cel">Nombre de la AC</label>
                                                             <input
 
+                                                                {...register("asoc", {
+                                                                    required: true,
+                                                                    pattern: /^[A-Za-z.\s_-]+$/
+                                                                })}
+                                                                onChange={e => { setNombreAC(e.target.value) }}
+
 
                                                                 className="form-control"
                                                                 id="asoCivil"
                                                                 name="asoCivil"
                                                             />
+                                                            {errors?.asocn?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
 
                                                         </div>
                                                         <div className="col-md-6">
                                                             <label htmlFor="cel">Cargo</label>
                                                             <input
 
+                                                                {...register("cargAC", {
+                                                                    required: true,
+                                                                    pattern: /^[A-Za-z.\s_-]+$/
+                                                                })}
+                                                                onChange={e => { setCargo(e.target.value) }}
+
 
                                                                 className="form-control"
                                                                 id="cargo"
                                                                 name="cargo"
                                                             />
+                                                            {errors?.cargAC?.type === "required" && <span className='eform'>Campo Vacio</span>}
+
 
                                                         </div>
 

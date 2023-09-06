@@ -59,7 +59,7 @@ function ViewLideres() {
                 "http://localhost:3001/lideres-view/" + id,
             );
             //setList(response.data)
-            //console.log(list)
+            console.log(response.data)
             document.getElementById("amaterno").setAttribute('value', response.data.amaterno)
             document.getElementById("apaterno").setAttribute('value', response.data.apaterno)
             document.getElementById("nombre").setAttribute('value', response.data.nombres)
@@ -73,10 +73,7 @@ function ViewLideres() {
             document.getElementById("dl").setAttribute('value', response.data.dl)
             document.getElementById("curp").setAttribute('value', response.data.curp)
             document.getElementById("secc").setAttribute('value', response.data.seccion)
-            var fecha = response.data.fecha_nacimiento
-            fecha = fecha.split("/").reverse().join("-");
-            //console.log(fecha)
-            document.getElementById("fnacimiento").setAttribute('value', fecha)
+
             document.getElementById("nivel").selectedIndex = response.data.circulo //select
             document.getElementById("cel").setAttribute('value', response.data.no_celular)
             document.getElementById("email").setAttribute('value', response.data.email)
@@ -91,6 +88,10 @@ function ViewLideres() {
             setLider(response.data.id_tipoLider);
             //alert(lider)
             if (response.data.id_tipoLider == 1) {
+                var fecha = response.data.fecha_nacimiento
+                fecha = fecha.split("/").reverse().join("-");
+                //console.log(fecha)
+                document.getElementById("fnacimiento").setAttribute('value', fecha)
                 var fecha2 = response.data.fiesta;
                 fecha2 = fecha2.split("/").reverse().join("-");
                 console.log(fecha2)
@@ -102,20 +103,46 @@ function ViewLideres() {
 
             }
             if (response.data.id_tipoLider == 2) {
+                var fecha = new Date(response.data.fecha_nacimiento)
+                fecha = fecha.toISOString().slice(0, 10);
+                document.getElementById("fnacimiento").setAttribute('value', fecha)
 
                 document.getElementById("partido").setAttribute('value', response.data.id_tipoLider)
-                
+
             }
             if (response.data.id_tipoLider == 3) {
+                var fecha = new Date(response.data.fecha_nacimiento)
+                fecha = fecha.toISOString().slice(0, 10);
+                document.getElementById("fnacimiento").setAttribute('value', fecha)
 
                 document.getElementById("escuela").setAttribute('value', response.data.nombre_escuela)
                 document.getElementById("cargo").selectedIndex = response.data.cargo
+            }
+            if (response.data.id_tipoLider == 4) {
+                var fecha = new Date(response.data.fecha_nacimiento)
+                fecha = fecha.toISOString().slice(0, 10);
+                document.getElementById("fnacimiento").setAttribute('value', fecha)
 
-                
+                //console.log(fecha)
+                document.getElementById("tenencia").selectedIndex = response.data.tenencia
+            }
+            if (response.data.id_tipoLider == 5) {
+                var fecha = new Date(response.data.fecha_nacimiento)
+                fecha = fecha.toISOString().slice(0, 10);
+                document.getElementById("fnacimiento").setAttribute('value', fecha)
+
+                //console.log(fecha)
+                document.getElementById("coloniaOr").setAttribute('value', response.data.colonia_encargado)
+
+
             }
             if (response.data.id_tipoLider == 6) {
-                document.getElementById("asoCivil").setAttribute('value', response.data.nomas)
-                document.getElementById("cargo").setAttribute('value', response.data.acargo)
+                var fecha = new Date(response.data.fecha_nacimiento)
+                fecha = fecha.toISOString().slice(0, 10);
+                document.getElementById("fnacimiento").setAttribute('value', fecha)
+
+                document.getElementById("asoCivil").setAttribute('value', response.data.nombre_ac)
+                document.getElementById("cargo").setAttribute('value', response.data.cargo_ac)
             }
 
 
@@ -168,7 +195,7 @@ function ViewLideres() {
 
     }
     const secs = [];
-    console.log(list)
+    //console.log(list)
     list.map(val => {
 
         secs.push(val.seccion_id)
@@ -188,14 +215,14 @@ function ViewLideres() {
         }
     }
 
-    console.log(secs)
+    //console.log(secs)
     useEffect(() => {
         getList();
         submitSecciones();
         submitSecciones2();
         getPartido();
 
-        console.log(lider)
+        //console.log(lider)
     }, [lider]);
     const atras = () => {
         let path = '/lideres';
@@ -524,7 +551,7 @@ function ViewLideres() {
                                             className="form-control"
                                             id="nivel"
 
-                                            name="nivel" required
+                                            name="nivel"
                                             readOnly
                                         >
                                             <option value="">Que tan cercano es al@ candidat@</option>
@@ -576,7 +603,7 @@ function ViewLideres() {
 
                                             className="form-control mr-1"
                                             id="tipolider"
-                                            name="tipolider" required
+                                            name="tipolider"
                                             disabled
                                         >
                                             <option value="">Selecciona alguna opcion</option>
@@ -737,7 +764,7 @@ function ViewLideres() {
                                                             <div className="col-md-6">
                                                                 <label htmlFor="cel">Cargo</label>
                                                                 <select
-                                                                        readOnly
+                                                                    readOnly
                                                                     className="form-control"
                                                                     id="cargo"
 
@@ -776,7 +803,8 @@ function ViewLideres() {
                                                                 id="tenencia"
 
                                                                 name="tenencia"
-
+                                                                readOnly
+                                                                disabled
                                                             >
                                                                 <option value="">Elige una tenencia</option>
                                                                 <option value="2">Jesús del Monte</option>
@@ -807,10 +835,10 @@ function ViewLideres() {
 
                                                         <div className="col-md-7">
                                                             <input
-
+                                                                readOnly
 
                                                                 className="form-control"
-                                                                id="coloniaOrden"
+                                                                id="coloniaOr"
                                                                 name="coloniaOrden"
                                                             />
 
