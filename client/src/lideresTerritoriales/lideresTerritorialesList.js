@@ -44,7 +44,7 @@ function LideresList() {
                 Object.entries(item).forEach(([key, val]) => {
                     if (key == "id") {
 
-                        console.log(`key-${key}-val-${JSON.stringify(val)}`)
+                        //console.log(`key-${key}-val-${JSON.stringify(val)}`)
                         id = JSON.stringify(val);Object.assign(item, { ver: <Link className='view' to={'/lideres/view/' + id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
                     Object.assign(item, { editar: <Link className='edit' title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
                     Object.assign(item, { eliminar: <Link className='delet' onClick={() => { deleteApoyo(val) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })

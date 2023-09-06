@@ -251,6 +251,14 @@ function PromotoresList() {
             </div>
         );
     };;
+    const representativeBodyTemplate3 = (rowData) => {
+        return (
+            <div className="flex align-items-center gap-2">
+                <span className="font-bold">{rowData.ver}</span>
+
+            </div>
+        );
+    };;
 
     const headerGroup = (<ColumnGroup>
         <Row>
@@ -302,13 +310,13 @@ function PromotoresList() {
                                     tableStyle={{ minWidth: '50rem' }}
                                     globalFilterFields={['nombre', 'no_celular', 'secc']}
                                     header={header}
-                                    rowGroupMode="rowspan" groupRowsBy={['nombre', 'no_celular']}>
+                                    rowGroupMode="rowspan" groupRowsBy={['nombre', 'no_celular','ver']}>
 
                                     <Column field="nombre" header="Nombre completo" style={{ minWidth: '12rem' }} body={representativeBodyTemplate} />
                                     <Column field="no_celular" header="Núm. de celular" style={{ minWidth: '12rem' }} body={representativeBodyTemplate2} />
                                     <Column field="secc" header="Seccion (es) de Responsabilidad" style={{ minWidth: '7rem' }} />
 
-                                    <Column field="ver" header="Ver" style={{ minWidth: '4rem' }} />
+                                    <Column field="ver" header="Ver" style={{ minWidth: '4rem' }} body={representativeBodyTemplate3} />
                                     <Column field="eliminar" header="Eliminar" style={{ minWidth: '4rem' }} />
 
                                 </DataTable>

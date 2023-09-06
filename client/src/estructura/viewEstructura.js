@@ -86,7 +86,7 @@ function ViewEstructura() {
 
             document.getElementById("observaciones").setAttribute('val', list[0].observaciones)
             document.getElementById("equipo").selectedIndex = list[0].id_equipo //select
-setObs(list[0].observaciones)
+            setObs(list[0].observaciones)
 
             setNewCoor([list[0].lat, list[0].lng])
 

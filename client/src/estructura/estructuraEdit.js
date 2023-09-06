@@ -108,6 +108,7 @@ function EditEstructura() {
     const navigate = useNavigate();
     const [list, setList] = useState([])
     const [list2, setList2] = useState([])
+    const [list4, setList4] = useState([])
     const [selectedSeccion, setSelectedSeccion] = useState(null);
     const getList = async (e) => {
 
@@ -139,10 +140,13 @@ function EditEstructura() {
             setValue("tw", res.data.twitter, { shouldValidate: true, shouldDirty: true });
             setValue("otrared", res.data.otra_red, { shouldValidate: true, shouldDirty: true });
             setValue("nivel", res.data.circulo, { shouldValidate: true, shouldDirty: true });
+            setValue("equipo", res.data.id_equipo, { shouldValidate: true, shouldDirty: true });
+
             setValue("lat", res.data.lat, { shouldValidate: true, shouldDirty: true });
             setValue("lng", res.data.lng, { shouldValidate: true, shouldDirty: true });
             setValue("contacto", res.data.contacto, { shouldValidate: true, shouldDirty: true });
             setValue("nocontacto", res.data.no_celcontacto, { shouldValidate: true, shouldDirty: true });
+            setValue("equipo", res.data.id_equipo, { shouldValidate: true, shouldDirty: true });
 
             setNombres(res.data.nombres)
             setApaterno(res.data.apaterno);
@@ -151,6 +155,7 @@ function EditEstructura() {
             setNumero(res.data.numero);
             setColonia(res.data.colonia);
             setCp(res.data.cp);
+            setEquipo(res.data.id_equipo);
             setCiudad(res.data.ciudad);
             setLatitud(res.data.lat);
             setLongitud(res.data.longitud);
@@ -160,16 +165,18 @@ function EditEstructura() {
             setSeccion(res.data.seccion);
             setDfederal(res.data.distrito_federal);
             setDlocal(res.data.distrito_local);
-           
+            setNewCoor([parseFloat(res.data.lat), parseFloat(res.data.lng)]);
             setEmail(res.data.email);
             setFacebook(res.data.facebook);
             setTwitter(res.data.twitter);
             setNivel(res.data.nivel);
             setOtra(res.data.otra_red);
-         
-        
-            
-           
+            setChangeCenter(true);
+            console.log(newCoordenadas)
+            console.log(res.data)
+
+
+
         } catch (ex) {
             console.log(ex)
         }
@@ -200,11 +207,7 @@ function EditEstructura() {
     }
 
 
-    useEffect(() => {
-        getList();
-        
 
-    }, []);
     const equiposList = () => {
 
 
@@ -317,7 +320,25 @@ function EditEstructura() {
 
         })
     }
+    const submitSecciones2 = async (e) => {
 
+
+        try {
+            const response = await Axios.post("http://localhost:3001/injerenciaEstructura/" + id
+            /*"http://54.219.124.66:3001/api/distritos"*/, {
+
+                });
+
+
+            setList4(response.data)
+
+
+        } catch (ex) {
+
+        }
+
+
+    }
 
     const limpiar = e => {
         e.preventDefault()
@@ -365,7 +386,20 @@ function EditEstructura() {
     }
 
 
+    useEffect(() => {
+        
+        equiposList();
+        submitSecciones();
+        submitSecciones2();
+        getList();
 
+    }, []);
+
+    const secs = [];
+    list4.map(val => {
+
+        secs.push(val.seccion_id)
+    })
     // This function will be triggered when the "Remove This Image" button is clicked
     const removeSelectedImage = () => {
         setFile();
@@ -900,10 +934,10 @@ function EditEstructura() {
 
                                     <label className="small mb-1" htmlFor="nivel">Seccion(es) de injerencia</label>
                                     <MultiSelect
-
-                                        value={selectedSeccion}
+                                        options={list2}
+                                        value={secs}
                                         onChange={(e) => setSelectedSeccion(e.value)}
-                                        options={list2} optionLabel="name"
+                                        optionLabel="name"
                                         filter placeholder="Selecciona una o más secciones" className="form-select" required />
 
                                     {errors?.seccInjerencia?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}
