@@ -45,14 +45,9 @@ function PromotoresList() {
             empObj.forEach((item) => {
                 Object.entries(item).forEach(([key, val]) => {
                     if (key == "id") {
-                        id = val;
-                        //console.log(`key-${key}-val-${JSON.stringify(val)}`)
-
-                    }
-                    if (key == "idsr") {
-                        sr = val;
+                        id = JSON.stringify(val);
                         Object.assign(item, { ver: <Link className='view' to={"/promotores/view/" + id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
-                        Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
+                        Object.assign(item, { editar: <Link className='edit' to={"promotores/edit/"+id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
                         Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" onClick={() => { deleteApoyo(id, val) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
 
 
@@ -263,7 +258,7 @@ function PromotoresList() {
     const headerGroup = (<ColumnGroup>
         <Row>
             <Column header="" colSpan={3}></Column>
-            <Column header="Acciones" style={{ paddingLeft: '125px' }} colSpan={2}></Column>
+            <Column header="Acciones" style={{ paddingLeft: '125px' }} colSpan={3}></Column>
 
         </Row>
         <Row>
@@ -274,6 +269,7 @@ function PromotoresList() {
 
             <Column header="ver"></Column>
             <Column header="editar"></Column>
+            <Column header="eliminar"></Column>
         </Row>
     </ColumnGroup>);
     return (
@@ -310,14 +306,16 @@ function PromotoresList() {
                                     tableStyle={{ minWidth: '50rem' }}
                                     globalFilterFields={['nombre', 'no_celular', 'secc']}
                                     header={header}
-                                    rowGroupMode="rowspan" groupRowsBy={['nombre', 'no_celular','ver']}>
+                                    rowGroupMode="rowspan" groupRowsBy={['nombre', 'no_celular']}>
 
                                     <Column field="nombre" header="Nombre completo" style={{ minWidth: '12rem' }} body={representativeBodyTemplate} />
                                     <Column field="no_celular" header="Núm. de celular" style={{ minWidth: '12rem' }} body={representativeBodyTemplate2} />
                                     <Column field="secc" header="Seccion (es) de Responsabilidad" style={{ minWidth: '7rem' }} />
 
-                                    <Column field="ver" header="Ver" style={{ minWidth: '4rem' }} body={representativeBodyTemplate3} />
-                                    <Column field="eliminar" header="Eliminar" style={{ minWidth: '4rem' }} />
+                                    <Column field="ver" header="ver" style={{ minWidth: '4rem' }} body={representativeBodyTemplate3} />
+                                    <Column field="editar" header="editar" style={{ minWidth: '4rem' }}  />
+
+                                    <Column field="eliminar" header="eliminar" style={{ minWidth: '4rem' }} />
 
                                 </DataTable>
                             </div>

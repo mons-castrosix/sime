@@ -140,13 +140,12 @@ function EditEstructura() {
             setValue("tw", res.data.twitter, { shouldValidate: true, shouldDirty: true });
             setValue("otrared", res.data.otra_red, { shouldValidate: true, shouldDirty: true });
             setValue("nivel", res.data.circulo, { shouldValidate: true, shouldDirty: true });
-            setValue("equipo", res.data.id_equipo, { shouldValidate: true, shouldDirty: true });
+            setValue("equipo", 1, { shouldValidate: true, shouldDirty: true });
 
             setValue("lat", res.data.lat, { shouldValidate: true, shouldDirty: true });
             setValue("lng", res.data.lng, { shouldValidate: true, shouldDirty: true });
             setValue("contacto", res.data.contacto, { shouldValidate: true, shouldDirty: true });
             setValue("nocontacto", res.data.no_celcontacto, { shouldValidate: true, shouldDirty: true });
-            setValue("equipo", res.data.id_equipo, { shouldValidate: true, shouldDirty: true });
 
             setNombres(res.data.nombres)
             setApaterno(res.data.apaterno);
@@ -155,7 +154,7 @@ function EditEstructura() {
             setNumero(res.data.numero);
             setColonia(res.data.colonia);
             setCp(res.data.cp);
-            setEquipo(res.data.id_equipo);
+            setEquipo(1);
             setCiudad(res.data.ciudad);
             setLatitud(res.data.lat);
             setLongitud(res.data.longitud);
@@ -171,6 +170,7 @@ function EditEstructura() {
             setTwitter(res.data.twitter);
             setNivel(res.data.nivel);
             setOtra(res.data.otra_red);
+            setObservaciones(res.data.observaciones);
             setChangeCenter(true);
             console.log(newCoordenadas)
             console.log(res.data)
@@ -387,11 +387,11 @@ function EditEstructura() {
 
 
     useEffect(() => {
-        
+        getList();
         equiposList();
         submitSecciones();
         submitSecciones2();
-        getList();
+
 
     }, []);
 
@@ -912,9 +912,9 @@ function EditEstructura() {
 
                                             })}
                                             className="form-select"
-
+                                            value={equipo}
                                             id="equipo"
-                                            name="equipo" required
+                                            name="equipo"
                                             onChange={e => { setEquipo(e.target.value); console.log(e.target.value) }}
                                         >
                                             <option value="">Selecciona alguna opcion</option>
@@ -956,7 +956,7 @@ function EditEstructura() {
                                     <label htmlFor="tw">Observaciones</label>
                                     <textarea
 
-
+                                        value={observaciones}
                                         className="form-control"
                                         id="observaciones"
                                         name="observaciones"

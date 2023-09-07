@@ -51,6 +51,7 @@ function EstructuraList() {
                         Object.assign(item, { editar: <Link className='edit' to={"/estructura/edit/" + id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
                         Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" onClick={() => { deleteApoyo(val) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
                     }
+                    
 
                 });
 
