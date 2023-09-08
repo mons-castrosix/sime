@@ -22,6 +22,7 @@ import Representantes from './representantes/representantes';
 import RepresentantesList from './representantes/representantesList';
 import Promotores from './promotores/promotores';
 import PromotoresList from './promotores/promotoresList';
+import PromotoresEdit from './promotores/promotoresEdit';
 import Resultados from './res_electorales/resultados';
 import Promovidos from './promovidos/promovidos';
 import PromovidosList from './promovidos/promovidosList';
@@ -60,6 +61,7 @@ root.render(
                  <Route path='/promotores' element={<PromotoresList/>} />
                  <Route path='/promotores/add' element={<Promotores/>} />
                  <Route path='/promotores/view/:id' element={<ViewPromotores/>} />
+                 <Route path='/promotores/edit/:id' element={<PromotoresEdit/>} />
 
                  <Route path='/promovidos' element={<PromovidosList/>} />
                  <Route path='/promovidos/add' element={<Promovidos/>} />

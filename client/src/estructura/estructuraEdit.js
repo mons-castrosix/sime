@@ -140,7 +140,7 @@ function EditEstructura() {
             setValue("tw", res.data.twitter, { shouldValidate: true, shouldDirty: true });
             setValue("otrared", res.data.otra_red, { shouldValidate: true, shouldDirty: true });
             setValue("nivel", res.data.circulo, { shouldValidate: true, shouldDirty: true });
-            setValue("equipo", 1, { shouldValidate: true, shouldDirty: true });
+            setValue("equipo", res.data.id_equipo, { shouldValidate: true, shouldDirty: true });
 
             setValue("lat", res.data.lat, { shouldValidate: true, shouldDirty: true });
             setValue("lng", res.data.lng, { shouldValidate: true, shouldDirty: true });
@@ -154,7 +154,7 @@ function EditEstructura() {
             setNumero(res.data.numero);
             setColonia(res.data.colonia);
             setCp(res.data.cp);
-            setEquipo(1);
+            setEquipo(res.data.id_equipo);
             setCiudad(res.data.ciudad);
             setLatitud(res.data.lat);
             setLongitud(res.data.longitud);
@@ -277,7 +277,7 @@ function EditEstructura() {
                 setValue("dl", res.data.dl, { shouldValidate: true, shouldDirty: true })
                 setValue("df", res.data.df, { shouldValidate: true, shouldDirty: true })
 
-                console.log(seccion)
+                //console.log(seccion)
 
 
             });
@@ -912,7 +912,7 @@ function EditEstructura() {
 
                                             })}
                                             className="form-select"
-                                            value={equipo}
+                                            
                                             id="equipo"
                                             name="equipo"
                                             onChange={e => { setEquipo(e.target.value); console.log(e.target.value) }}

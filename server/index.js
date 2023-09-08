@@ -1585,7 +1585,32 @@ app.post('/responsabilidadPromotor/:id', (req, res) => {
 
     }
   });
+});
+app.post('/promotor/detalles/:id', (req, res) => {
+  //console.log(req.body)
+
+  const id = req.params.id;
+
+  
+ 
+ const q="SELECT *FROM registro_promotores rp WHERE id=?;";
+  db.query(
+    q,id,
+    
+    (err, result) => {
+      if (err) {
+        //console.log(err);
+      }
+      else {
+        res.send(result[0])
+        console.log(result[0])
+      }
+    }
+  )
+
+
 })
+
 
 ///------------------------ PROMOVIDOS ----------------------------
 app.post('/insert-promovido', (req, res) => {
