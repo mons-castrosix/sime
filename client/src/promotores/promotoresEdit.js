@@ -111,7 +111,7 @@ function PromotoresEdit() {
     const navigate = useNavigate();
     const [list, setList] = useState([])
     const [selectedCities, setSelectedCities] = useState(null);
-
+    const [list4, setList4] = useState([])
 
     /*const center = {
       lat: document.getElementById("lat").value,
@@ -164,21 +164,24 @@ function PromotoresEdit() {
             setValue("curp", res.data.curp, { shouldValidate: true, shouldDirty: true });
             setValue("fnacimiento", fecha, { shouldValidate: true, shouldDirty: true });
             setValue("secc", res.data.seccion, { shouldValidate: true, shouldDirty: true });
-            setValue("df", res.data.distrito_federal, { shouldValidate: true, shouldDirty: true });
-            setValue("dl", res.data.distrito_local, { shouldValidate: true, shouldDirty: true });
+            setValue("df", res.data.df, { shouldValidate: true, shouldDirty: true });
+            setValue("dl", res.data.dl, { shouldValidate: true, shouldDirty: true });
             setValue("cel", res.data.no_celular, { shouldValidate: true, shouldDirty: true });
             setValue("email", res.data.email, { shouldValidate: true, shouldDirty: true });
             setValue("fb", res.data.facebook, { shouldValidate: true, shouldDirty: true });
             setValue("tw", res.data.twitter, { shouldValidate: true, shouldDirty: true });
             setValue("otrared", res.data.otra_red, { shouldValidate: true, shouldDirty: true });
             setValue("nivel", res.data.circulo, { shouldValidate: true, shouldDirty: true });
-            
+            setValue("lat", res.data.lat, { shouldValidate: true, shouldDirty: true });
+            setValue("lng", res.data.lng, { shouldValidate: true, shouldDirty: true });
             setNombres(res.data.nombres)
             setApaterno(res.data.apaterno);
             setAmaterno(res.data.amaterno);
             setCalle(res.data.calle);
             setNumero(res.data.numero);
             setColonia(res.data.colonia);
+            setNewCoor([parseFloat(res.data.lat), parseFloat(res.data.lng)]);
+
             setCp(res.data.cp);
             setCiudad(res.data.ciudad);
             setClave(res.data.c_elector);
@@ -193,7 +196,7 @@ function PromotoresEdit() {
             setNivel(res.data.nivel);
             setOtra(res.data.otra_red);
             setObservaciones(res.data.observaciones);
-
+            setChangeCenter(true);
         } catch (ex) {
             //console.log(ex);
         }
@@ -295,6 +298,30 @@ function PromotoresEdit() {
 
         })
     }
+    const submitSecciones2 = () => {
+
+
+        Axios.post("http://localhost:3001/responsabilidadPromotor/" + id
+            /*"http://54.219.124.66:3001/api/distritos"*/, {
+
+            }).then((response) => {
+
+                
+                //console.log(response.data)
+                setList4(response.data)
+               
+
+
+
+            });
+
+
+    }
+    const secs=[];
+    list4.map(val =>{
+        
+        secs.push(val.seccion_id)
+    })
 
 
     const limpiar = e => {
@@ -345,6 +372,8 @@ function PromotoresEdit() {
     useEffect(() => {
         getLista();
         submitSecciones();
+        submitSecciones2();
+        
     },[] );
 
 
@@ -387,7 +416,7 @@ function PromotoresEdit() {
                                 required: true,
                             })}
                             placeholder='latitud'
-                            type='hidden'
+                            
                             name="lat" id='lat'
 
                             value={newCoordenadas[0] || ''} />
@@ -396,7 +425,7 @@ function PromotoresEdit() {
                                 required: true,
                             })}
                             placeholder='longitud'
-                            type='hidden'
+                            
                             name='lng'
                             id='lng'
                             value={newCoordenadas[1] || ''} />
@@ -848,10 +877,10 @@ function PromotoresEdit() {
                                
                                 <label className="small mb-1" htmlFor="nivel">Seccion(es) de responsabilidad</label>
                                 <MultiSelect
-                                    
-                                    value={selectedCities}
-                                    onChange={(e) => setSelectedCities(e.value)}
-                                    options={list} optionLabel="name"
+                                    options={list}
+                                    value={secs || selectedCities}
+                                    onChange={(e) => {setSelectedCities(e.target.value); }}
+                                     optionLabel="name"
                                     filter placeholder="Selecciona una o más secciones" className="w-full md:w-20rem form-select" required />
 
                                 {errors?.seccInjerencia?.type === "required" && <span className='eform'>Selecciona una opción válida</span>}

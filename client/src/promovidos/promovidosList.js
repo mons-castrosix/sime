@@ -46,7 +46,7 @@ function PromovidosList() {
                         id = JSON.stringify(val);
                         //console.log(`key-${key}-val-${JSON.stringify(val)}`)
                         Object.assign(item, { ver: <Link className='view' to={"/promovidos/view/" + id} title="View" data-toggle="tooltip"><i className="material-icons">&#xE417;</i></Link> });
-                Object.assign(item, { editar: <Link className='edit' to={""} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
+                Object.assign(item, { editar: <Link className='edit' to={"/promovidos/edit/"+id} title="Edit" data-toggle="tooltip"><i className="material-icons">&#xE254;</i></Link> })
                 Object.assign(item, { eliminar: <Link className='delet' data-bs-toggle="modal" onClick={() => { deleteApoyo(val) }} title="Delete"><i className="material-icons">&#xE872;</i></Link> })
                     }
 
@@ -251,6 +251,7 @@ function PromovidosList() {
             <Column header="Promovido por"></Column>
            
             <Column header="ver"></Column>
+            <Column header="editar"></Column>
             <Column header="eliminar"></Column>
         </Row>
     </ColumnGroup>);
@@ -295,6 +296,8 @@ function PromovidosList() {
                                         <Column field="nombre2" header="Promovido por" style={{ minWidth: '7rem' }} />
 
                                         <Column field="ver" header="Ver" style={{ minWidth: '4rem' }} />
+                                        <Column field="editar" header="Editar" style={{ minWidth: '4rem' }} />
+
                                         <Column field="eliminar" header="Eliminar" style={{ minWidth: '4rem' }} />
 
                                     </DataTable>

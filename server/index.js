@@ -1593,7 +1593,7 @@ app.post('/promotor/detalles/:id', (req, res) => {
 
   
  
- const q="SELECT *FROM registro_promotores rp WHERE id=?;";
+ const q="SELECT *FROM registro_promotores rp INNER JOIN secc_distrito sd ON rp.id_Secc=sd.id WHERE rp.id=?;";
   db.query(
     q,id,
     
@@ -1771,7 +1771,86 @@ app.post('/promovidos-view/:id', (req, res) => {
     }
   })
 })
+app.post('/promovidos/detalles/:id', (req, res) => {
+  //console.log(req.body)
 
+  const id = req.params.id;
+
+  
+ 
+ const q="SELECT *FROM registro_promovidos rp INNER JOIN secc_distrito sd ON rp.id_Secc=sd.id WHERE rp.id=?;";
+  db.query(
+    q,id,
+    
+    (err, result) => {
+      if (err) {
+        //console.log(err);
+      }
+      else {
+        res.send(result[0])
+        console.log(result[0])
+      }
+    }
+  )
+
+
+})
+app.post('/promovidos/edit/:id', (req, res) => {
+  console.log(req.body)
+
+  const id = req.params.id;
+  
+  const apaterno = req.body.apaterno
+  const amaterno = req.body.amaterno
+  const nombres = req.body.nombres
+  const calle = req.body.calle
+  const numero = req.body.numero
+  const colonia = req.body.colonia
+  const cp = req.body.cp
+  const ciudad = req.body.ciudad
+  const clave_elector = req.body.clave_elector
+  const curp = req.body.curp
+  const fecha_nacimiento = req.body.fecha_nacimiento
+  const seccion = req.body.seccion
+  const id_Secc=req.body.id_Secc
+
+  const nivel = req.body.nivel
+  const no_celular = req.body.no_celular
+  const email = req.body.email
+  const facebook = req.body.facebook
+  const twitter = req.body.twitter
+  const otra_red = req.body.otra_red
+ 
+
+  const lat = req.body.lat
+  const lng= req.body.lng
+  const promotores=req.body.id_promotor
+  const response = []
+ /* db.query(
+    "UPDATE registro_promovidos SET apaterno=?,amaterno=?,nombres=?,calle=?,numero=?,colonia=?,cp=?,ciudad=?,clave_electoral=?,curp=?,fecha_nacimiento=?,seccion=?,id_Secc=?,circulo=?,no_celular=?,email=?,facebook=?,twitter=?,otra_red=?,id_promotor,lat=?,lng=? WHERE id=?;",
+    [apaterno, amaterno, nombres, calle, numero, colonia, cp, ciudad, clave_elector, curp, fecha_nacimiento, seccion, id_Secc,nivel, no_celular, email, facebook, twitter, otra_red,promotores, lat,lng, id],
+    (err, result) => {
+      if (err) {
+        //console.log(err);
+      }
+      else {
+        //res.send(result)
+        response.push(true);
+        console.log(result)
+      }
+    }
+  )
+  if(response[0]==true){
+    res.send("Editado");
+  }else{
+    res.send("No_editado");
+  }*/
+
+
+
+})
+
+///------------------------ REPRESENTANTES ----------------------------
 
 app.post('/api/insert-representantes', (req, res) => {
   console.log(req.body)

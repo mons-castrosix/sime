@@ -87,18 +87,18 @@ function ViewPromovidos() {
             document.getElementById("otrared").setAttribute('value', list[0].otra_red)
 
             document.getElementById("observaciones").setAttribute('val', list[0].observaciones)
-           
-setObs(list[0].observaciones)
 
-            setNewCoor([list[0].lat, list[0].lng])
+            setObs(list[0].observaciones)
+
+            setNewCoor([parseFloat(list[0].lat), parseFloat(list[0].lng)])
 
 
 
 
         });
     }
-    
-   
+
+
     const atras = () => {
         let path = '/promovidos';
         navigate(path);
@@ -111,10 +111,10 @@ setObs(list[0].observaciones)
 
             }).then((response) => {
 
-                
+
                 //console.log(response.data)
                 setList4(response.data)
-               
+
 
 
 
@@ -122,9 +122,9 @@ setObs(list[0].observaciones)
 
 
     }
-    const secs=[];
-    list4.map(val =>{
-        
+    const secs = [];
+    list4.map(val => {
+
         secs.push(val.seccion_id)
     })
     //console.log(secs)
@@ -148,22 +148,22 @@ setObs(list[0].observaciones)
 
         Axios.post("http://localhost:3001/api/promotoresAll"
             /*"http://54.219.124.66:3001/api/distritos"*/, {
-           
-        }).then((response) => {
-            var resultado = JSON.stringify(response.data);
-            var empObj = JSON.parse(resultado);
-          setList2(empObj)
-          console.log(response)
+
+            }).then((response) => {
+                var resultado = JSON.stringify(response.data);
+                var empObj = JSON.parse(resultado);
+                setList2(empObj)
+                console.log(response)
 
 
-        });
+            });
 
     }
     useEffect(() => {
         getList()
         submitSecciones()
         submitSecciones2()
-promotoresList()
+        promotoresList()
 
     }, [lider]);
     return (
@@ -222,7 +222,7 @@ promotoresList()
 
                                     <div className="col-md-6">
                                         <label htmlFor="amaterno">Apellido Materno</label>
-                                        <input  
+                                        <input
                                             readOnly
                                             className="form-control"
                                             id="amaterno"
@@ -313,7 +313,7 @@ promotoresList()
                                         <label htmlFor="celectoral">Clave Electoral</label>
                                         <input
 
-                                                readOnly
+                                            readOnly
                                             className="form-control"
                                             id="celectoral"
                                             name="celectoral"
@@ -375,7 +375,7 @@ promotoresList()
                                     <div className="col-4">
                                         <label htmlFor="df">Distrito Federal</label>
                                         <input
-                                            readOnly    
+                                            readOnly
 
                                             className="form-control"
                                             id="df"
@@ -388,7 +388,7 @@ promotoresList()
                                     <div className="col-4">
                                         <label htmlFor="dl">Distrito Local</label>
                                         <input
-                                                readOnly
+                                            readOnly
 
                                             className="form-control"
                                             id="dl"
@@ -444,7 +444,7 @@ promotoresList()
                                         <label htmlFor="fb">Facebook</label>
                                         <input
 
-                                            readOnly    
+                                            readOnly
                                             className="form-control"
                                             id="fb"
                                             name="fb"
@@ -482,7 +482,7 @@ promotoresList()
                                     <div className='col-6'>
                                         <label className="small mb-1" htmlFor="nivel">Circulo</label>
                                         <select
-                                            readOnly    
+                                            readOnly
                                             className="form-control"
                                             id="nivel"
 
@@ -499,27 +499,27 @@ promotoresList()
                                 </div>
 
                                 <hr id="division"></hr>
-                               
-                               
 
-                                
+
+
+
                                 <label className="small mb-1" htmlFor="nivel">Promovido por:</label>
-                                    <select
-                                        
-                                        className="form-select"
-                                        id="promovidopor"
+                                <select
 
-                                        name="promovidopor" disabled
-                                        
-                                    >
-                                        <option value="">Elige un promotor <i className='pi-angle-down'></i></option>
-                                        {list2.map(val => {
-                                        
-                                            return(<option value={val.id}>{val.nombre}</option> );
-                                        })}
-                                                         
+                                    className="form-select"
+                                    id="promovidopor"
 
-                                    </select>
+                                    name="promovidopor" disabled
+
+                                >
+                                    <option value="">Elige un promotor <i className='pi-angle-down'></i></option>
+                                    {list2.map(val => {
+
+                                        return (<option value={val.id}>{val.nombre}</option>);
+                                    })}
+
+
+                                </select>
                                 <div className="mb-3">
                                     <label htmlFor="tw">Observaciones</label>
                                     <textarea

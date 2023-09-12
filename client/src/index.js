@@ -29,6 +29,7 @@ import PromovidosList from './promovidos/promovidosList';
 import ViewEstructura from './estructura/viewEstructura';
 import ViewPromotores from './promotores/viewPromotores';
 import ViewPromovidos from './promovidos/viewPromovidos';
+import PromovidosEdit from './promovidos/promovidosEdit';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -66,6 +67,7 @@ root.render(
                  <Route path='/promovidos' element={<PromovidosList/>} />
                  <Route path='/promovidos/add' element={<Promovidos/>} />
                  <Route path='/promovidos/view/:id' element={<ViewPromovidos/>} />
+                 <Route path='/promovidos/edit/:id' element={<PromovidosEdit/>} />
 
 
                  <Route path='/representantes-generales' element={<RepresentantesList/>} />

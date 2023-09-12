@@ -853,7 +853,7 @@ function Promotores() {
                                 <MultiSelect
                                     
                                     value={selectedCities}
-                                    onChange={(e) => setSelectedCities(e.value)}
+                                    onChange={(e) => {setSelectedCities(e.target.value); }}
                                     options={list} optionLabel="name"
                                     filter placeholder="Selecciona una o más secciones" className="w-full md:w-20rem form-select" required />
 
