@@ -178,6 +178,7 @@ function PromovidosEdit() {
             setValue("equipo", res.data.id_equipo, { shouldValidate: true, shouldDirty: true });
             setObservaciones(res.data.observaciones);
             setidSecc(res.data.id_Secc)
+            setPromotor(res.data.id_promotor)
             setSeccion(res.data.seccion)
             setNombres(res.data.nombres)
             setApaterno(res.data.apaterno);
@@ -245,7 +246,7 @@ function PromovidosEdit() {
                         confirmButtonText: 'De acuerdo'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            //navigate('/promovidos')
+                            navigate('/promovidos')
                         }
                     })
                 }
@@ -403,7 +404,7 @@ function PromovidosEdit() {
             <div className="row">
                 <div className="col-5" >
                     <div className="card ">
-                        <div className="card-header text-center text-center text-white font-weight-bold">REGISTRO DE PROMOVIDOS</div>
+                        <div className="card-header text-center text-center text-white font-weight-bold">MODIFICAR REGISRTRO PROMOVIDO</div>
                         <div className="card-body rounded-3  text-center bg-light">
 
                             <form onSubmit={handleSubmit(handleRegistration)}>
@@ -931,7 +932,7 @@ function PromovidosEdit() {
                                         <button className="btn btn-danger" id='limpiar' onClick={limpiar} type="button">Limpiar datos</button>
                                     </div>
                                     <div className="col-md-4">
-                                        <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar Promovido</button>
+                                        <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Modificar Promovido</button>
                                         {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
                                     </div>
                                 </div>

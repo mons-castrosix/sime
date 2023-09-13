@@ -1826,12 +1826,12 @@ app.post('/promovidos/edit/:id', (req, res) => {
   const lng= req.body.lng
   const promotores=req.body.id_promotor
   const response = []
- /* db.query(
-    "UPDATE registro_promovidos SET apaterno=?,amaterno=?,nombres=?,calle=?,numero=?,colonia=?,cp=?,ciudad=?,clave_electoral=?,curp=?,fecha_nacimiento=?,seccion=?,id_Secc=?,circulo=?,no_celular=?,email=?,facebook=?,twitter=?,otra_red=?,id_promotor,lat=?,lng=? WHERE id=?;",
+  db.query(
+    "UPDATE registro_promovidos SET apaterno=?,amaterno=?,nombres=?,calle=?,numero=?,colonia=?,cp=?,ciudad=?,clave_electoral=?,curp=?,fecha_nacimiento=?,seccion=?,id_Secc=?,circulo=?,no_celular=?,email=?,facebook=?,twitter=?,otra_red=?,id_promotor=?,lat=?,lng=? WHERE id=?;",
     [apaterno, amaterno, nombres, calle, numero, colonia, cp, ciudad, clave_elector, curp, fecha_nacimiento, seccion, id_Secc,nivel, no_celular, email, facebook, twitter, otra_red,promotores, lat,lng, id],
     (err, result) => {
       if (err) {
-        //console.log(err);
+        console.log(err);
       }
       else {
         //res.send(result)
@@ -1844,7 +1844,7 @@ app.post('/promovidos/edit/:id', (req, res) => {
     res.send("Editado");
   }else{
     res.send("No_editado");
-  }*/
+  }
 
 
 
