@@ -165,7 +165,7 @@ function PromovidosEdit() {
             setValue("secc", res.data.seccion, { shouldValidate: true, shouldDirty: true });
             setValue("df", res.data.df, { shouldValidate: true, shouldDirty: true });
             setValue("dl", res.data.dl, { shouldValidate: true, shouldDirty: true });
-            setValue("promovidopor", res.data.id_promotor, { shouldValidate: true, shouldDirty: true });
+            setValue("promovidopor",parseInt( res.data.id_promotor), { shouldValidate: true, shouldDirty: true });
             setValue("cel", res.data.no_celular, { shouldValidate: true, shouldDirty: true });
             setValue("lat", parseFloat(res.data.lat), { shouldValidate: true, shouldDirty: true });
             setValue("lng", parseFloat(res.data.lng), { shouldValidate: true, shouldDirty: true });
@@ -177,10 +177,10 @@ function PromovidosEdit() {
             setValue("nivel", res.data.circulo, { shouldValidate: true, shouldDirty: true });
             setValue("equipo", res.data.id_equipo, { shouldValidate: true, shouldDirty: true });
             setObservaciones(res.data.observaciones);
-            setidSecc(res.data.id_Secc)
-            setPromotor(res.data.id_promotor)
-            setSeccion(res.data.seccion)
-            setNombres(res.data.nombres)
+            setidSecc(res.data.id_Secc);
+            setPromotor(res.data.id_promotor);
+            setSeccion(res.data.seccion);
+            setNombres(res.data.nombres);
             setApaterno(res.data.apaterno);
             setAmaterno(res.data.amaterno);
             setCalle(res.data.calle);

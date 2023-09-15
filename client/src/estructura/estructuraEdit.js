@@ -146,11 +146,12 @@ function EditEstructura() {
             setValue("lng", res.data.lng, { shouldValidate: true, shouldDirty: true });
             setValue("contacto", res.data.contacto, { shouldValidate: true, shouldDirty: true });
             setValue("nocontacto", res.data.no_celcontacto, { shouldValidate: true, shouldDirty: true });
-
+            setidSecc(res.data.id_Secc);
             setNombres(res.data.nombres)
             setApaterno(res.data.apaterno);
             setAmaterno(res.data.amaterno);
             setCalle(res.data.calle);
+            setCelular(res.data.no_celular);
             setNumero(res.data.numero);
             setColonia(res.data.colonia);
             setCp(res.data.cp);
@@ -172,8 +173,9 @@ function EditEstructura() {
             setOtra(res.data.otra_red);
             setObservaciones(res.data.observaciones);
             setChangeCenter(true);
-            console.log(newCoordenadas)
+            //console.log(newCoordenadas)
             console.log(res.data)
+            console.log(res.data.id_equipo)
 
 
 
@@ -227,7 +229,7 @@ function EditEstructura() {
     const submitReview = () => {
 
         Axios.post(//"http://54.219.124.66:3001/api/insert",
-            "http://localhost:3001/api/insert-estructura",
+            "http://localhost:3001/estructura/edit/" + id,
             {
 
                 apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
@@ -333,10 +335,20 @@ function EditEstructura() {
             setList4(response.data)
 
 
+
+
         } catch (ex) {
+
 
         }
 
+        const secs = [];
+        list4.map(val => {
+
+            secs.push(val.value)
+        })
+        console.log(secs)
+        setSelectedSeccion(secs)
 
     }
 
@@ -393,13 +405,11 @@ function EditEstructura() {
         submitSecciones2();
 
 
-    }, []);
 
-    const secs = [];
-    list4.map(val => {
+    }, selectedSeccion);
 
-        secs.push(val.seccion_id)
-    })
+
+
     // This function will be triggered when the "Remove This Image" button is clicked
     const removeSelectedImage = () => {
         setFile();
@@ -911,11 +921,11 @@ function EditEstructura() {
                                                 required: true,
 
                                             })}
-                                            className="form-select"
-                                            
+                                            className="form-select form-control"
+                                            value={equipo}
                                             id="equipo"
                                             name="equipo"
-                                            onChange={e => { setEquipo(e.target.value); console.log(e.target.value) }}
+                                            onChange={e => { setEquipo(e.target.value) }}
                                         >
                                             <option value="">Selecciona alguna opcion</option>
                                             {list.map(val => {
@@ -935,8 +945,8 @@ function EditEstructura() {
                                     <label className="small mb-1" htmlFor="nivel">Seccion(es) de injerencia</label>
                                     <MultiSelect
                                         options={list2}
-                                        value={secs}
-                                        onChange={(e) => setSelectedSeccion(e.value)}
+                                        value={selectedSeccion}
+                                        onChange={(e) => { setSelectedSeccion(e.target.value) }}
                                         optionLabel="name"
                                         filter placeholder="Selecciona una o más secciones" className="form-select" required />
 
