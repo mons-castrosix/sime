@@ -1610,7 +1610,7 @@ app.post('/promotores-view/:id', (req, res) => {
 app.post('/responsabilidadPromotor/:id', (req, res) => {
   const id = req.params.id
   //console.log(id)
-  const sqlInsert = "SELECT srp.seccion_id FROM secciones_responsabilidad_promotores  srp INNER JOIN secc_distrito sd ON srp.seccion_id=sd.id WHERE srp.promotor_id=?;";
+  const sqlInsert = "SELECT srp.seccion_id as value FROM secciones_responsabilidad_promotores  srp INNER JOIN secc_distrito sd ON srp.seccion_id=sd.id WHERE srp.promotor_id=?;";
   ////console.log(sqlInsert)
   db.query(sqlInsert, id, (err, result) => {
     if (err) {

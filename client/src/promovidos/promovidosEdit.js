@@ -216,7 +216,7 @@ function PromovidosEdit() {
 
 
 
-    }, []);
+    }, [promotor]);
     const submitReview = () => {
 
         Axios.post(//"http://54.219.124.66:3001/insert-promovido",

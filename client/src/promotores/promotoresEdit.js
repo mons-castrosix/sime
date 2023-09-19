@@ -298,30 +298,35 @@ function PromotoresEdit() {
 
         })
     }
-    const submitSecciones2 = () => {
+    const submitSecciones2 = async  (e) => {
 
-
-        Axios.post("http://localhost:3001/responsabilidadPromotor/" + id
+        try {
+            const response = await Axios.post("http://localhost:3001/responsabilidadPromotor/" + id
             /*"http://54.219.124.66:3001/api/distritos"*/, {
 
-            }).then((response) => {
+                });
 
-                
-                //console.log(response.data)
-                setList4(response.data)
-               
+
+            setList4(response.data)
 
 
 
-            });
+
+        } catch (ex) {
+
+
+        }
+            const secs = [];
+    list4.map(val => {
+
+        secs.push(val.value)
+    })
+    console.log(secs)
+    setSelectedCities(secs)
 
 
     }
-    const secs=[];
-    list4.map(val =>{
-        
-        secs.push(val.seccion_id)
-    })
+    
 
 
     const limpiar = e => {
@@ -369,12 +374,13 @@ function PromotoresEdit() {
 
 
     }
+    
     useEffect(() => {
         getLista();
         submitSecciones();
         submitSecciones2();
         
-    },[] );
+    },selectedCities );
 
 
     // This function will be triggered when the "Remove This Image" button is clicked
@@ -878,7 +884,7 @@ function PromotoresEdit() {
                                 <label className="small mb-1" htmlFor="nivel">Seccion(es) de responsabilidad</label>
                                 <MultiSelect
                                     options={list}
-                                    value={secs || selectedCities}
+                                    value={selectedCities}
                                     onChange={(e) => {setSelectedCities(e.target.value); }}
                                      optionLabel="name"
                                     filter placeholder="Selecciona una o más secciones" className="w-full md:w-20rem form-select" required />
