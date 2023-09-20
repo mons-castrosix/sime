@@ -145,7 +145,7 @@ function PromotoresEdit() {
 
         try {
             const res = await Axios.post(//"http://localhost:3001/apoyoId",{id:id}
-                "http://localhost:3001/promotor/detalles/" + id
+                "http://localhost:3001/edit-promotor/" + id
             );
 
             var fecha = new Date(res.data.fecha_nacimiento)

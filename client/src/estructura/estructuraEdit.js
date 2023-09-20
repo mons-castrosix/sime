@@ -159,7 +159,7 @@ function EditEstructura() {
             setCiudad(res.data.ciudad);
             setLatitud(res.data.lat);
             setLongitud(res.data.longitud);
-            setClave(res.data.clave_elector);
+            setClave(res.data.clave_electoral);
             setCurp(res.data.curp);
             setFecha(fecha);
             setSeccion(res.data.seccion);
@@ -236,18 +236,29 @@ function EditEstructura() {
                 ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
                 distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
                 otra_red: otra, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, observaciones: observaciones, idEquipo: equipo, injerencia: selectedSeccion
-            }).then(() => {
-                Swal.fire({
-                    title: 'Registro de estructura',
-                    text: "Agregado existosamente",
-                    icon: 'success',
-                    confirmButtonColor: '#716add',
-                    confirmButtonText: 'De acuerdo'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        navigate('/estructura')
-                    }
-                })
+            }).then((response) => {
+                console.log(response.data)
+                if (response.data == "No_Editado") {
+                    Swal.fire({
+                        title: 'Error',
+                        text: "No se guardaron los cambios",
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar'
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Datos actualizados',
+                        text: "Actualizados existosamente",
+                        icon: 'success',
+                        confirmButtonColor: '#716add',
+                        confirmButtonText: 'De acuerdo'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            navigate('/estructura')
+                        }
+                    })
+                }
+
 
             }).catch(error => {
                 Swal.fire({
