@@ -213,18 +213,29 @@ function PromotoresEdit() {
                 ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
                 distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
                 otra_red: otra, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, observaciones: observaciones, injerencias: selectedCities
-            }).then(() => {
-                Swal.fire({
-                    title: 'Registro de promotor',
-                    text: "Agregado existosamente",
-                    icon: 'success',
-                    confirmButtonColor: '#716add',
-                    confirmButtonText: 'De acuerdo'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        navigate('/promotores')
-                    }
-                })
+            }).then((response) => {
+                console.log(response.data)
+                if (response.data == "No_Editado") {
+                    Swal.fire({
+                        title: 'Error',
+                        text: "No se guardaron los cambios",
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar'
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Datos actualizados',
+                        text: "Actualizados existosamente",
+                        icon: 'success',
+                        confirmButtonColor: '#716add',
+                        confirmButtonText: 'De acuerdo'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            navigate('/promotores')
+                        }
+                    })
+                }
+
 
             }).catch(error => {
                 Swal.fire({
@@ -234,7 +245,6 @@ function PromotoresEdit() {
                     confirmButtonText: 'Cool'
                 })
             });
-
 
         /*console.log(aPaterno + aMaterno + nombres + calle + numero + colonia + cp + ciudad 
           + claveElectoral + curp + fecha + seccion + dfederal + dLocal + nivel

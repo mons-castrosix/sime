@@ -1666,6 +1666,8 @@ app.post('/promotor/detalles/:id', (req, res) => {
 app.post('/promotor-edit/:id', (req, res) => {
   console.log(req.body)
 
+  const id = req.params.id;
+  
   const apaterno = req.body.apaterno
   const amaterno = req.body.amaterno
   const nombres = req.body.nombres
@@ -1678,76 +1680,44 @@ app.post('/promotor-edit/:id', (req, res) => {
   const curp = req.body.curp
   const fecha_nacimiento = req.body.fecha_nacimiento
   const seccion = req.body.seccion
-  const distrito_federal = req.body.distrito_federal
-  const distrito_local = req.body.distrito_local
+  const id_Secc=req.body.id_Secc
+
   const nivel = req.body.nivel
   const no_celular = req.body.no_celular
   const email = req.body.email
   const facebook = req.body.facebook
   const twitter = req.body.twitter
   const otra_red = req.body.otra_red
-  const contacto = req.body.contacto
-  const no_celcontacto = req.body.no_celcontacto
+ 
+
   const lat = req.body.lat
-  const lng = req.body.lng
-  const lider = req.body.id_tipoLider
-  const id_Secc = req.body.id_Secc
-  const observaciones = req.body.observaciones
-  const injerencias = req.body.injerencias
-  const equipo = req.body.idEquipo
-
-/*
-  const sql2 = "SELECT max(id) as id FROM img_ine"
-  const sql3 = "SELECT max(id) as id FROM registro_promotores"
-  const sqlInsert = "INSERT INTO registro_promotores (nombres,apaterno,amaterno,calle,numero,colonia,cp,ciudad,fecha_nacimiento,curp,clave_electoral,seccion,id_Secc,no_celular, email,facebook,twitter,otra_red,circulo,observaciones,lat,lng,img) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);"
-  const secc_resp = "INSERT INTO secciones_responsabilidad_promotores (promotor_id,seccion_id) VALUES (?,?) ";
+  const lng= req.body.lng
+  const equipo=req.body.idEquipo
   const response = []
-  db.query(sql2, (err, result) => {
-    const id_image = result[0].id
-
-
-    db.query(sqlInsert, [
-      nombres, apaterno, amaterno, calle, numero, colonia, cp, ciudad, fecha_nacimiento, curp, clave_elector, seccion, id_Secc, no_celular, email, facebook, twitter, otra_red, nivel,
-      observaciones, lat, lng, id_image], (err, result) => {
-        if (err) {
-          res.send(err);
-        }
-        else {
-          response.push(true)
-
-        }
-      });
-
-    db.query(sql3, (err, result) => {
-      const id_p = result[0].id
-      for (let i = 0; i < injerencias.length; i++) {
-        db.query(secc_resp, [id_p, injerencias[i]], (err, result) => {
-          if (err) {
-            //console.log(err);
-          }
-          else {
-            response.push(true);
-
-
-          }
-        })
+  db.query(
+    "UPDATE registro_promotores SET apaterno=?,amaterno=?,nombres=?,calle=?,numero=?,colonia=?,cp=?,ciudad=?,clave_electoral=?,curp=?,fecha_nacimiento=?,seccion=?,id_Secc=?,circulo=?,no_celular=?,email=?,facebook=?,twitter=?,otra_red=?,lat=?,lng=? WHERE id=?;",
+    [apaterno, amaterno, nombres, calle, numero, colonia, cp, ciudad, clave_elector, curp, fecha_nacimiento, seccion, id_Secc,nivel, no_celular, email, facebook, twitter, otra_red, lat,lng, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        response.push(false);
       }
-
-    });
-
-  });
-
-
-
-  if (response[0] == true && response[1] == true) {
-    res.send("Agregado")
+      else {
+        //res.send(result)
+        response.push(true);
+        console.log(result)
+      }
+    }
+  )
+  if(response[0]==true){
+    res.send("Editado");
+  }else{
+    res.send("No_editado");
   }
-  else {
-    res.send("No Agregado")
-  }
 
-*/
-});
+
+
+})
 
 
 ///------------------------ PROMOVIDOS ----------------------------
@@ -2270,6 +2240,7 @@ app.post('/api/insert-representantesg', (req, res) => {
 
 
 );
+// ------- representantes generales ----------
 
 app.post('/representantes', (req, res) => {
   db.query('SELECT rc.id,CONCAT(rc.nombres," ",rc.apaterno," ",rc.amaterno) AS nombre,rc.no_celular,sd.secc,srp.id AS idsr FROM registro_representantes_casilla_gral rc INNER JOIN secciones_responsabilidad_representantes srp ON rc.id=srp.representante_id INNER JOIN secc_distrito sd ON srp.seccion_id=sd.id;', (err, result) => {
@@ -2297,7 +2268,32 @@ app.post('/representantes', (req, res) => {
     }
   })
 })
+app.post('/representantesg/detalles/:id', (req, res) => {
+  //console.log(req.body)
 
+  const id = req.params.id;
+
+  
+ 
+ const q="SELECT *FROM registro_representantes_casilla_gral rp INNER JOIN secc_distrito sd ON rp.id_Secc=sd.id WHERE rp.id=?;";
+  db.query(
+    q,id,
+    
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        res.send(result[0])
+        console.log(result[0])
+      }
+    }
+  )
+
+
+})
+
+// ------- representantes casilla ----------
 app.post('/representantes2', (req, res) => {
   db.query('SELECT rc.id,CONCAT(rc.nombres," ",rc.apaterno," ",rc.amaterno) AS nombre,rc.no_celular,ca.nombre AS tipocasilla FROM registro_representantes_casilla rc INNER JOIN cat_casilla ca ON rc.tipo_casilla=ca.sigla;', (err, result) => {
     if (err) {

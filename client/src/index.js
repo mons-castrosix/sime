@@ -20,6 +20,7 @@ import RepresentantesList2 from './representantes/representantesList2';
 import { BrowserRouter, NavLink, Routes, Route, Switch } from 'react-router-dom';
 import Representantes from './representantes/representantes';
 import RepresentantesList from './representantes/representantesList';
+import RepresentantesgView from './representantes/representantesgView';
 import Promotores from './promotores/promotores';
 import PromotoresList from './promotores/promotoresList';
 import PromotoresEdit from './promotores/promotoresEdit';
@@ -71,6 +72,8 @@ root.render(
 
 
                  <Route path='/representantes-generales' element={<RepresentantesList/>} />
+                 <Route path='/representantes-gview/:id' element={<RepresentantesgView/>} />
+
                  <Route path='/representantes-casilla' element={<RepresentantesList2/>} />
                  <Route path='/representantes/add' element={<Representantes/>} />
 
