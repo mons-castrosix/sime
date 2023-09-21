@@ -1663,7 +1663,7 @@ app.post('/promotor/detalles/:id', (req, res) => {
 
 })
 
-app.post('/edit-promotor/:id', (req, res) => {
+app.post('/promotor-edit/:id', (req, res) => {
   console.log(req.body)
 
   const apaterno = req.body.apaterno

@@ -145,7 +145,7 @@ function PromotoresEdit() {
 
         try {
             const res = await Axios.post(//"http://localhost:3001/apoyoId",{id:id}
-                "http://localhost:3001/edit-promotor/" + id
+                "http://localhost:3001/promotor/detalles/" + id
             );
 
             var fecha = new Date(res.data.fecha_nacimiento)
@@ -180,8 +180,9 @@ function PromotoresEdit() {
             setCalle(res.data.calle);
             setNumero(res.data.numero);
             setColonia(res.data.colonia);
+            setidSecc(res.data.id_Secc)
             setNewCoor([parseFloat(res.data.lat), parseFloat(res.data.lng)]);
-
+            setCelular(res.data.no_celular)
             setCp(res.data.cp);
             setCiudad(res.data.ciudad);
             setClave(res.data.c_elector);
@@ -205,13 +206,13 @@ function PromotoresEdit() {
     const submitReview = () => {
 
         Axios.post(//"http://54.219.124.66:3001/insert-promotor",
-            "http://localhost:3001/insert-promotor",
+            "http://localhost:3001/promotor-edit/"+id,
             {
 
                 apaterno: aPaterno, amaterno: aMaterno, nombres: nombres, calle: calle, numero: numero, colonia: colonia, cp: cp,
                 ciudad: ciudad, clave_elector: claveElectoral, curp: curp, fecha_nacimiento: fechaNacimiento, seccion: seccion, distrito_federal: document.getElementById("df").value,
                 distrito_local: document.getElementById("dl").value, nivel: nivel, no_celular: celular, email: email, facebook: facebook, twitter: twitter,
-                otra_red: otra, contacto: contacto, no_celcontacto: celContacto, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, observaciones: observaciones, injerencias: selectedCities
+                otra_red: otra, lat: document.getElementById("lat").value, lng: document.getElementById("lng").value, id_Secc: idSecc, observaciones: observaciones, injerencias: selectedCities
             }).then(() => {
                 Swal.fire({
                     title: 'Registro de promotor',
@@ -924,7 +925,7 @@ function PromotoresEdit() {
                                 <button className="btn btn-danger" id='limpiar' onClick={limpiar} type="button">Limpiar datos</button>
                             </div>
                             <div className="col-md-4">
-                                <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Guardar Promotor</button>
+                                <button className="btn btn-success" onClick={handleSubmit(onSubmit)} type="submit">Modificar Promotor</button>
                                 {errors?.lat?.type === "required" && <span className='eform'>Olvidaste Georeferenciar tu domicilio</span>}
                             </div>
                         </div>
